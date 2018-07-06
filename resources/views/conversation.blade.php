@@ -9,7 +9,7 @@
             @include('menu')
 
             <div class="col-10">
-                <div id="conversation">
+                <div id="conversation" class="direct-chat-messages">
 
                 </div>
             </div>

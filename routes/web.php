@@ -19,6 +19,10 @@ Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
 Route::get('/search','SearchController@search')->name('search');
 
+Route::get('a',function (){
+    dd(\App\District::all());
+});
+
 Route::resources([
     'messages' => 'MessageController',
     'conversation' => 'ConversationController'
