@@ -5,7 +5,22 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-3">
+                            <span class="btn">
+                                {{ __('Login') }}
+                            </span>
+                        </div>
+                        <div class="col-9">
+                            <div class="btn-group float-right">
+                                <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'github']) }}">Github</a>
+                                <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'twitter']) }}">Twitter</a>
+                                <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'facebook']) }}">Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
