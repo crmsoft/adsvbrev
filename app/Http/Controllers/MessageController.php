@@ -19,9 +19,8 @@ class MessageController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return MessageCollection
      */
     public function index(Request $request)
     {
