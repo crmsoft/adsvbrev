@@ -81,9 +81,7 @@ class ConversationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return ConversationCollection
      */
     public function index()
     {
@@ -107,7 +105,7 @@ class ConversationController extends Controller
                 ->where('user_conversations.user_id','=',$user->id)
                 ->select([
                     DB::raw("concat(users.name,' ',users.last_name) as last_message_user"),
-                    'messages.message',
+                    DB::raw('substring(messages.message,1,25) as message'),
                     'user_conversations.conversation_id',
                     'messages.created_at'
                 ])

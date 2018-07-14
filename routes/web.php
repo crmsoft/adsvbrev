@@ -14,18 +14,19 @@
 
 Auth::routes();
 
+Route::get('/dialog', function(){
+   return redirect(route('conversations-list'));
+});
+
 Route::get('/', 'ProfileController@index')->name('profile');
 Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
 Route::get('/search','SearchController@search')->name('search');
 
-Route::get('a',function (){
-    dd(\App\District::all());
-});
 
 Route::resources([
     'messages' => 'MessageController',
     'conversation' => 'ConversationController'
 ]);
 
-Route::get('/{user_unique}', 'ProfileController@showProfile')->name('show-user-profile');
+Route::get('/gg/{user_unique}', 'ProfileController@showProfile')->name('show-user-profile');
