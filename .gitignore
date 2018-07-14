@@ -13,3 +13,5 @@ yarn-error.log
 .env
 frontend
 tests
+composer.json
+composer.lock
