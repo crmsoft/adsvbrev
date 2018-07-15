@@ -38,30 +38,30 @@ return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),         // Your GitHub Client ID
         'client_secret' => env('GITHUB_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect' => 'http://game.dev/social/login/callback/github',
+        'redirect' => 'http://35.205.191.229/social/login/callback/github',
     ],
 
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),         // Your GitHub Client ID
         'client_secret' => env('TWITTER_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect' => 'http://game.dev/social/login/callback/twitter',
+        'redirect' => 'http://35.205.191.229/social/login/callback/twitter',
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),         // Your GitHub Client ID
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect' => 'http://game.dev/social/login/callback/facebook',
+        'redirect' => 'http://35.205.191.229/social/login/callback/facebook',
     ],
 
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),         // Your GitHub Client ID
         'client_secret' => env('GOOGLE_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect' => 'http://game.dev/social/login/callback/google',
+        'redirect' => 'http://35.205.191.229/social/login/callback/google',
     ],
 
     'twitch' => [
         'client_id' => env('TWITCH_CLIENT_ID'),         // Your GitHub Client ID
         'client_secret' => env('TWITCH_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect' => 'http://game.dev/social/login/callback/twitch',
+        'redirect' => 'http://35.205.191.229/social/login/callback/twitch',
     ],
 ];
