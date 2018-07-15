@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Conversation;
 use App\Http\Resources\MessageCollection;
+use App\Http\Resources\NewMessageNotification;
 use App\Message;
+use App\UnreadMessage;
+use App\User;
 use App\UserConversation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -43,7 +46,7 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function unread()
+    public function create()
     {
         //
     }
@@ -62,24 +65,34 @@ class MessageController extends Controller
 
         if($conversation){
 
-            $user_conversation = UserConversation::where('conversation_id', $conversation_id)
+            $user_conversations = UserConversation::where('conversation_id', $conversation_id)
                                 ->where('user_id', '<>', $user->id)
                                 ->join('users','users.id','=','user_conversations.user_id')
                                 ->get([
-                                    'users.user_communication_id'
+                                    'users.user_communication_id',
+                                    'users.id'
                                 ]);
 
-            if($user_conversation){
+            if($user_conversations){
                 $message = new Message;
                 $message->conversation()->associate($conversation);
                 $message->message = $request->get('message', '');
                 $message->user()->associate($user);
                 if ($message->save()) {
 
+                    $notification_recipients = [];
+                    foreach ($user_conversations as $user_conversation) {
+                        $notification_recipients[] = $user_conversation->user_communication_id;
+                        UnreadMessage::create([
+                            'user_id' => $user_conversation->id,
+                            'message_id' => $message->id
+                        ]);
+                    }
 
-                    Redis::publish(config('database.redis.message_channel'), $user_conversation->map(function($user){
-                        return $user->user_communication_id;
-                    }));
+                    Redis::publish(
+                        config('database.redis.message_channel'),
+                        json_encode($notification_recipients)
+                    );
 
                     return new MessageCollection($message);
                 }
@@ -95,9 +108,22 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $data = UnreadMessage::with('message')
+            ->where('user_id', $request->user()->id)
+            ->where('notified', false)
+            ->get();
+
+        $notify_messages = [];
+        foreach ($data as $item) {
+            $item->notified = true;
+            if ($item->save()) {
+                $notify_messages[]  = $item->message;
+            }
+        }
+
+        return new NewMessageNotification($notify_messages);
     }
 
     /**
