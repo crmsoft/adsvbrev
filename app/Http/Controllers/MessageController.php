@@ -49,9 +49,8 @@ class MessageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return MessageCollection|null
      */
     public function store(Request $request)
     {
@@ -81,19 +80,12 @@ class MessageController extends Controller
                         return $user->user_communication_id;
                     }));
 
-                    return new MessageCollection(new Collection([
-                        'message' => $message->message,
-                        'full_name' => "{$user->name} {$user->last_name}",
-                        'from_me' => 1,
-                        'created_at' => $message->created_at->format('Y-m-d H:i:s')
-                    ]));
+                    return new MessageCollection($message);
                 }
             }
         }
 
-        return [
-            $conversation
-        ];
+        return null;
     }
 
     /**
