@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Socialite;
 
 class SocialeLoginController extends Controller
@@ -19,15 +20,22 @@ class SocialeLoginController extends Controller
     /**
      * @param string $social_name
      */
-    public function handleProviderCallback( string $social_name )
+    public function handleProviderCallback( string $social_name, Request $request )
     {
         $social_account = Socialite::driver( $social_name )->user();
 
         $user = User::where('email', $social_account->getEmail())->first();
 
         if($user){
-            Auth::login($user);
-            return redirect(route('profile'));
+            $str = str_random(31);
+
+            $request->session()->put('user_communication_id', $str);
+            $user->user_communication_id = $str;
+            if($user->save()){
+                Redis::publish(config('database.redis.channel'), $str);
+                Auth::login($user);
+                return redirect(route('profile'));
+            }
         }
 
         return redirect(route('register'))->withInput([

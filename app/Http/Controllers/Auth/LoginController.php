@@ -53,7 +53,7 @@ class LoginController extends Controller
         $user->user_communication_id = $str;
         // store the key
         if($user->save()) {
-            Redis::publish(env('user_channel'), $str);
+            Redis::publish(config('database.redis.channel'), $str);
         }else{ // user should have a key
             Auth::logout();
         }

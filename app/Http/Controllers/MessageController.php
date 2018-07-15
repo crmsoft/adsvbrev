@@ -32,9 +32,10 @@ class MessageController extends Controller
                             ->where('user_id', $user_id)
                             ->first();
 
-        return new MessageCollection( Message::with(['user' => function($query){
-            return $query->select(['id', 'name', 'last_name']);
-        }])->get() );
+        return new MessageCollection( Message::where('conversation_id', $user_conversation->conversation_id)
+            ->with(['user' => function($query){
+                return $query->select(['id', 'name', 'last_name']);
+            }])->get() );
     }
 
     /**
@@ -42,7 +43,7 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function unread()
     {
         //
     }
@@ -76,7 +77,7 @@ class MessageController extends Controller
                 if ($message->save()) {
 
 
-                    Redis::publish(env('user_new_message_channel'), $user_conversation->map(function($user){
+                    Redis::publish(config('database.redis.message_channel'), $user_conversation->map(function($user){
                         return $user->user_communication_id;
                     }));
 
