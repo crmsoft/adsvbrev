@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,11 @@ class Message extends Model
     public function getFromMeAttribute(){
         $user_id = Auth::user()->id;
         return $this->user->id == $user_id;
+    }
+
+    public function getCreatedAtAttribute( $created_at ){
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $created_at);
+        return $date->diffInWeeks(Carbon::now()) > 1 ? $date->format('j M Y, g:ia') : $date->diffForHumans();
     }
 
     public function user(){

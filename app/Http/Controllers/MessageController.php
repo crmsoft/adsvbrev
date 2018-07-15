@@ -32,7 +32,9 @@ class MessageController extends Controller
                             ->where('user_id', $user_id)
                             ->first();
 
-        return new MessageCollection( Message::with('user')->get() );
+        return new MessageCollection( Message::with(['user' => function($query){
+            return $query->select(['id', 'name', 'last_name']);
+        }])->get() );
     }
 
     /**
