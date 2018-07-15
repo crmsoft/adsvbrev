@@ -32,19 +32,7 @@ class MessageController extends Controller
                             ->where('user_id', $user_id)
                             ->first();
 
-        return new MessageCollection(
-            Message::where('conversation_id', $user_conversation ? $user_conversation->conversation_id:NULL)
-                ->join('users','users.id','=','messages.user_id')
-                ->orderBy(
-                    'messages.created_at', 'asc'
-                )
-                ->get([
-                    'messages.message',
-                    'messages.created_at',
-                    DB::raw("concat(users.name,' ',users.last_name) as full_name"),
-                    DB::raw("(case when users.id = $user_id then true else false end) as from_me")
-                ])
-        );
+        return new MessageCollection( Message::with('user')->get() );
     }
 
     /**

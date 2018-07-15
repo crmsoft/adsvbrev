@@ -19,13 +19,24 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var array
+     */
+    protected $appends = [
+        'full_name'
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'user_communication_id', 'updated_at', 'created_at', 'email'
     ];
+
+    public function getFullNameAttribute(){
+        return $this->name . ' ' . $this->last_name;
+    }
 
     public function conversations(){
         return $this->hasMany('\App\UserConversation');

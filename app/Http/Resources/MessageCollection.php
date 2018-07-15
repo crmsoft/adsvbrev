@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class MessageCollection extends ResourceCollection
+class MessageCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -14,11 +14,6 @@ class MessageCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection,
-            'links' => [
-                'self' => 'link-value'
-            ]
-        ];
+        return parent::toArray($request);
     }
 }
