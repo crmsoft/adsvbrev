@@ -17,6 +17,8 @@
                                 <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'github']) }}">Github</a>
                                 <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'twitter']) }}">Twitter</a>
                                 <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'facebook']) }}">Facebook</a>
+                                <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'twitch']) }}">Twitch</a>
+                                <a class="btn btn-default" href="{{ route('login.with.social',['name' => 'google']) }}">Google+</a>
                             </div>
                         </div>
                     </div>

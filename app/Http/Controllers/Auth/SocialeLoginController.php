@@ -13,7 +13,7 @@ class SocialeLoginController extends Controller
 
     public function redirectToProvider( string $social_name )
     {
-        return Socialite::driver($social_name)->redirect();
+        return Socialite::with($social_name)->redirect();
     }
 
     /**

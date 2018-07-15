@@ -41,13 +41,13 @@ Route::group([
     Route::get('/with/{name}', 'SocialeLoginController@redirectToProvider')
         ->name('social')
         ->where([
-            'name' => 'github|twitter|facebook'
+            'name' => 'github|twitter|facebook|twitch|google'
         ]);
 
     Route::get('/callback/{name}', 'SocialeLoginController@handleProviderCallback')
         ->name('social.callback')
         ->where([
-            'name' => 'github|twitter|facebook'
+            'name' => 'github|twitter|facebook|twitch|google'
         ]);
 
 });

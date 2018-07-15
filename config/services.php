@@ -53,4 +53,15 @@ return [
         'redirect' => 'http://game.dev/social/login/callback/facebook',
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),         // Your GitHub Client ID
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'), // Your GitHub Client Secret
+        'redirect' => 'http://game.dev/social/login/callback/google',
+    ],
+
+    'twitch' => [
+        'client_id' => env('TWITCH_CLIENT_ID'),         // Your GitHub Client ID
+        'client_secret' => env('TWITCH_CLIENT_SECRET'), // Your GitHub Client Secret
+        'redirect' => 'http://game.dev/social/login/callback/twitch',
+    ],
 ];
