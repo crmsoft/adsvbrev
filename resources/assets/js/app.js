@@ -7,16 +7,33 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// import components
+import Dialogs from './components/dialogs';
+import Dialog from './components/dialog';
+import GGWSC, {user} from './components/websocket';
+import socketStore from './store/socket';
+import MessageNotification from './components/notifications/message';
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+ReactDOM.render((
+  <Router>
+    <div>
+        <Route path="/im" component={Dialogs}/>
+        <Route path="/dialog/:id" 
+               render={(props) => <Dialog id={props.match.params.id} 
+               trigger={socketStore}/>} 
+        />
+    </div>
+  </Router>
+), document.getElementById('conversation'));
 
-const app = new Vue({
-    el: '#app'
-});
+if(user){
+  const s = new GGWSC(socketStore);
+  ReactDOM.render(
+    <MessageNotification trigger={socketStore}/>, 
+    document.getElementById('pushs')
+  );
+}

@@ -16,3 +16,6 @@ tests
 composer.json
 composer.lock
 config/database.php
+.babelrc
+webpack.mix.js
+resources/assets/*

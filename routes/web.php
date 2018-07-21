@@ -14,7 +14,7 @@
 
 Auth::routes();
 
-Route::get('/dialog', function(){
+Route::get('/dialog/{any?}', function(){
    return redirect(route('conversations-list'));
 });
 
@@ -26,11 +26,14 @@ Route::get('/search','SearchController@search')->name('search');
 
 Route::resources([
     'messages' => 'MessageController',
-    'conversation' => 'ConversationController'
+    'conversations' => 'ConversationController'
 ]);
 
 Route::get('/gg/{user_unique}', 'ProfileController@showProfile')->name('show-user-profile');
 
+
+
+// social media login | redirects to register page
 Route::group([
     'middleware' => [ 'guest' ],
     'prefix' => 'social/login/',
@@ -38,12 +41,14 @@ Route::group([
     'as' => 'login.with.'
 ], function(){
 
+    // handle social option click
     Route::get('/with/{name}', 'SocialeLoginController@redirectToProvider')
         ->name('social')
         ->where([
             'name' => 'github|twitter|facebook|twitch|google'
         ]);
 
+    // handle social callback
     Route::get('/callback/{name}', 'SocialeLoginController@handleProviderCallback')
         ->name('social.callback')
         ->where([
