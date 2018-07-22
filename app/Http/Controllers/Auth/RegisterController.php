@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Jobs\SendWelcomeEmail;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -69,7 +72,17 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'unique' => 'id'.rand(100000,999999),
             'email' => $data['email'],
+            'email_verification_token' => sha1($data['email']),
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        Auth::logout();
+        $this->dispatch(new SendWelcomeEmail($user));
+
+        return redirect(route('login'))
+            ->with('status',__('Please check your email address'));
     }
 }

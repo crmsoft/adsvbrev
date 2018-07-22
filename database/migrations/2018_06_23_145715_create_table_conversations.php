@@ -34,6 +34,8 @@ class CreateTableConversations extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('conversations');
+        Schema::enableForeignKeyConstraints();
     }
 }

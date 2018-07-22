@@ -11,6 +11,15 @@
 |
 */
 
+Route::get('/validate/{token}', function($token){
+    $user = \App\User::where('email_verification_token',$token)->first();
+    if($user){
+        $user->validated = 1;
+        $user->save();
+        return redirect(route('login'))
+            ->with('status', __('Thank you! Your account successfully validated!'));
+    } return redirect(route('login'))->with('status', __('Failed validate your email please contact us, for more details!'));
+})->name('account.validation');
 
 Auth::routes();
 

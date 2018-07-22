@@ -40,6 +40,8 @@ class CreateUnreadMessgesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('unread_messages');
+        Schema::enableForeignKeyConstraints();
     }
 }

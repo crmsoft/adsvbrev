@@ -40,6 +40,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function credentials(Request $request)
+    {
+        $credentials = $request->only($this->username(), 'password');
+        // Customization: validate if client status is active (1)
+        $credentials['validated'] = 1;
+        return $credentials;
+    }
+
     protected function authenticated(Request $request, $user)
     {
         // generate some random key
