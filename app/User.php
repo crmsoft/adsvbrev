@@ -22,7 +22,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'full_name'
+        'full_name',
+        'status'
     ];
 
     /**
@@ -36,6 +37,10 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(){
         return $this->name . ' ' . $this->last_name;
+    }
+
+    public function getStatusAttribute(){
+        return !empty($this->user_communication_id);
     }
 
     public function conversations(){

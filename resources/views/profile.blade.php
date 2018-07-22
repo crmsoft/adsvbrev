@@ -22,9 +22,9 @@
         <main class="col-8">
             <div class="row user-heading">
                 <div class="col-12">
-                    {{ $user->name }} {{ $user->last_name }}
+                    {{ $user->full_name }}
                     <span class="float-right">
-                        online
+                        {{ $user->status ? 'online':'offline' }}
                     </span>
                 </div>
                 <div class="col-12">

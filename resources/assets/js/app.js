@@ -18,17 +18,19 @@ import GGWSC, {user} from './components/websocket';
 import socketStore from './store/socket';
 import MessageNotification from './components/notifications/message';
 
-ReactDOM.render((
-  <Router>
-    <div>
-        <Route path="/im" component={Dialogs}/>
-        <Route path="/dialog/:id" 
-               render={(props) => <Dialog id={props.match.params.id} 
-               trigger={socketStore}/>} 
-        />
-    </div>
-  </Router>
-), document.getElementById('conversation'));
+if(document.getElementById('conversation')){
+  ReactDOM.render((
+    <Router>
+      <div>
+          <Route path="/im" component={Dialogs}/>
+          <Route path="/dialog/:id" 
+                render={(props) => <Dialog id={props.match.params.id} 
+                trigger={socketStore}/>} 
+          />
+      </div>
+    </Router>
+  ), document.getElementById('conversation'));
+}
 
 if(user){
   const s = new GGWSC(socketStore);

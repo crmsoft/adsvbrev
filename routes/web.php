@@ -56,3 +56,17 @@ Route::group([
         ]);
 
 });
+
+
+Route::group([
+   'middleware' => [ 'guest' ],
+   'prefix' => 'SsXAZGWTyt/'
+], function(){
+    Route::get('/make_user_offline/{communication_id}', function($comm_id){
+        $user = \App\User::where('user_communication_id',$comm_id)->first();
+        if($user){
+            $user->user_communication_id = null;
+            $user->save();
+        }
+    });
+});
