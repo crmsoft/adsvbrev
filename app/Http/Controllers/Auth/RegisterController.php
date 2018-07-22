@@ -85,4 +85,21 @@ class RegisterController extends Controller
         return redirect(route('login'))
             ->with('status',__('Please check your email address'));
     }
+
+    public function validateEmail($token){
+
+        $user = User::where('email_verification_token',$token)
+                ->where('validated', 0)
+                ->first();
+
+        if($user){
+            $user->validated = 1;
+            $user->save();
+            return redirect(route('login'))
+                ->with('status', __('Thank you! Your account successfully validated!'))
+                ->withInput([
+                    'email' => $user->email
+                ]);
+        } return redirect(route('login'))->with('status', __('Failed validate your email please contact us, for more details!'));
+    }
 }

@@ -17,6 +17,7 @@ class CreateUnreadMessgesTable extends Migration
             $table->increments('id');
             $table->boolean('unread')->default(true);
             $table->boolean('notified')->default(false);
+            $table->boolean('user_online')->default(false);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('message_id');
             $table->timestamps();

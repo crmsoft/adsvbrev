@@ -82,17 +82,24 @@ class MessageController extends Controller
 
                     $notification_recipients = [];
                     foreach ($user_conversations as $user_conversation) {
-                        $notification_recipients[] = $user_conversation->user_communication_id;
+                        if($user_conversation->user_communication_id)
+                            $notification_recipients[] = $user_conversation->user_communication_id;
+
                         UnreadMessage::create([
                             'user_id' => $user_conversation->id,
-                            'message_id' => $message->id
+                            'message_id' => $message->id,
+                            'user_online' => !empty($user_conversation->user_communication_id)
                         ]);
                     }
 
-                    Redis::publish(
-                        config('database.redis.message_channel'),
-                        json_encode($notification_recipients)
-                    );
+                    // say node js to inform
+                    // user about the new messages
+                    if(!empty($notification_recipients)) {
+                        Redis::publish(
+                            config('database.redis.message_channel'),
+                            json_encode($notification_recipients)
+                        );
+                    }
 
                     return new MessageCollection($message);
                 }
@@ -113,6 +120,7 @@ class MessageController extends Controller
         $data = UnreadMessage::with('message')
             ->where('user_id', $request->user()->id)
             ->where('notified', false)
+            ->where('user_online', true)
             ->get();
 
         $notify_messages = [];

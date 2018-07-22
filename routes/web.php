@@ -11,18 +11,10 @@
 |
 */
 
-Route::get('/validate/{token}', function($token){
-    $user = \App\User::where('email_verification_token',$token)->first();
-    if($user){
-        $user->validated = 1;
-        $user->save();
-        return redirect(route('login'))
-            ->with('status', __('Thank you! Your account successfully validated!'))
-            ->withInput([
-                'email' => $user->email
-            ]);
-    } return redirect(route('login'))->with('status', __('Failed validate your email please contact us, for more details!'));
-})->name('account.validation');
+/** validate email address of newly registered user */
+Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
+    ->name('account.validation')
+    ->middleware(['guest']);
 
 Auth::routes();
 

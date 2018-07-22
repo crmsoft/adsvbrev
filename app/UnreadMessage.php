@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UnreadMessage extends Model
 {
     protected $fillable = [
-        'user_id', 'message_id', 'unread', 'viewed'
+        'user_id', 'message_id', 'unread', 'viewed', 'user_online'
     ];
 
     public function user(){
