@@ -29,13 +29,10 @@
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <form action="{{ route('start-conversation') }}" method="post" style="display: inline">
-                                        {{ csrf_field() }}
+                                    <button onclick="return sent_message(this)" class="btn btn-default float-right">
                                         <input type="hidden" value="{{ $r_user->unique }}" name="start-with"/>
-                                        <button class="btn btn-default float-right">
-                                            Message
-                                        </button>
-                                    </form>
+                                        Message
+                                    </button>
                                 </div>
                             </div>
                         </li>
@@ -49,3 +46,27 @@
     </div>
 
 @endsection
+
+@push('scripts')
+
+    <script>
+
+        function sent_message(btn) {
+            var message = prompt('Enter your message');
+
+            if (message) {
+
+                axios.post('conversations', {
+                    "unique": $('input',btn).val(),
+                    "message": message
+                })
+                    .then(function () {
+                        alert('Your message has been sent !')
+                    });
+
+            } return false;
+        }
+
+    </script>
+
+@endpush

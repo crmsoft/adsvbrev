@@ -20,58 +20,6 @@ class ConversationController extends Controller
         $this->middleware(['auth']);
     }
 
-
-    public function startConversation(Request $request)
-    {
-        $unique = $request->get('start-with');
-
-        if(empty($unique)){
-            return redirect()->back();
-        }
-
-        $user = Auth::user();
-        $start_with = User::where('unique', $unique)->first();
-
-        if(empty($start_with) || ($start_with->id == $user->id)){
-            return redirect()->back();
-        }
-
-        $users_conversation = DB::selectOne("SELECT
-                                               Count(*) as count 
-                                            FROM
-                                               user_conversations 
-                                            WHERE
-                                               user_conversations.conversation_id IN 
-                                               (
-                                                  SELECT
-                                                     id 
-                                                  FROM
-                                                     `conversations` 
-                                                  WHERE
-                                                     user_id = {$user->id}
-                                                     AND conversations.deleted_at IS NULL 
-                                               )
-                                               AND user_id = {$start_with->id} 
-                                               AND user_conversations.deleted_at IS NULL;");
-
-
-        if($users_conversation->count == 0){
-            $conversation = new Conversation;
-            $conversation->user()->associate($user);
-            $conversation->save();
-
-            $user_conversation = new UserConversation;
-            $user_conversation->user()->associate($user);
-            $user_conversation->conversation()->associate($conversation);
-            $user_conversation->save();
-
-            $user_conversation = new UserConversation;
-            $user_conversation->user()->associate($start_with);
-            $user_conversation->conversation()->associate($conversation);
-            $user_conversation->save();
-        } return redirect(route('conversations-list'));
-    }
-
     /**
      * Show template,
      * other staff will be handled by js
@@ -131,7 +79,58 @@ class ConversationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'unique' => 'required|exists:users,unique',
+            'message' => 'required'
+        ]);
+
+        $unique = $request->get('unique', 0);
+        $receiver = User::where('unique', $unique)
+            ->first();
+
+        $user = Auth::user();
+
+        if($receiver){
+            // find prev conversation
+            $user_conversation = DB::select("SELECT *
+                                                    FROM user_conversations uc
+                                                    WHERE uc.user_id = ? 
+                                                    AND uc.conversation_id IN (
+                                                      SELECT conversation_id
+                                                      FROM user_conversations
+                                                      WHERE user_id = ?) 
+                                                      AND uc.conversation_id IN (SELECT conversation_id
+                                                                                    FROM user_conversations
+                                                                                    GROUP BY conversation_id
+                                                                                    HAVING count(conversation_id) = 2);",[ $user->id, $receiver->id ]);
+
+            if(empty($user_conversation)){
+                // create conversation and wire with users
+                $conversation = new Conversation;
+                $conversation->user()->associate($user);
+                $conversation->save();
+
+                $user_conversation = new UserConversation;
+                $user_conversation->user()->associate($user);
+                $user_conversation->conversation()->associate($conversation);
+                $user_conversation->save();
+
+                $user_conversation = new UserConversation;
+                $user_conversation->user()->associate($receiver);
+                $user_conversation->conversation()->associate($conversation);
+                $user_conversation->save();
+            } else {
+                $conversation = Conversation::where('id',$user_conversation[0]->conversation_id)
+                                ->first();
+            }
+
+            $message = new Message;
+            $message->user()->associate($user);
+            $message->message = $request->get('message');
+            $message->conversation()->associate($conversation);
+            $message->save();
+
+        } return $conversation;
     }
 
     /**
