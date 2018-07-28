@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function conversations(){
         return $this->hasMany('\App\UserConversation');
     }
+
+    public function media(){
+        return $this->hasMany(Media::class);
+    }
 }

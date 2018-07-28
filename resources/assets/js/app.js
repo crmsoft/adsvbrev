@@ -39,3 +39,5 @@ if(user){
     document.getElementById('pushs')
   );
 }
+
+require('./global');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Conversation;
 use App\Http\Resources\MessageCollection;
 use App\Http\Resources\NewMessageNotification;
+use App\Media;
 use App\Message;
 use App\UnreadMessage;
 use App\User;
@@ -38,6 +39,8 @@ class MessageController extends Controller
         return new MessageCollection( Message::where('conversation_id', $user_conversation->conversation_id)
             ->with(['user' => function($query){
                 return $query->select(['id', 'name', 'last_name']);
+            }, 'messageMedia' => function($query){
+                return $query->select(['relation_id','path']);
             }])->get() );
     }
 
@@ -80,6 +83,24 @@ class MessageController extends Controller
                 $message->user()->associate($user);
                 if ($message->save()) {
 
+                    // attach media to message
+                    $files = $request->get('attachments', []);
+                    foreach ($files as $file) {
+
+                        $file_path = explode('/',$file);
+                        $file_name = array_pop($file_path);
+
+                        $media = $user->media()
+                                        ->where('path','like',"%$file_name")
+                                        ->first();
+
+                        // if the file exists
+                        if($media) {
+                            $media->message()->associate($message);
+                            $media->save();
+                        }
+                    }
+
                     $notification_recipients = [];
                     foreach ($user_conversations as $user_conversation) {
                         if($user_conversation->user_communication_id)
@@ -101,7 +122,14 @@ class MessageController extends Controller
                         );
                     }
 
-                    return new MessageCollection($message);
+                    return new MessageCollection(
+                        Message::where('id',$message->id)
+                            ->with(['user' => function($query){
+                                return $query->select(['id', 'name', 'last_name']);
+                            }, 'messageMedia' => function($query){
+                                return $query->select(['relation_id','path']);
+                            }])->first()
+                    );
                 }
             }
         }

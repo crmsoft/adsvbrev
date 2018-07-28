@@ -228,3 +228,19 @@ img{
 .notification-contnent{
   font-size: 12px;
 }
+
+.message-attachment{
+  position: relative;
+  .remove-attachment{
+    position: absolute;
+    top: 0;
+    font-weight: bold;
+    line-height: 1;
+    right: 0;
+    color: #ff6347;
+    cursor: pointer;
+  }
+  img{
+    height: 45px;
+  }
+}

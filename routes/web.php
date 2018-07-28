@@ -30,7 +30,8 @@ Route::get('/search','SearchController@search')->name('search');
 
 Route::resources([
     'messages' => 'MessageController',
-    'conversations' => 'ConversationController'
+    'conversations' => 'ConversationController',
+    'media' => 'MediaController'
 ]);
 
 Route::get('/gg/{user_unique}', 'ProfileController@showProfile')->name('show-user-profile');

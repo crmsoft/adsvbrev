@@ -33,11 +33,28 @@ class Message extends Model
         return $date->diffInWeeks(Carbon::now()) > 1 ? $date->format('j M Y, g:ia') : $date->diffForHumans();
     }
 
+    /**
+     * message belongs to user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(){
         return $this->belongsTo('\App\User');
     }
 
+    /**
+     * message belongs to conversation
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function conversation(){
         return $this->belongsTo('\App\Conversation');
+    }
+
+    /**
+     * message may have a media file|files
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messageMedia(){
+        return $this->hasMany(Media::class, 'relation_id')
+            ->where('type', 'message');
     }
 }
