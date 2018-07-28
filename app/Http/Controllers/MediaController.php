@@ -6,6 +6,7 @@ use App\Media;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class MediaController extends Controller
 {
@@ -43,10 +44,19 @@ class MediaController extends Controller
         $stored = [];
         foreach ($request->file('media') as $image) {
 
-            $path = Storage::disk('public')
-                            ->putFile('uploads', new File($image->getRealPath()));
+            $image = Image::make($image->getRealPath());
+            $image->resize(640,360,function($constraint){
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
 
-            $url = Storage::url($path);
+            $image->stream();
+            $name = hash('sha256', str_random() . $image) .'.'. (explode('/',$image->mime())[1]);
+
+            Storage::disk('public')
+                            ->put("uploads/$name", $image);
+
+            $url = Storage::url("uploads/$name");
 
             $media = new Media;
             $media->path = $url;
