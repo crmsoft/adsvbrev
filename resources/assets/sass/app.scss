@@ -22,9 +22,8 @@ img{
 }
 
 .dialog-wrapper{
-  padding: 10px;
   background: #ffffff;
-  height: 420px;
+  height: 380px;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
@@ -39,6 +38,7 @@ img{
   overflow: auto;
   right: 0;
   left: 0;
+  padding: 10px;
 }
 
 .dialog-wrapper > div > .row{

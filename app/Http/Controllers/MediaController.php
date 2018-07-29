@@ -17,7 +17,7 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $this->middleware(['auth']);
     }
 
     /**

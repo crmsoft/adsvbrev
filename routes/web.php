@@ -23,6 +23,7 @@ Route::get('/dialog/{any?}', function(){
 });
 
 Route::get('/', 'ProfileController@index')->name('profile');
+Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
 Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
 Route::get('/search','SearchController@search')->name('search');

@@ -19,3 +19,4 @@ config/database.php
 .babelrc
 webpack.mix.js
 resources/assets/*
+config/image.php

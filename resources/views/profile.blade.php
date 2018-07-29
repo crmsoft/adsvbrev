@@ -9,15 +9,17 @@
 
         <aside class="col-2">
             <div class="media">
-                <img src="http://via.placeholder.com/160/95a/fff?text={{ $user->name }}" alt="{{$user->name}} {{$user->last_name}}">
+                <img src="{{ $user->profile->ava }}" id="user_ava" alt="{{$user->name}} {{$user->last_name}}">
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-dark btn-block">
-                        Change
-                    </button>
+            @if($user->id == Auth::user()->id)
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" id="alter_avatar" class="btn btn-dark btn-block">
+                            Change
+                        </button>
+                    </div>
                 </div>
-            </div>
+            @endif
         </aside>
         <main class="col-8">
             <div class="row user-heading">

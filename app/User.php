@@ -50,4 +50,10 @@ class User extends Authenticatable
     public function media(){
         return $this->hasMany(Media::class);
     }
+
+    public function profile(){
+        return $this->hasOne(Profile::class)->withDefault([
+            'ava' => 'http://via.placeholder.com/160/95a/fff?text=?'
+        ]);
+    }
 }

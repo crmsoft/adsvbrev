@@ -41,3 +41,4 @@ if(user){
 }
 
 require('./global');
+require('./profile');
