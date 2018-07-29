@@ -15,7 +15,6 @@ class Message extends Model
         'deleted_at',
         'updated_at',
         'conversation_id',
-        'id',
         'user_id'
     ];
 

@@ -41,7 +41,9 @@ class MessageController extends Controller
                 return $query->select(['id', 'name', 'last_name']);
             }, 'messageMedia' => function($query){
                 return $query->select(['relation_id','path']);
-            }, 'user.profile'])->get() );
+            }, 'user.profile'])
+            ->orderBy('messages.id','desc')
+            ->paginate(10) );
     }
 
     /**
