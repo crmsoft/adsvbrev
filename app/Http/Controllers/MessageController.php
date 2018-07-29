@@ -41,7 +41,7 @@ class MessageController extends Controller
                 return $query->select(['id', 'name', 'last_name']);
             }, 'messageMedia' => function($query){
                 return $query->select(['relation_id','path']);
-            }])->get() );
+            }, 'user.profile'])->get() );
     }
 
     /**
@@ -128,7 +128,7 @@ class MessageController extends Controller
                                 return $query->select(['id', 'name', 'last_name']);
                             }, 'messageMedia' => function($query){
                                 return $query->select(['relation_id','path']);
-                            }])->first()
+                            }, 'user.profile'])->first()
                     );
                 }
             }
