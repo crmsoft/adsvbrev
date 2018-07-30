@@ -18,7 +18,9 @@ class SearchController extends Controller
         $user = Auth::user();
 
         $query = $request->get('q','');
-        $users = User::where('name','like',"%$query%")->get();
+        $users = User::orWhere('name','like',"%$query%")
+            ->orWhere('last_name','like',"%$query%")
+            ->get();
 
         return view('search-results',compact('users', 'user'));
     }

@@ -36,14 +36,16 @@ class MessageController extends Controller
                             ->where('user_id', $user_id)
                             ->first();
 
-        return new MessageCollection( Message::where('conversation_id', $user_conversation->conversation_id)
-            ->with(['user' => function($query){
-                return $query->select(['id', 'name', 'last_name']);
-            }, 'messageMedia' => function($query){
-                return $query->select(['relation_id','path']);
-            }, 'user.profile'])
-            ->orderBy('messages.id','desc')
-            ->paginate(10) );
+        return new MessageCollection(
+            Message::where('conversation_id', $user_conversation->conversation_id)
+                ->with(['user' => function($query){
+                    return $query->select(['id', 'name', 'last_name']);
+                }, 'messageMedia' => function($query){
+                    return $query->select(['relation_id','path']);
+                }, 'user.profile'])
+                ->orderBy('messages.id','desc')
+                ->paginate(10)
+        );
     }
 
     /**
