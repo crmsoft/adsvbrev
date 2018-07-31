@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -44,19 +43,7 @@ class MediaController extends Controller
         $stored = [];
         foreach ($request->file('media') as $image) {
 
-            $image = Image::make($image->getRealPath());
-            $image->resize(640,360,function($constraint){
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-
-            $image->stream();
-            $name = hash('sha256', str_random() . $image) .'.'. (explode('/',$image->mime())[1]);
-
-            Storage::disk('public')
-                            ->put("uploads/$name", $image);
-
-            $url = Storage::url("uploads/$name");
+            $url = self::putInStorage($image,640,360);
 
             $media = new Media;
             $media->path = $url;
@@ -65,6 +52,30 @@ class MediaController extends Controller
 
             $stored[] = $url;
         } return $stored;
+    }
+
+    /**
+     * put in public storage uploaded file.
+     * @param $post_file
+     * @param null $width
+     * @param null $height
+     * @return mixed
+     */
+    public static function putInStorage($post_file, $width = null, $height = null){
+
+        $image = Image::make($post_file->getRealPath());
+        $image->resize($width, $height, function($constraint){
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        $image->stream();
+        $name = hash('sha256', str_random() . $image) .'.'. $post_file->getClientOriginalExtension();
+
+        Storage::disk('public')
+            ->put("uploads/$name", $image);
+
+        return Storage::url("uploads/$name");
     }
 
     /**
