@@ -54,14 +54,18 @@ class LoginController extends Controller
         // this key will be used for user validation
         // on socket communication on front-end
         // that key generate for every user session
-        $str = str_random(31);
 
-        $request->session()->put('user_communication_id', $str);
         $user = $request->user();
-        $user->user_communication_id = $str;
-        // store the key
+        if(empty($user->user_communication_id)) {
+            $user->user_communication_id = $str;
+            $str = str_random(31);
+        } else {
+            $str = $user->user_communication_id;
+        }
+            // store the key
         if($user->save()) {
             Redis::publish(config('database.redis.channel'), $str);
+            $request->session()->put('user_communication_id', $str);
         }else{ // user should have a key
             Auth::logout();
         }
