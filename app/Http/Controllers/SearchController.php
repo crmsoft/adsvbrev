@@ -18,9 +18,12 @@ class SearchController extends Controller
         $user = Auth::user();
 
         $query = $request->get('q','');
-        $users = User::orWhere('name','like',"%$query%")
-            ->orWhere('last_name','like',"%$query%")
-            ->get();
+        $users = User::where('validated',1)
+                ->orWhere(function($query){
+                    $query->orWhere('name','like',"%$query%");
+                    $query->orWhere('last_name','like',"%$query%");
+                })
+                ->get();
 
         return view('search-results',compact('users', 'user'));
     }
