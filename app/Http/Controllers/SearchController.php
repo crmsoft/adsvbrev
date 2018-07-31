@@ -17,11 +17,11 @@ class SearchController extends Controller
     {
         $user = Auth::user();
 
-        $query = $request->get('q','');
+        $search = $request->get('q','');
         $users = User::where('validated',1)
-                ->orWhere(function($query){
-                    $query->orWhere('name','like',"%$query%");
-                    $query->orWhere('last_name','like',"%$query%");
+                ->where(function($query) use($search){
+                    $query->orWhere('name','like',"%$search%");
+                    $query->orWhere('last_name','like',"%$search%");
                 })
                 ->get();
 
