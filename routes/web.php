@@ -35,7 +35,7 @@ Route::resources([
     'media' => 'MediaController'
 ]);
 
-Route::get('/gg/{user_unique}', 'ProfileController@showProfile')->name('show-user-profile');
+Route::get('/gg/{user_unique}', 'ProfileController@show')->name('show-user-profile');
 
 
 

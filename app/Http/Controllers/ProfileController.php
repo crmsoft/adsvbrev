@@ -30,7 +30,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function showProfile($unique){
+    public function show($unique){
 
         $user = User::where('unique',$unique)->first();
 
