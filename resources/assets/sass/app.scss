@@ -8,7 +8,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-body{
+body,html{
+  height: 100%;
   color: #000666;
 }
 
@@ -244,3 +245,5 @@ img{
     height: 45px;
   }
 }
+
+@import '_app.scss';

@@ -57,8 +57,8 @@ class LoginController extends Controller
 
         $user = $request->user();
         if(empty($user->user_communication_id)) {
-            $user->user_communication_id = $str;
             $str = str_random(31);
+            $user->user_communication_id = $str;
         } else {
             $str = $user->user_communication_id;
         }
