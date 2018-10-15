@@ -52,8 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -68,9 +67,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'last_name' => $data['last_name'],
             'unique' => 'id'.rand(100000,999999),
+            'username' => str_slug($data['username']),
             'email' => $data['email'],
             'email_verification_token' => sha1($data['email']),
             'password' => Hash::make($data['password']),
@@ -81,6 +79,13 @@ class RegisterController extends Controller
     {
         Auth::logout();
         $this->dispatch(new SendWelcomeEmail($user));
+
+        if($request->ajax()){
+            return response()->json([
+                'message' =>
+                __('You are almost done! You be able to login after email confirmation. Thank you for registering!')
+            ]);
+        }
 
         return redirect(route('login'))
             ->with('status',__('Please check your email address'));

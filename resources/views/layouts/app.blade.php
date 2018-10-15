@@ -14,7 +14,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <script type="text/javascript">
         var gg = {
             wsc: function(){
@@ -25,10 +25,9 @@
     @stack('scripts')
 </head>
 <body>
-<main class="page-wrapper">
 
     <!-- Page Header -->
-    <header>
+    {{--<header>
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
                 <!-- Brand -->
@@ -134,16 +133,12 @@
                 </div>
             </div>
         </nav>
-    </header><!-- End Page Header -->
+    </header><!-- End Page Header -->--}}
 
     <main>
         @yield('content')
     </main>
 
-
-</main>
-
-    <div id="pushs"></div>
 
     <script src="{{mix('/js/manifest.js')}}"></script>
     <script src="{{mix('/js/vendor.js')}}"></script>

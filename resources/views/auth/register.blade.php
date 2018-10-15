@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{--<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -85,6 +85,16 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>--}}
+<div class="login-register">
+    <div class="d-flex">
+        <div class="flex-fill brand">
+            <img src="/img/login-logo.svg" alt="">
+        </div>
+        <div class="flex-fill form-holder">
+            <div id="login-register"></div>
         </div>
     </div>
 </div>

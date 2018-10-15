@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{--<div class="container">
     @if(session('status'))
         <div class="alert alert-secondary" role="alert">
             {{ session('status') }}
@@ -85,6 +85,17 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>--}}
+
+<div class="login-register">
+    <div class="d-flex">
+        <div class="flex-fill brand">
+            <img src="/img/login-logo.svg" alt="">
+        </div>
+        <div class="flex-fill form-holder">
+            <div id="login-register"></div>
         </div>
     </div>
 </div>

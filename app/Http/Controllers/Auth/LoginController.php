@@ -69,5 +69,11 @@ class LoginController extends Controller
         }else{ // user should have a key
             Auth::logout();
         }
+
+        if($request->ajax()){
+            return response()->json([
+                'message' => __('Authentication was successful, Redirecting you to your profile!')
+            ]);
+        }
     }
 }
