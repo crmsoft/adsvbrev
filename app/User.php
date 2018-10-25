@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Entities\Profile;
+use \App\Entities\Group;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const STATUS_SUBSCRIBE = 'subscribe';
+    const STATUS_FRIEND = 'friend';
 
     /**
      * The attributes that are mass assignable.
@@ -63,5 +68,16 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class)->withDefault([
             'ava' => 'http://via.placeholder.com/160/95a/fff?text=?'
         ]);
+    }
+
+    public function friend()
+    {
+        return $this->belongsToMany(User::class, 'user_friend', 'user_id', 'friend_id')
+            ->where('status', self::STATUS_FRIEND);
+    }
+
+    public function group(){
+        return $this->belongsToMany(Group::class, 'user_group', 'user_id', 'group_id')
+            ->where('status', Group::STATUS_JOINED);
     }
 }

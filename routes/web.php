@@ -16,13 +16,26 @@ Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
     ->name('account.validation')
     ->middleware(['guest']);
 
+// Lara Auth Routes
+//---------------------------------------------------------------------------------
 Auth::routes();
 
 Route::get('/dialog/{any?}', function(){
    return redirect(route('conversations-list'));
 });
 
-Route::get('/', 'ProfileController@index')->name('profile');
+// Profile Specific Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    'namespace' => '\Profile'
+], function (){
+
+    // User profile page
+    Route::get('/', 'ProfileController@index')->name('profile');
+    Route::get('/gg/{user_unique}', 'ProfileController@show')->name('user-profile');
+
+});
+
 Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
 Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
@@ -35,7 +48,6 @@ Route::resources([
     'media' => 'MediaController'
 ]);
 
-Route::get('/gg/{user_unique}', 'ProfileController@show')->name('show-user-profile');
 
 
 
