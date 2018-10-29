@@ -1,0 +1,56 @@
+/** global variable decloraton */
+$mainColor: #F05A24;
+$white: #ffffff;
+$grayText: #989898;
+$sectionBg: #202225;
+$sectionInnerColor: #484B52;
+$delimiterColor: #CBCBCB;
+$sectionBorderRadius: 3px;
+$sectionTop: 15px;
+
+/** use bootstrap */
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+@import "./icomoon/style";
+
+@import '~https://fonts.googleapis.com/css?family=Roboto';
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+/** global hooks */
+@import './mixin/default';
+
+@import './global/scrollbar';
+
+@import './global/form-elements';
+
+@import './global/main';
+
+@import './global/nav-tabs';
+
+/** login */
+@import './login-register/main';
+
+/** Header */
+@import './global/header';
+
+/** Profile */
+@import './profile/main';
+
+/** Aside Menu Navigation */
+@import './global/menu';
+
+/** Post creation */
+@import './global/create-post';
+
+/** Post View */
+@import './global/post';
+
+/** Post View */
+@import './global/comment';
+
+
+/** Settings Page */
+@import './settings/main';

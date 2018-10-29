@@ -1,0 +1,66 @@
+.post{
+    @include section-border-radius();
+    background-color: $sectionBg;
+    padding: 10px;
+    .post-header{
+        display: flex;
+        justify-content: space-between;
+        .post-author{
+            display: flex;
+            align-items: center;
+        }
+        .user-ava{
+            border-radius: 25px;
+            height: 50px;
+            width: 50px;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 10px;
+            img{
+                width: 100%;
+            }
+        }
+        
+        .user-post-info{
+            display: inline-block;
+            h2{
+                font-size: 14px;
+                margin: 0
+            }
+            .post-time{
+                font-size: 10px;
+                color: $mainColor;
+            }
+        }
+
+        .post-author-meta{
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            div{
+                cursor: pointer;
+                color: $mainColor;
+                +div{
+                    margin-left: 5px;
+                }
+                span{
+                    font-size: 15px;
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .post-media{
+        margin: 5px 0;
+        img{
+            max-width: 100%;
+        }
+    }
+
+    .post-comments{
+        .comment{
+            margin-left: 20px;
+        }
+    }
+}

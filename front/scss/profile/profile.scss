@@ -1,0 +1,165 @@
+nav.user-profile{
+    background-image: url('../img/user-default-bg-80.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    height: 250px;
+    position: relative;
+    margin: 25px 0;
+
+    .triangle-right{
+        position: absolute;
+        right: -50px;
+        height: 50px;
+        width: 100px;
+        background-color: #3E3F42;
+        transform: rotateZ(45deg);
+        top: -8px;
+        border-top-left-radius: 60px;
+    }
+
+    .profile{
+        padding: 0 25px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        
+        background : -moz-linear-gradient(50% 100% 90deg,rgba(26, 26, 26, 0.7) 0%,rgba(51, 51, 51, 0.8) 50.81%,rgba(152, 152, 152, 0) 100%);
+        background : -webkit-linear-gradient(90deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
+        background : -webkit-gradient(linear,50% 100% ,50% 0% ,color-stop(0,rgba(26, 26, 26, 0.7) ),color-stop(0.5081,rgba(51, 51, 51, 0.8) ),color-stop(1,rgba(152, 152, 152, 0) ));
+        background : -o-linear-gradient(90deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
+        background : -ms-linear-gradient(90deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#1A1A1A', endColorstr='#989898' ,GradientType=0)";
+        background : linear-gradient(0deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
+        border-radius : 0px 0px 6px 5px;
+        -moz-border-radius : 0px 0px 6px 5px;
+        -webkit-border-radius : 0px 0px 6px 5px;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#989898',endColorstr='#1A1A1A' , GradientType=0);
+
+        .ava-wrapper{
+            min-width: 225px;
+            position: relative;
+            .ava{
+                height: 200px;
+                width: 200px;
+                border-radius: 100px;
+                overflow: hidden;
+                border-color: #F05A24;
+                border-width: 2px;
+                border-style: solid;
+                position: absolute;
+                top: -40px;
+                img{
+                    width: 100%;
+                }
+            }
+            a.icon-pencil{
+                padding: 5px;
+                border-radius: 14px;
+                background-color: #ffffff;
+                position: absolute;
+                color: #F05A24;
+                right: 5px;
+                top: -15px;
+                text-decoration: none;
+
+            }
+        }
+        
+        .user{
+            color: #F05A24;
+            .user-level{
+                width: 180px;
+                height: 23px;
+                background: #000;
+                padding: 3px;
+                .user-level-progress{
+                    padding: 0 5px;
+                    height: 100%;
+                    font-size: 11px;
+                    color: #fff;
+                    text-align: right;
+                    background: #F05A24;
+                }
+            }
+            .user-level-value{
+                color: #ffffff;
+            }
+        }
+    }
+
+    p{
+        margin-bottom: 5px;
+    }
+
+    .user-about-wrapper{
+        display: flex;
+        .user-about{
+            align-self: flex-end;
+            p{
+                &:before{
+                    color: #F05A24;
+                    margin: 0 5px;
+                }
+            }
+        }
+    }
+
+    .user-pc{
+        display: flex;
+        align-self: flex-end;
+        .icon-pc{
+            padding-top: 5px;
+            color: #F05A24;
+            margin: 0 5px;
+        }
+        p{
+            line-height: 1.2;
+        }
+    }
+
+    .social-list-wrapper{
+        display: flex;
+        justify-content: flex-end;
+        width: 250px;
+        .social-list{
+            display: inline;
+            padding: 0;
+            margin: 0;
+            align-self: flex-end;
+            li{
+                display: inline;
+                a{
+                    position: relative;
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 25px;
+                    background: #fff;
+                    display: inline-block;
+                    &::before{
+                        color: $sectionInnerColor;
+                    }
+                    &.icon-twitch::before{
+                        position: absolute;
+                        font-size: 21px;
+                        top: 15px;
+                        left: 15px;
+                    }
+                    &.icon-yt::before{
+                        position: absolute;
+                        font-size: 20px;
+                        top: 15px;
+                        left: 11px;
+                    }
+                    &.icon-steam::before{
+                        position: absolute;
+                        font-size: 17px;
+                        top: 17px;
+                        left: 6px;
+                    }
+                }
+            }
+        }
+    }
+}

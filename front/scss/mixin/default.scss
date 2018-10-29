@@ -1,0 +1,32 @@
+@mixin right-edge-cut( $top, $color ) {
+    content: '';
+    position: absolute;
+    width: 1100%; height: 1100%;
+    top: $top; 
+    right: -500%;
+    background: $color;
+    transform-origin: 54% 0;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+@mixin section-border-radius(){
+    border-radius: $sectionBorderRadius
+}
+
+@mixin user-photo($h){
+    width: $h;
+    height: $h;
+    border-radius: $h / 2;
+    display: block;
+    overflow: hidden;
+    img{
+        width: 100%;
+    }
+}
+
+@mixin input-border-radius() {
+    border-radius : 4px;
+    -moz-border-radius : 4px;
+    -webkit-border-radius : 4px;
+}

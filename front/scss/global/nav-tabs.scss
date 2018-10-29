@@ -1,0 +1,38 @@
+.nav-tabs{
+    
+    margin: 0 -10px;
+    padding: 0 10px;
+    border-bottom: 3px solid $sectionInnerColor;
+    li{
+        +li{
+            margin-left: 1px;
+        }
+        a{
+            display: block;
+            overflow: hidden;
+            position: relative;
+            padding: 5px 15px;
+            display: block;
+            text-decoration: none;
+            color: $grayText;
+            border-top-left-radius: 7px;
+            z-index: 5;
+            &::before{
+                margin-right: 6px;
+                font-size: 12px;
+                @include right-edge-cut(0, #2F3136);
+            }
+            span{
+                text-transform: uppercase;
+            }
+        }
+        &.active{
+            a{
+                color: $white;
+                &:before{
+                    background-color:  $sectionInnerColor;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+.user-settings{
+    margin-top: 60px;
+    padding: 10px;
+    background-color: $sectionBg;
+    border-radius: $sectionBorderRadius;
+
+    .header{
+        position: relative;
+        h1{
+            padding: 20px 10px;
+            font-size: 23px;
+            font-weight: 300;
+            margin: 0;
+        }
+        img{
+            position: absolute;
+            right: 0;
+            bottom: -26;
+        }
+    }
+
+    .nav-tabs{
+        padding: 0 30px;
+    }
+
+    .content{
+        padding: 30px;
+        padding-bottom: 0;
+        max-width: 650px;
+        margin: 0 auto;
+
+        .row{
+            border-top: 1px solid $delimiterColor;
+            padding: 15px 0;
+            .col{
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                &.content-bottom{
+                    justify-content: flex-end;
+                }
+                &.content-top{
+                    justify-content: flex-start;
+                }
+            }
+        }
+
+        label{
+            margin-bottom: 5px;
+            font-size: 17px;
+        }
+
+        .text-hint{
+            font-size: 12px;
+        }
+
+        .submit-wrapper{
+            justify-content: center;
+        }
+    }
+}

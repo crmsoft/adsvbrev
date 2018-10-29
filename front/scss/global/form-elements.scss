@@ -1,0 +1,104 @@
+textarea,
+select,
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+    background-color: $sectionInnerColor;
+    border: 0;
+    padding: 5px 10px;
+    width: 100%;
+    @include input-border-radius();
+    color: $white;
+    &:focus{
+        outline-color: $mainColor;
+    }
+}
+
+option:checked{
+    background-color: $mainColor;
+}
+
+.form-input-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        
+        &[type="checkbox"]{
+            + .checkmark {
+                &:after{
+                    left: 9px;
+                    top: 5px;
+                    width: 5px;
+                    height: 10px;
+                    border: solid $mainColor;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+            }
+        }
+
+        &[type="radio"]{
+            + .checkmark {
+                &:after{
+                    top: 8px;
+                    left: 8px;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background: $mainColor;
+                }
+            }
+        }
+
+        &:checked{
+            ~ .checkmark{  
+                background-color: #ccc;
+                background-color: $sectionInnerColor;
+                &:after{
+                    content: "";
+                    position: absolute;
+                }
+                display: block;
+            }
+        }
+    }
+
+    .checkmark {
+        @include input-border-radius();
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
+
+    &:hover {
+        input {
+            &:checked{
+                background-color: #ccc;
+                ~ .checkmark {
+                    &:after{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}

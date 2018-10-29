@@ -1,0 +1,90 @@
+.profile-aside{
+    width: 20.9%;
+    padding-left: 10px;
+    .block{
+
+        @include section-border-radius();
+        background-color: $sectionBg; 
+        padding: 10px;
+
+        +.block{
+            margin-top: $sectionTop;
+        }
+
+        a{
+            color: $white;
+            text-decoration: none;
+        }
+
+        .header{
+            h3{
+                text-transform: uppercase;
+                margin-left: 5px;
+                display: inline-block;
+                font-size: 12px;
+            }
+            .items-count{
+                font-size: 12px;
+                color: $grayText;
+            }
+        }
+
+        .block-content{
+            padding: 5px;
+            img{
+                width: 100%;
+            }
+            .item-title{
+                font-size: 13px;
+                line-height: 1;
+                height: 14px;
+                display: inline-block;
+                color: $white;
+                padding: 2px 0;
+                overflow: hidden;
+            }
+            .item-details{
+                color: $white;
+                font-size: 11px;
+            }
+            time{
+                color: $mainColor;
+                font-size: 10px;
+            }
+
+            .friends{
+                .friend{
+                    width: 33.33335%;
+                    display: inline-block;
+                    float: left;
+                    overflow: hidden;
+                    img{
+                        border-radius: 115px;
+                        height: 45px;
+                        width: 45px;
+                        display: block;
+                        margin: 0 auto;
+                    }
+                    h2{
+                        font-size: 12px;
+                        text-align: center;
+                    }
+                    .item-plus{
+                        display: inline-block;
+                        background: $sectionInnerColor;
+                        border-radius: 32px;
+                        text-align: center;
+                        display: block;
+                        font-size: 32px;
+                        margin: 0 2px;
+                    }
+                }
+                &:after{
+                    content: ' ';
+                    clear: both;
+                    display: block;
+                }
+            }
+        }
+    }
+}

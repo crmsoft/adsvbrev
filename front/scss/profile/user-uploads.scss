@@ -1,0 +1,44 @@
+.user-uploads{
+    padding: 10px;
+    background-color: $sectionBg;
+    @include section-border-radius();
+    
+    .user-content{
+        
+        display: none;
+        padding: 10px 0 20px 0px;
+        position: relative;
+
+        .user-content-all{
+            position: absolute;
+            right: 5px;
+            color: $mainColor;
+            text-decoration: none;
+            bottom: 0;
+            font-size: 10px;
+        }
+
+        .row{
+            margin: 0;
+            width: 100%;
+
+            .col-4 {
+                padding: 0;
+                border: 3px solid transparent;
+                @include section-border-radius();
+                cursor: pointer;
+                &:hover{
+                    border: 3px solid $mainColor;
+                }
+            }
+
+            img{
+                width: 100%;
+            }
+        }
+
+        &.active{
+            display: flex;
+        }
+    }
+}

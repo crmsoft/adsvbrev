@@ -36,6 +36,14 @@ Route::group([
 
 });
 
+Route::group([
+    'namespace' => '\Profile\Settings'
+], function(){
+
+    Route::get('/settings', 'SettingController@index')->name('profile-settings');
+
+});
+
 Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
 Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');

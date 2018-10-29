@@ -1,0 +1,12 @@
+@import './profile';
+
+@import './user-uploads';
+
+@import './aside-blocks';
+
+.user-middle{
+    flex: 1;
+    .posts{
+        margin-top: $sectionTop;
+    }
+}

@@ -12,7 +12,7 @@
                 <div class="profile">
                     <div class="d-flex w-100">
                         <div class="ava-wrapper"><!-- AVA -->
-                            <a href="#edit" class="icon-pencil"></a>
+                            <a href="{{ route('profile-settings') }}" class="icon-pencil"></a>
                             <div class="ava">
                                 <img src="{{ $user->profile->ava }}" alt="">
                             </div>
@@ -59,16 +59,7 @@
 
         <div class="d-flex"><!-- content wrapper -->
 
-            <nav class="menu"><!-- start menu -->
-                <ul>
-                    <li>
-                        <a class="active" href="#">
-                            <span class="icon-profile"> my profile</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav><!-- end menu -->
-
+            @include('menu.index')
 
             <section class="user-middle"><!-- start user middle content -->
 

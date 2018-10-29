@@ -1,0 +1,125 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('./icomoon/fonts/icomoon.eot?vdr6wg');
+  src:  url('./icomoon/fonts/icomoon.eot?vdr6wg#iefix') format('embedded-opentype'),
+    url('./icomoon/fonts/icomoon.ttf?vdr6wg') format('truetype'),
+    url('./icomoon/fonts/icomoon.woff?vdr6wg') format('woff'),
+    url('./icomoon/fonts/icomoon.svg?vdr6wg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-friends .path1:before {
+  content: "\e900";
+  color: rgb(72, 75, 82);
+}
+.icon-add-friends .path2:before {
+  content: "\e91f";
+  margin-left: -1em;
+  color: rgb(47, 49, 54);
+}
+.icon-art:before {
+  content: "\e901";
+}
+.icon-cake:before {
+  content: "\e902";
+}
+.icon-caret-down:before {
+  content: "\e903";
+}
+.icon-clan:before {
+  content: "\e904";
+}
+.icon-event:before {
+  content: "\e905";
+}
+.icon-friend:before {
+  content: "\e906";
+}
+.icon-friends:before {
+  content: "\e907";
+}
+.icon-gamepad:before {
+  content: "\e908";
+}
+.icon-groups:before {
+  content: "\e909";
+}
+.icon-heart:before {
+  content: "\e90a";
+}
+.icon-heart-empty:before {
+  content: "\e90b";
+}
+.icon-kubok:before {
+  content: "\e90c";
+}
+.icon-location:before {
+  content: "\e90d";
+}
+.icon-m-groups:before {
+  content: "\e90e";
+}
+.icon-news:before {
+  content: "\e90f";
+}
+.icon-notification:before {
+  content: "\e910";
+}
+.icon-pc:before {
+  content: "\e911";
+}
+.icon-pencil:before {
+  content: "\e912";
+}
+.icon-photo-cam:before {
+  content: "\e913";
+}
+.icon-play:before {
+  content: "\e914";
+}
+.icon-profile:before {
+  content: "\e915";
+}
+.icon-reply-to-comment:before {
+  content: "\e916";
+}
+.icon-search-icon:before {
+  content: "\e917";
+}
+.icon-share:before {
+  content: "\e918";
+}
+.icon-steam:before {
+  content: "\e919";
+}
+.icon-tournament:before {
+  content: "\e91a";
+}
+.icon-trade:before {
+  content: "\e91b";
+}
+.icon-twitch:before {
+  content: "\e91c";
+}
+.icon-video-cam:before {
+  content: "\e91d";
+}
+.icon-yt:before {
+  content: "\e91e";
+}

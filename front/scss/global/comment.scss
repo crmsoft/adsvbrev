@@ -1,0 +1,103 @@
+.comment{
+    display: flex;
+    background-color: $sectionInnerColor;
+    flex: 1;
+    padding: 5px;
+    margin-top: 5px;
+    @include section-border-radius();
+    .comment-user{
+        margin-right: 10px;
+        a{
+           @include user-photo(40px)
+        }
+    }
+
+    .comment-container{
+        width: 100%;
+        .comment-user-info{
+            a{
+                h2{
+                    font-size: 12px;
+                    display: inline-block;
+                    color: $white;
+                }
+            }
+            span{
+                font-size: 10px;
+                color: $mainColor;
+            }
+        }
+        .comment-content{
+            
+        }
+        .comment-footer{
+            text-align: right;
+            .share,.likes{
+                display: inline-block;
+                a{
+                    color: $white;
+                    text-decoration: none;
+                    font-size: 12px;
+                    .text{
+                        color: $mainColor;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.see-all-comments{
+    display: none;
+}
+
+.comment + .see-all-comments{
+    display: block;
+    margin: 5px;
+    text-align: center;
+    a{
+        font-size: 11px;
+        color: $mainColor;
+    }
+}
+
+.user-post-comment{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    .user{
+        margin-right: 10px;
+        a{
+            @include user-photo(35px);
+        }
+    }
+    .comment-area{
+        width: 100%;
+        position: relative;
+        input{
+            @include section-border-radius();
+            width: 100%;
+            background-color: $sectionInnerColor;
+            border: 0;
+            padding: 5px;
+            font-size: 12px;
+            color: $white;
+            &::placeholder{
+                color: $white;
+            }
+            &:focus{
+                outline: 0;
+            }
+        }
+        .comment-actions{
+            position: absolute;
+            right: 5px;
+            top: 1px;
+            a{
+                font-size: 12px;
+                color: $white;
+                text-decoration: none;
+            }
+        }
+    }
+}

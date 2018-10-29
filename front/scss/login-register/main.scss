@@ -1,0 +1,119 @@
+.login-register{
+    @extend .d-flex;
+    @extend .justify-content-center;
+    align-items: center;
+    height: 100%;
+    color: #fff;
+    background-image: url('../img/login-bg-100.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    position: relative;
+    h1{
+        height: 150px;
+        font-size: 15px;
+    }
+
+    .brand {
+        background-color: $sectionBg;
+        padding: 75px 55px;
+        img{
+            width: 150px;
+        }
+    }
+
+    .form-holder{
+        padding: 25px;
+        padding-right: 45px;
+        position: relative;
+        overflow: hidden;
+        width: 350px;
+    }
+
+    .form-holder::before{
+        @include right-edge-cut(20,unquote('#3E3F42db'))
+    }
+
+    nav{
+        margin-bottom: 35px;
+        text-transform: uppercase;
+        a.link{
+            color: #fff;
+            margin: 0 25px;
+            position: relative;
+        }
+
+        a.link:active,a.link:hover{
+            text-decoration: none;
+        }
+
+        a.link.active:after{
+            content: ' ';
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-bottom: 1px solid #F05A24;
+            bottom: 0;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+    }
+
+    form{
+
+        .forgoten{
+            font-size: 9px;
+            text-transform: uppercase;
+            a{
+                color: #fff;
+            }
+        }
+
+        div.form-group{
+            
+            label{
+                opacity: 0.6;
+                text-transform: uppercase;
+            }
+
+            input{
+                display: block;
+                width: 100%;
+                border: 0;
+                font-size: 19px;
+                color: #fff;
+                opacity: 0.6;
+                background: transparent;
+            }
+
+            input:focus{
+                outline: 0;
+            }
+
+            button{
+                width: 100%;
+                background-color: #F05A24;
+                border: 0;
+                padding: 10px 10px;
+                border-radius: 10px;
+                color: #fff;
+                font-size: 18px;
+                cursor: pointer;
+            }
+            
+            &.underline-input{
+                border-bottom: 1px solid rgba(255,255,255,0.6)
+            }
+
+            &.active.underline-input{
+                border-bottom: 1px solid rgba(255,255,255,1)
+            }
+
+            &.active{
+                label,input{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
