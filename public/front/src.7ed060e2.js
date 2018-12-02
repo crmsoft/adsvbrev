@@ -36484,7 +36484,7 @@ var FETCHING = 'FETCHING';
 exports.FETCHING = FETCHING;
 var FETCH_DONE = 'FETCH_DONE';
 exports.FETCH_DONE = FETCH_DONE;
-var domain = "http://game.com"; // EVENTS
+var domain = "http://"; // EVENTS
 
 var fetchErr = function fetchErr(err) {
   return {
@@ -36544,7 +36544,7 @@ var moreFetch = function moreFetch() {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get('http://game.com/friend/list').then(function (data) {
+    _axios.default.get('/friend/list').then(function (data) {
       return dispatch(fetchDone(data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
@@ -37275,7 +37275,7 @@ var Group = function Group(props) {
     to: "/gg/".concat(props.group.name),
     className: "friend"
   }, _react.default.createElement("img", {
-    src: "http://game.com/",
+    src: "/",
     alt: "body"
   }), _react.default.createElement("h2", null, props.group.name));
 };
@@ -37304,7 +37304,7 @@ var FETCHING = 'FETCHING';
 exports.FETCHING = FETCHING;
 var FETCH_DONE = 'FETCH_DONE';
 exports.FETCH_DONE = FETCH_DONE;
-var domain = "http://game.com"; // EVENTS
+var domain = "http://"; // EVENTS
 
 var fetchErr = function fetchErr(err) {
   return {
@@ -37364,7 +37364,7 @@ var moreFetch = function moreFetch() {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get('http://game.com/group/list').then(function (data) {
+    _axios.default.get('/group/list').then(function (data) {
       return dispatch(fetchDone(data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
@@ -37396,7 +37396,7 @@ var GroupListItem = function GroupListItem(props) {
   }, _react.default.createElement("div", {
     className: "user-list-ava"
   }, _react.default.createElement("img", {
-    src: "http://game.com/".concat(props.user.profile.list_photo)
+    src: "/".concat(props.user.profile.list_photo)
   })), _react.default.createElement("div", {
     className: "user-list-user"
   }, _react.default.createElement("span", {
@@ -38312,7 +38312,7 @@ var fetchProfile = function fetchProfile() {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get('http://game.com/get/profile').then(function (data) {
+    _axios.default.get('/get/profile').then(function (data) {
       return dispatch(fetchDone(data.data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
@@ -38326,7 +38326,7 @@ var fetchGamerProfile = function fetchGamerProfile(username) {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get("http://game.com/get/profile/".concat(username)).then(function (data) {
+    _axios.default.get("/get/profile/".concat(username)).then(function (data) {
       return dispatch(fetchDone(data.data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
@@ -38430,9 +38430,9 @@ function (_Component) {
         },
        */
 
-      _axios.default.post('http://game.com/profile/ava', formData).then(function (response) {
+      _axios.default.post('/profile/ava', formData).then(function (response) {
         _this3.setState({
-          src: "http://game.com/".concat(response.data)
+          src: "/".concat(response.data)
         });
 
         _store.default.dispatch((0, _events.updateProfile)(response.data));
@@ -39409,7 +39409,7 @@ function (_Component3) {
       var data = this.state.formData;
       data.append('post', this.state.post);
 
-      _axios.default.post("http://game.com/post/store", data).then(function (response) {
+      _axios.default.post("/post/store", data).then(function (response) {
         return _this6.setState(function (state) {
           return {
             active: false,
@@ -40590,7 +40590,7 @@ function (_Component) {
         fr.append(key, data[key]);
       }
 
-      _axios.default.post("http://game.com/settings", fr).then(function (response) {
+      _axios.default.post("/settings", fr).then(function (response) {
         return _this2.setState({
           done: true,
           errors: false
@@ -40669,7 +40669,7 @@ var SettingsComponent = function SettingsComponent(props) {
   }, _react.default.createElement("div", {
     className: "header"
   }, _react.default.createElement("h1", null, "Settings"), _react.default.createElement("img", {
-    src: "http://game.com/img/settings-decor.png",
+    src: "/img/settings-decor.png",
     alt: ""
   })), _react.default.createElement("div", {
     id: "settings-content"
@@ -40911,7 +40911,7 @@ var performSearch = function performSearch(queryString) {
   return function (dispatch) {
     dispatch(progress());
 
-    _axios.default.post("http://game.com/search".concat(queryString)).then(function (response) {
+    _axios.default.post("/search".concat(queryString)).then(function (response) {
       return dispatch(done(response.data));
     }).catch(function (err) {
       return dispatch(error(err));
@@ -41934,7 +41934,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45373" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35663" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

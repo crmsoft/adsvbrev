@@ -93,7 +93,7 @@ class FriendsController extends Controller
             $user = Auth::user();
 
             $friend = $user->friend()->where('friend_id', $addMe->id)->first();
-            
+
             if( $friend && $user->id != $addMe->id ){
                 try{
 
