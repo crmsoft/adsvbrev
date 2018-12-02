@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        auth()->attempt([
+            'email' => 'akhtem.veliliaiev@gmail.com',
+            'password' => 'analitik3'
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return view('settings.index');
+        return response(45)->header(
+            'Access-Control-Allow-Origin', '*'
+        );
     }
 
     /**
@@ -67,9 +77,14 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        return response([
+            'world' => 'hello'
+        ])->header(
+            'Access-Control-Allow-Origin', '*'
+        );
     }
 
     /**

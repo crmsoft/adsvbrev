@@ -16,6 +16,13 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ava')->default('http://via.placeholder.com/160/95a/fff?text=?');
+
+            $table->text('about')->nullable();
+            $table->timestamp('dob')->nullable();
+            $table->string('timezone')->default('Europe/Istanbul')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('gender')->nullable();
+
             $table->unsignedInteger('user_id');
             $table->timestamps();
 

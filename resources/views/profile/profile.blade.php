@@ -71,7 +71,7 @@
 
             <section class="user-middle"><!-- start user middle content -->
 
-                <section class="user-uploads w-100"><!-- user media -->
+                <section class="user-uploads w-100" id="media-container"><!-- user media -->
                     <nav>
                         <ul class="nav nav-tabs">
                             <li class="active">

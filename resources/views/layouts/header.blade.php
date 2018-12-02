@@ -9,9 +9,9 @@
         </button>
         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
             <div class="navbar-nav w-100 justify-content-center nav-search">
-                <form class="form-inline my-2 my-lg-0 w-100">
+                <form class="form-inline my-2 my-lg-0 w-100" action="/search">
                     <span class="icon-search-icon"></span>
-                    <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2 w-100" name="q" type="search" placeholder="Search" aria-label="Search">
                 </form>
             </div>
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -28,7 +28,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="d-flex">
                             <div class="header-ava">
-                                <img src="{{ auth()->user()->profile->ava }}" alt="">
+                                <img src="{{ auth()->user()->profile->list_photo}}" alt="">
                             </div>
                             <div class="header-ava-text">
                                 {{ auth()->user()->username }}

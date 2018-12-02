@@ -13,7 +13,7 @@
                     <div class="d-flex w-100">
                         <div class="ava-wrapper"><!-- AVA -->
                             <a href="{{ route('profile-settings') }}" class="icon-pencil"></a>
-                            <div class="ava">
+                            <div class="ava" id="ava">
                                 <img src="{{ $user->profile->ava }}" alt="">
                             </div>
                         </div><!-- END AVA -->
@@ -63,7 +63,7 @@
 
             <section class="user-middle"><!-- start user middle content -->
 
-                <section class="user-uploads w-100"><!-- user media -->
+                <section class="user-uploads w-100" id="media-container"><!-- user media -->
                     <nav>
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -291,7 +291,7 @@
 
                 </section><!-- End Events -->
 
-                <section class="block"><!-- Events -->
+                <section class="block" id="section-friends"><!-- Events -->
                     <div class="header">
                         <a href="#">
                             <span class="icon-friends"></span>

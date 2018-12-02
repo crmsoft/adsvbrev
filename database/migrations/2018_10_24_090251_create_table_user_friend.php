@@ -13,8 +13,9 @@ class CreateTableUserFriend extends Migration
      */
     public function up()
     {
-        Schema::create('user_friend', function (Blueprint $table){
+        Schema::create('user_friends', function (Blueprint $table){
 
+            $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('friend_id');
             $table->string('status',31);
@@ -23,12 +24,8 @@ class CreateTableUserFriend extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('friend_id')->references('id')->on('users');
+            $table->softDeletes();
 
-
-            $table->primary([
-                'user_id',
-                'friend_id'
-            ]);
         });
     }
 
@@ -39,6 +36,6 @@ class CreateTableUserFriend extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_friend');
+        Schema::dropIfExists('user_friends');
     }
 }

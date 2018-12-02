@@ -18,12 +18,16 @@ class Media extends Model
         'full_path'
     ];
 
+    protected $visible = [
+        'full_path'
+    ];
+
     /**
      * append full path to file
      * @return string
      */
     public function getFullPathAttribute(){
-        return asset($this->path);
+        return  asset( '/storage/user-media/' . $this->user->dir . '/520_' . $this->path);
     }
 
     /**

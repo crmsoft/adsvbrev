@@ -20,7 +20,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'unique', 'email', 'password', 'email_verification_token'
+        'first_name',
+        'last_name',
+        'unique',
+        'email',
+        'username',
+        'password',
+        'email_verification_token'
     ];
 
     /**
@@ -28,7 +34,8 @@ class User extends Authenticatable
      */
     protected $appends = [
         'full_name',
-        'status'
+        'status',
+        'has_status'
     ];
 
     /**
@@ -42,14 +49,31 @@ class User extends Authenticatable
         'user_communication_id',
         'updated_at',
         'created_at',
-        'email',
         'id',
         'email_verification_token',
-        'validated'
+        'validated',
+        'pivot',
+        'dir'
     ];
 
+    public function getHasStatusAttribute(){
+
+        $user = auth()->user();
+
+        if($this->subscribers()->count())
+            return 'subscribed';
+
+        if($this->following()->count())
+            return 'following';
+
+        if($this->friend()->where('friend_id', $user->id)->count())
+            return 'friends';
+
+        return 'none';
+    }
+
     public function getFullNameAttribute(){
-        return $this->name . ' ' . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function getStatusAttribute(){
@@ -72,12 +96,32 @@ class User extends Authenticatable
 
     public function friend()
     {
-        return $this->belongsToMany(User::class, 'user_friend', 'user_id', 'friend_id')
+        return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id')
+            ->where('deleted_at', '=', null)
             ->where('status', self::STATUS_FRIEND);
     }
+
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class, 'user_friends', 'friend_id', 'user_id')
+            ->where('deleted_at', '=', null)
+            ->where('status', self::STATUS_SUBSCRIBE);
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id')
+            ->where('deleted_at', '=', null)
+            ->where('status', self::STATUS_SUBSCRIBE);
+    }
+
 
     public function group(){
         return $this->belongsToMany(Group::class, 'user_group', 'user_id', 'group_id')
             ->where('status', Group::STATUS_JOINED);
+    }
+
+    public function feed(){
+        return $this->hasMany(Post::class)->where('type', 'feed');
     }
 }

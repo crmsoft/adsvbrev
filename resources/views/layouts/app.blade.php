@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="/front/styles.f4e41cb8.css" rel="stylesheet">
     <script type="text/javascript">
         var gg = {
             wsc: function(){
@@ -32,8 +32,9 @@
     </main>
 
 
-    <script src="{{mix('/js/manifest.js')}}"></script>
+    <script src="/front/src.7ed060e2.js"></script>
+    {{--<script src="{{mix('/js/manifest.js')}}"></script>
     <script src="{{mix('/js/vendor.js')}}"></script>
-    <script src="{{mix('/js/app.js')}}"></script>
+    <script src="{{mix('/js/app.js')}}"></script>--}}
 </body>
 </html>

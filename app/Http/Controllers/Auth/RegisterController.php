@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entities\Profile;
 use App\Jobs\SendWelcomeEmail;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -66,13 +67,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'unique' => 'id'.rand(100000,999999),
+        $user = User::create([
             'username' => str_slug($data['username']),
             'email' => $data['email'],
+            'dir' => str_random(22),
             'email_verification_token' => sha1($data['email']),
             'password' => Hash::make($data['password']),
         ]);
+
+        $profile = new Profile;
+        $profile->user()->associate($user);
+        $profile->save();
+
+        return $user;
     }
 
     protected function registered(Request $request, $user)

@@ -24,30 +24,81 @@ Route::get('/dialog/{any?}', function(){
    return redirect(route('conversations-list'));
 });
 
+// Application main routes that handled by react route, only get req's
+//=================================================================
+Route::group([
+    'namespace' => '\Profile',
+    'middleware' => [ 'auth' ]
+], function(){
+    Route::get('/', 'ProfileController@index')->name('profile-view');
+    Route::get('/gg/{user_unique}', 'ProfileController@index')->name('user-profile');
+    Route::get('/search', 'ProfileController@index')->name('search-view');
+    Route::get('/settings', 'ProfileController@index')->name('settings-view');
+});
+
 // Profile Specific Routes
 //---------------------------------------------------------------------------------
 Route::group([
-    'namespace' => '\Profile'
+    'namespace' => '\Profile',
+    'middleware' => [ 'auth' ]
 ], function (){
 
     // User profile page
-    Route::get('/', 'ProfileController@index')->name('profile');
-    Route::get('/gg/{user_unique}', 'ProfileController@show')->name('user-profile');
+    Route::get('/get/profile/{username?}', 'ProfileController@profile')->name('get-profile');
+    Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
+    Route::get('/friend/list/{username?}', 'ProfileController@listFriends')->name('list-fo-friends');
+    Route::get('/group/list/{group?}', 'ProfileController@listGroups')->name('list-fo-groups');
+
+    Route::post('/settings','ProfileController@update')->name('edit-profile');
 
 });
+
+// Post Specific Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    // 'namespace' => '\Profile',
+    'middleware' => [ 'auth' ]
+], function (){
+
+    // User profile page
+    Route::post('/post/store', 'PostController@store')->name('store-post');
+
+});
+
+// Search page specific routes
+//=================================================================
+Route::group([
+    'middleware' => [ 'auth' ]
+], function(){
+    Route::post('/search', 'SearchController@search')->name('settings-view');
+});
+
+// Search page specific routes
+//=================================================================
+Route::group([
+    'middleware' => [ 'auth' ],
+    'prefix' => 'friends'
+], function(){
+    Route::post('/add/{username}', 'FriendsController@add')->name('add-to-friends');
+    Route::post('/unsubscribe/{username}', 'FriendsController@unsubscribe')->name('unsubscribe');
+    Route::post('/accept/{username}', 'FriendsController@accept')->name('accept-to-friends');
+    Route::post('/unfriend/{username}', 'FriendsController@unfriend')->name('accept-to-unfriend');
+});
+
 
 Route::group([
-    'namespace' => '\Profile\Settings'
+    'namespace' => '\Profile\Settings',
+    'middleware' => [ 'all' ]
 ], function(){
 
-    Route::get('/settings', 'SettingController@index')->name('profile-settings');
+    //Route::get('/settings', 'SettingController@index')->name('profile-settings');
+    ///Route::post('/settings','SettingController@update')->name('edit-profile');
 
 });
 
-Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
 Route::get('/im', 'ConversationController@go')->name('conversations-list');
 Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
-Route::get('/search','SearchController@search')->name('search');
+//Route::get('/search','SearchController@search')->name('search');
 
 
 Route::resources([
