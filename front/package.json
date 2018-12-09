@@ -4,21 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel ./pages/settings.html"
+    "start": "parcel ./pages/index.html --out-dir ../public/front",
+    "settings": "parcel ./pages/settings.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "bootstrap": "^4.1.3",
-    "react": "^16.6.0",
+    "jquery": "^3.3.1",
+    "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
+    "react": "^0.14.9 || ^15.3.0 || ^16.0.0",
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
+    "react-tabs": "^2.3.0",
+    "react-textarea-autosize": "^7.1.0-1",
     "reactjs-popup": "^1.3.0",
+    "redux-logger": "^3.0.6",
     "sass": "^1.14.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0"
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6"
   }
 }

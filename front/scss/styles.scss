@@ -1,5 +1,16 @@
 /** global variable decloraton */
-$mainColor: #F05A24;
+$mainColor: #F15A24;
+$green: #31EF26;
+$halfWhite: #FFFFFF99;
+$mainGray: #CBCBCB;
+$darkGray: #202225;
+$darekerGray: #36393F;
+$halfGray: #2F3136;
+$lighterGray: #3E3F42;
+$lightGray: #484B52;
+$lightestGrayd: #42464D;
+
+/** old declarations */
 $white: #ffffff;
 $grayText: #989898;
 $sectionBg: #202225;
@@ -26,9 +37,16 @@ body{
 
 @import './global/form-elements';
 
+@import './global/button';
+
 @import './global/main';
 
 @import './global/nav-tabs';
+
+@import './global/user-list-item';
+
+/** global Pop up container styles */
+@import './global/popup';
 
 /** login */
 @import './login-register/main';
@@ -54,3 +72,6 @@ body{
 
 /** Settings Page */
 @import './settings/main';
+
+/** Search Page */
+@import './search/main';

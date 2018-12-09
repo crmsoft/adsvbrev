@@ -2,6 +2,7 @@
     @include section-border-radius();
     background-color: $sectionBg;
     padding: 10px;
+    margin-bottom: 10px;
     .post-header{
         display: flex;
         justify-content: space-between;

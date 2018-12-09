@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="../src/index.js"></script>
+        <link rel="stylesheet" href="../scss/styles.scss">
     </head>
     <body>
         
@@ -76,6 +76,14 @@
                 <section class="user-middle"><!-- start user middle content -->
                 
                   <section class="user-settings">
+                    <section class="header">
+                      <h1>Settings</h1>
+                      <img src="../img/settings-decor.png" alt="">
+                    </section>
+                    <div id="settings-content"></div>
+                  </section>
+
+                  <section class="user-settings">
 
 
                       <section class="header">
@@ -83,7 +91,7 @@
                         <img src="../img/settings-decor.png" alt="">
                       </section>
                     
-                      <nav>
+                      <nav class="nav-tab">
                         <ul class="nav nav-tabs">
                           <li class="active">
                             <a href="#">
@@ -215,5 +223,6 @@
 
           </main>
 
+      <script crossorigin src="../src/index.js"></script>
     </body>
 </html>

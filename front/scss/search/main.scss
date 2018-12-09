@@ -1,0 +1,10 @@
+.search-results{
+    @extend .user-settings;
+    .content{
+        max-width: none;
+        padding: 30px 55px;
+    }
+}
+
+@import 'user-list-item';
+@import 'search-field';

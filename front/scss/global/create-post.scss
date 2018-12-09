@@ -3,10 +3,41 @@
     margin-top: $sectionTop;
     @include section-border-radius();
     background-color: $sectionBg;
-    form{
+    .wrapper{
         width: 100%;
         margin: 0;
         position: relative;
+        &.active{
+            .footer{
+                display: flex;
+                flex-direction: column;
+            }
+            .user-actions{
+                display: none;
+            }
+        }
+        .footer{
+            display: none;
+            .container-with-media{
+                img{
+                    margin: 5px 0;
+                    max-width: 100%;
+                }
+            }
+        }
+        .actions{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .add-media{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            a{
+                color: $white;
+            }
+        }
         input{
             width: 100%;
             border: none;
@@ -27,6 +58,7 @@
             a{
                 color: $white;
                 text-decoration: none;
+                margin-right: 5px;
             }
         }
     }

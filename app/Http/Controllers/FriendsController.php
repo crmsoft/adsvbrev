@@ -18,18 +18,9 @@ class FriendsController extends Controller
 
             $user = Auth::user();
 
-            $alreadyHasRelationShip = UserFriends::where(function($query) use ($user, $addMe){
-                $query->orWhere('user_id',$user->id);
-                $query->where('friend_id',$addMe->id);
+            $subscribed = $user->subscribers()->where('friend_id', $addMe->id)->count();
 
-            })->where(function($query) use ($user, $addMe){
-                $query->orWhere('user_id',$addMe->id);
-                $query->where('friend_id',$user->id);
-
-            })->where('status', User::STATUS_SUBSCRIBE)->count();
-
-
-            if( !$alreadyHasRelationShip && $user->id != $addMe->id ){
+            if( !$subscribed && $user->id != $addMe->id ){
                 try{
                     UserFriends::create([
                         'user_id' => $user->id,
@@ -59,7 +50,7 @@ class FriendsController extends Controller
 
             $user = Auth::user();
 
-            $subscriber = $user->subscribers()->where('user_id', $addMe->id)->first();
+            $subscriber = $user->followers()->where('user_id', $addMe->id)->first();
 
 
             if( $subscriber ){
@@ -124,7 +115,7 @@ class FriendsController extends Controller
 
             $user = Auth::user();
 
-            $following = $user->following()->where('friend_id',$addMe->id)->first();
+            $following = $user->subscribers()->where('friend_id',$addMe->id)->first();
 
 
             if( $following && $user->id != $addMe->id ){

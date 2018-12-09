@@ -30,8 +30,14 @@ class ProfileController extends Controller
 
     function listFriends(String $username = null){
         $user = $username ? User::where('username', $username)->first() : Auth::user();
-        $friends = $user->friend()->with('profile')->get();
+        $friends = $user->friend()->get();
         return response($friends);
+    }
+
+    function listFollowers( String $username = null ){
+        $user = $username ? User::where('username', $username)->first() : Auth::user();
+        $subscribers = $user->followers()->get();
+        return response($subscribers);
     }
 
     /**
@@ -113,7 +119,7 @@ class ProfileController extends Controller
                     'guest' => $username != null,
                     'profile' => $user->profile()->with('user')->first(),
                     'friends' => $user->friend()
-                                        ->limit(7)
+                                        ->limit(5)
                                         ->inRandomOrder()
                                         ->get(),
                     'feed' => $user->feed()->with(['media', 'user'])
@@ -171,7 +177,7 @@ class ProfileController extends Controller
         $profile->ava = $name;
         $profile->save();
 
-        $user->ava = "storage/{$users_dir}50_{$name}";
+        $user->ava = "/storage/{$users_dir}50_{$name}";
         $user->save();
 
         return response(Storage::url("{$users_dir}200_{$name}"));

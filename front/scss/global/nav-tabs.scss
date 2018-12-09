@@ -17,6 +17,7 @@
             color: $grayText;
             border-top-left-radius: 7px;
             z-index: 5;
+            line-height: 0;
             &::before{
                 margin-right: 6px;
                 font-size: 12px;

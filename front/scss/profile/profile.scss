@@ -37,9 +37,26 @@ nav.user-profile{
         -webkit-border-radius : 0px 0px 6px 5px;
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#989898',endColorstr='#1A1A1A' , GradientType=0);
 
+        &.editable{
+            .edit{
+                cursor: pointer;
+                &:hover{
+                    text-decoration: underline;
+                    text-decoration-color: $mainColor;
+                    &:after{
+                        content: "\e912";
+                        font-family:  'icomoon' !important;
+                        padding-left: 5px;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
         .ava-wrapper{
             min-width: 225px;
             position: relative;
+            cursor: pointer;
             .ava{
                 height: 200px;
                 width: 200px;
@@ -50,6 +67,22 @@ nav.user-profile{
                 border-style: solid;
                 position: absolute;
                 top: -40px;
+                .ava-holder{
+                    .ava-edit{
+                        padding: 10px;
+                        display: none;
+                        background-color: rgba(62, 63, 64, 0.5);
+                        text-align: center;
+                        position: absolute;
+                        bottom: 0px;
+                        width: 100%;
+                    }
+                    &:hover{
+                        .ava-edit{
+                            display: block;
+                        }
+                    }
+                }
                 img{
                     width: 100%;
                 }
@@ -97,8 +130,8 @@ nav.user-profile{
         display: flex;
         .user-about{
             align-self: flex-end;
-            p{
-                &:before{
+            .text{
+                >span:first-child{
                     color: #F05A24;
                     margin: 0 5px;
                 }
@@ -114,7 +147,7 @@ nav.user-profile{
             color: #F05A24;
             margin: 0 5px;
         }
-        p{
+        .text{
             line-height: 1.2;
         }
     }

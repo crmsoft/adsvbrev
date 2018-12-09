@@ -1,0 +1,12 @@
+.search-field{
+    input{
+        width: 100%;
+        background-color: transparent;
+        &:focus{
+            outline: 0;
+        }
+    }
+
+    border-bottom: 1px solid gray;
+    margin-bottom: 30px;
+}
