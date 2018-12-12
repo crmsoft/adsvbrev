@@ -11,6 +11,8 @@ import {
     fetchGamerProfile
 } from '../fetch/events';
 
+import About from '../about';
+
 class Guest extends Component{
 
     componentDidMount(){
@@ -33,6 +35,8 @@ class Guest extends Component{
                     <Menu />
 
                     <section className="user-middle">
+                        
+                        <About user={this.props.info} />
 
                         <section className="user-uploads w-100" id="media-container">
                             

@@ -10,6 +10,25 @@
     z-index: -1;
 }
 
+@mixin section-default {
+    border-radius: $sectionBorderRadius;
+    padding: $sectionPadding;
+    margin-bottom: $sectionTop;
+    background-color: $sectionBg;
+}
+
+@mixin section-delimiter {
+    border-bottom: 1px solid $lightGray;
+    margin: 0 ($sectionPadding * -1);
+    padding: 0 $sectionPadding;
+}
+
+@mixin secondary-delimiter {
+    border-bottom: .5px solid $lightestGrayd;
+    margin: 0 ($sectionPadding * -1);
+    padding: 0 $sectionPadding;
+}
+
 @mixin section-border-radius(){
     border-radius: $sectionBorderRadius
 }

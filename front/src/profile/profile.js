@@ -11,6 +11,7 @@ import {
     fetchProfile
 } from './fetch/events';
 import CreatePostComponent from '../post-add/index';
+import About from './about';
 
 
 
@@ -36,6 +37,8 @@ class ProfileComponent extends Component{
                     <Menu />
 
                     <section className="user-middle">
+
+                        <About user={this.props.info} />
 
                         <section className="user-uploads w-100" id="media-container">
                             

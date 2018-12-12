@@ -1,0 +1,36 @@
+.profile-about{
+    @include section-default;
+    .profile-about-header{
+        span{
+            color: $mainColor;
+        }
+        .profile-header-text{
+            display: inline;
+            margin-left: 5px;
+            font-size: 16px;
+        }
+        @include section-delimiter;
+    }
+
+    .profile-about-row{
+        @include secondary-delimiter;
+        display: flex;
+        padding: 10px;
+        font-size: 14px;
+        .profile-about-label{
+            min-width: 150px;
+            color: $mainColor;
+        }
+    }
+    .profile-about-footer{
+        text-align: right;
+        .profile-about-more{
+            color: $mainColor;
+            font-size: 9px;
+            &:hover{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+}

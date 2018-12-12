@@ -37,7 +37,6 @@
     33 => 'App\\Providers\\RouteServiceProvider',
     34 => 'SocialiteProviders\\Manager\\ServiceProvider',
     35 => 'Intervention\\Image\\ImageServiceProvider',
-    36 => 'Barryvdh\\Cors\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -60,7 +59,6 @@
     16 => 'App\\Providers\\EventServiceProvider',
     17 => 'App\\Providers\\RouteServiceProvider',
     18 => 'Intervention\\Image\\ImageServiceProvider',
-    19 => 'Barryvdh\\Cors\\ServiceProvider',
   ),
   'deferred' => 
   array (

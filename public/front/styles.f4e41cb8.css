@@ -7084,6 +7084,40 @@ nav.user-profile {
         clear: both;
         display: block; }
 
+.profile-about {
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #202225; }
+  .profile-about .profile-about-header {
+    border-bottom: 1px solid #484B52;
+    margin: 0 -10px;
+    padding: 0 10px; }
+    .profile-about .profile-about-header span {
+      color: #F15A24; }
+    .profile-about .profile-about-header .profile-header-text {
+      display: inline;
+      margin-left: 5px;
+      font-size: 16px; }
+  .profile-about .profile-about-row {
+    border-bottom: 0.5px solid #42464D;
+    margin: 0 -10px;
+    padding: 0 10px;
+    display: flex;
+    padding: 10px;
+    font-size: 14px; }
+    .profile-about .profile-about-row .profile-about-label {
+      min-width: 150px;
+      color: #F15A24; }
+  .profile-about .profile-about-footer {
+    text-align: right; }
+    .profile-about .profile-about-footer .profile-about-more {
+      color: #F15A24;
+      font-size: 9px; }
+      .profile-about .profile-about-footer .profile-about-more:hover {
+        text-decoration: underline;
+        cursor: pointer; }
+
 .user-middle {
   flex: 1; }
   .user-middle .posts {
