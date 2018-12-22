@@ -160,8 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        // Barryvdh\Cors\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 

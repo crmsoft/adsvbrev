@@ -6,8 +6,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Entities\Profile;
 use \App\Entities\Group;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -49,12 +51,41 @@ class User extends Authenticatable
         'user_communication_id',
         'updated_at',
         'created_at',
-        'id',
+        //'id',
         'email_verification_token',
         'validated',
         'pivot',
         'dir'
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'user' => [
+                'username' => $this->username,
+                'id' => $this->id
+            ]
+        ];
+    }
+
+    public function jwt(){
+        return JWTAuth::fromUser($this);
+    }
 
     public function getHasStatusAttribute(){
 
@@ -80,15 +111,25 @@ class User extends Authenticatable
         return !empty($this->user_communication_id);
     }
 
-    public function conversations(){
-        return $this->hasMany('\App\UserConversation');
+    public function chat()
+    {
+        return $this->hasManyThrough(
+            Conversation::class,
+            UserConversation::class,
+            'user_id',
+            'id',
+            'id',
+            'conversation_id'
+        );
     }
 
-    public function media(){
+    public function media()
+    {
         return $this->hasMany(Media::class);
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(Profile::class)->withDefault([
             'ava' => 'http://via.placeholder.com/160/95a/fff?text=?'
         ]);

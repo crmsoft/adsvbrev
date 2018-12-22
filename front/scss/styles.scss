@@ -8,7 +8,7 @@ $darekerGray: #36393F;
 $halfGray: #2F3136;
 $lighterGray: #3E3F42;
 $lightGray: #484B52;
-$lightestGrayd: #42464D;
+$lightestGray: #42464D;
 
 /** old declarations */
 $white: #ffffff;
@@ -76,3 +76,6 @@ body{
 
 /** Search Page */
 @import './search/main';
+
+/** Chat */
+@import './chat/main';

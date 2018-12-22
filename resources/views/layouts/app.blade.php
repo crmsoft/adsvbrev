@@ -18,7 +18,7 @@
     <script type="text/javascript">
         var gg = {
             wsc: function(){
-                return '{{session()->get('user_communication_id')}}';
+                return '{{ auth()->user()->jwt() }}';
             }
         }
     </script>

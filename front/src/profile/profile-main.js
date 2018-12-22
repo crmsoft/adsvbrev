@@ -1,6 +1,7 @@
 import React from 'react';
 import Ava from './ava';
 import {Link} from 'react-router-dom';
+import ProfileActions from './profile-actions';
 
 const EditableArea = ({text,icon, guest}) => {
     return (
@@ -56,7 +57,10 @@ const UserProfile = ({info}) => {
                             <EditableArea guest={guest} text="Intel® Pentium(R) CPU P6200 @ 2.13GHz × 2; Intel® Ironlake Mobile " />
                         </div>
                     </div>
-                    <div className="social-list-wrapper">
+                    <div className="right-block-wrapper">
+                        {
+                            guest ? <ProfileActions /> : null
+                        }
                         <ul className="social-list">
                             <li>
                                 <a href="#" className="icon-twitch"></a>

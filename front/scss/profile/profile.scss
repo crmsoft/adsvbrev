@@ -152,10 +152,23 @@ nav.user-profile{
         }
     }
 
-    .social-list-wrapper{
+    .right-block-wrapper{
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
         width: 250px;
+        .profile-quick-actions{
+            margin-bottom: 5px;
+            align-items: flex-end;
+            display: flex;
+            flex-direction: column;
+            .dd-btn{
+                margin-bottom: 5px;
+            }
+            .btn-more{
+                margin-left: 5px;
+            }
+        }
         .social-list{
             display: inline;
             padding: 0;

@@ -29,6 +29,9 @@ button{
         background-color: $mainColor;
         color: #202225;
     }
+    [class^="icon-"] {
+        margin-right: 5px;
+    }
 }
 
 .btn-gray{
@@ -47,6 +50,10 @@ button{
         background-color: $darkGray;
         color : $halfWhite;
     }
+}
+.btn-full{
+    background-color: $mainColor;
+    color: $white;
 }
 
 .btn-lg{

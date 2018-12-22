@@ -17,6 +17,7 @@ class CreateTableUserConversation extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('conversation_id')->unsigned();
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
 

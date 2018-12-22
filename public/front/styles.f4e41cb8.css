@@ -6566,6 +6566,8 @@ button:focus {
     text-decoration: none;
     background-color: #F15A24;
     color: #202225; }
+  .dd-btn [class^="icon-"] {
+    margin-right: 5px; }
 
 .btn-gray {
   border-color: #CBCBCB;
@@ -6580,6 +6582,10 @@ button:focus {
   .btn-dark-gray:hover {
     background-color: #202225;
     color: #FFFFFF99; }
+
+.btn-full {
+  background-color: #F15A24;
+  color: #ffffff; }
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 15px 55px; }
@@ -6953,37 +6959,47 @@ nav.user-profile {
       margin: 0 5px; }
     nav.user-profile .user-pc .text {
       line-height: 1.2; }
-  nav.user-profile .social-list-wrapper {
+  nav.user-profile .right-block-wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     width: 250px; }
-    nav.user-profile .social-list-wrapper .social-list {
+    nav.user-profile .right-block-wrapper .profile-quick-actions {
+      margin-bottom: 5px;
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column; }
+      nav.user-profile .right-block-wrapper .profile-quick-actions .dd-btn {
+        margin-bottom: 5px; }
+      nav.user-profile .right-block-wrapper .profile-quick-actions .btn-more {
+        margin-left: 5px; }
+    nav.user-profile .right-block-wrapper .social-list {
       display: inline;
       padding: 0;
       margin: 0;
       align-self: flex-end; }
-      nav.user-profile .social-list-wrapper .social-list li {
+      nav.user-profile .right-block-wrapper .social-list li {
         display: inline; }
-        nav.user-profile .social-list-wrapper .social-list li a {
+        nav.user-profile .right-block-wrapper .social-list li a {
           position: relative;
           height: 50px;
           width: 50px;
           border-radius: 25px;
           background: #fff;
           display: inline-block; }
-          nav.user-profile .social-list-wrapper .social-list li a::before {
+          nav.user-profile .right-block-wrapper .social-list li a::before {
             color: #484B52; }
-          nav.user-profile .social-list-wrapper .social-list li a.icon-twitch::before {
+          nav.user-profile .right-block-wrapper .social-list li a.icon-twitch::before {
             position: absolute;
             font-size: 21px;
             top: 15px;
             left: 15px; }
-          nav.user-profile .social-list-wrapper .social-list li a.icon-yt::before {
+          nav.user-profile .right-block-wrapper .social-list li a.icon-yt::before {
             position: absolute;
             font-size: 20px;
             top: 15px;
             left: 11px; }
-          nav.user-profile .social-list-wrapper .social-list li a.icon-steam::before {
+          nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
             position: absolute;
             font-size: 17px;
             top: 17px;
@@ -7412,3 +7428,59 @@ nav.user-profile {
     background-color: transparent; }
     .search-field input:focus {
       outline: 0; }
+
+/** Chat */
+.chat {
+  position: fixed;
+  overflow-y: auto;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  z-index: 10; }
+  .chat .chat-wrapper {
+    margin: 0 5px;
+    background-color: #202225;
+    max-width: 250px; }
+    .chat .chat-wrapper .header {
+      height: 40px;
+      border-bottom: 2px solid #42464D;
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; }
+    .chat .chat-wrapper .chatable {
+      overflow: auto;
+      max-height: 280px; }
+    .chat .chat-wrapper .chats {
+      border-bottom: 1px solid #484B52; }
+      .chat .chat-wrapper .chats .user-chat {
+        cursor: pointer; }
+      .chat .chat-wrapper .chats .user-list-ava {
+        position: relative;
+        width: 65px;
+        display: flex;
+        margin-right: 5px; }
+        .chat .chat-wrapper .chats .user-list-ava img {
+          border-radius: 20px;
+          width: 40px;
+          height: 40px;
+          position: absolute; }
+        .chat .chat-wrapper .chats .user-list-ava img + img {
+          left: 15px; }
+      .chat .chat-wrapper .chats .user-list-user {
+        font-size: 12px; }
+  .chat .dialog-wrapper {
+    display: flex; }
+    .chat .dialog-wrapper .dialog {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #2F3136;
+      margin-right: 3px; }
+      .chat .dialog-wrapper .dialog .message-container {
+        flex: 1;
+        max-height: 250px;
+        overflow: auto;
+        padding: 5px 10px; }
+      .chat .dialog-wrapper .dialog .input {
+        display: flex; }

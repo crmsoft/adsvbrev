@@ -10,6 +10,7 @@ import GuestComponent from './profile/guest/GuestComponent';
 import store, {guest} from './profile/fetch/store';
 import Settings from './settings/settings';
 import Search from './search';
+import Chat from './chat';
 
 const App = () => {
     return (
@@ -25,19 +26,10 @@ const App = () => {
                     <Route path="/gg/:id" component={GuestComponent} />
                 </Provider>
                 <Route path="/search" component={Search} />
+                <Chat />
             </div>
         </Router>
     )
 }
 
 ReactDOM.render( <App />, document.getElementById('app') )
-
-// axios.interceptors.response.use(response => {
-//     return response;
-// }, error => {
-//     // if the session is expired
-//     // should't at all actually
-//     if(error.response && (error.response.status == 401)){
-//         window.location.reload();
-//     }
-// });

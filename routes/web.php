@@ -17,6 +17,9 @@ Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
     ->middleware(['guest']);
 
 Route::get('/ab/{user}', function(\App\User $user){
+    dump(
+        \App\User::find(29)->chat->pluck('id')
+    ); exit;
     // the user
     dump($user->subscribers()->where('friend_id',1)->get()->pluck('id')->toArray());
     dump($user->followers()->where('friend_id',28)->get()->pluck('id')->toArray());
@@ -31,10 +34,6 @@ Route::get('/ab/{user}', function(\App\User $user){
 // Lara Auth Routes
 //---------------------------------------------------------------------------------
 Auth::routes();
-
-Route::get('/dialog/{any?}', function(){
-   return redirect(route('conversations-list'));
-});
 
 // Application main routes that handled by react route, only get req's
 //=================================================================
@@ -100,25 +99,16 @@ Route::group([
 
 
 Route::group([
-    'namespace' => '\Profile\Settings',
-    'middleware' => [ 'all' ]
+    'namespace' => '\Chat',
+    'middleware' => [ 'auth', 'web' ]
 ], function(){
 
-    //Route::get('/settings', 'SettingController@index')->name('profile-settings');
-    ///Route::post('/settings','SettingController@update')->name('edit-profile');
+    Route::get('/chats', 'ChatController@chats')->name('chat-list');
+    Route::post('/chats/{username}/start', 'ChatController@start')->name('create-chat');
+    Route::post('/chat/{conversation}/message', 'ChatController@store')->name('store-message');
 
 });
 
-Route::get('/im', 'ConversationController@go')->name('conversations-list');
-Route::post('/im/start','ConversationController@startConversation')->name('start-conversation');
-//Route::get('/search','SearchController@search')->name('search');
-
-
-Route::resources([
-    'messages' => 'MessageController',
-    'conversations' => 'ConversationController',
-    'media' => 'MediaController'
-]);
 
 
 

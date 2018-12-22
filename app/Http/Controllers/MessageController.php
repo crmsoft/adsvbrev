@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Redis;
 
 class MessageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
 
     /**
      * @param Request $request
