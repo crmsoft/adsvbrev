@@ -60,7 +60,7 @@ class Conversation extends Model
         $conversation = $this->id;
         $user_id = auth()->user()->id;
 
-        DB::select("insert into message_reads (message_id, user_id, created_at, updated_at)
+        DB::update("insert into message_reads (message_id, user_id, created_at, updated_at)
                     SELECT 
                         m.id, uc.user_id, now(), now()
                     FROM
