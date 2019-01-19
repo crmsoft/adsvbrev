@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Message;
 use App\User;
 use App\UserConversation;
+use App\MessageRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ class ChatController extends Controller{
 
         $chats = User::where('id', $user->id)
                 ->with(['chat' => function($query){
-                    $query->with('messages')->limit(10);
+                    $query->orderBy('updated_at', 'desc');
                     $query->with('members');
                 }])
                 ->with('friend')
@@ -67,11 +68,11 @@ class ChatController extends Controller{
                  'conversation_id' => $conversation->id
              ]);
 
-             return $conversation;
+             return Conversation::with('messages')->with('members')->find($conversation->id);
 
          } // end if
 
-         return Conversation::with('messages')->find($conversations[0]->conversation_id);
+         return Conversation::with('messages')->with('members')->find($conversations[0]->conversation_id);
     } // end start
 
     public function store(Conversation $conversation, Request $request)
@@ -84,11 +85,19 @@ class ChatController extends Controller{
 
         if( $conversation->members->where('id', $user->id)->count() > 0 )
         {
+            // update updated_at attr
+            $conversation->touch();
+
             $message = new Message;
             $message->message = $request->message;
             $message->user()->associate($user);
             $message->conversation()->associate($conversation);
             $message->save();
+
+            $messageRead = new MessageRead;
+            $messageRead->message()->associate($message);
+            $messageRead->user()->associate($user);
+            $messageRead->save();
 
             return $message;
         } // end if

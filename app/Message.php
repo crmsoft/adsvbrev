@@ -29,11 +29,6 @@ class Message extends Model
         return $this->user->id == $user_id;
     }
 
-    public function getCreatedAtAttribute( $created_at ){
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $created_at);
-        return $date->diffInWeeks(Carbon::now()) > 1 ? $date->format('j M Y, g:ia') : $date->diffForHumans();
-    }
-
     /**
      * message belongs to user
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

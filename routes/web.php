@@ -107,6 +107,7 @@ Route::group([
     Route::post('/chats/{username}/start', 'ChatController@start')->name('create-chat');
     Route::post('/chat/{conversation}/message', 'ChatController@store')->name('store-message');
 
+    Route::post('/chat/{conversation}/pull', 'MessageController@pull')->name('pull-latest-messages');
 });
 
 
