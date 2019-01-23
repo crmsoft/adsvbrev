@@ -22,6 +22,9 @@ class CreateProfilesTable extends Migration
             $table->string('timezone')->default('Europe/Istanbul')->nullable();
             $table->string('phone')->nullable();
             $table->string('gender')->nullable();
+            
+            $table->string('m_status')->default('online');
+            $table->string('m_sound')->default('on');
 
             $table->unsignedInteger('user_id');
             $table->timestamps();

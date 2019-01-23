@@ -38960,6 +38960,14 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRedux = require("react-redux");
+
+var _event = require("../../friedship/event");
+
+var _actions = require("../../friedship/actions");
+
+var _store = require("../fetch/store");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -38972,41 +38980,128 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var FriendShipAction =
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var FriendShipActionComponent =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(FriendShipAction, _Component);
+  _inherits(FriendShipActionComponent, _Component);
 
-  function FriendShipAction() {
-    _classCallCheck(this, FriendShipAction);
+  function FriendShipActionComponent() {
+    var _getPrototypeOf2;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(FriendShipAction).apply(this, arguments));
+    var _this;
+
+    _classCallCheck(this, FriendShipActionComponent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FriendShipActionComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      status: _actions.FRIENDSHIP_NONE
+    });
+
+    return _this;
   }
 
-  _createClass(FriendShipAction, [{
+  _createClass(FriendShipActionComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var status = _store.guest.getState().info.profile.user.has_status;
+
+      this.setState({
+        status: status === 'subscribed' ? _actions.FRIENDSHIP_FOLLOWING : status === 'friends' ? _actions.FRIENDSHIP_FRIENDS : status === 'following' ? _actions.FRIENDSHIP_SUBSCRIBED : _actions.FRIENDSHIP_NONE
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("button", {
+      var _this2 = this;
+
+      var _guest$getState = _store.guest.getState(),
+          info = _guest$getState.info;
+
+      var username = info.profile.user.username;
+      var status = this.state.status;
+      console.log(status);
+      return _react.default.createElement("div", null, status === _actions.FRIENDSHIP_NONE ? _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.addToFriends(username);
+        },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
         className: "icon-yt"
-      }), "Add to Friends"));
+      }), "Add to Friends") : null, status === _actions.FRIENDSHIP_FRIENDS ? _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.unfriend(username);
+        },
+        className: "dd-btn btn-sm btn-full"
+      }, _react.default.createElement("span", {
+        className: "icon-yt"
+      }), "Unfriend") : null, status === _actions.FRIENDSHIP_FOLLOWING ? _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.unsubscribe(username);
+        },
+        className: "dd-btn btn-sm btn-full"
+      }, _react.default.createElement("span", {
+        className: "icon-yt"
+      }), "Unsubscribe") : null, status === _actions.FRIENDSHIP_SUBSCRIBED ? _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.accept(username);
+        },
+        className: "dd-btn btn-sm btn-full"
+      }, _react.default.createElement("span", {
+        className: "icon-yt"
+      }), "Accept") : null);
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.relationship !== 'none' && nextProps.relationship !== prevState.status) {
+        return {
+          status: nextProps.relationship
+        };
+      }
+
+      return null;
     }
   }]);
 
-  return FriendShipAction;
+  return FriendShipActionComponent;
 }(_react.Component);
 
-exports.default = FriendShipAction;
-},{"react":"../node_modules/react/index.js"}],"../src/profile/profile-actions/MessageAction.js":[function(require,module,exports) {
+var FriendShipAction = (0, _reactRedux.connect)(function (state) {
+  return Object.assign({}, state);
+}, function (dispatch) {
+  return {
+    unfriend: function unfriend(username) {
+      dispatch((0, _event.unfriend)(username));
+    },
+    addToFriends: function addToFriends(username) {
+      dispatch((0, _event.addToFriends)(username));
+    },
+    unsubscribe: function unsubscribe(username) {
+      dispatch((0, _event.unsubscribe)(username));
+    },
+    accept: function accept(username) {
+      dispatch((0, _event.acceptToFriends)(username));
+    }
+  };
+})(FriendShipActionComponent);
+var _default = FriendShipAction;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../../friedship/event":"../src/friedship/event.js","../../friedship/actions":"../src/friedship/actions.js","../fetch/store":"../src/profile/fetch/store.js"}],"../src/profile/profile-actions/MessageAction.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39066,7 +39161,88 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = MessageAction;
-},{"react":"../node_modules/react/index.js"}],"../src/profile/profile-actions/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"../src/friedship/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _actions = require("./actions");
+
+var initalState = {
+  relationship: 'none',
+  user: 'self'
+};
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initalState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.FRIENDSHIP_NONE:
+      {
+        return {
+          user: action.data.user,
+          relationship: _actions.FRIENDSHIP_NONE
+        };
+      }
+
+    case _actions.FRIENDSHIP_SUBSCRIBED:
+      {
+        return {
+          user: action.data.user,
+          relationship: _actions.FRIENDSHIP_SUBSCRIBED
+        };
+      }
+
+    case _actions.FRIENDSHIP_FOLLOWING:
+      {
+        return {
+          user: action.data.user,
+          relationship: _actions.FRIENDSHIP_FOLLOWING
+        };
+      }
+
+    case _actions.FRIENDSHIP_FRIENDS:
+      {
+        return {
+          user: action.data.user,
+          relationship: _actions.FRIENDSHIP_FRIENDS
+        };
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./actions":"../src/friedship/actions.js"}],"../src/friedship/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+var _reduxLogger = require("redux-logger");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = (0, _reduxLogger.createLogger)();
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","./reducer":"../src/friedship/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/profile/profile-actions/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39080,17 +39256,23 @@ var _FriendShipAction = _interopRequireDefault(require("./FriendShipAction"));
 
 var _MessageAction = _interopRequireDefault(require("./MessageAction"));
 
+var _store = _interopRequireDefault(require("../../friedship/store"));
+
+var _reactRedux = require("react-redux");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ProfileActions = function ProfileActions() {
   return _react.default.createElement("div", {
     className: "profile-quick-actions"
-  }, _react.default.createElement(_MessageAction.default, null), _react.default.createElement(_FriendShipAction.default, null));
+  }, _react.default.createElement(_MessageAction.default, null), _react.default.createElement(_reactRedux.Provider, {
+    store: _store.default
+  }, _react.default.createElement(_FriendShipAction.default, null)));
 };
 
 var _default = ProfileActions;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./FriendShipAction":"../src/profile/profile-actions/FriendShipAction.js","./MessageAction":"../src/profile/profile-actions/MessageAction.js"}],"../src/profile/profile-main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./FriendShipAction":"../src/profile/profile-actions/FriendShipAction.js","./MessageAction":"../src/profile/profile-actions/MessageAction.js","../../friedship/store":"../src/friedship/store.js","react-redux":"../../node_modules/react-redux/es/index.js"}],"../src/profile/profile-main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42513,10 +42695,14 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "user-list-item"
       }, _react.default.createElement("div", {
+        className: "ava-wrapper"
+      }, _react.default.createElement("div", {
+        className: "status ".concat(data.status)
+      }), _react.default.createElement("div", {
         className: "user-list-ava"
       }, _react.default.createElement("img", {
         src: data.ava
-      })), _react.default.createElement("div", {
+      }))), _react.default.createElement("div", {
         className: "user-list-user"
       }, _react.default.createElement("span", {
         className: "user-list-user-name"
@@ -42613,7 +42799,7 @@ exports.default = Chat;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
+exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -42623,6 +42809,8 @@ var MESSAGE_SENDED = 'MESSAGE_SENDED';
 exports.MESSAGE_SENDED = MESSAGE_SENDED;
 var MESSAGE_RECIEVED = 'MESSAGE_RECIEVED';
 exports.MESSAGE_RECIEVED = MESSAGE_RECIEVED;
+var MESSAGE_NOTIFIED = 'MESSAGE_NOTIFIED';
+exports.MESSAGE_NOTIFIED = MESSAGE_NOTIFIED;
 var CHATS_LOADED = 'CHATS_LOADED';
 exports.CHATS_LOADED = CHATS_LOADED;
 var CLOSE_CHAT = 'CLOSE_CHAT';
@@ -42633,8 +42821,16 @@ var INC_CHAT_UNREAD = 'INC_CHAT_UNREAD';
 exports.INC_CHAT_UNREAD = INC_CHAT_UNREAD;
 var CHAT_READED = 'CHAT_READED';
 exports.CHAT_READED = CHAT_READED;
-var MESSAGE_NOTIFIED = 'MESSAGE_NOTIFIED';
-exports.MESSAGE_NOTIFIED = MESSAGE_NOTIFIED;
+var STATUS_ONLINE = 'STATUS_ONLINE';
+exports.STATUS_ONLINE = STATUS_ONLINE;
+var STATUS_OFFLINE = 'STATUS_OFFLINE';
+exports.STATUS_OFFLINE = STATUS_OFFLINE;
+var STATUS_BUSY = 'STATUS_BUSY';
+exports.STATUS_BUSY = STATUS_BUSY;
+var SOUND_ON = 'SOUND_ON';
+exports.SOUND_ON = SOUND_ON;
+var SOUND_OFF = 'SOUND_OFF';
+exports.SOUND_OFF = SOUND_OFF;
 
 var m_sended = function m_sended(chat) {
   return {
@@ -42684,7 +42880,337 @@ var close_chat = function close_chat(hash) {
 };
 
 exports.close_chat = close_chat;
-},{"axios":"../../node_modules/axios/index.js"}],"../src/chat/Users.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js"}],"../src/chat/redux/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _events = require("./events");
+
+var initialState = {
+  action: 'none',
+  target: undefined,
+  messenger: {
+    friend: [],
+    chat: []
+  }
+};
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _events.SOUND_OFF:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            m_sound: 'off'
+          })
+        });
+      }
+
+    case _events.SOUND_ON:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            m_sound: 'on'
+          })
+        });
+      }
+
+    case _events.STATUS_BUSY:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            m_status: 'busy'
+          })
+        });
+      }
+
+    case _events.STATUS_ONLINE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            m_status: 'online'
+          })
+        });
+      }
+
+    case _events.STATUS_OFFLINE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            m_status: 'offline'
+          })
+        });
+      }
+
+    case _events.MESSAGE_SENDED:
+      {
+        return Object.assign({}, state, {
+          action: null
+        });
+      }
+
+    case _events.INC_CHAT_UNREAD:
+      {
+        return Object.assign({}, state, {
+          action: null,
+          messenger: Object.assign({
+            chat: state.messenger.chat.map(function (chat) {
+              if (action.data === chat.hash_id) {
+                chat.unread++;
+              } // end if
+
+
+              return chat;
+            })
+          }, state.messenger)
+        });
+      }
+
+    case _events.CHAT_READED:
+      {
+        return Object.assign({}, state, {
+          action: null,
+          messenger: Object.assign({
+            chat: state.messenger.chat.map(function (chat) {
+              if (action.data === chat.hash_id) {
+                chat.unread = 0;
+              } // end if
+
+
+              return chat;
+            })
+          }, state.messenger)
+        });
+      }
+
+    case _events.MESSAGE_RECIEVED:
+      {
+        return {
+          action: _events.MESSAGE_RECIEVED,
+          target: action.data,
+          messenger: Object.assign({}, state.messenger)
+        };
+      }
+
+    case _events.MESSAGE_NOTIFIED:
+      {
+        return Object.assign({}, state, {
+          action: null
+        });
+      }
+
+    case _events.CHATS_LOADED:
+      {
+        return Object.assign({}, state, {
+          messenger: action.data
+        });
+      }
+
+    case _events.CLOSE_CHAT:
+      {
+        return Object.assign({}, state, {
+          chatToClose: action.data,
+          action: _events.CLOSE_CHAT
+        });
+      }
+
+    case _events.CHAT_CLOSED:
+      {
+        return Object.assign({}, state, {
+          chatToClose: null,
+          action: null
+        });
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./events":"../src/chat/redux/events.js"}],"../src/chat/redux/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+var _reduxLogger = require("redux-logger");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = (0, _reduxLogger.createLogger)();
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","./reducer":"../src/chat/redux/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/chat/MessengerOptions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _store = _interopRequireDefault(require("./redux/store"));
+
+var _events = require("./redux/events");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MessengerOptions =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(MessengerOptions, _Component);
+
+  function MessengerOptions(props) {
+    var _this;
+
+    _classCallCheck(this, MessengerOptions);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MessengerOptions).call(this, props));
+    _this.state = {
+      sound: _this.props.sound,
+      status: _this.props.status
+    };
+    return _this;
+  }
+
+  _createClass(MessengerOptions, [{
+    key: "onStatusChange",
+    value: function onStatusChange(status) {
+      _store.default.dispatch({
+        type: status,
+        data: null
+      });
+    }
+  }, {
+    key: "onSound",
+    value: function onSound() {
+      _store.default.dispatch({
+        type: this.state.sound === 'on' ? _events.SOUND_OFF : _events.SOUND_ON,
+        data: null
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$state = this.state,
+          status = _this$state.status,
+          sound = _this$state.sound;
+      return _react.default.createElement("div", {
+        className: "messenger-options"
+      }, _react.default.createElement("div", {
+        className: "main-title"
+      }, "Messenger Settings"), _react.default.createElement("div", {
+        className: "messenger-sound-option"
+      }, _react.default.createElement("div", {
+        className: "sound-title"
+      }, "Sound"), _react.default.createElement("div", {
+        className: "sound-option-switch"
+      }, _react.default.createElement("label", {
+        className: "switch"
+      }, _react.default.createElement("input", {
+        checked: sound === 'on',
+        type: "checkbox",
+        onChange: this.onSound.bind(this)
+      }), _react.default.createElement("span", {
+        className: "slider round"
+      })))), _react.default.createElement("div", {
+        className: "messenger-options-statuses"
+      }, _react.default.createElement("div", {
+        className: "status-title"
+      }, "Status"), _react.default.createElement("div", {
+        className: "status offline " + (status === 'offline' ? 'active' : ''),
+        onClick: function onClick() {
+          return _this2.onStatusChange.call(_this2, _events.STATUS_OFFLINE);
+        }
+      }, "Offline"), _react.default.createElement("div", {
+        className: "status busy " + (status === 'busy' ? 'active' : ''),
+        onClick: function onClick() {
+          return _this2.onStatusChange.call(_this2, _events.STATUS_BUSY);
+        }
+      }, "Busy"), _react.default.createElement("div", {
+        className: "status online " + (status === 'online' ? 'active' : ''),
+        onClick: function onClick() {
+          return _this2.onStatusChange.call(_this2, _events.STATUS_ONLINE);
+        }
+      }, "Online")));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.sound !== prevState.sound) {
+        _axios.default.post("/messenger/sound", {
+          sound: nextProps.sound
+        });
+
+        return {
+          sound: nextProps.sound
+        };
+      }
+
+      if (nextProps.status !== prevState.status) {
+        var status = nextProps.status;
+
+        _axios.default.post("/messenger/status", {
+          status: status
+        });
+
+        return {
+          status: status
+        };
+      }
+
+      return null;
+    }
+  }]);
+
+  return MessengerOptions;
+}(_react.Component);
+
+exports.default = MessengerOptions;
+},{"react":"../node_modules/react/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js"}],"../src/chat/Messenger.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42701,6 +43227,10 @@ var _User = _interopRequireDefault(require("./User"));
 var _Chat = _interopRequireDefault(require("./Chat"));
 
 var _events = require("./redux/events");
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+var _MessengerOptions = _interopRequireDefault(require("./MessengerOptions"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -42820,21 +43350,42 @@ function (_Component) {
     value: function render() {
       var _this$props$messenger = this.props.messenger,
           friend = _this$props$messenger.friend,
-          chat = _this$props$messenger.chat;
+          chat = _this$props$messenger.chat,
+          m_status = _this$props$messenger.m_status,
+          m_sound = _this$props$messenger.m_sound; // no messenger when no friends;
+
+      if (!friend.length) {
+        return null;
+      }
+
       return _react.default.createElement("div", {
         className: this.state.minimized ? "chat-wrapper minimized" : "chat-wrapper"
       }, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement("span", {
-        className: "title"
+        className: "title ".concat(m_status)
       }, "Messenger"), _react.default.createElement("div", {
         className: "chat-actions"
       }, _react.default.createElement("span", {
         onClick: this.minimizeMessenger.bind(this),
         className: "minimize"
-      }, "\u2693"), _react.default.createElement("span", {
-        className: "settings"
-      }, "\u26EF"))), this.state.minimized ? null : _react.default.createElement("div", {
+      }, "\u2693"), _react.default.createElement(_reactjsPopup.default, {
+        className: "options-pop-up",
+        contentStyle: popupStyle,
+        position: "top right",
+        overlayStyle: {
+          display: 'none'
+        },
+        lockScroll: false,
+        closeOnEscape: true,
+        modal: false,
+        trigger: _react.default.createElement("span", {
+          className: "settings"
+        }, "\u26EF")
+      }, _react.default.createElement(_MessengerOptions.default, {
+        status: m_status,
+        sound: m_sound
+      })))), this.state.minimized ? null : _react.default.createElement("div", {
         className: "chatable"
       }, _react.default.createElement(ChatList, {
         chats: chat,
@@ -42849,7 +43400,14 @@ function (_Component) {
   return UsersComponent;
 }(_react.Component);
 
-var Users = (0, _reactRedux.connect)(function (state) {
+var popupStyle = {
+  width: '270px',
+  padding: 0,
+  border: 0,
+  backgroundColor: 'transparent',
+  left: 0
+};
+var Messenger = (0, _reactRedux.connect)(function (state) {
   return Object.assign({}, state);
 }, function (dispatch) {
   return {
@@ -42861,9 +43419,9 @@ var Users = (0, _reactRedux.connect)(function (state) {
     }
   };
 })(UsersComponent);
-var _default = Users;
+var _default = Messenger;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./User":"../src/chat/User.js","./Chat":"../src/chat/Chat.js","./redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./User":"../src/chat/User.js","./Chat":"../src/chat/Chat.js","./redux/events":"../src/chat/redux/events.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./MessengerOptions":"../src/chat/MessengerOptions.js","axios":"../../node_modules/axios/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -59243,141 +59801,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = _BasicScrollToBottom.default;
 exports.default = _default;
 
-},{"./ScrollToBottom/AutoHideFollowButton":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js","./BasicScrollToBottom":"../node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js","./ScrollToBottom/Composer":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js","./ScrollToBottom/FunctionContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js","./ScrollToBottom/Panel":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js","./ScrollToBottom/StateContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"}],"../src/chat/redux/reducer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _events = require("./events");
-
-var initialState = {
-  action: 'none',
-  target: undefined,
-  messenger: {
-    friend: [],
-    chat: []
-  }
-};
-
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _events.MESSAGE_SENDED:
-      {
-        return Object.assign({}, state, {
-          action: null
-        });
-      }
-
-    case _events.INC_CHAT_UNREAD:
-      {
-        return Object.assign({}, state, {
-          action: null,
-          messenger: Object.assign({
-            chat: state.messenger.chat.map(function (chat) {
-              if (action.data === chat.hash_id) {
-                chat.unread++;
-              } // end if
-
-
-              return chat;
-            })
-          }, state.messenger)
-        });
-      }
-
-    case _events.CHAT_READED:
-      {
-        return Object.assign({}, state, {
-          action: null,
-          messenger: Object.assign({
-            chat: state.messenger.chat.map(function (chat) {
-              if (action.data === chat.hash_id) {
-                chat.unread = 0;
-              } // end if
-
-
-              return chat;
-            })
-          }, state.messenger)
-        });
-      }
-
-    case _events.MESSAGE_RECIEVED:
-      {
-        return {
-          action: _events.MESSAGE_RECIEVED,
-          target: action.data,
-          messenger: Object.assign({}, state.messenger)
-        };
-      }
-
-    case _events.MESSAGE_NOTIFIED:
-      {
-        console.log(state.action);
-        return Object.assign({}, state, {
-          action: null
-        });
-      }
-
-    case _events.CHATS_LOADED:
-      {
-        return Object.assign({}, state, {
-          messenger: action.data
-        });
-      }
-
-    case _events.CLOSE_CHAT:
-      {
-        return Object.assign({}, state, {
-          chatToClose: action.data,
-          action: _events.CLOSE_CHAT
-        });
-      }
-
-    case _events.CHAT_CLOSED:
-      {
-        return Object.assign({}, state, {
-          chatToClose: null,
-          action: null
-        });
-      }
-
-    default:
-      return Object.assign({}, state);
-  }
-};
-
-var _default = reducer;
-exports.default = _default;
-},{"./events":"../src/chat/redux/events.js"}],"../src/chat/redux/store.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _redux = require("redux");
-
-var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
-
-var _reducer = _interopRequireDefault(require("./reducer"));
-
-var _reduxLogger = require("redux-logger");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = (0, _reduxLogger.createLogger)();
-var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
-var _default = store;
-exports.default = _default;
-},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","./reducer":"../src/chat/redux/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/chat/redux/socket.js":[function(require,module,exports) {
+},{"./ScrollToBottom/AutoHideFollowButton":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js","./BasicScrollToBottom":"../node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js","./ScrollToBottom/Composer":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js","./ScrollToBottom/FunctionContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js","./ScrollToBottom/Panel":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js","./ScrollToBottom/StateContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"}],"../src/chat/redux/socket.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -59391,7 +59815,7 @@ var _events = require("./events");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc());
+var socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
 
 socket.onclose = function () {//document.location.reload();
 };
@@ -59480,67 +59904,114 @@ var DialogComponent =
 function (_Component) {
   _inherits(DialogComponent, _Component);
 
-  function DialogComponent() {
-    var _getPrototypeOf2;
-
+  function DialogComponent(props) {
     var _this;
 
     _classCallCheck(this, DialogComponent);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DialogComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DialogComponent).call(this, props));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       messagesList: [],
-      reload: false
+      reload: false,
+      pullingPrev: false
     });
 
+    _this.containerRef = _react.default.createRef();
     return _this;
   }
 
   _createClass(DialogComponent, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.pull();
+      var _this2 = this;
+
+      this.pull().then(function (done) {
+        _this2.containerRef.current.addEventListener('scroll', _this2.containerScrollListener.bind(_this2), true);
+      });
+    }
+  }, {
+    key: "containerScrollListener",
+    value: function containerScrollListener(e) {
+      var container = e.target;
+
+      if (container.scrollTop < 10) {
+        this.pullPrev();
+      }
+    }
+  }, {
+    key: "pullPrev",
+    value: function pullPrev() {
+      var _this3 = this;
+
+      if (this.state.pullingPrev || this.state.messagesList.length === 0) {
+        return false;
+      }
+
+      this.setState(function (state) {
+        return {
+          pullingPrev: true
+        };
+      }, function () {
+        var hash_id = _this3.props.chat.hash_id;
+
+        _axios.default.post("/chat/".concat(hash_id, "/pull/prev"), {
+          last: _this3.state.messagesList[0].id
+        }).then(function (response) {
+          return _this3.setState(function (state) {
+            return {
+              beforePull: _this3.containerRef.current.scrollHeight,
+              pullingPrev: !response.data.more,
+              messagesList: _toConsumableArray(response.data.list.reverse()).concat(_toConsumableArray(state.messagesList))
+            };
+          }, function () {
+            _this3.containerRef.current.querySelector('.css-y1c0xs').scrollTop = _this3.state.beforePull + 55;
+          });
+        });
+      });
     }
   }, {
     key: "pull",
     value: function pull() {
-      var _this2 = this;
+      var _this4 = this;
 
-      this.props.sended();
-      var hash_id = this.props.chat.hash_id;
+      return new Promise(function (resolve, reject) {
+        _this4.props.sended();
 
-      _axios.default.post("/chat/".concat(hash_id, "/pull")).then(function (response) {
-        return _this2.setState(function (state) {
-          var ids = state.messagesList.map(function (m) {
-            return m.id;
+        var hash_id = _this4.props.chat.hash_id;
+
+        _axios.default.post("/chat/".concat(hash_id, "/pull")).then(function (response) {
+          _this4.setState(function (state) {
+            var ids = state.messagesList.map(function (m) {
+              return m.id;
+            });
+            return {
+              chat: hash_id,
+              messagesList: _toConsumableArray(state.messagesList).concat(_toConsumableArray(response.data.reverse().filter(function (m) {
+                return ids.indexOf(m.id) === -1;
+              })))
+            };
           });
-          return {
-            chat: hash_id,
-            messagesList: _toConsumableArray(state.messagesList).concat(_toConsumableArray(response.data.reverse().filter(function (m) {
-              return ids.indexOf(m.id) === -1;
-            })))
-          };
+
+          return true;
+        }).then(function (done) {
+          return setTimeout(resolve, 450);
         });
       });
     }
   }, {
     key: "onMessage",
     value: function onMessage(message) {
-      var _this3 = this;
+      var _this5 = this;
 
       var hash = this.props.chat.hash_id;
 
       _axios.default.post("/chat/".concat(hash, "/message"), {
         message: message
       }).then(function (response) {
-        _this3.setState({
+        _this5.setState({
           reload: false,
-          messagesList: _toConsumableArray(_this3.state.messagesList).concat([response.data])
+          messagesList: _toConsumableArray(_this5.state.messagesList).concat([response.data])
         }, function () {
           return _socket.default.chatMessagePush(hash);
         });
@@ -59554,22 +60025,27 @@ function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      console.log(this.state.reload);
-
       if (this.state.reload) {
         this.pull();
       }
     }
   }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.containerRef.current.removeEventListener('scroll', this.containerScrollListener);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "dialog"
+        className: "dialog",
+        ref: this.containerRef
       }, _react.default.createElement(_DialogHead.default, {
         members: this.props.chat.members,
         closeChat: this.closeChat.bind(this),
         me: this.props.messenger.username
       }), _react.default.createElement(_reactScrollToBottom.default, {
+        animating: false,
         className: "message-container"
       }, this.state.messagesList.map(function (m, index) {
         return _react.default.createElement(_Message.default, {
@@ -59704,12 +60180,23 @@ function () {
     _classCallCheck(this, NewMessageSound);
 
     this.playing = false;
+    this.locked = false;
   }
 
   _createClass(NewMessageSound, [{
+    key: "toggle",
+    value: function toggle(state) {
+      this.locked = state === true;
+    }
+  }, {
     key: "play",
     value: function play() {
       var _this = this;
+
+      if (this.locked) {
+        return false;
+      } // end if
+
 
       if (!this.playing) {
         var audio = new Audio(sound);
@@ -59738,7 +60225,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Users = _interopRequireDefault(require("./Users"));
+var _Messenger = _interopRequireDefault(require("./Messenger"));
 
 var _Dialogs = _interopRequireDefault(require("./Dialogs"));
 
@@ -59820,6 +60307,8 @@ function (_Component) {
             target = _store$getState.target,
             messenger = _store$getState.messenger,
             chatToClose = _store$getState.chatToClose;
+
+        _NewMessage.default.toggle(messenger.m_sound === 'off');
 
         if (action === _events.MESSAGE_RECIEVED) {
           var is_chat_open = _this2.state.activeChats.filter(function (chat) {
@@ -59903,7 +60392,7 @@ function (_Component) {
         chats: this.state.activeChats
       }), _react.default.createElement(_reactRedux.Provider, {
         store: _store.default
-      }, _react.default.createElement(_Users.default, {
+      }, _react.default.createElement(_Messenger.default, {
         onChat: this.addChat.bind(this)
       })));
     }
@@ -59913,7 +60402,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Chat;
-},{"react":"../node_modules/react/index.js","./Users":"../src/chat/Users.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","./redux/socket":"../src/chat/redux/socket.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","./redux/socket":"../src/chat/redux/socket.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -59994,7 +60483,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43161" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35022" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

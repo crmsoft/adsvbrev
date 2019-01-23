@@ -29,6 +29,9 @@ class ChatController extends Controller{
                 ->with('friend')
                 ->first();
 
+        $chats['m_status'] = $user->profile->m_status;
+        $chats['m_sound'] = $user->profile->m_sound;
+        
         return $chats;
 
     } // end list of chats

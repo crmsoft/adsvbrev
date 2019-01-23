@@ -25,7 +25,9 @@ class Profile extends Model
         'gender',
         'phone',
         'timezone',
-        'about'
+        'about',
+        'm_sound',
+        'm_status'
     ];
 
     protected $dates = [

@@ -6603,6 +6603,53 @@ body {
   background-color: #3E3F42;
   color: #fff; }
 
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 43px;
+  height: 17px; }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+    .switch input:checked + .slider {
+      background-color: #F15A24; }
+    .switch input:focus + .slider {
+      box-shadow: 0 0 1px #F15A24; }
+    .switch input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+      background-color: white; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s; }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 1px;
+    bottom: 1px;
+    background-color: #202225;
+    -webkit-transition: .4s;
+    transition: .4s; }
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px; }
+
+.slider.round:before {
+  border-radius: 50%; }
+
 .nav-tabs {
   margin: 0 -10px;
   padding: 0 10px;
@@ -7432,7 +7479,6 @@ nav.user-profile {
 /** Chat */
 .chat {
   position: fixed;
-  overflow-y: auto;
   bottom: 0;
   right: 0;
   display: flex;
@@ -7452,6 +7498,18 @@ nav.user-profile {
       flex-direction: row;
       justify-content: space-between;
       align-items: center; }
+      .chat .chat-wrapper .header .title::before {
+        content: ' ';
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+        background-color: green;
+        border-radius: 5px;
+        margin-right: 5px; }
+      .chat .chat-wrapper .header .title.offline::before {
+        background-color: red; }
+      .chat .chat-wrapper .header .title.busy::before {
+        background-color: yellow; }
       .chat .chat-wrapper .header .chat-actions {
         display: flex; }
         .chat .chat-wrapper .header .chat-actions .minimize {
@@ -7957,6 +8015,21 @@ nav.user-profile {
   display: flex;
   justify-content: inherit;
   cursor: pointer; }
+  .user .user-list-item .ava-wrapper {
+    position: relative; }
+    .user .user-list-item .ava-wrapper .status {
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      position: absolute;
+      right: 8px;
+      bottom: 5px; }
+      .user .user-list-item .ava-wrapper .status.online {
+        background-color: green; }
+      .user .user-list-item .ava-wrapper .status.offline {
+        background-color: red; }
+      .user .user-list-item .ava-wrapper .status.busy {
+        background-color: yellow; }
   .user .user-list-item .user-list-ava {
     margin-right: 10px; }
   .user .user-list-item .user-list-user {
@@ -7969,3 +8042,66 @@ nav.user-profile {
       word-break: break-all;
       white-space: pre;
       font-size: 13px; }
+
+.options-pop-up div:first-child {
+  background-color: #202225 !important; }
+
+.messenger-options {
+  background-color: #202225;
+  padding: 10px;
+  border-radius: 3px; }
+  .messenger-options .main-title {
+    font-weight: bold;
+    margin-bottom: 10px; }
+  .messenger-options .messenger-sound-option {
+    display: flex;
+    margin-bottom: 5px; }
+    .messenger-options .messenger-sound-option .sound-title {
+      font-size: 14px;
+      color: #bababa;
+      margin-right: 25px; }
+    .messenger-options .messenger-sound-option .sound-option-switch {
+      align-self: center;
+      padding-top: 3px; }
+  .messenger-options .messenger-options-statuses {
+    display: flex;
+    font-size: 10px; }
+    .messenger-options .messenger-options-statuses .status-title {
+      font-size: 14px;
+      padding-right: 25px;
+      color: #bababa; }
+    .messenger-options .messenger-options-statuses .status {
+      padding: 2px 7px;
+      border-radius: 10px;
+      align-self: center; }
+      .messenger-options .messenger-options-statuses .status.active {
+        background-color: #F15A24; }
+      .messenger-options .messenger-options-statuses .status.online:before {
+        content: ' ';
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        background-color: green;
+        border-radius: 4px;
+        margin-right: 4px; }
+      .messenger-options .messenger-options-statuses .status.offline:before {
+        content: ' ';
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        background-color: green;
+        border-radius: 4px;
+        margin-right: 4px;
+        background-color: red; }
+      .messenger-options .messenger-options-statuses .status.busy:before {
+        content: ' ';
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        background-color: green;
+        border-radius: 4px;
+        margin-right: 4px;
+        background-color: yellow; }
+      .messenger-options .messenger-options-statuses .status:before {
+        vertical-align: -5%;
+        margin-right: 2px; }

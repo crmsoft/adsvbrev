@@ -108,7 +108,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function getStatusAttribute(){
-        return !empty($this->user_communication_id);
+        return $this->user_communication_id == 0 ? 'offline' : $this->profile->m_status;
     }
 
     public function chat()

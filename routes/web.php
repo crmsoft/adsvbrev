@@ -108,6 +108,10 @@ Route::group([
     Route::post('/chat/{conversation}/message', 'ChatController@store')->name('store-message');
 
     Route::post('/chat/{conversation}/pull', 'MessageController@pull')->name('pull-latest-messages');
+    Route::post('/chat/{conversation}/pull/prev', 'MessageController@pullPrev')->name('pull-latest-messages');
+
+    Route::post('/messenger/sound', 'MessengerController@sound')->name('set-meesenger-sound');
+    Route::post('/messenger/status', 'MessengerController@status')->name('set-meesenger-status');
 });
 
 
