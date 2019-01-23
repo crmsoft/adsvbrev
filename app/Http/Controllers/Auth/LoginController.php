@@ -50,30 +50,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // generate some random key
-        // this key will be used for user validation
-        // on socket communication on front-end
-        // that key generate for every user session
-
-        $user = $request->user();
-        if(empty($user->user_communication_id)) {
-            $str = str_random(31);
-            $user->user_communication_id = $str;
-        } else {
-            $str = $user->user_communication_id;
-        }
-            // store the key
-        if($user->save()) {
-            Redis::publish(config('database.redis.channel'), $str);
-            $request->session()->put('user_communication_id', $str);
-        }else{ // user should have a key
-            Auth::logout();
-        }
-
-        if($request->ajax()){
             return response()->json([
                 'message' => __('Authentication was successful, Redirecting you to your profile!')
             ]);
-        }
     }
 }

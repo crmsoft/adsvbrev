@@ -87,15 +87,10 @@ class RegisterController extends Controller
         Auth::logout();
         $this->dispatch(new SendWelcomeEmail($user));
 
-        if($request->ajax()){
-            return response()->json([
-                'message' =>
-                __('You are almost done! You be able to login after email confirmation. Thank you for registering!')
-            ]);
-        }
-
-        return redirect(route('login'))
-            ->with('status',__('Please check your email address'));
+        return response()->json([
+            'message' =>
+            __('You are almost done! You be able to login after email confirmation. Thank you for registering!')
+        ]);
     }
 
     public function validateEmail($token){
