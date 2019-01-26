@@ -20,7 +20,9 @@ class ChatUser extends JsonResource
             'username' => $this->username,
             'ava' => $this->ava,
             'chat' => new ChatCollection($this->chat),
-            'friend' => new UserCollection($this->friend)
+            'friend' => new UserCollection($this->friend),
+            'm_status' => $this->profile->m_status,
+            'm_sound' => $this->profile->m_sound
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\UserListStatus;
+namespace App\Http\Resources\Post;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserCollection extends ResourceCollection
+class PostCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

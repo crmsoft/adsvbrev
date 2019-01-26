@@ -38532,16 +38532,20 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 var initialState = {
-  info: {
+  data: {
     friends: [],
     groups: [],
     feed: [],
     profile: {
       ava: '',
       user: {}
+    },
+    totals: {
+      friends: 0,
+      groups: 0
     }
   },
-  totals: {}
+  guest: true
 };
 
 var profileReducer = function profileReducer() {
@@ -38553,7 +38557,7 @@ var profileReducer = function profileReducer() {
       {
         return Object.assign({}, state, {
           info: Object.assign({}, state.info, {
-            feed: [action.data].concat(_toConsumableArray(state.info.feed))
+            feed: [action.data].concat(_toConsumableArray(state.data.info.feed))
           })
         });
       }
@@ -38671,8 +38675,9 @@ var fetchProfile = function fetchProfile() {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get('/get/profile').then(function (data) {
-      return dispatch(fetchDone(data.data));
+    _axios.default.get('/get/profile').then(function (_ref) {
+      var data = _ref.data;
+      return dispatch(fetchDone(data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
     });
@@ -38685,8 +38690,9 @@ var fetchGamerProfile = function fetchGamerProfile(username) {
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get("/get/profile/".concat(username)).then(function (data) {
-      return dispatch(fetchDone(data.data));
+    _axios.default.get("/get/profile/".concat(username)).then(function (_ref2) {
+      var data = _ref2.data;
+      return dispatch(fetchDone(data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
     });
@@ -40406,18 +40412,23 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$props$data = this.props.data,
+          feed = _this$props$data.feed,
+          friends = _this$props$data.friends,
+          groups = _this$props$data.groups,
+          totals = _this$props$data.totals;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
         className: "user-profile"
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
-        info: this.props.info
+        info: this.props.data
       })), _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_index5.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
-        user: this.props.info
+        user: this.props.data
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
@@ -40426,21 +40437,21 @@ function (_Component) {
       }, _react.default.createElement(_index6.default, null)), _react.default.createElement("section", {
         className: "posts"
       }, _react.default.createElement(_index.default, {
-        list: this.props.info.feed
+        list: feed
       }))), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_index2.default, {
         isGuest: false,
-        list: this.props.info.friends,
-        total: this.props.totals.friends
+        list: friends,
+        total: totals.friends
       })), _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_index3.default, {
         isGuest: false,
-        list: this.props.info.groups,
-        total: this.props.totals.groups
+        list: groups,
+        total: totals.groups
       })))));
     }
   }]);
@@ -55758,7 +55769,7 @@ var MessageUserInfo = function MessageUserInfo(_ref) {
     className: "message-user"
   }, user.full_name), _react.default.createElement("span", {
     className: "message-time"
-  }, _luxon.DateTime.fromSQL(created_at).toLocaleString(_luxon.DateTime.TIME_24_SIMPLE)));
+  }, _luxon.DateTime.fromMillis(created_at * 1000).toLocaleString(_luxon.DateTime.TIME_24_SIMPLE)));
 };
 
 var MessageUserAva = function MessageUserAva(_ref2) {
@@ -60048,12 +60059,13 @@ function (_Component) {
 
         _axios.default.post("/chat/".concat(hash_id, "/pull/prev"), {
           last: _this3.state.messagesList[0].id
-        }).then(function (response) {
+        }).then(function (_ref) {
+          var data = _ref.data;
           return _this3.setState(function (state) {
             return {
               beforePull: _this3.containerRef.current.scrollHeight,
-              pullingPrev: !response.data.more,
-              messagesList: [].concat(_toConsumableArray(response.data.list.reverse()), _toConsumableArray(state.messagesList))
+              pullingPrev: !data.data.more,
+              messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
           }, function () {
             _this3.containerRef.current.querySelector('.css-y1c0xs').scrollTop = _this3.state.beforePull + 55;
@@ -60072,13 +60084,15 @@ function (_Component) {
         var hash_id = _this4.props.chat.hash_id;
 
         _axios.default.post("/chat/".concat(hash_id, "/pull")).then(function (response) {
+          var data = response.data.data;
+
           _this4.setState(function (state) {
             var ids = state.messagesList.map(function (m) {
               return m.id;
             });
             return {
               chat: hash_id,
-              messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(response.data.reverse().filter(function (m) {
+              messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(data.reverse().filter(function (m) {
                 return ids.indexOf(m.id) === -1;
               })))
             };
@@ -60575,7 +60589,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33303" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35265" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

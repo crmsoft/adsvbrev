@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Conversation;
 use App\Message;
 
+use \App\Http\Resources\Chat\Dialog\MessageCollection;
+
 class MessageController extends Controller{
 
     static $limit_per_pull = 15;
@@ -28,10 +30,9 @@ class MessageController extends Controller{
                         $query->limit(self::$limit_per_pull);
                     }])->first();
 
-        
         $conversation->markReaded();
 
-        return $latest->messages;
+        return new MessageCollection($latest->messages);
     }
 
     /**
@@ -57,10 +58,9 @@ class MessageController extends Controller{
                     }])->first();
 
         
-        return [
-            'list' => $latest->messages,
+        return (new MessageCollection($latest->messages))->additional([
             'more' => $latest->messages->count() === self::$limit_per_pull
-        ];
+        ]);
     }
 
 } // end ConversationController

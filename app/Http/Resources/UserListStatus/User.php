@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\UserList;
+namespace App\Http\Resources\UserListStatus;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

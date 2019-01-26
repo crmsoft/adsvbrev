@@ -11,6 +11,8 @@ use App\MessageRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Resources\Chat\Dialog\ResourceMessage;
+
 use App\Http\Resources\Chat\ChatUser;
 
 class ChatController extends Controller{
@@ -24,19 +26,6 @@ class ChatController extends Controller{
         $user = $request->user();
 
         return new ChatUser($user);
-        $chats = User::where('id', $user->id)
-                ->with(['chat' => function($query){
-                    $query->orderBy('updated_at', 'desc');
-                    $query->with('members');
-                }])
-                ->with('friend')
-                ->first();
-
-        $chats['m_status'] = $user->profile->m_status;
-        $chats['m_sound'] = $user->profile->m_sound;
-        
-        return $chats;
-
     } // end list of chats
 
     /**
@@ -105,7 +94,7 @@ class ChatController extends Controller{
             $messageRead->user()->associate($user);
             $messageRead->save();
 
-            return $message;
+            return new ResourceMessage($message);
         } // end if
 
         return response('Conversation is not found', 404);

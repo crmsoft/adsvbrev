@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+use App\Http\Resources\Profile\ResourceProfile;
 
 use App\Http\Resources\UserList\UserCollection;
 
@@ -110,6 +111,10 @@ class ProfileController extends Controller
         }else{
             $user = User::where('username', $username)->first();
         }
+
+        return (new ResourceProfile($user))->additional(
+            [ 'guest' => $username != null ]
+        );
 
         $totalFriends = $user->friend()->count();
         $totalGroups = $user->group()->count();

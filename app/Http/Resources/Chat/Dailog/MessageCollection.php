@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\UserListStatus;
+namespace App\Http\Resources\Chat\Dialog;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserCollection extends ResourceCollection
+class MessageCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +14,10 @@ class UserCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(
+            function($message){
+                return new ResourceMessage($message);
+            }
+        );
     }
 }
