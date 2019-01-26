@@ -129,7 +129,7 @@ class ProfileController extends Controller
                                         ->inRandomOrder()
                                         ->get(),
                     'feed' => $user->feed()->with(['media', 'user'])
-                        ->limit(10)->orderBy('created_at', 'desc')->get(),
+                        ->take(3)->orderBy('created_at', 'desc')->get(),
                     'groups' => $user->group(function($query){
                         $query->inRandomOrder();
                         $query->limit(3);

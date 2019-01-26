@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Media;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-use App\Http\Resources\Post\ResourcePost;
+use App\Http\Resources\Media\ResourceMedia;
 
-class PostCollection extends ResourceCollection
+class MediaCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,8 +16,8 @@ class PostCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($post){
-            return new ResourcePost($post);
+        return $this->collection->map(function($media){
+            return new ResourceMedia($media);
         });
     }
 }
