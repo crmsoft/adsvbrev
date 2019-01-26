@@ -43,6 +43,7 @@ class PostController extends Controller
         $post->save();
 
 
+        $mediaList = [];
         foreach ($request->file('media', []) as $media) {
             $image = Image::make($media->getRealPath());
 
@@ -65,10 +66,13 @@ class PostController extends Controller
             $media->user()->associate($user);
             $media->relation_id = $post->id;
             $media->save();
+
+            $mediaList[] = $media;
         }
 
+        $post['media'] = $mediaList;
 
-        return 'ok';
+        return $post;
     }
 
     public function attachMedia(Request $request){

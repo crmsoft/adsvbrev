@@ -34375,7 +34375,7 @@ var Post = function Post(_ref) {
   }, _react.default.createElement("div", {
     className: "user-ava"
   }, _react.default.createElement("img", {
-    src: "/img/default-ava.jpg",
+    src: data.user.ava,
     alt: "That's you !"
   })), _react.default.createElement("div", {
     className: "user-post-info"
@@ -34475,6 +34475,11 @@ function (_Component) {
   }
 
   _createClass(FeedList, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      console.log(this.props);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, this.props.list.map(function (item, index) {
@@ -38497,7 +38502,7 @@ exports.default = AvaPoupContent;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PROFILE_REFRESH = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
+exports.POST_ADDED = exports.PROFILE_REFRESH = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
 var PROFILE_FETCH_START = 'PROFILE_FETCH_START';
 exports.PROFILE_FETCH_START = PROFILE_FETCH_START;
 var PROFILE_FETCH_DONE = 'PROFILE_FETCH_DONE';
@@ -38506,6 +38511,8 @@ var PROFILE_FETCH_ERROR = 'PROFILE_FETCH_ERROR';
 exports.PROFILE_FETCH_ERROR = PROFILE_FETCH_ERROR;
 var PROFILE_REFRESH = 'REFRESH_PROFILE';
 exports.PROFILE_REFRESH = PROFILE_REFRESH;
+var POST_ADDED = 'POST_ADDED';
+exports.POST_ADDED = POST_ADDED;
 },{}],"../src/profile/fetch/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -38515,6 +38522,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _actions = require("./actions");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 var initialState = {
   info: {
@@ -38534,6 +38549,15 @@ var profileReducer = function profileReducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _actions.POST_ADDED:
+      {
+        return Object.assign({}, state, {
+          info: Object.assign({}, state.info, {
+            feed: [action.data].concat(_toConsumableArray(state.info.feed))
+          })
+        });
+      }
+
     case _actions.PROFILE_REFRESH:
       {
         var a = Object.assign({}, state);
@@ -39398,7 +39422,11 @@ var Menu = function Menu() {
     to: "/"
   }, _react.default.createElement("span", {
     className: "icon-profile"
-  }, " my profile")))));
+  }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+    to: "/fee"
+  }, _react.default.createElement("span", {
+    className: "icon-profile"
+  }, " feed")))));
 };
 
 var _default = Menu;
@@ -39833,6 +39861,10 @@ var _reactTextareaAutosize = _interopRequireDefault(require("react-textarea-auto
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _store = _interopRequireDefault(require("../profile/fetch/store"));
+
+var _actions = require("../profile/fetch/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -40079,6 +40111,11 @@ function (_Component3) {
             saving: false,
             saved: true
           };
+        }, function () {
+          _store.default.dispatch({
+            type: _actions.POST_ADDED,
+            data: response.data
+          });
         });
       }).catch(function (err) {
         return _this6.setState({
@@ -40131,7 +40168,7 @@ function (_Component3) {
 }(_react.Component);
 
 exports.default = CreatePostComponent;
-},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","axios":"../../node_modules/axios/index.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -59815,7 +59852,8 @@ var _events = require("./events");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
+//const socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc());
+var socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
 
 socket.onclose = function () {//document.location.reload();
 };
@@ -60431,7 +60469,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import '../node_modules/bootstrap/js/src/dropdown';
+//import $ from '../node_modules/jquery/dist/jquery.min';
+//import '../node_modules/bootstrap/dist/js/bootstrap';
 var App = function App() {
   return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", null, _react.default.createElement(_reactRedux.Provider, {
     store: _store.default
@@ -60483,7 +60522,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35022" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41705" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
