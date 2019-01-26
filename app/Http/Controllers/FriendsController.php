@@ -52,12 +52,12 @@ class FriendsController extends Controller
 
             $subscriber = $user->followers()->where('user_id', $addMe->id)->first();
 
-
             if( $subscriber ){
 
-                $subscriber->pivot->update([
-                    'status' => User::STATUS_FRIEND
-                ]);
+                UserFriends::where('user_id', $addMe->id)
+                            ->where('friend_id', $user->id)
+                            ->where('status', User::STATUS_SUBSCRIBE)
+                            ->update(['status' => User::STATUS_FRIEND]);
 
                 UserFriends::create([
                     'status' => User::STATUS_FRIEND,
@@ -109,30 +109,23 @@ class FriendsController extends Controller
 
     public function unsubscribe(String $username)
     {
-        $addMe = User::where('username', $username)->where('validated',1)->first();
+        $recipient = User::where('username', $username)->where('validated',1)->first();
 
-        if( $addMe ){
+        $result = 0;
 
-            $user = Auth::user();
+        if($recipient)
+        {   
+            $user = auth()->user();
 
-            $following = $user->subscribers()->where('friend_id',$addMe->id)->first();
+            $result = UserFriends::where('user_id', $user->id)
+            ->where('friend_id', $recipient->id)
+            ->where('status', User::STATUS_SUBSCRIBE)
+            ->delete();
+        } // end if
 
-
-            if( $following && $user->id != $addMe->id ){
-                try{
-                    $following->pivot->update(['deleted_at' => now()]);
-
-                    return [
-                        'status' => 'none'
-                    ];
-                } catch (\Exception $e){
-                    // should be duplicate error
-                    Log::debug($e);
-                }
-            }
-        }
-
-        return response('Not Found', 404);
+        return $result == 1 ? [
+            'status' => 'none'
+        ] : response('Not Found', 404);
     }
 
 }

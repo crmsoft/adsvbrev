@@ -91,14 +91,17 @@ class User extends Authenticatable implements JWTSubject
 
         $user = auth()->user();
 
-        if($user->subscribers()->where('friend_id', $this->id)->count())
-            return 'subscribed';
+        if($this->id != $user->id)
+        {
+            if($user->subscribers()->where('friend_id', $this->id)->count())
+                return 'subscribed';
 
-        if($user->followers()->where('user_id', $this->id)->count())
-            return 'following';
+            if($user->followers()->where('user_id', $this->id)->count())
+                return 'following';
 
-        if($this->friend()->where('friend_id', $user->id)->count())
-            return 'friends';
+            if($this->friend()->where('friend_id', $user->id)->count())
+                return 'friends';
+        } // end if 
 
         return 'none';
     }
@@ -137,23 +140,38 @@ class User extends Authenticatable implements JWTSubject
 
     public function friend()
     {
-        return $this->belongsToMany(User::class, 'user_friends','user_id', 'friend_id')
-            ->where('deleted_at', '=', null)
-            ->where('status', self::STATUS_FRIEND);
+        return $this->hasManyThrough(
+            User::class,
+            UserFriends::class,
+            'user_id',
+            'id',
+            'id',
+            'friend_id'
+        )->where('status', self::STATUS_FRIEND);
     }
 
     public function subscribers()
     {
-        return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id')
-            ->where('deleted_at', '=', null)
-            ->where('status', self::STATUS_SUBSCRIBE);
+        return $this->hasManyThrough(
+            User::class,
+            UserFriends::class,
+            'user_id',
+            'id',
+            'id',
+            'friend_id'
+        )->where('status', self::STATUS_SUBSCRIBE);
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'user_friends', 'friend_id', 'user_id')
-            ->where('deleted_at', '=', null)
-            ->where('status', self::STATUS_SUBSCRIBE);
+        return $this->hasManyThrough(
+            User::class,
+            UserFriends::class,
+            'friend_id',
+            'id',
+            'id',
+            'user_id'
+        )->where('status', self::STATUS_SUBSCRIBE);
     }
 
 

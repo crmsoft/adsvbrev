@@ -36591,7 +36591,7 @@ var intialFetch = function intialFetch(user) {
     dispatch(fetchStart());
 
     _axios.default.get(url).then(function (data) {
-      return dispatch(fetchedInitial(data));
+      return dispatch(fetchedInitial(data.data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
     });
@@ -36606,7 +36606,7 @@ var moreFetch = function moreFetch() {
     dispatch(fetchStart());
 
     _axios.default.get(followers ? '' : '/friend/list').then(function (data) {
-      return dispatch(fetchDone(data));
+      return dispatch(fetchDone(data.data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
     });
@@ -37126,7 +37126,7 @@ var fetchReducer = function fetchReducer() {
     case _actions.FETCH_DONE:
       {
         return {
-          items: _toConsumableArray(state.items).concat(_toConsumableArray(action.data)),
+          items: [].concat(_toConsumableArray(state.items), _toConsumableArray(action.data)),
           update: false
         };
       }
@@ -37886,7 +37886,7 @@ var fetchReducer = function fetchReducer() {
     case _actions.FETCH_DONE:
       {
         return {
-          items: _toConsumableArray(state.items).concat(_toConsumableArray(action.data))
+          items: [].concat(_toConsumableArray(state.items), _toConsumableArray(action.data))
         };
       }
 
@@ -39847,7 +39847,59 @@ TextareaAutosize.defaultProps = {
 } : void 0;
 var _default = TextareaAutosize;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","@babel/runtime/helpers/esm/assertThisInitialized":"../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../src/post-add/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","@babel/runtime/helpers/esm/assertThisInitialized":"../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Input =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Input, _Component);
+
+  function Input() {
+    _classCallCheck(this, Input);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Input).apply(this, arguments));
+  }
+
+  _createClass(Input, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("textarea", null));
+    }
+  }]);
+
+  return Input;
+}(_react.Component);
+
+exports.default = Input;
+},{"react":"../node_modules/react/index.js"}],"../src/post-add/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39864,6 +39916,8 @@ var _axios = _interopRequireDefault(require("axios"));
 var _store = _interopRequireDefault(require("../profile/fetch/store"));
 
 var _actions = require("../profile/fetch/actions");
+
+var _Input = _interopRequireDefault(require("./Input"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39994,7 +40048,7 @@ function (_Component2) {
 
       this.setState(function (state) {
         return {
-          previews: _toConsumableArray(state.previews).concat([preview])
+          previews: [].concat(_toConsumableArray(state.previews), [preview])
         };
       }, function () {
         _this4.props.onFiles(file);
@@ -40139,7 +40193,7 @@ function (_Component3) {
 
       return _react.default.createElement("div", {
         className: "wrapper " + (this.state.active ? "active" : "")
-      }, _react.default.createElement(_reactTextareaAutosize.default, {
+      }, _react.default.createElement(_Input.default, {
         placeholder: "Tell about your adventure in favorite game...",
         onFocus: this.onEnter,
         value: this.state.post,
@@ -40168,7 +40222,7 @@ function (_Component3) {
 }(_react.Component);
 
 exports.default = CreatePostComponent;
-},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","./Input":"../src/post-add/Input.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41730,7 +41784,7 @@ var performSearch = function performSearch(queryString) {
     dispatch(progress());
 
     _axios.default.post("/search".concat(queryString)).then(function (response) {
-      return dispatch(done(response.data));
+      return dispatch(done(response.data.data));
     }).catch(function (err) {
       return dispatch(error(err));
     });
@@ -42901,7 +42955,7 @@ var load_chats = function load_chats() {
     return _axios.default.get("/chats").then(function (response) {
       return dispatch({
         type: CHATS_LOADED,
-        data: response.data
+        data: response.data.data
       });
     });
   };
@@ -59852,8 +59906,7 @@ var _events = require("./events");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//const socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc());
-var socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
+var socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
 
 socket.onclose = function () {//document.location.reload();
 };
@@ -60000,7 +60053,7 @@ function (_Component) {
             return {
               beforePull: _this3.containerRef.current.scrollHeight,
               pullingPrev: !response.data.more,
-              messagesList: _toConsumableArray(response.data.list.reverse()).concat(_toConsumableArray(state.messagesList))
+              messagesList: [].concat(_toConsumableArray(response.data.list.reverse()), _toConsumableArray(state.messagesList))
             };
           }, function () {
             _this3.containerRef.current.querySelector('.css-y1c0xs').scrollTop = _this3.state.beforePull + 55;
@@ -60025,7 +60078,7 @@ function (_Component) {
             });
             return {
               chat: hash_id,
-              messagesList: _toConsumableArray(state.messagesList).concat(_toConsumableArray(response.data.reverse().filter(function (m) {
+              messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(response.data.reverse().filter(function (m) {
                 return ids.indexOf(m.id) === -1;
               })))
             };
@@ -60049,7 +60102,7 @@ function (_Component) {
       }).then(function (response) {
         _this5.setState({
           reload: false,
-          messagesList: _toConsumableArray(_this5.state.messagesList).concat([response.data])
+          messagesList: [].concat(_toConsumableArray(_this5.state.messagesList), [response.data])
         }, function () {
           return _socket.default.chatMessagePush(hash);
         });
@@ -60413,7 +60466,7 @@ function (_Component) {
 
 
       this.setState({
-        activeChats: _toConsumableArray(this.state.activeChats).concat([hash])
+        activeChats: [].concat(_toConsumableArray(this.state.activeChats), [hash])
       }, function () {
         _store.default.dispatch({
           type: _events.CHAT_READED,
@@ -60522,7 +60575,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41705" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33303" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

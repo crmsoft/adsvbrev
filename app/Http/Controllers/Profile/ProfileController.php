@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+
+use App\Http\Resources\UserList\UserCollection;
+
 class ProfileController extends Controller
 {
     /**
@@ -30,14 +33,12 @@ class ProfileController extends Controller
 
     function listFriends(String $username = null){
         $user = $username ? User::where('username', $username)->first() : Auth::user();
-        $friends = $user->friend()->get();
-        return response($friends);
+        return new UserCollection($user->friend);
     }
 
     function listFollowers( String $username = null ){
         $user = $username ? User::where('username', $username)->first() : Auth::user();
-        $subscribers = $user->followers()->get();
-        return response($subscribers);
+        return new UserCollection($user->followers);
     }
 
     /**

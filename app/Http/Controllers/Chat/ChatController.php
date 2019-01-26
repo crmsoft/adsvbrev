@@ -11,6 +11,8 @@ use App\MessageRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Resources\Chat\ChatUser;
+
 class ChatController extends Controller{
 
     /**
@@ -18,9 +20,10 @@ class ChatController extends Controller{
      */
     public function chats(Request $request)
     {
-
+        //return [ 'chat' => [  ], 'friend' => [] ];
         $user = $request->user();
 
+        return new ChatUser($user);
         $chats = User::where('id', $user->id)
                 ->with(['chat' => function($query){
                     $query->orderBy('updated_at', 'desc');
