@@ -5,7 +5,7 @@ namespace App\Http\Resources\Profile;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\UserList\UserCollection;
-use App\Http\Resources\UserList\User;
+use App\Http\Resources\UserListStatus\User;
 use App\Http\Resources\Post\PostCollection;
 
 class ResourceProfile extends JsonResource

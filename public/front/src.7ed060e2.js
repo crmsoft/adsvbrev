@@ -39048,7 +39048,7 @@ function (_Component) {
   _createClass(FriendShipActionComponent, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var status = _store.guest.getState().info.profile.user.has_status;
+      var status = _store.guest.getState().data.profile.user.has_status;
 
       this.setState({
         status: status === 'subscribed' ? _actions.FRIENDSHIP_FOLLOWING : status === 'friends' ? _actions.FRIENDSHIP_FRIENDS : status === 'following' ? _actions.FRIENDSHIP_SUBSCRIBED : _actions.FRIENDSHIP_NONE
@@ -39060,9 +39060,9 @@ function (_Component) {
       var _this2 = this;
 
       var _guest$getState = _store.guest.getState(),
-          info = _guest$getState.info;
+          data = _guest$getState.data;
 
-      var username = info.profile.user.username;
+      var username = data.profile.user.username;
       var status = this.state.status;
       console.log(status);
       return _react.default.createElement("div", null, status === _actions.FRIENDSHIP_NONE ? _react.default.createElement("button", {
@@ -39333,10 +39333,10 @@ var EditableArea = function EditableArea(_ref) {
   }, text) : _react.default.createElement("span", null, text));
 };
 
-var UserProfile = function UserProfile(_ref2) {
-  var info = _ref2.info;
-  var profile = info.profile,
-      guest = info.guest;
+var UserProfile = function UserProfile(data) {
+  var profile = data.info.profile;
+  var guest = data.guest;
+  console.log(data, data.info);
   return _react.default.createElement("div", {
     className: "h-100"
   }, _react.default.createElement("div", {
@@ -40537,7 +40537,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props.data);
       var _this$props$data = this.props.data,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
@@ -40547,7 +40546,8 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
-        info: this.props.data
+        info: this.props.data,
+        guest: true
       })), _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_index3.default, null), _react.default.createElement("section", {
@@ -60069,7 +60069,7 @@ function (_Component) {
           return _this3.setState(function (state) {
             return {
               beforePull: _this3.containerRef.current.scrollHeight,
-              pullingPrev: !data.data.more,
+              pullingPrev: !data.more,
               messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
           }, function () {
