@@ -34475,11 +34475,6 @@ function (_Component) {
   }
 
   _createClass(FeedList, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      console.log(this.props);
-    }
-  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, this.props.list.map(function (item, index) {
@@ -34580,7 +34575,7 @@ var Friend = function Friend(props) {
   }, _react.default.createElement("img", {
     src: "".concat(props.friend.ava),
     alt: "body"
-  }), _react.default.createElement("h2", null, props.friend.name));
+  }), _react.default.createElement("h2", null, props.friend.first_name));
 };
 
 var _default = Friend;
@@ -39020,6 +39015,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var guestUnsubscribe = function guestUnsubscribe() {};
+
 var FriendShipActionComponent =
 /*#__PURE__*/
 function (_Component) {
@@ -39048,11 +39045,18 @@ function (_Component) {
   _createClass(FriendShipActionComponent, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var status = _store.guest.getState().data.profile.user.has_status;
+      guestUnsubscribe = _store.guest.subscribe(function () {
+        var status = _store.guest.getState().data.profile.user.has_status;
 
-      this.setState({
-        status: status === 'subscribed' ? _actions.FRIENDSHIP_FOLLOWING : status === 'friends' ? _actions.FRIENDSHIP_FRIENDS : status === 'following' ? _actions.FRIENDSHIP_SUBSCRIBED : _actions.FRIENDSHIP_NONE
-      });
+        this.setState({
+          status: status === 'subscribed' ? _actions.FRIENDSHIP_FOLLOWING : status === 'friends' ? _actions.FRIENDSHIP_FRIENDS : status === 'following' ? _actions.FRIENDSHIP_SUBSCRIBED : _actions.FRIENDSHIP_NONE
+        });
+      }.bind(this));
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      guestUnsubscribe();
     }
   }, {
     key: "render",
@@ -39064,7 +39068,6 @@ function (_Component) {
 
       var username = data.profile.user.username;
       var status = this.state.status;
-      console.log(status);
       return _react.default.createElement("div", null, status === _actions.FRIENDSHIP_NONE ? _react.default.createElement("button", {
         onClick: function onClick() {
           return _this2.props.addToFriends(username);
@@ -39336,7 +39339,6 @@ var EditableArea = function EditableArea(_ref) {
 var UserProfile = function UserProfile(data) {
   var profile = data.info.profile;
   var guest = data.guest;
-  console.log(data, data.info);
   return _react.default.createElement("div", {
     className: "h-100"
   }, _react.default.createElement("div", {
@@ -40492,6 +40494,8 @@ var _index3 = _interopRequireDefault(require("../../menu/index"));
 
 var _index4 = _interopRequireDefault(require("../groups/index"));
 
+var _feed = _interopRequireDefault(require("../feed"));
+
 var _events = require("../fetch/events");
 
 var _about = _interopRequireDefault(require("../about"));
@@ -40540,7 +40544,8 @@ function (_Component) {
       var _this$props$data = this.props.data,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
-          totals = _this$props$data.totals;
+          totals = _this$props$data.totals,
+          feed = _this$props$data.feed;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
         className: "user-profile"
       }, _react.default.createElement("div", {
@@ -40557,7 +40562,11 @@ function (_Component) {
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
-      }, _react.default.createElement(_index2.default, null))), _react.default.createElement("aside", {
+      }, _react.default.createElement(_index2.default, null)), _react.default.createElement("section", {
+        className: "posts"
+      }, _react.default.createElement(_feed.default, {
+        list: feed
+      }))), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
         className: "block",
@@ -40591,7 +40600,7 @@ var GuestComponent = (0, _reactRedux.connect)(function (state) {
 })(Guest);
 var _default = GuestComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../feed":"../src/profile/feed/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42997,6 +43006,14 @@ exports.default = void 0;
 
 var _events = require("./events");
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 var initialState = {
   action: 'none',
   target: undefined,
@@ -43082,17 +43099,23 @@ var reducer = function reducer() {
 
     case _events.CHAT_READED:
       {
+        var newChat = action.data;
+        var added = state.messenger.chat.filter(function (chat) {
+          return chat.hash_id === newChat.hash_id;
+        });
+        var chats = state.messenger.chat;
+
+        if (added.length) {
+          var index = chats.indexOf(added.pop());
+          chats[index].unread = 0;
+        } else {
+          chats.push(newChat);
+        }
+
         return Object.assign({}, state, {
           action: null,
           messenger: Object.assign({
-            chat: state.messenger.chat.map(function (chat) {
-              if (action.data === chat.hash_id) {
-                chat.unread = 0;
-              } // end if
-
-
-              return chat;
-            })
+            chat: _toConsumableArray(chats)
           }, state.messenger)
         });
       }
@@ -43428,10 +43451,11 @@ function (_Component) {
     value: function createChat(username) {
       var _this2 = this;
 
-      _axios.default.post("/chats/".concat(username, "/start")).then(function (response) {
-        _this2.startConversation(response.data);
+      _axios.default.post("/chats/".concat(username, "/start")).then(function (_ref3) {
+        var data = _ref3.data;
 
-        _this2.props.loadChats();
+        _this2.startConversation(data.data); //this.props.loadChats();
+
       }).catch(function (err) {
         return console.log(err);
       });
@@ -60118,10 +60142,12 @@ function (_Component) {
 
       _axios.default.post("/chat/".concat(hash, "/message"), {
         message: message
-      }).then(function (response) {
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+
         _this5.setState({
           reload: false,
-          messagesList: [].concat(_toConsumableArray(_this5.state.messagesList), [response.data])
+          messagesList: [].concat(_toConsumableArray(_this5.state.messagesList), [data.data])
         }, function () {
           return _socket.default.chatMessagePush(hash);
         });
@@ -60474,9 +60500,9 @@ function (_Component) {
     }
   }, {
     key: "addChat",
-    value: function addChat(hash) {
+    value: function addChat(newChat) {
       var chat_exists = this.state.activeChats.filter(function (chat) {
-        return chat === hash;
+        return chat.hash_id === newChat.hash_id;
       });
 
       if (chat_exists.length) {
@@ -60485,11 +60511,11 @@ function (_Component) {
 
 
       this.setState({
-        activeChats: [].concat(_toConsumableArray(this.state.activeChats), [hash])
+        activeChats: [].concat(_toConsumableArray(this.state.activeChats), [newChat])
       }, function () {
         _store.default.dispatch({
           type: _events.CHAT_READED,
-          data: hash.hash_id
+          data: newChat
         });
       });
     }

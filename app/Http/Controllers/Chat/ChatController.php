@@ -11,6 +11,8 @@ use App\MessageRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Resources\Chat\ResourceChat;
+
 use App\Http\Resources\Chat\Dialog\ResourceMessage;
 
 use App\Http\Resources\Chat\ChatUser;
@@ -63,11 +65,11 @@ class ChatController extends Controller{
                  'conversation_id' => $conversation->id
              ]);
 
-             return Conversation::with('messages')->with('members')->find($conversation->id);
+             return new ResourceChat($conversation);
 
          } // end if
 
-         return Conversation::with('messages')->with('members')->find($conversations[0]->conversation_id);
+         return new ResourceChat(Conversation::find($conversations[0]->conversation_id));
     } // end start
 
     public function store(Conversation $conversation, Request $request)

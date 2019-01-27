@@ -4,6 +4,7 @@ namespace App\Http\Resources\Chat;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserList\UserCollection;
+use App\Http\Resources\Chat\ChatCollection;
 
 class ChatUser extends JsonResource
 {

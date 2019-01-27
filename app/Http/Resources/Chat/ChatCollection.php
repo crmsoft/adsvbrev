@@ -4,6 +4,8 @@ namespace App\Http\Resources\Chat;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+use \App\Http\Resources\Chat\ResourceChat;
+
 class ChatCollection extends ResourceCollection
 {
     /**
@@ -14,6 +16,10 @@ class ChatCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(
+            function($chat){
+                return new ResourceChat($chat);
+            }
+        );
     }
 }

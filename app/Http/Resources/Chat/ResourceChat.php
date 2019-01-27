@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 use \App\Http\Resources\UserList\UserCollection;
 
-class Chat extends JsonResource
+class ResourceChat extends JsonResource
 {
     /**
      * Transform the resource collection into an array.

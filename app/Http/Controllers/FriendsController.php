@@ -77,30 +77,27 @@ class FriendsController extends Controller
 
     public function unfriend(String $username)
     {
-        $addMe = User::where('username', $username)->where('validated',1)->first();
 
-        if( $addMe ){
+        $user = Auth::user();
 
-            $user = Auth::user();
+        $friend = $user->friend()->where('username', $username)->first();
 
-            $friend = $user->friend()->where('friend_id', $addMe->id)->first();
+        if( $friend && $user->id != $friend->id ){
+            try{
 
-            if( $friend && $user->id != $addMe->id ){
-                try{
+                UserFriends::where('user_id', $friend->id)
+                    ->where('friend_id', $user->id)
+                    ->update(['status' => User::STATUS_SUBSCRIBE]);
 
-                    UserFriends::where('user_id', $friend->pivot->friend_id)
-                        ->where('friend_id', $friend->pivot->user_id)
-                        ->update(['status' => User::STATUS_SUBSCRIBE]);
+                UserFriends::where('friend_id', $friend->id)
+                            ->where('user_id', $user->id)->delete();
 
-                    $friend->pivot->update([ 'deleted_at' => now() ]);
-
-                    return [
-                        'status' => 'following'
-                    ];
-                } catch (\Exception $e){
-                    // should be duplicate error
-                    Log::debug($e);
-                }
+                return [
+                    'status' => 'following'
+                ];
+            } catch (\Exception $e){
+                // should be duplicate error
+                Log::debug($e);
             }
         }
 
