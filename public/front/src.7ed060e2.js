@@ -40537,18 +40537,23 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log(this.props.data);
+      var _this$props$data = this.props.data,
+          friends = _this$props$data.friends,
+          groups = _this$props$data.groups,
+          totals = _this$props$data.totals;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
         className: "user-profile"
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
-        info: this.props.info
+        info: this.props.data
       })), _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_index3.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
-        user: this.props.info
+        user: this.props.data
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
@@ -40559,15 +40564,15 @@ function (_Component) {
         id: "section-friends"
       }, _react.default.createElement(_index.default, {
         isGuest: true,
-        user: this.props.info.profile.user.username,
-        list: this.props.info.friends,
-        total: this.props.totals.friends
+        user: this.props.data.profile.user.username,
+        list: friends,
+        total: totals.friends
       })), _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_index4.default, {
         isGuest: true,
-        list: this.props.info.groups,
-        total: this.props.totals.groups
+        list: groups,
+        total: totals.groups
       })))));
     }
   }]);
