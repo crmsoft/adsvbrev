@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+use App\Http\Resources\Post\ResourcePost;
+
 class PostController extends Controller
 {
     /**
@@ -43,7 +45,6 @@ class PostController extends Controller
         $post->save();
 
 
-        $mediaList = [];
         foreach ($request->file('media', []) as $media) {
             $image = Image::make($media->getRealPath());
 
@@ -67,12 +68,10 @@ class PostController extends Controller
             $media->relation_id = $post->id;
             $media->save();
 
-            $mediaList[] = $media;
         }
 
-        $post['media'] = $mediaList;
 
-        return $post;
+        return new ResourcePost($post);
     }
 
     public function attachMedia(Request $request){
