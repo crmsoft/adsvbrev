@@ -41507,6 +41507,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var data = this.props.data.data;
       return _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
       }, _react.default.createElement(_reactTabs.Tab, {
@@ -41524,7 +41525,7 @@ function (_Component) {
       }, " Security")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_profile.default, {
-        profile: this.props.data.info.profile,
+        profile: data.profile,
         errors: this.state.errors,
         save: this.saveChanges
       })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_security.default, {
