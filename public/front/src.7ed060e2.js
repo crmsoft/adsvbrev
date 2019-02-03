@@ -40015,7 +40015,7 @@ function (_Component) {
 
       var user = _store2.default.getState();
 
-      if (!user.username) {
+      if (!user || !user.username) {
         unListen = _store2.default.subscribe(function () {
           var user = _store2.default.getState();
 
