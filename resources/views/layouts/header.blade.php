@@ -14,36 +14,9 @@
                     <input class="form-control mr-sm-2 w-100" name="q" type="search" placeholder="Search" aria-label="Search">
                 </form>
             </div>
-            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                <li class="nav-item">
-                    <span class="nav-item-count">5</span>
-                    <a href="#asdc" class="nav-link icon-friend"></a>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-item-count">5</span>
-                    <a href="#sacvsd" class="nav-link icon-notification"></a>
-                </li>
-                <li class="nav-item">
-
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="d-flex">
-                            <div class="header-ava">
-                                <img src="{{ auth()->user()->profile->list_photo}}" alt="">
-                            </div>
-                            <div class="header-ava-text">
-                                {{ auth()->user()->username }}
-                            </div>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-
-
-                </li>
-            </ul>
+            <div id="header" class="ml-auto w-100">
+                Loading your profile...
+            </div>
         </div>
     </nav>
 
