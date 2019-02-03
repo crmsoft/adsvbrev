@@ -4,14 +4,18 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use Cog\Contracts\Love\Liker\Models\Liker as LikerContract;
+use Cog\Laravel\Love\Liker\Models\Traits\Liker;
+
 use App\Entities\Profile;
 use \App\Entities\Group;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, LikerContract
 {
-    use Notifiable;
+    use Notifiable, Liker;
 
     const STATUS_SUBSCRIBE = 'subscribe';
     const STATUS_FRIEND = 'friend';
@@ -26,6 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'unique',
         'email',
+        'dir',
         'username',
         'password',
         'email_verification_token'

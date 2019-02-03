@@ -25,7 +25,7 @@ class ResourceProfile extends JsonResource
         $profile['user'] = $user;
 
         $feed = new PostCollection($this->feed()->with(['media', 'user'])
-                ->limit(10)->orderBy('created_at', 'desc')->get());
+                    ->orderBy('created_at', 'desc')->take(2)->get());
 
         return [
             'friends' => new UserCollection($this->friend),

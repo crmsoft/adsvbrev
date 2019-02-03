@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Comment;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\UserList\User;
 use App\Http\Resources\Media\MediaCollection;
-use App\Http\Resources\Comment\CommentCollection;
 
-class ResourcePost extends JsonResource
+class ResourceComment extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -20,13 +19,12 @@ class ResourcePost extends JsonResource
     {
         return [
             'id' => $this->hash,
-            'created_at' => $this->human_ago,
-            'content' => $this->content,
-            'user' => new User($this->user),
-            'media' => new MediaCollection($this->media),
-            'comment' => new CommentCollection($this->comments),
+            'user' => new User($this->creator),
+            'created_at' => $this->created_at->diffForHumans(null, true, true),
+            'contnet' => $this->body,
             'like_count' => $this->likesCount,
-            'likes' => $this->isLikedBy($this->user->id)
+            'likes' => $this->isLikedBy($this->creator->id),
+            'media' => new MediaCollection($this->media)
         ];
     }
 }

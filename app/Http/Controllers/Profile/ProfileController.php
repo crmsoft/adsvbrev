@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+use App\Http\Resources\UserList\User as ResourceUser;
+
 use App\Http\Resources\Profile\ResourceProfile;
 
 use App\Http\Resources\UserList\UserCollection;
@@ -24,6 +26,16 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
+    }
+
+    /**
+     * fetch logged in user inforamtion
+     * 
+     * @return Response $user
+     */
+    public function getUser()
+    {
+        return new ResourceUser(auth()->user());
     }
 
     public function listGroups(){
@@ -115,33 +127,6 @@ class ProfileController extends Controller
         return (new ResourceProfile($user))->additional(
             [ 'guest' => $username != null ]
         );
-
-        $totalFriends = $user->friend()->count();
-        $totalGroups = $user->group()->count();
-
-
-        $profile = [
-                'info' => [
-                    'guest' => $username != null,
-                    'profile' => $user->profile()->with('user')->first(),
-                    'friends' => $user->friend()
-                                        ->limit(5)
-                                        ->inRandomOrder()
-                                        ->get(),
-                    'feed' => $user->feed()->with(['media', 'user'])
-                        ->take(3)->orderBy('created_at', 'desc')->get(),
-                    'groups' => $user->group(function($query){
-                        $query->inRandomOrder();
-                        $query->limit(3);
-                    })->get()
-                ],
-                'totals' => [
-                    'friends' => $totalFriends,
-                    'groups' => $totalGroups
-                ]
-            ];
-
-        return response($profile);
     }
 
     /**

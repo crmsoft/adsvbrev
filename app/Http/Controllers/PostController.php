@@ -74,6 +74,11 @@ class PostController extends Controller
         return new ResourcePost($post);
     }
 
+    public function toggleLike(Post $post)
+    {
+        return $post->toggleLikeBy();
+    }
+
     public function attachMedia(Request $request){
 
         if( $request->has('file') ){

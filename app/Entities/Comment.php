@@ -1,20 +1,23 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \App\User;
+use \App\Media;
 
 use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
 use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
 
-use BrianFaust\Commentable\Traits\HasComments;
-
-
-class Post extends Model implements LikeableContract
+class Comment extends \BrianFaust\Commentable\Models\Comment implements LikeableContract
 {
-    use SoftDeletes, HasComments, Likeable;
+    use SoftDeletes, Likeable;
 
+    /**
+     * Appends extra fields to model
+     * 
+     * @var array
+     */
     protected $appends = [
         'human_ago', 'hash'
     ];
@@ -22,11 +25,6 @@ class Post extends Model implements LikeableContract
     public function getHashAttribute()
     {
         return \Hashids::encode($this->id);
-    }
-
-    public function getHumanAgoAttribute()
-    {
-        return $this->created_at ? $this->created_at->diffForHumans() : '';
     }
 
     /**
@@ -41,12 +39,9 @@ class Post extends Model implements LikeableContract
         return $this->where($this->getRouteKeyName(), $value)->first();
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
-
     public function media(){
         return $this->hasMany(Media::class, 'relation_id')
-                ->where('type', 'post');
+                ->where('type', 'comment');
     }
-}
+
+} // end class Comment
