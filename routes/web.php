@@ -16,21 +16,6 @@ Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
     ->name('account.validation')
     ->middleware(['guest']);
 
-Route::get('/ab/{user}', function(\App\User $user){
-    dump(
-        \App\User::find(29)->chat->pluck('id')
-    ); exit;
-    // the user
-    dump($user->subscribers()->where('friend_id',1)->get()->pluck('id')->toArray());
-    dump($user->followers()->where('friend_id',28)->get()->pluck('id')->toArray());
-    dump($user->friend()->where('friend_id',5)->pluck('users.id')->toArray());
-    dump(\App\User::find(5)->friend()->pluck('users.id')->toArray());
-    // dump(\App\User::find(23)->following()->where('user_id', 17)->get()->pluck('id')->toArray());
-
-//    dump( 23, \App\User::find(23)->friend()->where('friend_id',17)->get()->pluck('id')->toArray() );
-//    dd( 17,\App\User::find(17)->friend()->where('friend_id',23)->get()->pluck('id')->toArray() );
-});
-
 // Lara Auth Routes
 //---------------------------------------------------------------------------------
 Auth::routes();
@@ -56,6 +41,7 @@ Route::group([
 
     // User profile page
     Route::get('/get/profile/{username?}', 'ProfileController@profile')->name('get-profile');
+    Route::post('/profile', 'ProfileController@getUser')->name('get-user');
     Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
     Route::get('/friend/list/{username?}', 'ProfileController@listFriends')->name('list-fo-friends');
     Route::get('/followers/list/{username?}', 'ProfileController@listFollowers')->name('list-fo-friends');
@@ -74,6 +60,20 @@ Route::group([
 
     // User profile page
     Route::post('/post/store', 'PostController@store')->name('store-post');
+    Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
+
+});
+
+// Comment Specific Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    // 'namespace' => '\Profile',
+    'middleware' => [ 'auth' ]
+], function (){
+
+    // User profile page
+    Route::post('/comment/store/{post}', 'CommentController@store')->name('store-comment');
+    Route::post('/comment/like/{comment}', 'CommentController@toggleLike')->name('toggle-like-comment');
 
 });
 
