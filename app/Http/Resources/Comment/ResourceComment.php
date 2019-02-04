@@ -23,7 +23,7 @@ class ResourceComment extends JsonResource
             'created_at' => $this->created_at->diffForHumans(null, true, true),
             'contnet' => $this->body,
             'like_count' => $this->likesCount,
-            'likes' => $this->isLikedBy($this->creator->id),
+            'likes' => $this->isLikedBy(auth()->id()),
             'media' => new MediaCollection($this->media)
         ];
     }

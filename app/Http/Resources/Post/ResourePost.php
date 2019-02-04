@@ -26,7 +26,7 @@ class ResourcePost extends JsonResource
             'media' => new MediaCollection($this->media),
             'comment' => new CommentCollection($this->comments),
             'like_count' => $this->likesCount,
-            'likes' => $this->isLikedBy($this->user->id)
+            'likes' => $this->isLikedBy(auth()->id())
         ];
     }
 }
