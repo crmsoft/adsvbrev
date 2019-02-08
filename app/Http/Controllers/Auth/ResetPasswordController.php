@@ -48,14 +48,9 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse($response)
     {
-        if(request()->ajax()){
-            return response()->json([
-                'message' => trans($response)
-            ]);
-        }
-
-        return redirect($this->redirectPath())
-            ->with('status', trans($response));
+        return response()->json([
+            'message' => trans($response)
+        ]);
     }
 
     /**
@@ -67,16 +62,10 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        if($request->ajax()){
-            return response()->json([
-                'errors' => [
-                    'message' => [__('Sorry, we encountered a problem. Please try again later!')]
-                ]
-            ], 422);
-        }
-
-        return redirect()->back()
-            ->withInput($request->only('email'))
-            ->withErrors(['email' => trans($response)]);
+        return response()->json([
+            'errors' => [
+                'message' => [__('Sorry, we encountered a problem. Please try again later!')]
+            ]
+        ], 422);
     }
 }
