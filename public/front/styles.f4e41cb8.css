@@ -8304,14 +8304,25 @@ nav.user-profile {
         font-size: 9px;
         padding: 5px 5px 0; }
     .chat-message .message .message-content {
-      padding: 2px 3px;
-      background-color: aliceblue;
       color: black;
-      border-radius: 3px;
       line-height: 1;
       align-self: flex-start;
       word-break: break-all;
-      font-size: 13px; }
+      font-size: 13px;
+      display: flex; }
+      .chat-message .message .message-content .message-text {
+        border-radius: 3px;
+        padding: 2px 3px;
+        background-color: aliceblue;
+        display: inline-block; }
+      .chat-message .message .message-content .message-status {
+        align-self: flex-end; }
+        .chat-message .message .message-content .message-status.readed:before {
+          content: '\221E';
+          color: #F15A24;
+          font-size: 12px;
+          margin-left: 3px;
+          display: inline-block; }
 
 .user .user-list-item {
   display: flex;
