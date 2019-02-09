@@ -22,6 +22,8 @@ class ResourceComment extends JsonResource
             'user' => new User($this->creator),
             'created_at' => $this->created_at->diffForHumans(null, true, true),
             'contnet' => $this->body,
+            'parent' => $this->parent_hash,
+            'subs' => $this->parent_hash ? [] : new CommentCollection($this->children()->take(4)->orderBy('id', 'desc')->get()),
             'like_count' => $this->likesCount,
             'likes' => $this->isLikedBy(auth()->id()),
             'media' => new MediaCollection($this->media)

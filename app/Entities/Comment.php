@@ -19,12 +19,17 @@ class Comment extends \BrianFaust\Commentable\Models\Comment implements Likeable
      * @var array
      */
     protected $appends = [
-        'human_ago', 'hash'
+        'human_ago', 'hash', 'parent_hash'
     ];
 
     public function getHashAttribute()
     {
         return \Hashids::encode($this->id);
+    }
+
+    public function getParentHashAttribute()
+    {
+        return $this->parent_id ? \Hashids::encode($this->parent_id) : null;
     }
 
     /**

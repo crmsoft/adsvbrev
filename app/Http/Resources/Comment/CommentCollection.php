@@ -18,6 +18,6 @@ class CommentCollection extends ResourceCollection
     {
         return $this->collection->map(function($comment){
             return new ResourceComment($comment);
-        });
+        })->reverse();
     }
 }

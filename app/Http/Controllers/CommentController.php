@@ -15,19 +15,26 @@ use App\Http\Resources\Comment\ResourceComment;
 class CommentController extends Controller
 {
 
-    public function store(Request $request, Post $post)
+    public function store(Request $request, Post $post, Comment $comment)
     {
 
         $request->validate([
             'comment' => ['required', 'min:1'],
-            'file' => 'image|mimes:jpeg,jpg,gif,png|max:8000'
+            'file'    => 'image|mimes:jpeg,jpg,gif,png|max:8000',
         ]);
 
         $user = auth()->user();
 
+        $parentComment = $comment->id ? $comment : null;
+
+        if ($comment && $comment->parent_id)
+        {
+            $parentComment = Comment::find( $comment->parent_id );
+        } // end if
+
         $comment = $post->comment([
             'body' => $request->comment
-        ], $user);
+        ], $user, $parentComment);
 
         if ($request->hasFile('file')) {
             $media = $request->file('file');
