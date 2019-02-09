@@ -1,7 +1,7 @@
 /** global variable decloraton */
 $mainColor: #F15A24;
 $green: #31EF26;
-$halfWhite: #FFFFFF99;
+$halfWhite: #ffffff99;
 $mainGray: #CBCBCB;
 $darkGray: #202225;
 $darekerGray: #36393F;
@@ -9,6 +9,8 @@ $halfGray: #2F3136;
 $lighterGray: #3E3F42;
 $lightGray: #484B52;
 $lightestGray: #42464D;
+$postBack: #14191C;
+$postDelimiter: #293235;
 
 /** old declarations */
 $white: #ffffff;
@@ -18,7 +20,9 @@ $sectionInnerColor: #484B52;
 $delimiterColor: #CBCBCB;
 $sectionBorderRadius: 3px;
 $sectionTop: 15px;
-$sectionPadding: 10px;;
+$sectionPadding: 10px;
+$commentBottom: 10px;
+$commentMargin: 10px;
 
 /** use bootstrap */
 @import '../node_modules/bootstrap/scss/bootstrap.scss';

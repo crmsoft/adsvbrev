@@ -49,3 +49,13 @@
     -moz-border-radius : 4px;
     -webkit-border-radius : 4px;
 }
+
+@mixin status-buble($h) {
+    content:  ' ';
+    display: inline-block;
+    height: $h;
+    width: $h;
+    background-color: green;
+    border-radius: $h / 2;
+    margin-right: $h / 2;
+}

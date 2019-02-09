@@ -1,6 +1,6 @@
 .chat{
     position: fixed;
-    overflow-y: auto;
+    //overflow-y: auto;
     bottom: 0;
     right: 0;
     display: flex;
@@ -10,13 +10,38 @@
         margin: 0 5px;
         background-color: $darkGray;
         max-width: 250px;
+        align-self: flex-end;
         .header{
+            cursor: pointer;
+            min-width: 200px;
             height: 40px;
             border-bottom: 2px solid $lightestGray;
             padding: 0 10px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .title{
+                &::before{
+                    @include status-buble(10px)
+                }
+                &.offline{
+                    &::before{
+                        background-color: red;
+                    }
+                }
+                &.busy{
+                    &::before{
+                        background-color: yellow;
+                    }
+                }
+            }
+            .chat-actions{
+              display: flex;
+              .minimize{
+                margin-right: 5px;
+              }
+            }
         }
         .chatable{
             overflow: auto;
@@ -29,7 +54,8 @@
             }
             .user-list-ava{
                 position: relative;
-                width: 65px;
+                width: 75px;
+                border-radius: 0;
                 display: flex;
                 margin-right: 5px; 
                 img{
@@ -44,6 +70,18 @@
             }
             .user-list-user{
                 font-size: 12px;
+                position: relative;
+                .unread{
+                    display: inline-block;
+                    position: absolute;
+                    right: 0;
+                    background: #f05a24;
+                    border-radius: 15px;
+                    height: 20px;
+                    width: 20px;
+                    text-align: center;
+                    vertical-align: middle;
+                }
             }
         }
     }
@@ -51,20 +89,94 @@
     .dialog-wrapper{
         display: flex;
         .dialog{
+            position: relative;
+            max-width: 250px;
+            height: 320px;
             flex: 1;
             display: flex;
             flex-direction: column;
             background-color: $halfGray;
             margin-right: 3px;
             .message-container{
+                background-image: url('/public/../../img/message_background-01.png');
                 flex: 1;
                 max-height: 250px;
                 overflow: auto;
-                padding: 5px 10px;
+                padding: 5px;
             }
             .input{
+                border-radius: 5px;
+                margin: 0 5px;
                 display: flex;
+                background-color: $lightGray;
+                textarea{
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                .emoji{
+                    display: flex;
+                    align-items: center;
+                    padding-left: 5px;
+                    cursor: pointer;
+                    &:after{
+                        content: '|';
+                        height: 85%;
+                        background: $mainGray;
+                        width: 1px;
+                        height: 24px;
+                        margin-left: 5px;
+                    }
+                }
+                .attach{
+                    padding: 0 5px;
+                    display: flex;
+                    align-items: center;
+                    font-size: 9px;
+                    span{
+                        background-color: $mainGray;
+                        border-radius: 45px;
+                        width: 12px;
+                        text-align: center;
+                        vertical-align: middle;
+                        height: 12px;
+                        cursor: pointer;
+                    }
+                }
+                .emoji-container{
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    display: none;
+                    &.show{
+                        display: block;
+                    }
+                }
+            }
+            .dialog-head{
+                border-bottom: 1px solid gray;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 5px;
+                .dialog-title{
+                    font-size: 14px;
+                    overflow: hidden;
+                    max-width: 160px;
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .dialog-actions{
+                    font-size: 15px;
+                    cursor: pointer;                    
+                }
             }
         }
     }
 }
+
+@import './emoji';
+@import './message';
+@import './user';
+@import './messenger-options'

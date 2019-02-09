@@ -1,13 +1,46 @@
+.textarea{
+    height: 25px;
+    position: relative;
+    textarea{
+        background-color: $darkGray;
+        resize: none;
+        outline: 0;
+        padding: 0;
+        padding-right: 35px;
+    }
+    .emoji{
+        display: none;
+        margin: 0;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        position: absolute;
+        font-family: 'icomoon' !important;
+        right: 0;
+        top: 0;
+        color: $white;
+        &.active{
+            color: $mainColor;
+        }
+        &:before{
+            content: "\e907"
+        }
+    }
+}
+
 .user-add-post{
     padding: 10px;
     margin-top: $sectionTop;
     @include section-border-radius();
     background-color: $sectionBg;
+    border: 1px solid $mainColor;
+    position: relative;
     .wrapper{
         width: 100%;
         margin: 0;
-        position: relative;
         &.active{
+            padding-bottom: 30px;
             .footer{
                 display: flex;
                 flex-direction: column;
@@ -15,8 +48,21 @@
             .user-actions{
                 display: none;
             }
+            .textarea{
+                height: auto;
+            }
+            .previews, .emoji{
+                display: block;
+            }
         }
         .footer{
+            border-radius: 3px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 5px 10px;
+            background-color: #0d1011;
             display: none;
             .container-with-media{
                 img{
@@ -31,6 +77,7 @@
             width: 100%;
         }
         .add-media{
+            text-decoration: none;
             justify-content: center;
             align-items: center;
             display: flex;
@@ -53,12 +100,57 @@
         }
         .user-actions{
             position: absolute;
-            right: 0;
-            top: 6px;
+            right: 5px;
+            top: 10px;
             a{
                 color: $white;
                 text-decoration: none;
                 margin-right: 5px;
+            }
+        }
+    }
+}
+
+.previews{
+    display: none;
+    padding: 10px 0;
+    .preview{
+        position: relative;
+        cursor: pointer;
+        border: 1px solid transparent;
+        width: 120px;
+        height: 75px;
+        background-size: cover;
+        display: inline-block;
+        margin-right: 5px;
+        &:hover{
+            border-color: $mainColor;
+            .hover{
+                display: flex;
+            }
+        }
+        
+
+        .hover{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background: rgba(66, 70, 77, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            span{
+                height: 20px;
+                width: 20px;
+                background-color: $halfGray;
+                text-align: center;
+                font-size: 25px;
+                line-height: 0.8;
+                border-radius: 15px;
+                color: $lightestGray;
+                box-shadow: 0px 0px $white;
             }
         }
     }

@@ -1,0 +1,68 @@
+$subTitlesColors: #bababa;
+
+.options-pop-up{
+    div:first-child{
+        background-color: $darkGray !important;
+    }
+}
+
+.messenger-options{
+    background-color: $darkGray;
+    padding: 10px;
+    border-radius: 3px;
+    .main-title{
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .messenger-sound-option{
+        display: flex;
+        margin-bottom: 5px;
+        .sound-title{
+            font-size: 14px;
+            color: $subTitlesColors;
+            margin-right: 25px;
+        }
+        .sound-option-switch{
+            align-self: center;
+            padding-top: 3px;
+        }
+    }
+    .messenger-options-statuses{
+        display: flex;
+        font-size: 10px;
+        .status-title{
+            font-size: 14px;
+            padding-right: 25px;
+            color: $subTitlesColors;
+        }
+        .status{
+            padding: 2px 7px;
+            border-radius: 10px;
+            align-self: center;
+            &.active{
+                background-color: $mainColor;
+            }
+            &.online{
+                &:before{
+                    @include status-buble(8px);
+                }
+            }
+            &.offline{
+                &:before{
+                    @include status-buble(8px);
+                    background-color: red
+                }
+            }
+            &.busy{
+                &:before{
+                    @include status-buble(8px);
+                    background-color: yellow;
+                }
+            }
+            &:before{
+                vertical-align: -5%;
+                margin-right: 2px;
+            }
+        }
+    }
+}

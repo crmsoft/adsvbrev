@@ -1,0 +1,61 @@
+.chat-message{
+    display: flex;
+    margin-bottom: 1px;
+    .user-ava{
+        width: 30px;
+        height: 30px;
+        border-radius: 20px;
+        margin-right: 5px;
+    }
+    .message{
+        display: flex;
+        flex-direction: column;
+        max-width: 80%;
+        .message-sender-info{
+            display: flex;
+            .message-user{
+                font-size: 14px;
+                max-width: 120px;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .message-time{
+                color: gray;
+                font-size: 9px;
+                padding: 5px 5px 0;
+            }
+        }
+        .message-content{
+            color: black;
+            line-height: 1;
+            align-self: flex-start;
+            word-break: break-all;
+            font-size: 13px;
+            display: flex;
+
+            .message-text
+            {
+                border-radius: 3px;
+                padding: 2px 3px;
+                background-color: aliceblue;
+                display: inline-block;
+            }
+
+            .message-status{
+                align-self: flex-end;
+                &.readed
+                {
+                    &:before{
+                        content: '\221E';
+                        color: $mainColor;
+                        font-size: 12px;
+                        margin-left: 3px;
+                        display: inline-block;
+                    }
+                }
+            }
+
+        }
+    }
+}

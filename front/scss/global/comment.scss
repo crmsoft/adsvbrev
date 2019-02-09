@@ -1,103 +1,222 @@
-.comment{
-    display: flex;
-    background-color: $sectionInnerColor;
-    flex: 1;
-    padding: 5px;
-    margin-top: 5px;
-    @include section-border-radius();
-    .comment-user{
-        margin-right: 10px;
-        a{
-           @include user-photo(40px)
-        }
-    }
+.comments{
+  width: 100%;
+  position: relative;
+  background: #14191C;
 
-    .comment-container{
-        width: 100%;
-        .comment-user-info{
-            a{
-                h2{
-                    font-size: 12px;
-                    display: inline-block;
-                    color: $white;
-                }
-            }
-            span{
-                font-size: 10px;
-                color: $mainColor;
-            }
-        }
-        .comment-content{
-            
-        }
-        .comment-footer{
-            text-align: right;
-            .share,.likes{
-                display: inline-block;
-                a{
-                    color: $white;
-                    text-decoration: none;
-                    font-size: 12px;
-                    .text{
-                        color: $mainColor;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.see-all-comments{
-    display: none;
-}
-
-.comment + .see-all-comments{
-    display: block;
-    margin: 5px;
+  .all-comments
+  {
+    width: 100%;
     text-align: center;
-    a{
-        font-size: 11px;
-        color: $mainColor;
+    a
+    {
+      display: inline-block;
+      color:$mainColor;
+      text-decoration: none;
     }
+  }
+
+  .comment
+  {
+    display: flex;
+    color:$white;
+    margin-bottom: $commentBottom;
+    
+    &.reply{
+      margin-left: 50px;
+    }
+
+    >div{
+      margin: $commentMargin;
+    }
+
+    .comment-user{
+      flex-shrink: 1;
+      .comment-user-ava{
+        img
+        {
+          height: 45px;
+          width: 45px;
+          -webkit-border-radius: 100%;
+          -moz-border-radius: 100%;
+          border-radius: 100%;
+          border:1px solid $mainColor;
+        }
+      }
+    }
+
+    .comment-body{
+      width: 100%;
+
+      img{
+        max-width: 100%;
+      }
+
+      p{
+        margin-bottom: 5px;
+        a{
+          text-decoration: none;
+          color: $white;
+          strong
+          {
+            font-weight: 600;
+            padding-right: 5px;
+          }
+        }
+      }
+    }
+    .comment-time
+    {
+      color:$mainColor;
+    }
+    .comment-dot
+    {
+      color:$white;
+      cursor: pointer;
+      line-height: 16px;
+    }
+    .comment-actions
+    {
+      
+     >span:first-child{
+        margin-right: 5px;
+        >span{
+          &:first-child{
+            display: none;
+          }
+          color: $mainColor;
+        }
+        &.active{
+          >span{
+            &:first-child{
+              display: inline-block;
+            }
+            &:last-child{
+              display: none;
+            }  
+          }
+        }
+      }
+
+      span
+      {
+        float: left;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        color:$white;
+        cursor:pointer;
+        font-weight: 600;
+      }
+      >:last-child{
+        margin-left: 10px;        
+      }
+    }
+  }
 }
 
-.user-post-comment{
-    display: flex;
-    flex: 1;
-    align-items: center;
-    .user{
-        margin-right: 10px;
-        a{
-            @include user-photo(35px);
-        }
+.add-comment{
+  position: relative;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .user{
+    align-self: flex-start;
+    flex:0 0 auto;
+    width: 45px;
+    height: 45px;
+    border-radius: 105px;
+    border-width: 1px;
+    border-color: $mainColor;
+    border-style: solid;
+    overflow: hidden;
+    img{
+      max-width: 100%;
     }
-    .comment-area{
-        width: 100%;
-        position: relative;
-        input{
-            @include section-border-radius();
-            width: 100%;
-            background-color: $sectionInnerColor;
-            border: 0;
-            padding: 5px;
-            font-size: 12px;
-            color: $white;
-            &::placeholder{
-                color: $white;
-            }
-            &:focus{
-                outline: 0;
-            }
-        }
-        .comment-actions{
-            position: absolute;
-            right: 5px;
-            top: 1px;
-            a{
-                font-size: 12px;
-                color: $white;
-                text-decoration: none;
-            }
-        }
+  }
+  .input{
+    border-radius: 3px;
+    background-color: $postDelimiter;
+    margin-left: 10px;
+    flex:1 1 auto;
+    textarea{
+      display: block;
+      outline: none;
+      background-color: $postDelimiter;
+      resize: none;
+      height: 20px;
+      padding-right: 80px;
     }
+    &.active{
+      .previews{
+        display: block !important;
+        margin: 0 10px;
+        padding-bottom: 5px;
+      }
+    }
+    &.submitable{
+      .btn{
+        display: block;
+      }
+    }
+    .btn{
+      display: none;
+      margin: 10px 5px 5px;
+      float: right;
+    }
+    &:after{
+      content: ' ';
+      display:  block;
+      clear: both;
+    }
+  }
+  .actions{
+    position: absolute;
+    top: 22px;
+    right: 0;
+    width: 90px;
+    span{
+      cursor: pointer;
+      display: inline-block;
+      +span{
+        margin-left: 5px;
+      }
+      &:hover{
+        color: $mainColor;
+      }
+    }
+    button{
+      &.active{
+        color: $mainColor;
+      }
+      color: $white;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      margin-right: 5px;
+      border: 0;
+      outline: none;
+      background-color: transparent;
+    }
+  }
+}
+
+.has-emoji{
+  .popup-content{
+    background-color: $postDelimiter !important;
+    border: 0 !important;
+    border-radius: 3px;
+    >div{
+      background-color: $postDelimiter !important;
+    }
+  }
+  .emoji-mart{
+    background-color: $postDelimiter !important;
+  }
+  .emoji-mart-category-label{
+    span{
+      background-color: $lightGray;
+      color: $white !important;
+    }
+  }
 }
