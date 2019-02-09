@@ -24,9 +24,22 @@ class Message extends Model
         'from_me'
     ];
 
+    public function getReadedAttribute()
+    {
+        $user_id = Auth::id();
+        return \DB::table('message_reads')
+                ->where('user_id', '<>', $user_id)
+                ->where('message_id', $this->id)->count() > 0;
+    }
+
     public function getFromMeAttribute(){
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         return $this->user->id == $user_id;
+    }
+
+    public function getHashAttribute()
+    {
+        return \Hashids::encode($this->id);
     }
 
     /**

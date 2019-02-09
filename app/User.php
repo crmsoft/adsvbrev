@@ -128,7 +128,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
             'id',
             'id',
             'conversation_id'
-        );
+        )->orderBy('updated_at', 'desc');
     }
 
     public function media()

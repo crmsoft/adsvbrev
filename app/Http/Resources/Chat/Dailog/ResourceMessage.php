@@ -16,10 +16,11 @@ class ResourceMessage extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->hash,
             'message' => $this->message,
             'created_at' => $this->created_at->getTimestamp(),
-            'user' => new User($this->user)
+            'user' => new User($this->user),
+            'readed' => $this->readed
         ];
     }
 }

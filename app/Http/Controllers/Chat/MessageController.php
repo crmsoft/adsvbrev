@@ -45,10 +45,10 @@ class MessageController extends Controller{
     public function pullPrev( Request $request, Conversation $conversation )
     {
         $request->validate([
-            'last' => 'required|numeric|min:1'
+            'last' => 'required|string'
         ]);
 
-        $first_message_in_chat = $request->last;
+        $first_message_in_chat = \Hashids::decode($request->last);
 
         $latest = Conversation::where('id', $conversation->id)
                     ->with(['messages' => function($query) use ($first_message_in_chat){
