@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('ab', function(){
+    $post = \App\Post::find(47);
+    dd($post->comments()->where('parent_id', null)->get()[3]->children);
+});
+
 /** validate email address of newly registered user */
 Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
     ->name('account.validation')
@@ -72,7 +77,7 @@ Route::group([
 ], function (){
 
     // User profile page
-    Route::post('/comment/store/{post}', 'CommentController@store')->name('store-comment');
+    Route::post('/comment/store/{post}/{comment?}', 'CommentController@store')->name('store-comment');
     Route::post('/comment/like/{comment}', 'CommentController@toggleLike')->name('toggle-like-comment');
 
 });
