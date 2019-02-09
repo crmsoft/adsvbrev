@@ -10,6 +10,11 @@ const Menu = () => {
                         <span className="icon-profile"> my profile</span>
                     </Link>
                 </li>
+                <li>
+                    <Link to="/fee">
+                        <span className="icon-profile"> feed</span>
+                    </Link>
+                </li>
             </ul>
         </nav>
     )

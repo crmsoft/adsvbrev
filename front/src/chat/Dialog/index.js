@@ -1,24 +1,120 @@
 import React, {Component} from 'react';
 import Input from './Input';
 import {
-    m_sended,
+    MESSAGE_RECIEVED,
+    m_notified,
     close_chat
 } from '../redux/events';
-import socket from '../redux/socket';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Message from './Message';
+import MessageList from './MessageList';
 import Header from './DialogHead';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import socket from '../redux/socket';
 
 class DialogComponent extends Component{
+
+    state = {
+        messagesList: [],
+        reload: false,
+        pullingPrev: false
+    }
+
+    constructor(props)
+    {
+        super(props)
+        this.containerRef = React.createRef();
+    }
+
+    componentDidMount()
+    {                
+        this.pull()
+        .then(done => {
+            this.containerRef.current.addEventListener('scroll', this.containerScrollListener.bind(this), true);
+        });
+    }
+
+    containerScrollListener(e)
+    {
+        const container = e.target;
+        if( container.scrollTop < 10)
+        {
+            this.pullPrev();
+        }
+    }
+
+    pullPrev()
+    {
+        
+        if(this.state.pullingPrev || 
+            (this.state.messagesList.length === 0))
+        {
+            return false;
+        }
+
+        this.setState(state => {
+            return {
+                pullingPrev: true,
+            }
+        }, () => {
+            const {hash_id} = this.props.chat;
+            axios.post(`/chat/${hash_id}/pull/prev`, {
+                last: this.state.messagesList[0].id
+            })
+            .then(({data}) => this.setState(state => {
+                return {
+                    beforePull: this.containerRef.current.scrollHeight,
+                    pullingPrev: !data.more,
+                    messagesList: [
+                        ...data.data.reverse(),
+                        ...state.messagesList
+                    ]
+                }
+            }, () => {
+                this.containerRef.current.querySelector('.css-y1c0xs').scrollTop = this.state.beforePull + 55;
+            }))
+        });
+    }
+
+    pull()
+    {
+        return new Promise((resolve, reject) => {
+            this.props.sended();
+            const {hash_id} = this.props.chat;
+            axios.post(`/chat/${hash_id}/pull`)
+            .then(response => {
+                const {data} = response.data;
+                this.setState(state => {
+                    const ids = state.messagesList.map(m => m.id);
+                    return {
+                        chat: hash_id,
+                        messagesList: [
+                            ...state.messagesList,
+                            ...data.reverse().filter(m => {
+                                return ids.indexOf(m.id) === -1
+                            })
+                        ]
+                    }
+                });
+                return true;
+            })
+            .then(done => setTimeout(resolve, 450))
+        });
+    }
 
     onMessage(message)
     {
         const hash = this.props.chat.hash_id;
         axios.post(`/chat/${hash}/message`, {
             message: message
-        }).then(response => {
-            this.props.sended(hash);
+        }).then(({data}) => {            
+            this.setState({
+                reload: false,
+                messagesList: [
+                    ...this.state.messagesList,
+                    data.data                   
+                ]
+            }, () => socket.chatMessagePush(hash))
         });   
     }
 
@@ -27,22 +123,46 @@ class DialogComponent extends Component{
         this.props.close( this.props.chat.hash_id ); 
     }
 
-    render(){    
-        console.log(this.props);
+    componentDidUpdate()
+    {
+        if(this.state.reload)
+        {
+            this.pull();
+        }
+    }
+
+    componentWillUnmount()
+    {
+        this.containerRef.current.removeEventListener('scroll', this.containerScrollListener);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+
+        if((nextProps.action === MESSAGE_RECIEVED) && 
+            (nextProps.target === prevState.chat) &&
+            !prevState.reload)
+        {            
+            return {reload: true};
+        }
+       
+       
+        return {reload: false};
+    }
+
+    render(){   
             
         return (
-            <div className="dialog">
+            <div className="dialog" ref={this.containerRef}>
                 <Header members={this.props.chat.members} 
                         closeChat={this.closeChat.bind(this)}
                         me={this.props.messenger.username}
                 />
-                <div className="message-container">
-                    {
-                        this.props.chat.messages.map((m,index) => {
-                            return <Message key={index} message={m} />
-                        })
-                    }
-                </div>
+                <ScrollToBottom 
+                    animating={false}
+                    className="message-container"
+                >
+                <MessageList messages={this.state.messagesList} />
+                </ScrollToBottom>
                 <Input 
                     onMessage={this.onMessage.bind(this)} 
                 />
@@ -59,7 +179,7 @@ const Dialog = connect(
     },
     dispatch => {
         return {
-            sended: hash => dispatch(m_sended(hash)),
+            sended: hash => dispatch(m_notified(hash)),
             close: hash => dispatch(close_chat(hash))
         }
     }

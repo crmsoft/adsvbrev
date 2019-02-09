@@ -37,7 +37,7 @@ export default class ProfileForm extends Component{
     }
 
     render(){
-        const profile = this.props.profile;
+        const {profile} = this.props;
         const {editetFields} = this.state;
         return (
             <div>

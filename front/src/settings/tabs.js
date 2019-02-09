@@ -41,6 +41,8 @@ export default class SettingsContnet extends Component {
     }
 
     render(){
+        const {data} = this.props.data;
+        
         return (
             <Tabs>
                 <TabList className="nav nav-tabs">
@@ -63,7 +65,7 @@ export default class SettingsContnet extends Component {
                     <TabPanel> 
                         
                         <ProfileForm 
-                            profile={this.props.data.info.profile} 
+                            profile={data.profile} 
                             errors={this.state.errors} 
                             save={this.saveChanges} 
                         />

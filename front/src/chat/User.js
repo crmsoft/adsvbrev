@@ -7,18 +7,22 @@ export default class User extends Component {
             <div 
                 key={data.username}
                 onClick={e => { onClick(data.username); }}
+                className="user"
             >
-                <div className="user-list-item">
-                    <a className="d-flex" href="/gg/rowena09">
-                        <div className="user-list-ava">
-                            <img src={data.ava} />
+                {
+                    <div className="user-list-item">
+                        <div className="ava-wrapper">
+                            <div className={`status ${data.status}`}></div>
+                            <div className="user-list-ava">
+                                <img src={data.ava} />
+                            </div>    
                         </div>
                         <div className="user-list-user">
-                            <span>{data.full_name}</span>
-                            <span>{data.username}</span>
+                            <span className="user-list-user-name">{data.full_name}</span>
+                            <span className="user-list-username">{data.username}</span>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                }
             </div>
         )
     }

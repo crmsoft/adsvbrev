@@ -6,7 +6,7 @@ import {
 } from "./actions";
 
 const initalState = {
-    relationship: FRIENDSHIP_NONE,
+    relationship: 'none',
     user: 'self'
 };
 

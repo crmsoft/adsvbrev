@@ -44,7 +44,7 @@ const fetchProfile = () => {
         dispatch(fetchStart());
 
         axios.get('/get/profile')
-        .then(data => dispatch(fetchDone(data.data)))
+        .then(({data}) => dispatch(fetchDone(data)))
         .catch(err => dispatch(fetchErr(err)))        
     };
 }
@@ -55,7 +55,7 @@ const fetchGamerProfile = ( username ) => {
         dispatch(fetchStart());
 
         axios.get(`/get/profile/${username}`)
-        .then(data => dispatch(fetchDone(data.data)))
+        .then(({data}) => dispatch(fetchDone(data)))
         .catch(err => dispatch(fetchErr(err)))        
     };
 }

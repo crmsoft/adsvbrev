@@ -34,7 +34,7 @@ const intialFetch = (user, followers = false) => {
         dispatch(fetchStart());
 
         axios.get(url)
-        .then(data => dispatch(fetchedInitial(data)))
+        .then(data => dispatch(fetchedInitial(data.data)))
         .catch(err => dispatch(fetchErr(err)))        
     };
 }
@@ -45,7 +45,7 @@ const moreFetch = (followers = false) => {
         dispatch(fetchStart());
 
         axios.get( followers ? '' : '/friend/list')
-        .then(data => dispatch(fetchDone(data)))
+        .then(data => dispatch(fetchDone(data.data)))
         .catch(err => dispatch(fetchErr(err)))        
     };
 }

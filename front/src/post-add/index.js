@@ -1,106 +1,12 @@
 import React, {Component} from 'react';
-import Textarea from 'react-textarea-autosize';
 import axios from 'axios';
-
-class Upload extends Component {
-    
-    constructor(...props){
-        super(...props);
-        this.chooseFile = this.chooseFile.bind(this);
-        this.onUserSelectFile = this.onUserSelectFile.bind(this);
-        this.ref = React.createRef();
-    }
-
-    chooseFile(){
-        this.ref.current.click();
-    }
-
-    onUserSelectFile(e){
-        const el = e.target;
-        if( el.files.length > 0 ){
-            const file = el.files[0];
-            const reader = new FileReader();
-            reader.addEventListener('load', () =>
-                this.props.onFiles( file, reader.result )
-            );
-            reader.readAsDataURL(el.files[0]);
-        } // end if     
-    }
-
-    render(){
-        return (
-            <div>
-                <input 
-                    className="d-none"
-                    type="file" 
-                    ref={this.ref} 
-                    onChange={this.onUserSelectFile} />
-                <a 
-                    onClick={this.chooseFile}
-                    href="javascript:void(0)" 
-                    className="icon-photo-cam"></a>
-            </div>
-        )
-    }
-}
-
-class Footer extends Component {
-    state = {
-        previews: []
-    }
-
-    constructor(...props){
-        super(...props);
-        this.onFiles = this.onFiles.bind(this);
-    }
-
-    onFiles(file, preview){
-        this.setState((state) => {
-            return {
-                previews: [
-                    ...state.previews,
-                    preview
-                ]
-            }
-        }, () => {
-            this.props.onFiles(file);
-        });
-    }
-
-    componentDidUpdate(props, state){
-        if(props.saved && state.previews.length > 0){
-            this.setState(state => {
-                return {
-                    previews: []
-                }
-            });
-        }
-    }
-
-    render(){
-        return (
-            <div className="footer">
-                <div className="container-with-media">
-                    {
-                        this.state.previews.map((src,index) => {
-                            return <img key={index} src={src} />
-                        })
-                    }
-                </div>
-                <div className="actions">
-                    <div className="add-media">
-                        <Upload 
-                            onFiles={this.onFiles}
-                        />
-                    </div>
-                    <button 
-                        disabled={this.props.enabled}
-                        onClick={this.props.submitPost}>Post</button>
-                </div>
-            </div>
-        )
-    }
-}
+import store from '../profile/fetch/store';
+import {
+    POST_ADDED
+} from '../profile/fetch/actions';
+import Input from './Input';
+import PostMedia from './Media';
+import Footer from './Footer';
 
 export default class CreatePostComponent extends Component{
 
@@ -108,15 +14,16 @@ export default class CreatePostComponent extends Component{
         post: '',
         saving: false,
         active: false,
-        formData: new FormData(),
-        saved: false
+        saved: false,
+        select: false,
+        files: []
     }
 
     constructor(...props){
         super(...props);
-        this.onFieldChange = this.onFieldChange.bind(this);        
         this.submitPost = this.submitPost.bind(this);
         this.onFiles = this.onFiles.bind(this);
+        this.onFileRemove = this.onFileRemove.bind(this);
         this.onEnter = this.onEnter.bind(this);
     }
 
@@ -124,60 +31,109 @@ export default class CreatePostComponent extends Component{
         this.setState(state => {
             return {
                 active:true,
-                saved:false,
-                formData: state.active ? state.formData : (new FormData())
+                saved:false
             }
         })
-    }
-
-    onFieldChange(e){
-        const value = e.target.value;
-
-        this.setState({
-            post: value
-        });
     }
 
     submitPost(){
         
         this.setState({saving:true, saved: false});
         
-        const data = this.state.formData;
+        const data = new FormData();
         data.append('post', this.state.post);
+        this.state.files.map(
+            file => data.append('media[]', file)
+        )
 
         axios.post(`/post/store`, data)
-        .then(response => this.setState(state => { 
+        .then(({data}) => this.setState(state => { 
             return {
                 active: false,
                 post:'', 
                 saving:false, 
-                saved:true
+                saved:true,
+                files: []
             } 
+        }, () => {
+            store.dispatch({type: POST_ADDED, data: data.data});
         }))
         .catch(err => this.setState({saving:false, saved: false}));
 
     }
 
     onFiles( file ){
+
+        // handle user cancel file select.
+        if(!file)
+        {
+            return this.setState(state => {
+                return {
+                    select: false
+                }
+            })    
+        }
+
         this.setState(state => {
-            state.formData.append(`media[]`,file);
             return {
-                ...state
+                ...state,
+                select: false,
+                files: [
+                    ...state.files,
+                    file
+                ]
             }
         })
+    }
+
+    onFileRemove(index)
+    {
+        if(this.state.files[index])
+        {
+
+            this.setState(state => {
+                return {
+                    files: state.files.filter((f,i) => {
+                        return i !== index;
+                    })
+                }
+            });
+
+        } // end if
+    }
+
+    onSelect()
+    {
+        this.setState({select: true});
+    }
+
+    onText(text)
+    {
+        this.setState(() => {
+            return {
+                post: text
+            }
+        });
     }
 
     render(){
         return (
             <div className={`wrapper ` + (this.state.active ? `active`:``)}>
-                <Textarea 
+                <Input 
+                    emoji={this.state.saved}
                     placeholder={`Tell about your adventure in favorite game...`}
-                    onFocus={this.onEnter}
+                    onFocus={this.onEnter.bind(this)}
+                    onType={this.onText.bind(this)}
                     value={this.state.post}
-                    onChange={this.onFieldChange}
+                />
+                <PostMedia 
+                    reset={this.state.saved}
+                    select={this.state.select}
+                    onFiles={this.onFiles}
+                    onRemove={this.onFileRemove}
                 />
                 <Footer 
-                    onFiles={this.onFiles}
+                    onSelect={this.onSelect.bind(this)}
                     enabled={this.state.saving || this.state.post.length <= 0}
                     saved={this.state.saved}
                     submitPost={this.submitPost}

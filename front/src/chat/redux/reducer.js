@@ -4,7 +4,15 @@ import {
     MESSAGE_RECIEVED,
     CHATS_LOADED,
     CLOSE_CHAT,
-    CHAT_CLOSED
+    CHAT_CLOSED,
+    INC_CHAT_UNREAD,
+    CHAT_READED,
+    MESSAGE_NOTIFIED,
+    STATUS_BUSY,
+    STATUS_ONLINE,
+    STATUS_OFFLINE,
+    SOUND_OFF,
+    SOUND_ON
 } from './events';
 
 const initialState = {
@@ -18,16 +26,121 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
+        case SOUND_OFF : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    m_sound: 'off'
+                }
+            }
+        }
+        case SOUND_ON : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    m_sound: 'on'
+                }
+            }
+        }
+        case STATUS_BUSY : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    m_status: 'busy'
+                }
+            }
+        }
+        case STATUS_ONLINE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    m_status: 'online'
+                }
+            }
+        }
+        case STATUS_OFFLINE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    m_status: 'offline'
+                }
+            }
+        }
+
         case MESSAGE_SENDED : {
             return {
-                action: MESSAGE_SENDED,
-                target: action.data
+                ...state,
+                action: null,
+            }
+        }
+        case INC_CHAT_UNREAD : {
+            return {
+                ...state,
+                action: null,
+                messenger: {
+                    chat: state.messenger.chat.map(chat => {                        
+                        if(action.data === chat.hash_id)
+                        {
+                            chat.unread++;
+                        } // end if
+
+                        return chat;
+                    }),
+                    ...state.messenger
+                }
+            }
+        }
+        case CHAT_READED : {
+            const newChat = action.data;
+            const added = state.messenger.chat.filter(
+                function( chat )
+                {
+                    return chat.hash_id === newChat.hash_id
+                }
+            );
+
+            let chats = state.messenger.chat;
+
+            if(added.length)
+            {
+                const index = chats.indexOf(added.pop());
+                chats[index].unread = 0;
+            }
+            else
+            {
+                chats.push(newChat);
+            }
+
+
+            return {
+                ...state,
+                action: null,
+                messenger: {
+                    chat: [
+                        ...chats
+                    ],
+                    ...state.messenger
+                }
             }
         }
         case MESSAGE_RECIEVED : {
             return {
                 action: MESSAGE_RECIEVED,
-                target: action.data
+                target: action.data,
+                messenger: {
+                    ...state.messenger
+                }
+            }
+        }
+        case MESSAGE_NOTIFIED : {            
+            return {
+                ...state,
+                action: null
             }
         }
         case CHATS_LOADED : {
@@ -39,13 +152,15 @@ const reducer = (state = initialState, action) => {
         case CLOSE_CHAT : {
             return {
                 ...state,
-                chatToClose: action.data
+                chatToClose: action.data,
+                action: CLOSE_CHAT
             }
         }
         case CHAT_CLOSED : {
             return {
                 ...state,
-                chatToClose: null
+                chatToClose: null,
+                action: null
             }
         }
         default: return {

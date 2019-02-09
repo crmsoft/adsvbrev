@@ -22,8 +22,11 @@ const EditableArea = ({text,icon, guest}) => {
     )
 }
 
-const UserProfile = ({info}) => {
-    const {profile, guest} = info;
+const UserProfile = (data) => {
+    
+    const {profile} = data.info;
+    const {guest} = data;
+
     return (
         <div className="h-100">
             <div className="profile editable">

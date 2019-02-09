@@ -16,6 +16,9 @@ export default class Chat extends Component{
                                 <span>
                                     { data.members.map(user => { return user.first_name; }).join(', ') }
                                 </span>
+                                {
+                                    data.unread === 0 ? null : <span className="unread">{data.unread}</span>
+                                }
                             </div>
                         </div>
                     </div>

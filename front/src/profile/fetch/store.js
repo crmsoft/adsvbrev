@@ -13,16 +13,16 @@ const store = createStore(
     )
 )
 
-const guest = createStore(
-    profileReducer,
-    applyMiddleware(
-        thunk,
-        logger
-    )
-)
+// const guest = createStore(
+//     profileReducer,
+//     applyMiddleware(
+//         thunk,
+//         logger
+//     )
+// )
 
 export default store;
 
 export {
-    guest
+    store as guest
 }

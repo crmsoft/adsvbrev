@@ -30,7 +30,7 @@ const performSearch = (queryString) => {
         dispatch(progress());
 
         axios.post(`/search${queryString}`)
-        .then(response => dispatch(done(response.data)))
+        .then(response => dispatch(done(response.data.data)))
         .catch(err => dispatch(error(err)))
     }
 }

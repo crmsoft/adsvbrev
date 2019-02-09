@@ -22,13 +22,19 @@ class ProfileComponent extends Component{
     }
 
     render(){
+        const {
+                feed, 
+                friends, 
+                groups,
+                totals
+            } = this.props.data;
         return (
             <div>
                 <nav className="user-profile">
                     
                     <div className="triangle-right"></div>
 
-                    <UserProfle info={this.props.info}/>
+                    <UserProfle info={this.props.data}/>
 
                 </nav>
 
@@ -38,7 +44,7 @@ class ProfileComponent extends Component{
 
                     <section className="user-middle">
 
-                        <About user={this.props.info} />
+                        <About user={this.props.data} />
 
                         <section className="user-uploads w-100" id="media-container">
                             
@@ -50,9 +56,7 @@ class ProfileComponent extends Component{
                             <CreatePostComponent />
                         </section>
                         
-                        <section className="posts">
-                            <FeedList list={this.props.info.feed} />
-                        </section>
+                        <FeedList list={feed} />
 
                     </section>
 
@@ -62,8 +66,8 @@ class ProfileComponent extends Component{
 
                             <Friends 
                                 isGuest={false}
-                                list={this.props.info.friends} 
-                                total={this.props.totals.friends} 
+                                list={friends} 
+                                total={totals.friends} 
                             />                    
 
                         </section>
@@ -72,8 +76,8 @@ class ProfileComponent extends Component{
 
                             <Groups 
                                 isGuest={false}
-                                list={this.props.info.groups} 
-                                total={this.props.totals.groups} 
+                                list={groups} 
+                                total={totals.groups} 
                             />                    
 
                         </section>

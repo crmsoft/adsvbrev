@@ -6,6 +6,7 @@ import MediaTabs from '../media-tabs/index';
 import UserProfle from '../profile-main';
 import Menu from '../../menu/index';
 import Groups from '../groups/index';
+import FeedList from '../feed';
 
 import {
     fetchGamerProfile
@@ -19,14 +20,37 @@ class Guest extends Component{
         this.props.init(this.props.match.params.id);
     }
 
+    shouldComponentUpdate(nextProps)
+    {
+        
+        return (nextProps.routerTime !== this.props.routerTime) || 
+            !this.props.data.profile.user.username ||
+            (this.props.data.profile.user.username !== nextProps.data.profile.user.username)
+    }
+
+    componentDidUpdate()
+    {
+        if(this.props.data.profile.user.username !== this.props.match.params.id)
+        {
+            this.props.init(this.props.match.params.id);
+        } // end if
+    }
+
     render(){
+        const {
+            friends,
+            groups,
+            totals,
+            feed
+        } = this.props.data;
+
         return (
             <div>
                 <nav className="user-profile">
                     
                     <div className="triangle-right"></div>
 
-                    <UserProfle info={this.props.info}/>
+                    <UserProfle info={this.props.data} guest={true}/>
 
                 </nav>
 
@@ -36,12 +60,16 @@ class Guest extends Component{
 
                     <section className="user-middle">
                         
-                        <About user={this.props.info} />
+                        <About user={this.props.data} />
 
                         <section className="user-uploads w-100" id="media-container">
                             
                             <MediaTabs />
 
+                        </section>
+
+                        <section className="posts">
+                            <FeedList list={feed} />
                         </section>
 
                     </section>
@@ -52,8 +80,9 @@ class Guest extends Component{
 
                             <Friends 
                                 isGuest={true}
-                                user={this.props.info.profile.user.username} 
-                                list={this.props.info.friends} total={this.props.totals.friends} 
+                                user={this.props.data.profile.user.username} 
+                                list={friends} 
+                                total={totals.friends} 
                             />                    
 
                         </section>
@@ -62,8 +91,8 @@ class Guest extends Component{
 
                             <Groups 
                                 isGuest={true}
-                                list={this.props.info.groups} 
-                                total={this.props.totals.groups} 
+                                list={groups} 
+                                total={totals.groups} 
                             />                    
 
                         </section>
@@ -78,7 +107,9 @@ class Guest extends Component{
 
 const GuestComponent = connect(
     state => {
-        return state;
+        return {
+            ...state
+        };
     },
     dispatch => {
         return {
