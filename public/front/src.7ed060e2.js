@@ -38306,10 +38306,12 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var comment = this.props.comment;
       var user = comment.user;
       return _react.default.createElement("div", {
-        className: "comment"
+        className: comment.parent ? "comment reply" : "comment"
       }, _react.default.createElement("div", {
         className: "comment-user"
       }, _react.default.createElement("div", {
@@ -38337,7 +38339,11 @@ function (_Component) {
         className: "icon-heart"
       }), _react.default.createElement("span", {
         className: "icon-heart-empty"
-      })), _react.default.createElement("span", null, comment.like_count | 0), _react.default.createElement("span", null, "reply")))), _react.default.createElement("div", {
+      })), _react.default.createElement("span", null, comment.like_count | 0), _react.default.createElement("span", {
+        onClick: function onClick(e) {
+          _this2.props.replyTo(user, comment.id);
+        }
+      }, "reply")))), _react.default.createElement("div", {
         className: "comment-time"
       }, comment.created_at), _react.default.createElement("div", {
         className: "comment-dot"
@@ -38375,13 +38381,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var pushNewComment = function pushNewComment(comments, newComment) {
+  if (newComment.parent) {
+    var found = comments.filter(function (c) {
+      return c.id === newComment.parent;
+    });
+
+    if (found.length) {
+      var index = comments.indexOf(found.pop());
+      comments[index].subs.push(newComment);
+    }
+  } else {
+    comments.push(newComment);
+  } // end if
+
+
+  return comments;
+};
 
 var Comments =
 /*#__PURE__*/
@@ -38389,17 +38415,35 @@ function (_Component) {
   _inherits(Comments, _Component);
 
   function Comments() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Comments);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Comments).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Comments)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      moreLoaded: 0,
+      comments: [],
+      hasMore: false
+    });
+
+    return _this;
   }
 
   _createClass(Comments, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          comments = _this$props.comments,
-          post = _this$props.post;
+      var _this2 = this;
+
+      var _this$state = this.state,
+          comments = _this$state.comments,
+          post = _this$state.post;
 
       if (comments.length === 0) {
         return null;
@@ -38407,13 +38451,72 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         className: "comments"
-      }, comments.map(function (comment) {
-        return _react.default.createElement(_Comment.default, {
+      }, this.state.hasMore ? _react.default.createElement("div", {
+        className: "d-flex pt-3"
+      }, _react.default.createElement("div", {
+        className: "all-comments"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0)"
+      }, "All Comments"))) : null, comments.map(function (comment) {
+        if (comment.subs.length === 0) {
+          return _react.default.createElement(_Comment.default, {
+            replyTo: _this2.props.replyTo,
+            post: post,
+            comment: comment,
+            key: comment.id
+          });
+        }
+
+        return [_react.default.createElement(_Comment.default, {
+          replyTo: _this2.props.replyTo,
           post: post,
           comment: comment,
           key: comment.id
-        });
+        })].concat(_react.default.createElement(Comments, {
+          replies: true,
+          key: "".concat(_this2.props.post, "_sub_comments"),
+          push: _this2.props.push,
+          replyTo: _this2.props.replyTo,
+          post: _this2.props.post,
+          comments: comment.subs
+        }));
       }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (prevState.comments.length === 0) {
+        var comments = nextProps.comments;
+        var hasMore = comments.length > 3;
+        var comments_ = comments.length === 0 ? nextProps.push ? [nextProps.push] : [] : comments;
+        return {
+          comments: hasMore ? comments.slice(1, 4) : comments_,
+          hasMore: hasMore,
+          post: nextProps.post
+        };
+      } // end if
+
+
+      if (nextProps.push) {
+        var comment = nextProps.push; // if in sub tree, and push for main tree
+
+        if (nextProps.replies && !comment.parent) {
+          return null;
+        }
+
+        var added = prevState.comments.filter(function (c) {
+          return c.id === comment.id;
+        });
+
+        if (added.length === 0) {
+          return {
+            comments: pushNewComment(prevState.comments, comment)
+          };
+        }
+      } // end if
+
+
+      return null;
     }
   }]);
 
@@ -39711,6 +39814,8 @@ function (_Component) {
           previews: []
         };
       }
+
+      return null;
     }
   }]);
 
@@ -39867,7 +39972,9 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       text: '',
       flie: null,
-      user: {}
+      user: {},
+      replyToComment: null,
+      needFocus: false
     });
 
     _this.ref = _react.default.createRef();
@@ -39886,24 +39993,28 @@ function (_Component) {
       var _this2 = this;
 
       if (this.state.text) {
+        var text = this.state.text;
+        var url = "/comment/store/".concat(this.props.post.id);
+
+        if (this.state.replyToComment) {
+          url = "/comment/store/".concat(this.props.post.id, "/").concat(this.state.replyToComment.comment);
+          text = text.replace("".concat(this.state.replyToComment.user.username, ","), "");
+        } // end if
+
+
         var frm = new FormData();
-        frm.append('comment', this.state.text);
+        frm.append('comment', text);
         this.state.file && frm.append('file', this.state.file);
 
-        _axios.default.post("/comment/store/".concat(this.props.post.id), frm).then(function (response) {
-          return _store.default.dispatch({
-            type: _actions.APPEND_COMMENT,
-            data: {
-              comment: response.data.data,
-              post: _this2.props.post.id
-            }
-          });
+        _axios.default.post(url, frm).then(function (response) {
+          _this2.props.onComment(response.data);
         }).then(function () {
           return _this2.setState(function () {
             return {
               text: '',
               file: null,
-              emoji: false
+              emoji: false,
+              replyToComment: null
             };
           });
         });
@@ -39920,8 +40031,24 @@ function (_Component) {
     key: "onText",
     value: function onText(e) {
       var text = e.target.value;
-      this.setState({
-        text: text
+      var replyTo = this.state.replyToComment;
+
+      if (replyTo) {
+        var username = replyTo.user.username;
+
+        if (text.indexOf("".concat(username, ",")) === -1) {
+          text = '';
+          replyTo = null;
+        } // end if
+
+      } // end if
+
+
+      this.setState(function () {
+        return {
+          text: text,
+          replyToComment: replyTo
+        };
       });
     }
     /**
@@ -40043,6 +40170,18 @@ function (_Component) {
       unListen();
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.state.needFocus) {
+        this.ref.focus();
+        this.setState(function () {
+          return {
+            needFocus: false
+          };
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -40058,6 +40197,18 @@ function (_Component) {
 
       var inputClass = this.state.text ? 'submitable' : '';
       inputClass += this.state.file ? ' active' : '';
+      var comment = this.state.text;
+
+      if (this.state.replyToComment) {
+        var username = this.state.replyToComment.user.username;
+
+        if (this.state.text.indexOf(username) === -1) {
+          comment = "".concat(username, ", ").concat(comment);
+        } // end if
+
+      } // end if
+
+
       return _react.default.createElement("div", {
         className: "add-comment"
       }, _react.default.createElement("div", {
@@ -40072,7 +40223,7 @@ function (_Component) {
         },
         placeholder: "What do you think about it ?",
         onChange: this.onText.bind(this),
-        value: this.state.text
+        value: comment
       }), _react.default.createElement(_Media.default, {
         onRemove: this.onFileRemove.bind(this),
         onFiles: this.onFiles.bind(this),
@@ -40108,6 +40259,19 @@ function (_Component) {
       }), _react.default.createElement("span", {
         className: "icon-video-cam"
       })));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.reply && prevState.user.username !== nextProps.reply.user.username) {
+        return {
+          replyToComment: nextProps.reply,
+          needFocus: true
+        };
+      } // end if
+
+
+      return null;
     }
   }]);
 
@@ -40151,13 +40315,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Post =
 /*#__PURE__*/
@@ -40165,24 +40331,76 @@ function (_Component) {
   _inherits(Post, _Component);
 
   function Post() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Post);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Post).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Post)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      reply: null
+      /**
+       * user click like btn
+       */
+
+    });
+
+    return _this;
   }
 
   _createClass(Post, [{
     key: "toggleLike",
-
-    /**
-     * user click like btn
-     */
     value: function toggleLike() {
-      var _this = this;
+      var _this2 = this;
 
       _axios.default.post("/post/like/".concat(this.props.post.id)).then(function (response) {
         return _store.default.dispatch({
           type: 'POST_LIKED',
-          data: _this.props.post.id
+          data: _this2.props.post.id
+        });
+      });
+    }
+  }, {
+    key: "reply",
+    value: function reply(user, comment_id) {
+      var _this3 = this;
+
+      this.setState(function () {
+        return {
+          reply: {
+            user: user,
+            comment: comment_id
+          }
+        };
+      }, function () {
+        _this3.setState(function () {
+          return {
+            reply: null
+          };
+        });
+      });
+    }
+  }, {
+    key: "onCommentAdded",
+    value: function onCommentAdded(_ref) {
+      var _this4 = this;
+
+      var data = _ref.data;
+      this.setState(function () {
+        return {
+          pushComment: data
+        };
+      }, function () {
+        _this4.setState(function () {
+          return {
+            pushComment: null
+          };
         });
       });
     }
@@ -40242,9 +40460,14 @@ function (_Component) {
       })), _react.default.createElement("span", null, post.like_count | 0), _react.default.createElement("span", {
         className: "icon icon-share"
       }), _react.default.createElement("span", null, post.share_count | 0))), _react.default.createElement(_Comments.default, {
+        key: "".concat(post.id, "_comment"),
+        push: this.state.pushComment,
+        replyTo: this.reply.bind(this),
         post: post.id,
         comments: post.comment
       }), _react.default.createElement(_AddComment.default, {
+        onComment: this.onCommentAdded.bind(this),
+        reply: this.state.reply,
         key: post.id,
         post: post
       }));
@@ -44537,6 +44760,32 @@ function (_Component) {
         };
       });
     }
+    /**
+     * user clicks on emoji icon, Popup onOpen event !
+     */
+
+  }, {
+    key: "onEmoji",
+    value: function onEmoji() {
+      this.setState(function () {
+        return {
+          emoji: true
+        };
+      });
+    }
+    /**
+     * user close emoji popup, Popup onClose event !
+     */
+
+  }, {
+    key: "onCloseEmoji",
+    value: function onCloseEmoji() {
+      this.setState(function () {
+        return {
+          emoji: false
+        };
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -44545,8 +44794,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "textarea has-emoji"
       }, _react.default.createElement(_reactjsPopup.default, {
-        onOpen: this.toggleEmoji.bind(this),
-        onClose: this.toggleEmoji.bind(this),
+        open: this.state.emoji,
         closeOnDocumentClick: true,
         position: "top right",
         overlayStyle: {
@@ -44555,6 +44803,8 @@ function (_Component) {
         lockScroll: false,
         closeOnEscape: true,
         modal: false,
+        onOpen: this.onEmoji.bind(this),
+        onClose: this.onCloseEmoji.bind(this),
         trigger: _react.default.createElement("button", {
           className: this.state.emoji ? "emoji active" : "emoji"
         })
@@ -44572,6 +44822,18 @@ function (_Component) {
         value: this.props.value,
         placeholder: "What is your toughts ?"
       }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, state) {
+      if (nextProps.emoji) {
+        return {
+          emoji: false
+        };
+      } // end if
+
+
+      return null;
     }
   }]);
 
@@ -44838,6 +45100,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "wrapper " + (this.state.active ? "active" : "")
       }, _react.default.createElement(_Input.default, {
+        emoji: this.state.saved,
         placeholder: "Tell about your adventure in favorite game...",
         onFocus: this.onEnter.bind(this),
         onType: this.onText.bind(this),
@@ -45178,6 +45441,19 @@ function (_Component) {
       this.props.init(this.props.match.params.id);
     }
   }, {
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
+      return nextProps.routerTime !== this.props.routerTime || !this.props.data.profile.user.username || this.props.data.profile.user.username !== nextProps.data.profile.user.username;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.props.data.profile.user.username !== this.props.match.params.id) {
+        this.props.init(this.props.match.params.id);
+      } // end if
+
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props$data = this.props.data,
@@ -45229,7 +45505,7 @@ function (_Component) {
 }(_react.Component);
 
 var GuestComponent = (0, _reactRedux.connect)(function (state) {
-  return state;
+  return Object.assign({}, state);
 }, function (dispatch) {
   return {
     init: function init(username) {
@@ -60908,26 +61184,26 @@ function (_Component) {
       return _react.default.createElement("ul", {
         className: "nav navbar-nav justify-content-end"
       }, _react.default.createElement("li", {
-        class: "nav-item"
+        className: "nav-item"
       }, _react.default.createElement("span", {
-        class: "nav-item-count"
+        className: "nav-item-count"
       }, "5"), _react.default.createElement("a", {
         href: "#asdc",
-        class: "nav-link icon-friend"
+        className: "nav-link icon-friend"
       })), _react.default.createElement("li", {
-        class: "nav-item"
+        className: "nav-item"
       }, _react.default.createElement("span", {
-        class: "nav-item-count"
+        className: "nav-item-count"
       }, "5"), _react.default.createElement("a", {
         href: "#sacvsd",
-        class: "nav-link icon-notification"
+        className: "nav-link icon-notification"
       })), _react.default.createElement("li", {
-        class: "nav-item"
+        className: "nav-item"
       }, _react.default.createElement("span", {
-        class: "nav-item-count"
+        className: "nav-item-count"
       }, "5"), _react.default.createElement("a", {
         href: "#asdc",
-        class: "nav-link icon-notification"
+        className: "nav-link icon-notification"
       })), _react.default.createElement("li", {
         className: "nav-item"
       }, _react.default.createElement("a", {
@@ -61022,7 +61298,12 @@ var App = function App() {
     store: _store.guest
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/gg/:id",
-    component: _GuestComponent.default
+    component: function component(props) {
+      var myProps = Object.assign({}, props, {
+        routerTime: +new Date()
+      });
+      return _react.default.createElement(_GuestComponent.default, myProps);
+    }
   })), _react.default.createElement(_reactRouterDom.Route, {
     path: "/search",
     component: _search.default
@@ -61061,7 +61342,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41315" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38475" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
