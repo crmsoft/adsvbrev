@@ -37935,7 +37935,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.placeEmoji = void 0;
+exports.inViewPort = exports.placeEmoji = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -38003,6 +38003,13 @@ var placeEmoji = function placeEmoji(text) {
 };
 
 exports.placeEmoji = placeEmoji;
+
+var inViewPort = function inViewPort(elem, parent) {
+  var bounding = elem.getBoundingClientRect();
+  return bounding.top >= 0 && bounding.left >= 0 && bounding.bottom <= (parent.innerHeight || document.documentElement.clientHeight) && bounding.right <= (parent.innerWidth || document.documentElement.clientWidth);
+};
+
+exports.inViewPort = inViewPort;
 },{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
 "use strict";
 
@@ -57134,13 +57141,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
  * helper to show message user once 
@@ -57163,21 +57172,35 @@ function (_Component) {
   _inherits(MessageList, _Component);
 
   function MessageList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, MessageList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MessageList).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MessageList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      localeStore: null
+    });
+
+    return _this;
   }
 
   _createClass(MessageList, [{
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       return _react.default.createElement(_react.Fragment, null, this.props.messages.map(function (message) {
         var user = message.user;
         return _react.default.createElement(_Message.default, {
           key: message.id,
-          showUser: _this.state.localeStore(user.username),
+          showUser: _this2.state.localeStore(user.username),
           message: message
         });
       }));
@@ -61272,6 +61295,8 @@ var _reactScrollToBottom = _interopRequireDefault(require("react-scroll-to-botto
 
 var _socket = _interopRequireDefault(require("../redux/socket"));
 
+var _utils = require("../../utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -61365,12 +61390,24 @@ function (_Component) {
         }).then(function (_ref) {
           var data = _ref.data;
           return _this3.setState(function (state) {
+            var parent = _this3.containerRef.current.querySelector('.css-y1c0xs');
+
+            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.message'));
+
+            for (var l = childs.length, i = 0; i < l; i++) {
+              if ((0, _utils.inViewPort)(childs[i], parent)) {
+                break;
+              }
+            } // end for
+
+
             return {
-              beforePull: _this3.containerRef.current.scrollHeight,
+              beforePull: childs[i],
               pullingPrev: !data.more,
               messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
-          }, function () {// this.containerRef.current.querySelector('.css-y1c0xs').scrollTop = this.state.beforePull + 55;
+          }, function () {
+            _this3.state.beforePull && _this3.state.beforePull.scrollIntoView();
           });
         });
       });
@@ -61494,7 +61531,7 @@ var Dialog = (0, _reactRedux.connect)(function (state) {
 })(DialogComponent);
 var _default = Dialog;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Input":"../src/chat/Dialog/Input.js","../redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./MessageList":"../src/chat/Dialog/MessageList.js","./DialogHead":"../src/chat/Dialog/DialogHead.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","../redux/socket":"../src/chat/redux/socket.js"}],"../src/chat/Dialogs.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Input":"../src/chat/Dialog/Input.js","../redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./MessageList":"../src/chat/Dialog/MessageList.js","./DialogHead":"../src/chat/Dialog/DialogHead.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","../redux/socket":"../src/chat/redux/socket.js","../../utils":"../src/utils.js"}],"../src/chat/Dialogs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -64640,7 +64677,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33158" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42307" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
