@@ -37952,11 +37952,11 @@ var placeEmoji = function placeEmoji(text) {
 
 
   var result = emojies.filter(function (emoji) {
-    var matches = _emojiMart.emojiIndex.search(emoji.replace(/\:/g, '')).filter(function (emo) {
-      return emo.colons === emoji;
-    });
+    var matches = _emojiMart.emojiIndex.search(emoji.replace(/\:/g, ''));
 
-    return matches.length;
+    return matches && matches.filter(function (emo) {
+      return emo.colons === emoji;
+    }).length;
   }).map(function (emo, i) {
     return {
       emoji: _react.default.createElement(_emojiMart.Emoji, {
@@ -37969,6 +37969,15 @@ var placeEmoji = function placeEmoji(text) {
       length: emo.length
     };
   });
+  /**
+   * no emoji found in index !
+   */
+
+  if (result.length === 0) {
+    return text;
+  } // end if
+
+
   var r = [];
 
   for (var i = 0; i < result.length; i++) {
@@ -38000,7 +38009,7 @@ exports.placeEmoji = placeEmoji;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.COMMENT_LIKED = exports.APPEND_COMMENT = exports.POST_LIKED = exports.POST_ADDED = exports.PROFILE_REFRESH = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
+exports.DEVICE_SETTINGS = exports.COMMENT_LIKED = exports.APPEND_COMMENT = exports.POST_LIKED = exports.POST_ADDED = exports.PROFILE_REFRESH = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
 var PROFILE_FETCH_START = 'PROFILE_FETCH_START';
 exports.PROFILE_FETCH_START = PROFILE_FETCH_START;
 var PROFILE_FETCH_DONE = 'PROFILE_FETCH_DONE';
@@ -38017,6 +38026,8 @@ var APPEND_COMMENT = 'APPEND_COMMENT';
 exports.APPEND_COMMENT = APPEND_COMMENT;
 var COMMENT_LIKED = 'COMMENT_LIKED';
 exports.COMMENT_LIKED = COMMENT_LIKED;
+var DEVICE_SETTINGS = 'DEVICE_SETTINGS';
+exports.DEVICE_SETTINGS = DEVICE_SETTINGS;
 },{}],"../src/profile/fetch/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -38154,6 +38165,17 @@ var profileReducer = function profileReducer() {
       {
         return Object.assign({}, state, {
           fetching: true
+        });
+      }
+
+    case _actions.DEVICE_SETTINGS:
+      {
+        return Object.assign({}, state, {
+          data: Object.assign({}, state.data, {
+            profile: Object.assign({}, state.data.profile, {
+              user_devices: action.data
+            })
+          })
         });
       }
 
@@ -40345,10 +40367,6 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       reply: null
-      /**
-       * user click like btn
-       */
-
     });
 
     return _this;
@@ -40356,6 +40374,10 @@ function (_Component) {
 
   _createClass(Post, [{
     key: "toggleLike",
+
+    /**
+     * user click like btn
+     */
     value: function toggleLike() {
       var _this2 = this;
 
@@ -40405,9 +40427,25 @@ function (_Component) {
       });
     }
   }, {
+    key: "showAll",
+    value: function showAll() {
+      this.setState(function () {
+        return {
+          hasMore: false
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var post = this.props.post;
+      var hasMore = this.state.hasMore;
+      var content = hasMore ? post.content.substr(0, 240) : post.content;
+      content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")));
+      var more = hasMore ? _react.default.createElement("a", {
+        href: "javascript:void(0)",
+        onClick: this.showAll.bind(this)
+      }, "More...") : null;
       return _react.default.createElement("div", {
         className: "post"
       }, _react.default.createElement("div", {
@@ -40437,9 +40475,7 @@ function (_Component) {
         trigger: _react.default.createElement("span", null, "...")
       }, _react.default.createElement("ul", null, _react.default.createElement("li", null, "pin post"), _react.default.createElement("li", null, "delete"))))), _react.default.createElement("div", {
         className: "post-content"
-      }, _react.default.createElement("p", null, (0, _utils.placeEmoji)(post.content), " ", _react.default.createElement("a", {
-        href: "#"
-      }, "More...")), _react.default.createElement("div", {
+      }, _react.default.createElement("p", null, (0, _utils.placeEmoji)(content), more), _react.default.createElement("div", {
         className: post.media.length > 1 ? "post-media n-".concat(post.media.length) : "post-media"
       }, post.media.map(function (url) {
         return _react.default.createElement("div", {
@@ -40471,6 +40507,15 @@ function (_Component) {
         key: post.id,
         post: post
       }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, state) {
+      if (state.hasMore === undefined) {
+        return {
+          hasMore: nextProps.post.content.length > 250
+        };
+      }
     }
   }]);
 
@@ -44607,10 +44652,6 @@ var UserProfile = function UserProfile(data) {
     className: "user-about"
   }, _react.default.createElement(EditableArea, {
     guest: guest,
-    text: "Istanbul - Turkey",
-    icon: "icon-location"
-  }), _react.default.createElement(EditableArea, {
-    guest: guest,
     text: "July 24, 1985",
     icon: "icon-cake"
   }))), _react.default.createElement("div", {
@@ -44621,7 +44662,8 @@ var UserProfile = function UserProfile(data) {
     className: "d-inline-block mb-1"
   }, _react.default.createElement(EditableArea, {
     guest: guest,
-    text: "Intel\xAE Pentium(R) CPU P6200 @ 2.13GHz \xD7 2; Intel\xAE Ironlake Mobile "
+    text: "Istanbul - Turkey",
+    icon: "icon-location"
   }))), _react.default.createElement("div", {
     className: "right-block-wrapper"
   }, guest ? _react.default.createElement(_profileActions.default, null) : null, _react.default.createElement("ul", {
@@ -44814,6 +44856,7 @@ function (_Component) {
         set: "google",
         sheetSize: "16"
       })), _react.default.createElement(_reactTextareaAutosize.default, {
+        maxRows: 15,
         inputRef: function inputRef(ref) {
           _this3.ref = ref;
         },
@@ -45134,7 +45177,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = CreatePostComponent;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/AboutTab.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45187,17 +45230,17 @@ var OtherContent = function OtherContent(_ref) {
   }, profile.phone)));
 };
 
-var About =
+var AboutTab =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(About, _Component);
+  _inherits(AboutTab, _Component);
 
-  function About(props) {
+  function AboutTab(props) {
     var _this;
 
-    _classCallCheck(this, About);
+    _classCallCheck(this, AboutTab);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(About).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AboutTab).call(this, props));
     _this.toggle = _this.toggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
       open: false
@@ -45205,7 +45248,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(About, [{
+  _createClass(AboutTab, [{
     key: "toggle",
     value: function toggle() {
       this.setState({
@@ -45215,16 +45258,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var user = this.props.user;
-      return _react.default.createElement("div", {
-        className: "profile-about"
-      }, _react.default.createElement("div", {
-        className: "profile-about-header"
-      }, _react.default.createElement("span", {
-        className: "icon-profile"
-      }), _react.default.createElement("h4", {
-        className: "profile-header-text"
-      }, "About Me")), _react.default.createElement("div", {
+      var profile = this.props.profile;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "profile-about-content"
       }, _react.default.createElement("div", {
         className: "profile-about-row"
@@ -45232,8 +45267,8 @@ function (_Component) {
         className: "profile-about-label"
       }, "About Me"), _react.default.createElement("div", {
         className: "profile-about-value"
-      }, user.profile.about)), this.state.open ? _react.default.createElement(OtherContent, {
-        profile: user.profile
+      }, profile.about)), this.state.open ? _react.default.createElement(OtherContent, {
+        profile: profile
       }) : null), _react.default.createElement("div", {
         className: "profile-about-footer"
       }, _react.default.createElement("span", {
@@ -45243,11 +45278,608 @@ function (_Component) {
     }
   }]);
 
+  return AboutTab;
+}(_react.Component);
+
+exports.default = AboutTab;
+},{"react":"../node_modules/react/index.js"}],"../src/profile/about/DevicePopup.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../fetch/store"));
+
+var _actions = require("../fetch/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var DevicesPopup =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(DevicesPopup, _Component);
+
+  function DevicesPopup() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, DevicesPopup);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DevicesPopup)).call.apply(_getPrototypeOf2, [this].concat(props)));
+
+    var pc = _this.props.selected.filter(function (d) {
+      return d.key === 'pc';
+    });
+
+    _this.state = {
+      open: undefined,
+      text: pc.length ? pc.pop().description : ''
+    };
+    return _this;
+  }
+
+  _createClass(DevicesPopup, [{
+    key: "toggle",
+    value: function toggle(key) {
+      this.setState(function (state) {
+        return {
+          innerCall: true,
+          devices: state.devices.map(function (device) {
+            key === device.key && (device.selected = !device.selected);
+            return device;
+          })
+        };
+      });
+    }
+  }, {
+    key: "notePcSpecs",
+    value: function notePcSpecs(e) {
+      var text = e.target.value;
+      this.setState(function () {
+        return {
+          text: text
+        };
+      });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.props.close();
+    }
+  }, {
+    key: "onSave",
+    value: function onSave() {
+      var _this2 = this;
+
+      var user_devices = [];
+      var frm = new FormData();
+      this.state.devices.map(function (device) {
+        if (!device.selected) {
+          return;
+        }
+
+        frm.append('device[]', device.key);
+
+        if (device.key === 'pc') {
+          frm.append('pc_description', _this2.state.text);
+          device.description = _this2.state.text;
+        }
+
+        user_devices.push(device);
+      });
+
+      _axios.default.post("/setting/devices", frm).then(function (response) {});
+
+      _store.default.dispatch({
+        type: _actions.DEVICE_SETTINGS,
+        data: user_devices
+      });
+
+      this.props.close();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _this$state = this.state,
+          devices = _this$state.devices,
+          open = _this$state.open;
+      var can_save = devices.filter(function (d) {
+        return d.selected;
+      }).length;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactjsPopup.default, {
+        open: open,
+        onClose: this.close.bind(this),
+        modal: true
+      }, _react.default.createElement("div", {
+        className: "device-selection"
+      }, _react.default.createElement("div", {
+        className: "device-select-header"
+      }, _react.default.createElement("h3", null, "Add Device"), _react.default.createElement("button", {
+        onClick: this.close.bind(this)
+      }, "\xD7")), _react.default.createElement("div", {
+        className: "device-options"
+      }, devices.map(function (device) {
+        return _react.default.createElement(_react.Fragment, {
+          key: device.key
+        }, device.key === 'pc' && device.selected ? _react.default.createElement("textarea", {
+          defaultValue: _this3.state.text,
+          onChange: _this3.notePcSpecs.bind(_this3),
+          placeholder: "Your pc specifications"
+        }) : '', _react.default.createElement("button", {
+          onClick: function onClick(e) {
+            _this3.toggle.call(_this3, device.key);
+          },
+          className: "btn dd-btn " + (device.selected ? "btn-full" : "")
+        }, device.title));
+      })), _react.default.createElement("div", {
+        className: "device-actions text-right"
+      }, _react.default.createElement("button", {
+        className: "btn dd-btn btn-gray btn-sm",
+        onClick: this.close.bind(this)
+      }, "Cancel"), _react.default.createElement("button", {
+        disabled: !can_save,
+        className: "btn dd-btn btn-full btn-sm",
+        onClick: this.onSave.bind(this)
+      }, "Save")))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.innerCall) {
+        return {
+          innerCall: false
+        };
+      } // end if
+
+
+      return {
+        open: props.isOpen,
+        devices: [].concat(_toConsumableArray(props.devices.filter(function (d) {
+          return props.selected.filter(function (dev) {
+            return dev.key !== d.key;
+          }).length === props.selected.length;
+        })), _toConsumableArray(props.selected))
+      };
+    }
+  }]);
+
+  return DevicesPopup;
+}(_react.Component);
+
+exports.default = DevicesPopup;
+},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js","../fetch/store":"../src/profile/fetch/store.js","../fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/about/SelectDevice.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var SelectDevice =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(SelectDevice, _Component);
+
+  function SelectDevice() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, SelectDevice);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(SelectDevice)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      popup: false
+    });
+
+    return _this;
+  }
+
+  _createClass(SelectDevice, [{
+    key: "open",
+    value: function open() {
+      this.setState(function () {
+        return {
+          popup: true
+        };
+      });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.setState(function () {
+        return {
+          popup: false
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var devices = this.props.profile.devices;
+      return _react.default.createElement("div", {
+        className: "profile-devices device-advice"
+      }, _react.default.createElement(_DevicePopup.default, {
+        isOpen: this.state.popup,
+        close: this.close.bind(this),
+        devices: devices,
+        selected: []
+      }), _react.default.createElement("button", {
+        onClick: this.open.bind(this),
+        className: "btn dd-btn"
+      }, "Click to add gaming devices that your are using!"));
+    }
+  }]);
+
+  return SelectDevice;
+}(_react.Component);
+
+exports.default = SelectDevice;
+},{"react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/DeviceList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DeviceList =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(DeviceList, _Component);
+
+  function DeviceList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, DeviceList);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DeviceList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      popup: false
+    });
+
+    return _this;
+  }
+
+  _createClass(DeviceList, [{
+    key: "close",
+    value: function close() {
+      this.setState(function () {
+        return {
+          popup: false
+        };
+      });
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      this.setState(function () {
+        return {
+          popup: true
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          list = _this$props.list,
+          devices = _this$props.devices,
+          guest = _this$props.guest;
+      var hasPc = list.filter(function (d) {
+        return d.key === 'pc';
+      });
+      return _react.default.createElement("div", {
+        className: "pr-2 pl-2"
+      }, _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-4 main-color"
+      }, "My preffered devices"), _react.default.createElement("div", {
+        className: "col-sm-8"
+      }, list.filter(function (d) {
+        return d.key !== 'pc';
+      }).map(function (d) {
+        return d.title;
+      }).join(', '))), hasPc.length ? _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-4 main-color"
+      }, "My computer properties"), _react.default.createElement("div", {
+        className: "col-sm-8"
+      }, hasPc[0].description)) : null, !guest ? _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-12 device-advice"
+      }, _react.default.createElement(_DevicePopup.default, {
+        close: this.close.bind(this),
+        isOpen: this.state.popup,
+        devices: devices,
+        selected: list
+      }), _react.default.createElement("div", {
+        className: "text-right"
+      }, _react.default.createElement("button", {
+        onClick: this.open.bind(this),
+        className: "dd-btn btn-sm"
+      }, "Device Settings")))) : null);
+    }
+  }]);
+
+  return DeviceList;
+}(_react.Component);
+
+exports.default = DeviceList;
+},{"react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/MyDevice.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _SelectDevice = _interopRequireDefault(require("./SelectDevice"));
+
+var _DeviceList = _interopRequireDefault(require("./DeviceList"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MyDevice =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(MyDevice, _Component);
+
+  function MyDevice() {
+    _classCallCheck(this, MyDevice);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MyDevice).apply(this, arguments));
+  }
+
+  _createClass(MyDevice, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          profile = _this$props.profile,
+          guest = _this$props.guest;
+      return guest ? _react.default.createElement(_react.Fragment, null, profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
+        guest: guest,
+        devices: profile.devices,
+        list: profile.user_devices
+      }) : _react.default.createElement("div", {
+        className: "d-flex justify-content-center p-3"
+      }, _react.default.createElement("h5", {
+        className: "main-color"
+      }, "No devices added yet"))) : profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
+        guest: guest,
+        devices: profile.devices,
+        list: profile.user_devices
+      }) : _react.default.createElement(_SelectDevice.default, {
+        profile: profile
+      });
+    }
+  }]);
+
+  return MyDevice;
+}(_react.Component);
+
+exports.default = MyDevice;
+},{"react":"../node_modules/react/index.js","./SelectDevice":"../src/profile/about/SelectDevice.js","./DeviceList":"../src/profile/about/DeviceList.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactTabs = require("react-tabs");
+
+var _AboutTab = _interopRequireDefault(require("./AboutTab"));
+
+var _MyDevice = _interopRequireDefault(require("./MyDevice"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var About =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(About, _Component);
+
+  function About() {
+    _classCallCheck(this, About);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(About).apply(this, arguments));
+  }
+
+  _createClass(About, [{
+    key: "render",
+    value: function render() {
+      var user = this.props.user;
+      return _react.default.createElement("div", {
+        className: "profile-about"
+      }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
+        className: "nav nav-tabs"
+      }, _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-profile"
+      }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-pc"
+      }, " My Devices")))), _react.default.createElement("div", {
+        className: "content"
+      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
+        profile: user.profile
+      })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_MyDevice.default, {
+        guest: this.props.isGuest,
+        profile: user.profile
+      })))));
+    }
+  }]);
+
   return About;
 }(_react.Component);
 
 exports.default = About;
-},{"react":"../node_modules/react/index.js"}],"../src/profile/profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/profile/about/AboutTab.js","./MyDevice":"../src/profile/about/MyDevice.js"}],"../src/profile/profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45473,7 +46105,8 @@ function (_Component) {
       }, _react.default.createElement(_index3.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
-        user: this.props.data
+        user: this.props.data,
+        isGuest: true
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
@@ -56536,6 +57169,7 @@ function (_Component) {
       return _react.default.createElement(_react.Fragment, null, this.props.messages.map(function (message) {
         var user = message.user;
         return _react.default.createElement(_Message.default, {
+          key: message.id,
           showUser: _this.state.localeStore(user.username),
           message: message
         });
@@ -60729,8 +61363,7 @@ function (_Component) {
               pullingPrev: !data.more,
               messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
-          }, function () {
-            _this3.containerRef.current.querySelector('.css-y1c0xs').scrollTop = _this3.state.beforePull + 55;
+          }, function () {// this.containerRef.current.querySelector('.css-y1c0xs').scrollTop = this.state.beforePull + 55;
           });
         });
       });
@@ -61414,7 +62047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38475" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43992" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

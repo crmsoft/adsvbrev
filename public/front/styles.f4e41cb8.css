@@ -4458,7 +4458,7 @@ button.bg-dark:focus {
 .d-table-cell {
   display: table-cell !important; }
 
-.d-flex, .login-register {
+.d-flex, .login-register, .profile-about .profile-devices {
   display: flex !important; }
 
 .d-inline-flex {
@@ -4640,7 +4640,7 @@ button.bg-dark:focus {
 .justify-content-end {
   justify-content: flex-end !important; }
 
-.justify-content-center, .login-register {
+.justify-content-center, .login-register, .profile-about .profile-devices {
   justify-content: center !important; }
 
 .justify-content-between {
@@ -5160,14 +5160,14 @@ button.bg-dark:focus {
 .mx-1 {
   margin-left: 0.25rem !important; }
 
-.m-2 {
+.m-2, .profile-about .device-advice .popup-content .btn {
   margin: 0.5rem !important; }
 
 .mt-2,
 .my-2 {
   margin-top: 0.5rem !important; }
 
-.mr-2,
+.mr-2, .profile-about .device-advice .popup-content textarea,
 .mx-2 {
   margin-right: 0.5rem !important; }
 
@@ -5175,7 +5175,7 @@ button.bg-dark:focus {
 .my-2 {
   margin-bottom: 0.5rem !important; }
 
-.ml-2,
+.ml-2, .profile-about .device-advice .popup-content textarea,
 .mx-2 {
   margin-left: 0.5rem !important; }
 
@@ -5312,7 +5312,7 @@ button.bg-dark:focus {
 .px-3 {
   padding-left: 1rem !important; }
 
-.p-4 {
+.p-4, .profile-about .profile-devices {
   padding: 1.5rem !important; }
 
 .pt-4,
@@ -6603,6 +6603,9 @@ body {
   background-color: #000;
   color: #fff; }
 
+.main-color {
+  color: #F15A24 !important; }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -7180,6 +7183,32 @@ nav.user-profile {
       .profile-about .profile-about-footer .profile-about-more:hover {
         text-decoration: underline;
         cursor: pointer; }
+  .profile-about .device-advice .popup-content {
+    border-radius: 3px;
+    background-color: #14191C !important;
+    border: none !important;
+    padding: 0 !important; }
+    .profile-about .device-advice .popup-content .device-options {
+      margin: 15px 25px; }
+    .profile-about .device-advice .popup-content .device-select-header {
+      background-color: #F15A24; }
+      .profile-about .device-advice .popup-content .device-select-header * {
+        line-height: 1; }
+      .profile-about .device-advice .popup-content .device-select-header h3 {
+        margin: 10px;
+        font-size: 17px;
+        display: inline-block; }
+      .profile-about .device-advice .popup-content .device-select-header button {
+        font-size: 20px;
+        background: transparent;
+        outline: none;
+        float: right;
+        cursor: pointer;
+        border: none;
+        color: #484B52;
+        padding: 10px; }
+    .profile-about .device-advice .popup-content textarea {
+      display: block; }
 
 .user-middle {
   flex: 1; }

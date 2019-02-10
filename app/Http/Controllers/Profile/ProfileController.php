@@ -173,4 +173,45 @@ class ProfileController extends Controller
 
         return response(Storage::url("{$users_dir}200_{$name}"));
     }
+
+    /**
+     * set Devices of Profile, User
+     */
+    public function setDevices(Request $request)
+    {
+
+        $profile = auth()->user()->profile;
+
+        $options = [];
+
+        if(!empty($profile->options))
+        {
+            $options = $profile->options;
+            $options['devices'] = [];
+        } // end if
+
+        $avialable_devies = collect(config('profile.devices'));
+
+        foreach($request->get('device', []) as $device_key)
+        {
+            if ($avialable_devies->where('key', $device_key)->count())
+            {
+                $options['devices'][] = array_merge(
+                    $avialable_devies->where('key', $device_key)->first(),
+                    [
+                        'selected' => true,
+                        'description' => $device_key === 'pc' ? $request->get('pc_description', '') : NULL
+                    ]
+                );
+            } // end if
+            
+        } // end foreach
+
+        $profile->options = json_encode($options);
+
+        return response()->json([
+            'saved' => $profile->save()
+        ]);
+
+    }
 }

@@ -12,8 +12,7 @@
 */
 
 Route::get('ab', function(){
-    $post = \App\Post::find(47);
-    dd($post->comments()->where('parent_id', null)->get()[3]->children);
+
 });
 
 /** validate email address of newly registered user */
@@ -53,6 +52,9 @@ Route::group([
     Route::get('/group/list/{group?}', 'ProfileController@listGroups')->name('list-fo-groups');
 
     Route::post('/settings','ProfileController@update')->name('edit-profile');
+
+    Route::post('/setting/devices', 'ProfileController@setDevices')->name('settings-set-devices');
+
 
 });
 

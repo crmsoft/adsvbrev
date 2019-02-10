@@ -34,7 +34,7 @@ class ResourceProfile extends JsonResource
                             $query->limit(3);
                         })->get(),
             'feed' => $feed,
-            'profile' => $profile,
+            'profile' => new ProfileConfig($profile),
             'totals' => [
                 'friends' => $this->friend->count(),
                 'groups' => $this->group->count()

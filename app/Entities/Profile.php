@@ -34,6 +34,11 @@ class Profile extends Model
         'dob'
     ];
 
+    public function getOptionsAttribute($value)
+    {
+        return @json_decode($value, true);
+    }
+     
     public function getDobAttribute( $dob ){
         return $dob ? date('Y-m-d', strtotime($dob)) : '0000-00-00';
     }
