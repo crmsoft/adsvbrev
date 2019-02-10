@@ -34,6 +34,7 @@ Route::group([
     Route::get('/gg/{user_unique}', 'ProfileController@index')->name('user-profile');
     Route::get('/search', 'ProfileController@index')->name('search-view');
     Route::get('/settings', 'ProfileController@index')->name('settings-view');
+    Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
 });
 
 // Profile Specific Routes
