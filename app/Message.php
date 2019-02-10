@@ -28,8 +28,10 @@ class Message extends Model
     {
         $user_id = Auth::id();
         return \DB::table('message_reads')
-                ->where('user_id', '<>', $user_id)
-                ->where('message_id', $this->id)->count() > 0;
+                ->join('messages', 'messages.id', '=', 'message_reads.message_id')
+                ->where('messages.user_id', $user_id)
+                ->where('message_reads.user_id', '<>', $user_id)
+                ->where('message_reads.message_id', $this->id)->count() > 0;
     }
 
     public function getFromMeAttribute(){
