@@ -40379,19 +40379,19 @@ function (_Component) {
      * user click like btn
      */
     value: function toggleLike() {
-      var _this2 = this;
+      var post = this.state.post;
 
-      _axios.default.post("/post/like/".concat(this.props.post.id)).then(function (response) {
+      _axios.default.post("/post/like/".concat(post.id)).then(function (response) {
         return _store.default.dispatch({
           type: 'POST_LIKED',
-          data: _this2.props.post.id
+          data: post.id
         });
       });
     }
   }, {
     key: "reply",
     value: function reply(user, comment_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.setState(function () {
         return {
@@ -40401,7 +40401,7 @@ function (_Component) {
           }
         };
       }, function () {
-        _this3.setState(function () {
+        _this2.setState(function () {
           return {
             reply: null
           };
@@ -40411,7 +40411,7 @@ function (_Component) {
   }, {
     key: "onCommentAdded",
     value: function onCommentAdded(_ref) {
-      var _this4 = this;
+      var _this3 = this;
 
       var data = _ref.data;
       this.setState(function () {
@@ -40419,7 +40419,7 @@ function (_Component) {
           pushComment: data
         };
       }, function () {
-        _this4.setState(function () {
+        _this3.setState(function () {
           return {
             pushComment: null
           };
@@ -40438,7 +40438,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var post = this.props.post;
+      var post = this.state.post;
       var hasMore = this.state.hasMore;
       var content = post.content;
 
@@ -40517,8 +40517,9 @@ function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(nextProps, state) {
-      if (state.hasMore === undefined) {
+      if (state.hasMore === undefined || state.post.id !== nextProps.post.id) {
         return {
+          post: nextProps.post,
           hasMore: nextProps.post.content.length > 250
         };
       }
