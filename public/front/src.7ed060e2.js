@@ -40440,8 +40440,14 @@ function (_Component) {
     value: function render() {
       var post = this.props.post;
       var hasMore = this.state.hasMore;
-      var content = hasMore ? post.content.substr(0, 240) : post.content;
-      content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")));
+      var content = post.content;
+
+      if (hasMore) {
+        content = content.substr(0, 240);
+        content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")));
+      } // end if
+
+
       var more = hasMore ? _react.default.createElement("a", {
         href: "javascript:void(0)",
         onClick: this.showAll.bind(this)
