@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <div id="app" class="container">
-
+    <div id="app">
+        @include('layouts.header')
     </div>
 
 @endsection

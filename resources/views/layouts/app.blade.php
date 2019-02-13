@@ -26,10 +26,7 @@
 </head>
 <body>
 
-    <main>
-        @include('layouts/header')
-        @yield('content')
-    </main>
+    @yield('content')
 
 
     <script src="/front/src.7ed060e2.js"></script>
