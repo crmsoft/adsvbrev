@@ -44682,10 +44682,7 @@ var UserProfile = function UserProfile(data) {
     className: "d-flex w-100"
   }, _react.default.createElement("div", {
     className: "ava-wrapper"
-  }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/settings",
-    className: "icon-pencil"
-  }), _react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: "ava",
     id: "ava"
   }, _react.default.createElement(_ava.default, {
@@ -62087,8 +62084,11 @@ function (_Component) {
         className: "followers-list"
       }, list.map(function (user) {
         return _react.default.createElement("li", {
-          className: "user",
-          key: user.username
+          className: "user"
+        }, _react.default.createElement("div", {
+          className: "row"
+        }, _react.default.createElement("div", {
+          className: "col p-0"
         }, _react.default.createElement(_reactRouterDom.Link, {
           to: "/gg/".concat(user.username),
           className: "user-list-item d-inline-flex"
@@ -62106,8 +62106,8 @@ function (_Component) {
           className: "user-list-user-name"
         }, user.full_name), _react.default.createElement("span", {
           className: "user-list-username"
-        }, user.mutual === 0 ? 'no mutual friends' : "".concat(user.mutual, " friends")))), _react.default.createElement("div", {
-          className: "d-inline-flex h-100 mt-2"
+        }, user.mutual === 0 ? 'no mutual friends' : "".concat(user.mutual, " friends"))))), _react.default.createElement("div", {
+          className: "actions"
         }, _react.default.createElement("button", {
           onClick: function onClick(e) {
             return _this6.onAccept.call(_this6, user.username);
@@ -62118,7 +62118,7 @@ function (_Component) {
             return _this6.onDecline.call(_this6, user.username);
           },
           className: "dd-btn btn-red btn-sm m-1"
-        }, "Deny")));
+        }, "Deny"))));
       })))));
     }
   }], [{
@@ -62150,6 +62150,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
 
 var _events = require("./events");
 
@@ -62246,6 +62248,20 @@ function (_Component) {
       });
     }
   }, {
+    key: "onProfileOptionsClick",
+    value: function onProfileOptionsClick(e) {
+      var clicked = e.target;
+
+      if (clicked.tagName.toLowerCase()) {
+        this.setState(function () {
+          return {
+            menu: false
+          };
+        });
+      } // end if
+
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -62339,6 +62355,7 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "header-ava-text"
       }, "".concat(user.username, " ")))), _react.default.createElement("div", {
+        onClick: this.onProfileOptionsClick.bind(this),
         className: !this.state.menu ? 'dropdown-menu' : 'dropdown-menu show'
       }, _react.default.createElement("a", {
         onClick: function onClick(e) {
@@ -62348,7 +62365,10 @@ function (_Component) {
         },
         className: "dropdown-item",
         href: "javascript:void(0)"
-      }, "Logout"))))))));
+      }, "Logout"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/settings",
+        className: "dropdown-item"
+      }, "Settings"))))))));
     }
   }]);
 
@@ -62375,7 +62395,7 @@ var Header = (0, _reactRedux.connect)(function (state) {
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./Followers":"../src/header/Followers.js","../friedship/event":"../src/friedship/event.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./Followers":"../src/header/Followers.js","../friedship/event":"../src/friedship/event.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /* flatpickr v4.5.2, @license MIT */
