@@ -193,14 +193,14 @@ class User extends Authenticatable implements JWTSubject, LikerContract
         (SELECT 
         friend_id
     FROM
-        game.user_friends
+        user_friends
     WHERE
         user_id = 29 AND status = 'friend'
             AND deleted_at IS NULL) AS t1
     JOIN (SELECT 
         friend_id
     FROM
-        game.user_friends
+        user_friends
     WHERE
         user_id = 1 AND status = 'friend'
             AND deleted_at IS NULL) AS t2 ON t2.friend_id = t1.friend_id) AS tt"), 'tt.friend_id', '=', 'users.id');
