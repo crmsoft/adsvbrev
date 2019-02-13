@@ -19,6 +19,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
 
     const STATUS_SUBSCRIBE = 'subscribe';
     const STATUS_FRIEND = 'friend';
+    const STATUS_DECLINED = 'declined';
 
     /**
      * The attributes that are mass assignable.
@@ -179,6 +180,31 @@ class User extends Authenticatable implements JWTSubject, LikerContract
         )->where('status', self::STATUS_SUBSCRIBE);
     }
 
+    /**
+     * Join users with friends
+     * 
+     * @return Builder 
+     */
+    public function getMutualFriendsOf( int $user_id )
+    {
+        return self::join(\DB::raw("(SELECT 
+        t1.friend_id
+    FROM
+        (SELECT 
+        friend_id
+    FROM
+        game.user_friends
+    WHERE
+        user_id = 29 AND status = 'friend'
+            AND deleted_at IS NULL) AS t1
+    JOIN (SELECT 
+        friend_id
+    FROM
+        game.user_friends
+    WHERE
+        user_id = 1 AND status = 'friend'
+            AND deleted_at IS NULL) AS t2 ON t2.friend_id = t1.friend_id) AS tt"), 'tt.friend_id', '=', 'users.id');
+    } // end getMutualFriendsAttribute
 
     public function group(){
         return $this->belongsToMany(Group::class, 'user_group', 'user_id', 'group_id')

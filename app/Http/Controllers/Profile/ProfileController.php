@@ -35,7 +35,12 @@ class ProfileController extends Controller
      */
     public function getUser()
     {
-        return new ResourceUser(auth()->user());
+        $user = auth()->user();
+        return (new ResourceUser($user))->additional(
+            [
+                'followers' => $user->followers()->count()
+            ]
+        );
     }
 
     public function listGroups(){
@@ -51,7 +56,11 @@ class ProfileController extends Controller
 
     function listFollowers( String $username = null ){
         $user = $username ? User::where('username', $username)->first() : Auth::user();
-        return new UserCollection($user->followers);
+        return (new UserCollection($user->followers))->additional(
+            [
+                'mutual' => true
+            ]
+        );
     }
 
     /**

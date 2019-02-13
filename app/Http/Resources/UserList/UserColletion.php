@@ -14,6 +14,9 @@ class UserCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $ad = $this->additional;
+        return $this->collection->map(function($u) use ($ad) {
+            return (new User($u))->additional($ad);
+        });
     }
 }

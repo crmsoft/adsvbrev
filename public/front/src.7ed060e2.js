@@ -39858,7 +39858,7 @@ exports.default = PostMedia;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PROFILE_LOADED = exports.load_profile = void 0;
+exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.reduce_followers = exports.load_profile = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -39866,19 +39866,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var PROFILE_LOADED = 'PROFILE_LOADED';
 exports.PROFILE_LOADED = PROFILE_LOADED;
+var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
+exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
 
 var load_profile = function load_profile() {
   return function (dispatch) {
     _axios.default.post('/profile').then(function (response) {
       return dispatch({
         type: PROFILE_LOADED,
-        data: response.data.data
+        data: response.data
       });
     });
   };
 };
 
 exports.load_profile = load_profile;
+
+var reduce_followers = function reduce_followers() {
+  return function (dispatch) {
+    dispatch({
+      type: REDUCE_FOLLOWERS,
+      data: null
+    });
+  };
+};
+
+exports.reduce_followers = reduce_followers;
 },{"axios":"../../node_modules/axios/index.js"}],"../src/header/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -39891,15 +39904,27 @@ var _events = require("./events");
 
 var reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    user: {}
+    data: {
+      user: {}
+    }
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _events.REDUCE_FOLLOWERS:
+      {
+        return Object.assign({}, state, {
+          followers: state.followers - 1
+        });
+      }
+
     case _events.PROFILE_LOADED:
       {
         return Object.assign({}, action.data);
       }
+
+    default:
+      return Object.assign({}, state);
   }
 };
 
@@ -42068,7 +42093,7 @@ exports.moreFetch = moreFetch;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FRIENDSHIP_FRIENDS = exports.FRIENDSHIP_FOLLOWING = exports.FRIENDSHIP_SUBSCRIBED = exports.FRIENDSHIP_NONE = void 0;
+exports.FRIENDSHIP_DECLINE = exports.FRIENDSHIP_FRIENDS = exports.FRIENDSHIP_FOLLOWING = exports.FRIENDSHIP_SUBSCRIBED = exports.FRIENDSHIP_NONE = void 0;
 var FRIENDSHIP_NONE = 'FRIENDSHIP_NONE';
 exports.FRIENDSHIP_NONE = FRIENDSHIP_NONE;
 var FRIENDSHIP_SUBSCRIBED = 'FRIENDSHIP_SUBSCRIBED';
@@ -42077,19 +42102,38 @@ var FRIENDSHIP_FOLLOWING = 'FRIENDSHIP_FOLLOWING';
 exports.FRIENDSHIP_FOLLOWING = FRIENDSHIP_FOLLOWING;
 var FRIENDSHIP_FRIENDS = 'FRIENDSHIP_FRIENDS';
 exports.FRIENDSHIP_FRIENDS = FRIENDSHIP_FRIENDS;
+var FRIENDSHIP_DECLINE = 'FRIENDSHIP_DECLINE';
+exports.FRIENDSHIP_DECLINE = FRIENDSHIP_DECLINE;
 },{}],"../src/friedship/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.unsubscribe = exports.acceptToFriends = exports.unfriend = exports.addToFriends = void 0;
+exports.declineFriendship = exports.unsubscribe = exports.acceptToFriends = exports.unfriend = exports.addToFriends = void 0;
 
 var _actions = require("./actions");
 
 var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var declineFriendship = function declineFriendship(username) {
+  return function (dispatch) {
+    _axios.default.post("/friends/decline/".concat(username)).then(function (response) {
+      return dispatch({
+        type: _actions.FRIENDSHIP_DECLINE,
+        data: {
+          user: username
+        }
+      });
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+};
+
+exports.declineFriendship = declineFriendship;
 
 var addToFriends = function addToFriends(username) {
   return function (dispatch) {
@@ -61845,7 +61889,259 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Chat;
-},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","./redux/socket":"../src/chat/redux/socket.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/header/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","./redux/socket":"../src/chat/redux/socket.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/header/Followers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Followers =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Followers, _Component);
+
+  function Followers() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Followers);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Followers)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      list: [],
+      open: false
+    });
+
+    return _this;
+  }
+
+  _createClass(Followers, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate() {
+      return true;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var _this2 = this;
+
+      if (this.state.load) {
+        _axios.default.get("/followers/list").then(function (response) {
+          return _this2.setState(function () {
+            return {
+              load: false,
+              list: response.data.data
+            };
+          });
+        });
+      } // end if
+
+    }
+  }, {
+    key: "onAccept",
+    value: function onAccept(username) {
+      var _this3 = this;
+
+      this.setState(function (state) {
+        return {
+          list: state.list.filter(function (user) {
+            return user.username !== username;
+          }),
+          load: false
+        };
+      }, function () {
+        if (_this3.state.list.length === 0) {
+          _this3.props.close();
+        } // end if
+
+
+        _this3.props.onAccept(username);
+      });
+    }
+  }, {
+    key: "onDecline",
+    value: function onDecline(username) {
+      var _this4 = this;
+
+      this.setState(function (state) {
+        return {
+          list: state.list.filter(function (user) {
+            return user.username !== username;
+          }),
+          load: false
+        };
+      }, function () {
+        if (_this4.state.list.length === 0) {
+          _this4.props.close();
+        } // end if
+
+
+        _this4.props.onDecline(username);
+      });
+    }
+  }, {
+    key: "onClose",
+    value: function onClose() {
+      var _this5 = this;
+
+      this.setState(function () {
+        return {
+          open: false
+        };
+      }, function () {
+        _this5.props.close();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
+      var list = this.state.list;
+
+      if (list.length === 0) {
+        return _react.default.createElement("div", {
+          className: "followers-popup"
+        }, _react.default.createElement(_reactjsPopup.default, {
+          onOpen: function onOpen(e) {
+            return _this6.props.onOpen();
+          },
+          open: this.props.open,
+          onClose: this.onClose.bind(this),
+          modal: false,
+          overlayStyle: {
+            display: 'none'
+          },
+          position: "bottom right",
+          trigger: this.props.trigger
+        }, _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+          className: "followers-header"
+        }, _react.default.createElement("span", {
+          className: "icon icon-friend"
+        }), " Friend Request"), _react.default.createElement("div", {
+          className: "followers-list text-center main-color p-3"
+        }, "Empty"))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "followers-popup"
+      }, _react.default.createElement(_reactjsPopup.default, {
+        onOpen: function onOpen(e) {
+          return _this6.props.onOpen();
+        },
+        open: this.props.open,
+        onClose: function onClose(e) {
+          return _this6.props.close();
+        },
+        modal: false,
+        overlayStyle: {
+          display: 'none'
+        },
+        position: "bottom right",
+        trigger: this.props.trigger
+      }, _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "followers-header"
+      }, _react.default.createElement("span", {
+        className: "icon icon-friend"
+      }), " Friend Request"), _react.default.createElement("ul", {
+        className: "followers-list"
+      }, list.map(function (user) {
+        return _react.default.createElement("li", {
+          className: "user",
+          key: user.username
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/gg/".concat(user.username),
+          className: "user-list-item d-inline-flex"
+        }, _react.default.createElement("div", {
+          className: "ava-wrapper"
+        }, _react.default.createElement("div", {
+          className: "status offline"
+        }), _react.default.createElement("div", {
+          className: "user-list-ava"
+        }, _react.default.createElement("img", {
+          src: user.ava
+        }))), _react.default.createElement("div", {
+          className: "user-list-user"
+        }, _react.default.createElement("span", {
+          className: "user-list-user-name"
+        }, user.full_name), _react.default.createElement("span", {
+          className: "user-list-username"
+        }, user.mutual === 0 ? 'no mutual friends' : "".concat(user.mutual, " friends")))), _react.default.createElement("div", {
+          className: "d-inline-flex h-100 mt-2"
+        }, _react.default.createElement("button", {
+          onClick: function onClick(e) {
+            return _this6.onAccept.call(_this6, user.username);
+          },
+          className: "dd-btn btn-yellow btn-sm m-1"
+        }, "Accept"), _react.default.createElement("button", {
+          onClick: function onClick(e) {
+            return _this6.onDecline.call(_this6, user.username);
+          },
+          className: "dd-btn btn-red btn-sm m-1"
+        }, "Deny")));
+      })))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (props.open && state.open === false) {
+        return {
+          load: true,
+          open: true
+        };
+      }
+
+      return {
+        load: false
+      };
+    }
+  }]);
+
+  return Followers;
+}(_react.Component);
+
+exports.default = Followers;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/header/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61860,6 +62156,10 @@ var _events = require("./events");
 var _reactRedux = require("react-redux");
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _Followers = _interopRequireDefault(require("./Followers"));
+
+var _event = require("../friedship/event");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61904,7 +62204,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(HeaderComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      menu: false
+      menu: false,
+      followersOpen: false
     });
 
     return _this;
@@ -61927,18 +62228,87 @@ function (_Component) {
       });
     }
   }, {
+    key: "openFollowers",
+    value: function openFollowers() {
+      this.setState(function () {
+        return {
+          followersOpen: true
+        };
+      });
+    }
+  }, {
+    key: "closeFollowers",
+    value: function closeFollowers() {
+      this.setState(function () {
+        return {
+          followersOpen: false
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var user = this.props;
-      return _react.default.createElement("ul", {
+      var _this3 = this;
+
+      var user = this.props.data;
+      var followers = this.props.followers;
+      return _react.default.createElement("header", null, _react.default.createElement("nav", {
+        className: "navbar navbar-light navbar-expand-md bg-faded justify-content-center"
+      }, _react.default.createElement("a", {
+        href: "/",
+        className: "navbar-brand d-flex w-50 mr-auto"
+      }, _react.default.createElement("img", {
+        src: "/img/logo/logo-h.png",
+        alt: "Logo"
+      })), _react.default.createElement("button", {
+        className: "navbar-toggler",
+        type: "button",
+        "data-toggle": "collapse",
+        "data-target": "#collapsingNavbar3"
+      }, _react.default.createElement("span", {
+        className: "navbar-toggler-icon"
+      })), _react.default.createElement("div", {
+        className: "navbar-collapse collapse w-100",
+        id: "collapsingNavbar3"
+      }, _react.default.createElement("div", {
+        className: "navbar-nav w-100 justify-content-center nav-search"
+      }, _react.default.createElement("form", {
+        className: "form-inline my-2 my-lg-0 w-100",
+        action: "/search"
+      }, _react.default.createElement("span", {
+        className: "icon-search-icon"
+      }), _react.default.createElement("input", {
+        className: "form-control mr-sm-2 w-100",
+        name: "q",
+        type: "search",
+        placeholder: "Search",
+        "aria-label": "Search"
+      }))), _react.default.createElement("div", {
+        className: "ml-auto w-100"
+      }, _react.default.createElement("ul", {
         className: "nav navbar-nav justify-content-end"
       }, _react.default.createElement("li", {
         className: "nav-item"
       }, _react.default.createElement("span", {
-        className: "nav-item-count"
-      }, "5"), _react.default.createElement("a", {
-        href: "#asdc",
-        className: "nav-link icon-friend"
+        className: "nav-item-count " + (followers === 0 ? "d-none" : "")
+      }, followers), _react.default.createElement(_Followers.default, {
+        onDecline: function onDecline(u) {
+          _this3.props.decline(u);
+
+          _this3.props.reduce_followers();
+        },
+        onAccept: function onAccept(u) {
+          _this3.props.accept(u);
+
+          _this3.props.reduce_followers();
+        },
+        open: this.state.followersOpen,
+        onOpen: this.openFollowers.bind(this),
+        close: this.closeFollowers.bind(this),
+        trigger: _react.default.createElement("a", {
+          href: "javascript:void(0)",
+          className: "nav-link icon-friend"
+        })
       })), _react.default.createElement("li", {
         className: "nav-item"
       }, _react.default.createElement("span", {
@@ -61978,7 +62348,7 @@ function (_Component) {
         },
         className: "dropdown-item",
         href: "javascript:void(0)"
-      }, "Logout"))));
+      }, "Logout"))))))));
     }
   }]);
 
@@ -61991,12 +62361,21 @@ var Header = (0, _reactRedux.connect)(function (state) {
   return {
     load: function load() {
       return dispatch((0, _events.load_profile)());
+    },
+    reduce_followers: function reduce_followers() {
+      return dispatch((0, _events.reduce_followers)());
+    },
+    accept: function accept(username) {
+      return dispatch((0, _event.acceptToFriends)(username));
+    },
+    decline: function decline(username) {
+      return dispatch((0, _event.declineFriendship)(username));
     }
   };
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./Followers":"../src/header/Followers.js","../friedship/event":"../src/friedship/event.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /* flatpickr v4.5.2, @license MIT */
@@ -64580,7 +64959,7 @@ exports.default = Schedule;
 },{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
@@ -64608,14 +64987,18 @@ var _store2 = _interopRequireDefault(require("./header/store"));
 
 var _Schedule = _interopRequireDefault(require("./schedule/Schedule"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 //import $ from '../node_modules/jquery/dist/jquery.min';
 //import '../node_modules/bootstrap/dist/js/bootstrap';
 var App = function App() {
-  return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", null, _react.default.createElement(_reactRedux.Provider, {
+  return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactRedux.Provider, {
+    store: _store2.default
+  }, _react.default.createElement(_index.default, null)), _react.default.createElement("div", {
+    className: "container"
+  }, _react.default.createElement(_reactRedux.Provider, {
     store: _store.default
   }, _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
@@ -64642,14 +65025,10 @@ var App = function App() {
   }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/schedule",
     component: _Schedule.default
-  }), _react.default.createElement(_chat.default, null)));
+  })), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-
-_reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
-  store: _store2.default
-}, _react.default.createElement(_index.default, null)), document.getElementById('header'));
 },{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -64677,7 +65056,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42307" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36922" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

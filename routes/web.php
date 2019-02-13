@@ -12,7 +12,8 @@
 */
 
 Route::get('ab', function(){
-
+    $u = \App\User::find(29);
+    dd($u->getMutualFriendsOf(1)->first());
 });
 
 /** validate email address of newly registered user */
@@ -103,6 +104,7 @@ Route::group([
     Route::post('/unsubscribe/{username}', 'FriendsController@unsubscribe')->name('unsubscribe');
     Route::post('/accept/{username}', 'FriendsController@accept')->name('accept-to-friends');
     Route::post('/unfriend/{username}', 'FriendsController@unfriend')->name('accept-to-unfriend');
+    Route::post('/decline/{username}', 'FriendsController@decline')->name('decline-to-unfriend');
 });
 
 

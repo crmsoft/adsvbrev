@@ -14,12 +14,14 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
+        
         return [
             'full_name' => $this->full_name,
             'first_name' => $this->first_name,
             'username' => $this->username,
             'ava' => $this->ava,
-            'status' => $this->status
+            'status' => $this->status,
+            'mutual' => isset($this->additional['mutual']) ? $this->getMutualFriendsOf(auth()->id())->count() : -1
         ];
     }
 }

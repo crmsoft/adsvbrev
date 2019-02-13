@@ -28,7 +28,7 @@ class ResourceProfile extends JsonResource
                     ->orderBy('created_at', 'desc')->take(2)->get());
 
         return [
-            'friends' => new UserCollection($this->friend),
+            'friends' => new UserCollection($this->friend()->take(5)->inRandomOrder()->get()),
             'groups' => $this->group(function($query){
                             $query->inRandomOrder();
                             $query->limit(3);

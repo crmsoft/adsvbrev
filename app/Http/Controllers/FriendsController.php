@@ -125,4 +125,25 @@ class FriendsController extends Controller
         ] : response('Not Found', 404);
     }
 
+    public function decline(String $username)
+    {
+        $recipient = User::where('username', $username)->where('validated',1)->first();
+
+        $result = 0;
+
+        if($recipient)
+        {   
+            $user = auth()->user();
+
+            $result = UserFriends::where('friend_id', $user->id)
+            ->where('user_id', $recipient->id)
+            ->where('status', User::STATUS_SUBSCRIBE)
+            ->update(['status' => User::STATUS_DECLINED]);
+        } // end if
+
+        return $result == 1 ? [
+            'status' => 'none'
+        ] : response('Not Found', 403);
+    }
+
 }
