@@ -188,22 +188,22 @@ class User extends Authenticatable implements JWTSubject, LikerContract
     public function getMutualFriendsOf( int $user_id )
     {
         return self::join(\DB::raw("(SELECT 
-        t1.friend_id
-    FROM
-        (SELECT 
-        friend_id
-    FROM
-        user_friends
-    WHERE
-        user_id = 29 AND status = 'friend'
-            AND deleted_at IS NULL) AS t1
-    JOIN (SELECT 
-        friend_id
-    FROM
-        user_friends
-    WHERE
-        user_id = 1 AND status = 'friend'
-            AND deleted_at IS NULL) AS t2 ON t2.friend_id = t1.friend_id) AS tt"), 'tt.friend_id', '=', 'users.id');
+                            t1.friend_id
+                        FROM
+                            (SELECT 
+                            friend_id
+                        FROM
+                            user_friends
+                        WHERE
+                            user_id = users.id AND status = 'friend'
+                                AND deleted_at IS NULL) AS t1
+                        JOIN (SELECT 
+                            friend_id
+                        FROM
+                            user_friends
+                        WHERE
+                            user_id = $user_id AND status = 'friend'
+                                AND deleted_at IS NULL) AS t2 ON t2.friend_id = t1.friend_id) AS tt"), 'tt.friend_id', '=', 'users.id');
     } // end getMutualFriendsAttribute
 
     public function group(){
