@@ -60,7 +60,7 @@ class Guest extends Component{
 
                     <section className="user-middle">
                         
-                        <About user={this.props.data} />
+                        <About user={this.props.data} isGuest={true} />
 
                         <section className="user-uploads w-100" id="media-container">
                             

@@ -11,6 +11,7 @@ import MessageList from './MessageList';
 import Header from './DialogHead';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import socket from '../redux/socket';
+import {inViewPort} from '../../utils';
 
 class DialogComponent extends Component{
 
@@ -62,8 +63,21 @@ class DialogComponent extends Component{
                 last: this.state.messagesList[0].id
             })
             .then(({data}) => this.setState(state => {
+
+                const parent = this.containerRef.current.querySelector('.css-y1c0xs');
+                const childs = Array.prototype.slice.call(
+                                    parent.querySelectorAll('div.message')
+                                );
+                for(var l = childs.length, i = 0; i<l; i++)
+                {
+                    if(inViewPort(childs[i], parent))
+                    {
+                        break;
+                    }
+                } // end for
+                
                 return {
-                    beforePull: this.containerRef.current.scrollHeight,
+                    beforePull: childs[i],
                     pullingPrev: !data.more,
                     messagesList: [
                         ...data.data.reverse(),
@@ -71,7 +85,7 @@ class DialogComponent extends Component{
                     ]
                 }
             }, () => {
-                this.containerRef.current.querySelector('.css-y1c0xs').scrollTop = this.state.beforePull + 55;
+                this.state.beforePull && this.state.beforePull.scrollIntoView();
             }))
         });
     }

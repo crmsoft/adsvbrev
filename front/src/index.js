@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import { Provider  } from "react-redux";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -14,33 +14,39 @@ import Search from './search';
 import Chat from './chat';
 import Header from './header/index';
 import headerStore from './header/store';
+import Schedule from './schedule/Schedule';
 
 const App = () => {
     return (
         <Router>
-            <div>
-                <Provider store={store}>
-                    <Route exact path="/" component={Profile} />
-                </Provider> 
-                <Provider store={store}>
-                    <Route path="/settings" component={Settings} />
-                </Provider> 
-                <Provider store={guest}>
-                    <Route path="/gg/:id" component={(props) => {
-                        const myProps = {
-                            ...props,
-                            routerTime: (+(new Date))
-                        };
-                        
-                        return <GuestComponent {...myProps} />
-                    }} />
+            <Fragment>
+                <Provider store={headerStore}>
+                    <Header />
                 </Provider>
-                <Route path="/search" component={Search} />
+                <div className="container">
+                    <Provider store={store}>
+                        <Route exact path="/" component={Profile} />
+                    </Provider> 
+                    <Provider store={store}>
+                        <Route path="/settings" component={Settings} />
+                    </Provider> 
+                    <Provider store={guest}>
+                        <Route path="/gg/:id" component={(props) => {
+                            const myProps = {
+                                ...props,
+                                routerTime: (+(new Date))
+                            };
+                            
+                            return <GuestComponent {...myProps} />
+                        }} />
+                    </Provider>
+                    <Route path="/search" component={Search} />
+                    <Route path="/schedule" component={Schedule} />
+                </div>
                 <Chat />
-            </div>
+            </Fragment>
         </Router>
     )
 }
 
 ReactDOM.render( <App />, document.getElementById('app') )
-ReactDOM.render( <Provider store={headerStore}><Header /></Provider>, document.getElementById('header') )

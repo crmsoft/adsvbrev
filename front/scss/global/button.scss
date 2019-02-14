@@ -56,6 +56,24 @@ button{
     color: $white;
 }
 
+.btn-yellow {
+    background-color: $yellow;
+    &:hover{
+        background-color: $yellow;
+    }
+}
+
+.btn-red {
+    background-color: $red;
+    &:hover{
+        background-color: $red;
+    }
+}
+.btn-yellow, .btn-red{
+    color: $white;
+    border: none;
+}
+
 .btn-lg{
     padding: 15px 55px;
 }

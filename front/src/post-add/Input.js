@@ -91,6 +91,7 @@ export default class Input extends Component{
                     />
                 </Popup>
                 <Textarea
+                    maxRows={15}
                     inputRef={ref => {this.ref=ref;}}
                     onFocus={this.props.onFocus}
                     onChange={this.onChange.bind(this)}

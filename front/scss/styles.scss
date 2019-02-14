@@ -11,6 +11,8 @@ $lightGray: #484B52;
 $lightestGray: #42464D;
 $postBack: #14191C;
 $postDelimiter: #293235;
+$yellow: #f7931e;
+$red: #c1272d;
 
 /** old declarations */
 $white: #ffffff;
@@ -83,3 +85,6 @@ body{
 
 /** Chat */
 @import './chat/main';
+
+
+@import "../node_modules/flatpickr/dist/themes/material_green.scss";

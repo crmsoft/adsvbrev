@@ -82,3 +82,58 @@ header{
         }
     }
 }
+
+.followers-popup{
+    .popup-content {
+        background-color: $lightGray !important;
+        border: 1px solid $lightGray !important;
+        padding: 0 !important;
+        >div{
+            background-color: $lightGray !important;
+        }
+    }
+
+    .popup-content{
+        border-radius: 3px;
+        width: 380px !important;
+        .followers-header{
+            padding: 3px 10px;
+        }
+        .followers-list{
+            background-color: $darekerGray;
+            margin: 0;
+            padding: 0;
+            max-height: 320px;
+            overflow-y: auto;
+            li{
+                @extend .container;
+                height: auto;
+                list-style: none;
+                a{
+                    color: $white;
+                    border-bottom: none;
+                }
+                .user-list-user-name{
+                    line-height: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis
+                }
+                .user-list-user{
+                    width: 125px;
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    .user-list-username{
+                        display: block;
+                    }
+                }
+                .actions{
+                    @extend .col;
+                    @extend .p-0;
+                    padding-top: 11px !important;
+                }
+            }
+        }
+    }
+}

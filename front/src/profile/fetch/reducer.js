@@ -6,7 +6,8 @@ import {
     POST_ADDED,
     POST_LIKED,
     APPEND_COMMENT,
-    COMMENT_LIKED
+    COMMENT_LIKED,
+    DEVICE_SETTINGS
 } from './actions';
 
 const initialState = {
@@ -125,6 +126,18 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetching: true,
+            }
+        }
+        case DEVICE_SETTINGS : {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    profile: {
+                        ...state.data.profile,
+                        user_devices: action.data
+                    }
+                }
             }
         }
         default: {

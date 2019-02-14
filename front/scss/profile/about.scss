@@ -33,4 +33,51 @@
             }
         }
     }
+
+    .profile-devices {
+        @extend .d-flex;
+        @extend .justify-content-center;
+        @extend .p-4;
+    }
+
+    .device-advice{
+        .popup-content{
+            border-radius: 3px;
+            background-color: $postBack !important;
+            border: none !important;
+            padding: 0 !important;
+            .device-options{
+                margin: 15px 25px;
+            }
+            .device-select-header{
+                * {
+                    line-height: 1;
+                }
+                background-color: $mainColor;
+                h3{
+                    margin: 10px;
+                    font-size: 17px;
+                    display: inline-block;
+                }
+                button{
+                    font-size: 20px;
+                    background: transparent;
+                    outline: none;
+                    float: right;
+                    cursor: pointer;
+                    border: none;
+                    color: $lightGray;
+                    padding: 10px;
+                }
+            }
+            .btn{
+                @extend .m-2
+            }
+            textarea{
+                @extend .ml-2;
+                @extend .mr-2;
+                display: block;
+            }
+        }
+    }
 }

@@ -1,0 +1,485 @@
+$backcolor:#14191c;
+$whitecolor:#fff;
+$greycolor:#BAB7BE;
+$greycolor05opacity:#bab7be69;
+$groupcolor:#F05A24;
+$groupcolor05opacity:#f05a2480;
+$groupcolor02opacity:#f15a2452;
+$dudescolor:#6DB100;
+$dudescolor05opacity:#6db10070;
+$mecolor:#662D91;
+$mecolor05opacity:#662d9170;
+$schedulebordercolor:#354247;
+
+.schedule{
+    padding: 1rem 3rem;
+    float: left;
+    width: 100%;
+    border: 1px solid $schedulebordercolor;
+    .schedule-canlendar
+    {
+        float: left;
+        width: 100%;
+    }
+    .schedule-header
+    {
+        margin: 2rem 0;
+        float: left;
+        width: 100%;
+        .schedula-title
+        {
+            float: left;
+            width:50%;
+            small
+            {
+                font-size: 26px;
+            }
+
+        }
+        .schedule-change
+        {
+            float: right;
+            width:50%;
+            span
+            {
+                float: right;
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                border-radius: 100%;
+                height: 30px;
+                width:30px;
+                line-height: 30px;
+                text-align: center;
+                &:hover
+                {
+                    background-color: $groupcolor02opacity;
+                }
+            }
+
+        }
+    }
+    /* hide unnecessary elements of fp */
+    .flatpickr-input, .flatpickr-months{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    /* main class of event cell */
+    .has-event{
+
+        display: flex;
+        flex-flow: row wrap;
+        text-align: center;
+
+        /* rule for 3, with last under */
+        .aside { flex: 1 0 1; }
+
+        /* span event day */
+        .event-day{
+            position: absolute;
+            z-index: 3;
+        }
+
+        /* mark for dudes event */
+        .event-dd-mark{
+            display: inline-block;
+            background-color: $dudescolor;
+            z-index: 1;
+            order: 1;
+            width: 50%;
+        }
+        /* mark for groups event */
+        .event-group-mark{
+            display: inline-block;
+            background-color: $groupcolor;
+            z-index: 1;
+            order: 2;
+            width: 50%;
+        }
+        /* mark for user event */
+        .user-event-mark{
+            flex: 1 100%;
+            order: 4;
+            display: inline-block;
+            background-color: $mecolor;
+            z-index: 1;
+        }
+
+        /* two parallels */
+        .event-dd-mark + .user-event-mark {
+            flex: 1 0 0;
+        }
+
+        /* two parallels */
+        .event-group-mark + .user-event-mark {
+            flex: 1 0 50%;
+        }
+        /* single event full width */
+        >*:only-child{
+            width: 100%;
+        }
+
+    }
+
+
+    background: $backcolor;
+    border-radius: 6px;
+    margin: 20px 0px;
+    .flatpickr-input{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .flatpickr-calendar.animate.inline
+    {
+        width:100%;
+        .flatpickr-months
+        {
+
+            .flatpickr-month
+            {
+                background: $backcolor;
+            }
+        }
+        .flatpickr-innerContainer
+        {
+            border:0px;
+            background:none;
+            .flatpickr-rContainer
+            {
+                .flatpickr-weekdays
+                {
+                    background: $backcolor;
+                    .flatpickr-weekdaycontainer
+                    {
+                        span.flatpickr-weekday
+                        {
+                            color:$greycolor;
+                            background: $backcolor;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                            font-weight: 400;
+
+                            border-right:1px solid $greycolor;
+                            &:last-child
+                            {
+                                border:0px !important;
+                            }
+                        }
+                    }
+                }
+                width: 100%;
+                .flatpickr-days
+                {
+                    width: 100%;
+                    border: 0px;
+                    .dayContainer
+                    {
+                        width: 100%;
+                        max-width: none;
+                        background: $backcolor;
+                        color:$greycolor;
+                        border: 0px;
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        .flatpickr-day
+                        {
+                            width: 14.285%;
+                            max-width: none;
+                            color:$greycolor;
+                            border-bottom: 3px solid $greycolor;
+                            border-left:1px solid $greycolor;
+                            -webkit-border-radius: 0px;
+                            -moz-border-radius: 0px;
+                            border-radius: 0px;
+                            padding: 4px;
+                            min-height: 60px;
+                            line-height: 78px;
+                            font-size: 16px;
+
+                        }
+                        .flatpickr-day:nth-child(7n+8),.flatpickr-day:nth-child(1)
+                        {
+                            border-left:0px !important;
+                        }
+                        .prevMonthDay
+                        {
+                            border-bottom:3px solid $greycolor05opacity;
+                            border-left:1px solid $greycolor05opacity;
+                        }
+                        .nextMonthDay
+                        {
+                            border-bottom:3px solid $greycolor05opacity;
+                            border-left:1px solid $greycolor05opacity;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    .schedule-event
+    {
+        margin:2rem 0px;
+        font-family: "Roboto Regular";
+
+     .create-event
+     {
+         border-bottom: 1px solid $greycolor05opacity;
+         float: left;
+         width: 100%;
+         padding: 1rem 0;
+
+
+    .schedule-group
+    {
+        font-family:"Roboto Thin";
+        height: 30px;
+        padding: 10px 10px;
+        font-size: 10px;
+        line-height: 10px;
+        float: left;
+        span
+        {
+            float: left;
+            width:20px;
+            height: 10px;
+            margin-right:5px;
+            background: $groupcolor;
+
+        }
+    }
+        .schedule-dudes
+        {
+            height: 30px;
+            padding: 10px 10px;
+            font-size: 10px;
+            line-height: 10px;
+            float: left;
+            span
+            {
+                float: left;
+                width:20px;
+                height: 10px;
+                margin-right:5px;
+                background: $dudescolor;
+
+            }
+        }
+        .schedule-me
+        {
+            height: 30px;
+            padding: 10px 10px;
+            font-size: 10px;
+            line-height: 10px;
+            float: left;
+            span
+            {
+                float: left;
+                width:20px;
+                height: 10px;
+                margin-right:5px;
+                background: $mecolor;
+
+            }
+        }
+    .dd-btn
+    {
+        float: right;
+    }
+
+
+
+    }
+
+        .schedule-contents
+        {
+            padding:1rem 0;
+            float: left;
+            .schedule-content
+            {
+                float: left;
+                margin-bottom:1rem;
+
+                &.withgroup
+                {
+
+                    h3{
+                        color:$groupcolor05opacity;
+                        font-size:18px;
+                    }
+                    .schedule-content-line
+                    {
+                        border-left:4px solid $groupcolor;
+                        text-decoration: underline;
+                        float: left;
+                        padding:0 1rem ;
+                        .title
+                        {
+                            width:20%;
+                            float: left;
+                            small{
+                                cursor: pointer;
+                                height: 20px ;
+                                line-height: 20px;
+                                -webkit-border-radius: 3px;
+                                -moz-border-radius: 3px;
+                                border-radius: 3px;
+                                padding: 0px 0.5rem;
+                                border:1px solid $groupcolor;
+                                float: left;
+                                img
+                                {
+                                    height: 13px;
+                                    margin-top:3px;
+                                    margin-right: 5px;
+                                    float: left;
+                                }
+
+                            }
+                        }
+                        span
+                        {
+                            width:10%;
+                            float: left;
+                            text-align:center
+                        }
+                        .content
+                        {
+                            width:70%;
+                            float: left;
+                            text-decoration: underline;
+                        }
+                        .long-content
+                        {
+                            width:70%;
+                            float: left;
+                            font-family: "Roboto thin";
+                        }
+                    }
+                }
+
+                &.withdudes
+                {
+                    h3{
+                        color:$dudescolor05opacity;
+                        font-size:18px;
+                    }
+                    .schedule-content-line
+                    {
+                        border-left:4px solid $dudescolor;
+                        text-decoration: underline;
+                        float: left;
+                        padding:0 1rem ;
+                        .title
+                        {
+                            width:20%;
+                            float: left;
+                            small{
+                                cursor: pointer;
+                                height: 20px ;
+                                line-height: 20px;
+                                -webkit-border-radius: 3px;
+                                -moz-border-radius: 3px;
+                                border-radius: 3px;
+                                padding: 0px 0.5rem;
+                                border:1px solid $groupcolor;
+                                float: left;
+                                img
+                                {
+                                    height: 13px;
+                                    margin-top:3px;
+                                    margin-right: 5px;
+                                    float: left;
+                                }
+
+                            }
+                        }
+                        span
+                        {
+                            width:10%;
+                            float: left;
+                            text-align:center
+                        }
+                        .content
+                        {
+                            width:70%;
+                            float: left;
+                            text-decoration: underline;
+                        }
+                        .long-content
+                        {
+                            width:70%;
+                            float: left;
+                            font-family: "Roboto thin";
+                        }
+                    }
+                }
+
+                &.withme
+                {
+                    h3{
+                        color:$mecolor05opacity;
+                        font-size:18px;
+                    }
+                    .schedule-content-line
+                    {
+                        border-left:4px solid $mecolor;
+                        text-decoration: underline;
+                        float: left;
+                        padding:0 1rem ;
+                        .title
+                        {
+                            width:20%;
+                            float: left;
+                            small{
+                                cursor: pointer;
+                                height: 20px ;
+                                line-height: 20px;
+                                -webkit-border-radius: 3px;
+                                -moz-border-radius: 3px;
+                                border-radius: 3px;
+                                padding: 0px 0.5rem;
+                                border:1px solid $groupcolor;
+                                float: left;
+                                img
+                                {
+                                    height: 13px;
+                                    margin-top:3px;
+                                    margin-right: 5px;
+                                    float: left;
+                                }
+
+                            }
+                        }
+                        span
+                        {
+                            width:10%;
+                            float: left;
+                            text-align:center
+                        }
+                        .content
+                        {
+                            width:70%;
+                            float: left;
+                            text-decoration: underline;
+                        }
+                        .long-content
+                        {
+                            width:70%;
+                            float: left;
+                            font-family: "Roboto thin";
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+}

@@ -10,16 +10,25 @@ const placeEmoji = text => {
     } // end if
     
     const result = emojies.filter(emoji => {
-        const matches = emojiIndex.search( emoji.replace(/\:/g, '') ).filter(emo => emo.colons === emoji)
-        
-        return matches.length;
+        const matches = emojiIndex.search( emoji.replace(/\:/g, '') );
+
+
+        return matches && matches.filter(emo => emo.colons === emoji).length;
     }).map((emo, i) => {
         return {
             emoji: <Emoji key={i} size={16} emoji={emo} set="google" />,
             index: text.indexOf(emo),
             length: emo.length
         }
-    });   
+    });  
+    
+    /**
+     * no emoji found in index !
+     */
+    if (result.length === 0)
+    {
+        return text;
+    } // end if
     
     let r = [];
     for(let i=0; i<result.length; i++)
@@ -47,6 +56,17 @@ const placeEmoji = text => {
     return r;
 }
 
+const inViewPort = (elem, parent) => {
+    var bounding = elem.getBoundingClientRect();
+    return (
+        bounding.top >= 0 &&
+        bounding.left >= 0 &&
+        bounding.bottom <= (parent.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <= (parent.innerWidth || document.documentElement.clientWidth)
+    );
+};
+
 export {
-    placeEmoji
+    placeEmoji,
+    inViewPort
 };

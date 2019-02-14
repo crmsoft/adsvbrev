@@ -32,7 +32,6 @@ const UserProfile = (data) => {
             <div className="profile editable">
                 <div className="d-flex w-100">
                     <div className="ava-wrapper">
-                        <Link to="/settings" className="icon-pencil"></Link>
                         <div className="ava" id="ava">
                             <Ava isGuest={guest} ava={profile.main_photo}/>
                         </div>
@@ -50,14 +49,13 @@ const UserProfile = (data) => {
                     </div>
                     <div className="w-25 user-about-wrapper">
                         <div className="user-about">
-                            <EditableArea guest={guest} text="Istanbul - Turkey" icon="icon-location" />
                             <EditableArea guest={guest} text="July 24, 1985" icon="icon-cake" />
                         </div>
                     </div>
                     <div className="w-25 user-pc">
                         <div className="d-inline-block icon-pc"></div>
                         <div className="d-inline-block mb-1">
-                            <EditableArea guest={guest} text="Intel® Pentium(R) CPU P6200 @ 2.13GHz × 2; Intel® Ironlake Mobile " />
+                            <EditableArea guest={guest} text="Istanbul - Turkey" icon="icon-location" />
                         </div>
                     </div>
                     <div className="right-block-wrapper">

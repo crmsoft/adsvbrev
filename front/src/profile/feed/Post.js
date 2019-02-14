@@ -12,13 +12,25 @@ export default class Post extends Component{
 		reply: null
 	}
 
+	static getDerivedStateFromProps(nextProps, state)
+	{
+		if (state.hasMore === undefined || (state.post.id !== nextProps.post.id))
+		{
+			return {
+				post: nextProps.post,
+				hasMore: nextProps.post.content.length > 250
+			};
+		}
+	}
+
 	/**
 	 * user click like btn
 	 */
 	toggleLike()
 	{		
-		axios.post(`/post/like/${this.props.post.id}`)
-		.then(response => store.dispatch({type: 'POST_LIKED', data: this.props.post.id}))
+		const {post} = this.state;
+		axios.post(`/post/like/${post.id}`)
+		.then(response => store.dispatch({type: 'POST_LIKED', data: post.id}))
 	}
 
 	reply(user, comment_id)
@@ -55,10 +67,34 @@ export default class Post extends Component{
 		});
 	}
 
+	showAll()
+	{
+		this.setState(() => {
+			return {
+				hasMore: false
+			}
+		})
+	}
+
     render()
     {
-        const {post} = this.props;
+		const {post} = this.state;
+		const {hasMore} = this.state;
 
+		let {content}  = post;
+		
+		if (hasMore)
+		{
+			content = content.substr(0,240)
+			content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")))
+		} // end if
+
+		const more = hasMore ? (
+						<a 
+							href="javascript:void(0)"
+							onClick={this.showAll.bind(this)}
+						>More...</a>
+					) : null
         return (
             <div className="post">
 
@@ -95,7 +131,12 @@ export default class Post extends Component{
 
 				<div className="post-content">
 					<p>
-						{placeEmoji(post.content)} <a href="#">More...</a>
+						{
+							placeEmoji(content)
+						}					
+						{
+							more
+						}
 					</p>
 					<div className={ post.media.length > 1 ? `post-media n-${post.media.length}` : "post-media"  }>
                         {

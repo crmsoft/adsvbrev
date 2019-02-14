@@ -2,9 +2,18 @@ import {
     FRIENDSHIP_NONE,
     FRIENDSHIP_SUBSCRIBED,
     FRIENDSHIP_FOLLOWING,
-    FRIENDSHIP_FRIENDS
+    FRIENDSHIP_FRIENDS,
+    FRIENDSHIP_DECLINE,
 } from './actions';
 import axios from 'axios';
+
+const declineFriendship = username => {  
+    return dispatch => {
+        axios.post(`/friends/decline/${username}`)
+        .then(response => dispatch({type: FRIENDSHIP_DECLINE, data: { user:username }}))
+        .catch(err => console.log(err))
+    }
+}
 
 const addToFriends = username => {  
     return dispatch => {
@@ -42,5 +51,6 @@ export {
     addToFriends,
     unfriend,
     acceptToFriends,
-    unsubscribe
+    unsubscribe,
+    declineFriendship
 }

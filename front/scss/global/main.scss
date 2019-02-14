@@ -3,4 +3,14 @@ body{
     color: #fff;
 }
 
-@import './switch'
+.main-color{
+    color: $mainColor !important;
+}
+
+.react-tabs__tab{
+    z-index: 0;
+}
+
+@import './switch';
+
+@import './schedule';

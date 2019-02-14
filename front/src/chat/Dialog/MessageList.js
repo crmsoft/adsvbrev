@@ -20,6 +20,10 @@ const getStore = () => {
 
 export default class MessageList extends Component {
 
+    state = {
+        localeStore: null
+    }
+
     static getDerivedStateFromProps(nextProps, state)
     {
         return {
@@ -37,6 +41,7 @@ export default class MessageList extends Component {
                         const {user} = message;
                         
                         return <Message 
+                                    key={message.id}
                                     showUser={this.state.localeStore(user.username)}
                                     message={message}
                                 />
