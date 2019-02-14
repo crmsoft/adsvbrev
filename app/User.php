@@ -187,6 +187,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
      */
     public function getMutualFriendsOf( int $user_id )
     {
+        $self_id = $this->id;
         return self::join(\DB::raw("(SELECT 
                             t1.friend_id
                         FROM
@@ -195,7 +196,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
                         FROM
                             user_friends
                         WHERE
-                            user_id = users.id AND status = 'friend'
+                            user_id = $self_id AND status = 'friend'
                                 AND deleted_at IS NULL) AS t1
                         JOIN (SELECT 
                             friend_id
