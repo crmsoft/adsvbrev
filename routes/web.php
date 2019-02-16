@@ -52,6 +52,7 @@ Route::group([
     Route::get('/friend/list/{username?}', 'ProfileController@listFriends')->name('list-fo-friends');
     Route::get('/followers/list/{username?}', 'ProfileController@listFollowers')->name('list-fo-friends');
     Route::get('/group/list/{group?}', 'ProfileController@listGroups')->name('list-fo-groups');
+    Route::get('/notification/list', 'ProfileController@notifications')->name('list-fo-friends');
 
     Route::post('/settings','ProfileController@update')->name('edit-profile');
 
@@ -70,7 +71,7 @@ Route::group([
     // User profile page
     Route::post('/post/store', 'PostController@store')->name('store-post');
     Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
-
+    Route::post('/feed/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
 });
 
 // Comment Specific Routes
