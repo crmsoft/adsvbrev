@@ -40411,6 +40411,10 @@ var profileReducer = function profileReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
+  if (initialState.fetching) {
+    return state;
+  }
+
   switch (action.type) {
     case _actions.COMMENT_LIKED:
       {
@@ -40507,7 +40511,9 @@ var profileReducer = function profileReducer() {
 
     case _actions.PROFILE_FETCH_START:
       {
-        return initialState;
+        return Object.assign({}, initialState, {
+          fetching: true
+        });
       }
 
     case _actions.DEVICE_SETTINGS:
@@ -44288,7 +44294,6 @@ function (_Component) {
       var _this$state = this.state,
           list = _this$state.list,
           localeStore = _this$state.localeStore;
-      console.log(localeStore);
       return _react.default.createElement("section", {
         className: "posts"
       }, list.map(function (item, index) {
@@ -49826,14 +49831,9 @@ function (_Component) {
       this.props.init(this.props.match.params.id);
     }
   }, {
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps) {
-      return nextProps.routerTime !== this.props.routerTime || !this.props.data.profile.user.username || this.props.data.profile.user.username !== nextProps.data.profile.user.username;
-    }
-  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      if (this.props.data.profile.user.username !== this.props.match.params.id) {
+      if (this.props.match.params.id !== this.props.data.profile.user.username && !this.props.fetching) {
         this.props.init(this.props.match.params.id);
       } // end if
 
@@ -68810,12 +68810,7 @@ var App = function App() {
     store: _store.guest
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/gg/:id",
-    component: function component(props) {
-      var myProps = Object.assign({}, props, {
-        routerTime: +new Date()
-      });
-      return _react.default.createElement(_GuestComponent.default, myProps);
-    }
+    component: _GuestComponent.default
   })), _react.default.createElement(_reactRouterDom.Route, {
     path: "/search",
     component: _search.default
