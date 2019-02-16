@@ -44319,7 +44319,8 @@ function (_Component) {
       }
 
       return {
-        localStorage: getStore()()
+        localStorage: getStore()(),
+        user: props.user
       };
     }
   }]);
@@ -52166,6 +52167,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+var UsersAva = function UsersAva(_ref) {
+  var list = _ref.list;
+
+  if (list.length === 0) {
+    return null;
+  } // end if
+
+
+  var list_ = list;
+  var user = list_.pop();
+  return _react.default.createElement("div", {
+    className: "chat-user-ava"
+  }, _react.default.createElement("img", {
+    key: user.username,
+    src: user.ava
+  }), _react.default.createElement(UsersAva, {
+    list: list_
+  }));
+};
+
 var Chat =
 /*#__PURE__*/
 function (_Component) {
@@ -52182,7 +52203,16 @@ function (_Component) {
     value: function render() {
       var _this$props = this.props,
           data = _this$props.data,
-          _onClick = _this$props.onClick;
+          _onClick = _this$props.onClick,
+          user = _this$props.user;
+      var members = data.members;
+
+      if (data.members.length > 2) {
+        members = data.members.filter(function (m) {
+          return m.username !== user;
+        });
+      }
+
       return _react.default.createElement("div", {
         onClick: function onClick(e) {
           return _onClick(data);
@@ -52194,11 +52224,8 @@ function (_Component) {
         className: "d-flex"
       }, _react.default.createElement("div", {
         className: "user-list-ava"
-      }, data.members.map(function (user) {
-        return _react.default.createElement("img", {
-          key: user.username,
-          src: user.ava
-        });
+      }, _react.default.createElement(UsersAva, {
+        list: members
       })), _react.default.createElement("div", {
         className: "user-list-user"
       }, _react.default.createElement("span", null, data.members.map(function (user) {
@@ -52694,11 +52721,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var ChatList = function ChatList(_ref) {
   var chats = _ref.chats,
-      startConversation = _ref.startConversation;
+      startConversation = _ref.startConversation,
+      user = _ref.user;
   return _react.default.createElement("div", {
     className: "chats"
   }, chats.map(function (chat) {
     return _react.default.createElement(_Chat.default, {
+      user: user,
       onClick: startConversation,
       key: chat.hash_id,
       data: chat
@@ -52787,7 +52816,8 @@ function (_Component) {
           friend = _this$props$messenger.friend,
           chat = _this$props$messenger.chat,
           m_status = _this$props$messenger.m_status,
-          m_sound = _this$props$messenger.m_sound; // no messenger when no friends;
+          m_sound = _this$props$messenger.m_sound,
+          username = _this$props$messenger.username; // no messenger when no friends;
 
       if (!friend.length) {
         return null;
@@ -52823,6 +52853,7 @@ function (_Component) {
       })))), this.state.minimized ? null : _react.default.createElement("div", {
         className: "chatable"
       }, _react.default.createElement(ChatList, {
+        user: username,
         chats: chat,
         startConversation: this.startConversation.bind(this)
       }), _react.default.createElement(UserList, {

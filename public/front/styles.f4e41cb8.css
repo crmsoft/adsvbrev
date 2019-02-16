@@ -8965,20 +8965,30 @@ nav.user-profile {
         cursor: pointer; }
       .chat .chat-wrapper .chats .user-list-ava {
         position: relative;
-        width: 75px;
+        flex-basis: 41px;
+        height: 41px;
         border-radius: 0;
         display: flex;
         margin-right: 5px; }
-        .chat .chat-wrapper .chats .user-list-ava img {
+        .chat .chat-wrapper .chats .user-list-ava .chat-user-ava {
+          display: inline-block;
+          overflow: hidden;
           border-radius: 20px;
           width: 40px;
           height: 40px;
-          position: absolute; }
-        .chat .chat-wrapper .chats .user-list-ava img + img {
-          left: 15px; }
+          position: absolute;
+          left: 12px; }
+        .chat .chat-wrapper .chats .user-list-ava .chat-user-ava:first-child {
+          left: 0; }
       .chat .chat-wrapper .chats .user-list-user {
         font-size: 12px;
-        position: relative; }
+        position: relative;
+        padding-top: 5px;
+        flex: 1; }
+        .chat .chat-wrapper .chats .user-list-user span {
+          max-height: 35px;
+          overflow: hidden;
+          line-height: 1; }
         .chat .chat-wrapper .chats .user-list-user .unread {
           display: inline-block;
           position: absolute;
