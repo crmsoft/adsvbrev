@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+use App\Http\Resources\Notification\NotificationCollection;
+
 use App\Http\Resources\UserList\User as ResourceUser;
 
 use App\Http\Resources\Profile\ResourceProfile;
@@ -60,6 +62,16 @@ class ProfileController extends Controller
             [
                 'mutual' => true
             ]
+        );
+    }
+
+    public function notifications()
+    {
+        $user = auth()->user();
+
+        return new NotificationCollection(
+           \App\Entities\UserNotification::where('user_id', $user->id)
+                ->orderBy('id', 'desc')->take(10)->get()
         );
     }
 

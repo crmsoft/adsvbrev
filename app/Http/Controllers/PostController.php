@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 use App\Http\Resources\Post\ResourcePost;
+use App\Http\Resources\Post\PostCollection;
 
 class PostController extends Controller
 {
@@ -79,11 +80,21 @@ class PostController extends Controller
         return $post->toggleLikeBy();
     }
 
-    public function attachMedia(Request $request){
+    public function loadMore(Request $request, string $username = null)
+    {
+        $request->validate([
+            'last' => 'string|min:5'
+        ]);
 
-        if( $request->has('file') ){
+        $user = $username ? \App\User::where('username', $username)->first() : auth()->user();
 
-        }
+        $last_post_id = \Hashids::decode( $request->last );
 
+        return new PostCollection(
+            $user->feed()
+                ->where('id', '<', $last_post_id)
+                ->with(['media', 'user'])
+                    ->orderBy('created_at', 'desc')->take(2)->get()
+        );
     }
 }
