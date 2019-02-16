@@ -44210,7 +44210,26 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var lastId = null;
+/**
+ * helper to show message user once 
+ */
+var getStore = function getStore() {
+  var data = {
+    last: null
+  };
+  return function () {
+    var _this = this;
+
+    return {
+      set: function set(post_id) {
+        _this.last = post_id;
+      },
+      get: function get() {
+        return _this.last;
+      }
+    };
+  }.bind(data);
+};
 
 var FeedList =
 /*#__PURE__*/
@@ -44220,7 +44239,7 @@ function (_Component) {
   function FeedList() {
     var _getPrototypeOf2;
 
-    var _this;
+    var _this2;
 
     _classCallCheck(this, FeedList);
 
@@ -44228,19 +44247,19 @@ function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FeedList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this2 = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FeedList)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this2)), "state", {
       list: []
     });
 
-    return _this;
+    return _this2;
   }
 
   _createClass(FeedList, [{
     key: "loadMore",
     value: function loadMore() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.end) {
         return null;
@@ -44248,13 +44267,13 @@ function (_Component) {
 
 
       _axios.default.post(this.state.user ? "/feed/more/".concat(this.state.user) : "/feed/more", {
-        last: lastId
+        last: this.state.localeStore.get()
       }).then(function (_ref) {
         var data = _ref.data;
 
-        _this2.setState(function () {
+        _this3.setState(function () {
           return data.data.length ? {
-            list: [].concat(_toConsumableArray(_this2.state.list), _toConsumableArray(data.data))
+            list: [].concat(_toConsumableArray(_this3.state.list), _toConsumableArray(data.data))
           } : {
             end: true
           };
@@ -44264,16 +44283,19 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
-      var list = this.state.list;
+      var _this$state = this.state,
+          list = _this$state.list,
+          localeStore = _this$state.localeStore;
+      console.log(localeStore);
       return _react.default.createElement("section", {
         className: "posts"
       }, list.map(function (item, index) {
-        lastId = item.id;
+        localeStore.set(item.id);
         return _react.default.createElement(_Post.default, {
           onEnterViewport: function onEnterViewport() {
-            item.id === lastId && _this3.loadMore();
+            item.id === localeStore.get() && _this4.loadMore();
           },
           key: index,
           post: item
@@ -44286,11 +44308,14 @@ function (_Component) {
       if (state.list.length === 0 || props.user !== state.user) {
         return {
           list: props.list,
-          user: props.user
+          user: props.user,
+          localeStore: getStore()()
         };
       }
 
-      return null;
+      return {
+        localStorage: getStore()()
+      };
     }
   }]);
 
