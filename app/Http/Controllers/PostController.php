@@ -80,6 +80,17 @@ class PostController extends Controller
         return $post->toggleLikeBy();
     }
 
+    public function deletePost(Post $post)
+    {
+        $user = auth()->user();
+
+        $result = $user->feed()->where('id', $post->id)->delete();
+
+        return response()->json([
+            'action' => $result
+        ]);
+    }
+
     public function loadMore(Request $request, string $username = null)
     {
         $request->validate([

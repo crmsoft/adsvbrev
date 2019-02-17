@@ -71,6 +71,7 @@ Route::group([
     // User profile page
     Route::post('/post/store', 'PostController@store')->name('store-post');
     Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
+    Route::post('/post/delete/{post}', 'PostController@deletePost')->name('delete-post');
     Route::post('/feed/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
 });
 
@@ -84,6 +85,7 @@ Route::group([
     // User profile page
     Route::post('/comment/store/{post}/{comment?}', 'CommentController@store')->name('store-comment');
     Route::post('/comment/like/{comment}', 'CommentController@toggleLike')->name('toggle-like-comment');
+    Route::post('/comment/delete/{comment}', 'CommentController@delete')->name('delete-comment');
 
 });
 

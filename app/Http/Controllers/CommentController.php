@@ -70,4 +70,11 @@ class CommentController extends Controller
     {
         return $comment->toggleLikeBy();
     }
+
+    public function delete(Comment $comment)
+    {
+        $user = auth()->user();
+
+        return ['a' => $user->id === $comment->creator_id];
+    }
 }
