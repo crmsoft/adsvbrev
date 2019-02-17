@@ -75,6 +75,13 @@ class CommentController extends Controller
     {
         $user = auth()->user();
 
-        return ['a' => $user->id === $comment->creator_id];
+        $result = 0;
+
+        if ($user->id === $comment->creator_id)
+        {
+            $result = $comment->delete();
+        }
+
+        return ['action' => $result];
     }
 }
