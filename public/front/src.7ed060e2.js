@@ -52175,15 +52175,14 @@ var UsersAva = function UsersAva(_ref) {
   } // end if
 
 
-  var list_ = list;
-  var user = list_.pop();
+  var user = list[list.length - 1];
   return _react.default.createElement("div", {
     className: "chat-user-ava"
   }, _react.default.createElement("img", {
     key: user.username,
     src: user.ava
   }), _react.default.createElement(UsersAva, {
-    list: list_
+    list: list.slice(0, list.length - 1)
   }));
 };
 
@@ -52207,7 +52206,11 @@ function (_Component) {
           user = _this$props.user;
       var members = data.members;
 
-      if (data.members.length > 2) {
+      if (members.length === 0) {
+        return null;
+      }
+
+      if (user && data.members.length > 2) {
         members = data.members.filter(function (m) {
           return m.username !== user;
         });
@@ -52308,10 +52311,11 @@ exports.m_recieved = m_recieved;
 
 var load_chats = function load_chats() {
   return function (dispatch) {
-    return _axios.default.get("/chats").then(function (response) {
-      return dispatch({
+    return _axios.default.get("/chats").then(function (_ref) {
+      var data = _ref.data;
+      dispatch({
         type: CHATS_LOADED,
-        data: response.data.data
+        data: data.data
       });
     });
   };
@@ -65190,8 +65194,7 @@ function (_Component) {
       var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        _this4.props.sended();
-
+        //this.props.sended();
         var hash_id = _this4.props.chat.hash_id;
 
         _axios.default.post("/chat/".concat(hash_id, "/pull")).then(function (response) {
