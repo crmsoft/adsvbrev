@@ -8742,6 +8742,22 @@ nav.user-profile {
       color: #ffffff;
       cursor: pointer;
       line-height: 16px; }
+      .comments .comment .comment-dot .popup-overlay {
+        display: none; }
+      .comments .comment .comment-dot .popup-content {
+        width: 80px !important;
+        padding: 0 !important;
+        border: none !important; }
+        .comments .comment .comment-dot .popup-content > div {
+          background-color: #3E3F42 !important; }
+      .comments .comment .comment-dot ul {
+        background-color: #3E3F42;
+        margin: 0;
+        padding: 5px; }
+        .comments .comment .comment-dot ul li {
+          max-width: 55px;
+          font-size: 12px;
+          list-style: none; }
     .comments .comment .comment-actions > span:first-child {
       margin-right: 5px; }
       .comments .comment .comment-actions > span:first-child > span {

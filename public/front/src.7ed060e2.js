@@ -40599,7 +40599,725 @@ var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware
 exports.guest = store;
 var _default = store;
 exports.default = _default;
-},{"./reducer":"../src/profile/fetch/reducer.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/comment/Comment.js":[function(require,module,exports) {
+},{"./reducer":"../src/profile/fetch/reducer.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../node_modules/reactjs-popup/reactjs-popup.es.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactDom = require("react-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*!
+ * reactjs-popup v1.3.2
+ * (c) 2018-present Youssouf EL AZIZI <youssoufelazizi@gmail.com>
+ * Released under the MIT License.
+ */
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+/* Algo to calculate position
+  1. center position for popup content : the center of the trigger will be the center of the content content
+      so the popup content position will be like this :
+      top => the y of the center for the trigger element : trigger.top + trigger.height/2
+      left => the x of the center for the trigger element : trigger.left + trigger.width/2
+
+  2. translate position according to the first  position attribute  passed  in the function argument
+      for example :
+        position = 'left top'
+        we need to handle the first argument in the position: 'left' => that's mean we need to translate the popup content according to the X axis by - content.width/2
+
+  3.translate position according to the first  position attribute  passed  in the function argument
+    for example :
+      position = 'left top'
+      the second argument 'top' => translate popup content by + content.height*4/5
+
+  4. check if calculated position is going out of bounds of wrapper box or not. If yes repeat 1-3 for next position enum. By default wrapper box is window element
+*/
+
+
+function getCoordinatesForPosition(triggerBounding, ContentBounding, position, arrow, _ref) {
+  var offsetX = _ref.offsetX,
+      offsetY = _ref.offsetY;
+  var margin = arrow ? 8 : 0;
+  var args = position.split(" "); // the step N 1 : center the popup content => ok
+
+  var CenterTop = triggerBounding.top + triggerBounding.height / 2;
+  var CenterLeft = triggerBounding.left + triggerBounding.width / 2;
+  var height = ContentBounding.height,
+      width = ContentBounding.width;
+  var top = CenterTop - height / 2;
+  var left = CenterLeft - width / 2;
+  var transform = "";
+  var arrowTop = "0%";
+  var arrowLeft = "0%"; // the  step N 2 : => ok
+
+  switch (args[0]) {
+    case "top":
+      top -= height / 2 + triggerBounding.height / 2 + margin;
+      transform = "rotate(45deg)";
+      arrowTop = "100%";
+      arrowLeft = "50%";
+      break;
+
+    case "bottom":
+      top += height / 2 + triggerBounding.height / 2 + margin;
+      transform = "rotate(225deg)";
+      arrowLeft = "50%";
+      break;
+
+    case "left":
+      left -= width / 2 + triggerBounding.width / 2 + margin;
+      transform = " rotate(-45deg)";
+      arrowLeft = "100%";
+      arrowTop = "50%";
+      break;
+
+    case "right":
+      left += width / 2 + triggerBounding.width / 2 + margin;
+      transform = "rotate(135deg)";
+      arrowTop = "50%";
+      break;
+  }
+
+  switch (args[1]) {
+    case "top":
+      top = triggerBounding.top;
+      arrowTop = triggerBounding.height / 2 + "px";
+      break;
+
+    case "bottom":
+      top = triggerBounding.top - height + triggerBounding.height;
+      arrowTop = height - triggerBounding.height / 2 + "px";
+      break;
+
+    case "left":
+      left = triggerBounding.left;
+      arrowLeft = triggerBounding.width / 2 + "px";
+      break;
+
+    case "right":
+      left = triggerBounding.left - width + triggerBounding.width;
+      arrowLeft = width - triggerBounding.width / 2 + "px";
+      break;
+  }
+
+  top = args[0] === "top" ? top - offsetY : top + offsetY;
+  left = args[0] === "left" ? left - offsetX : left + offsetX;
+  return {
+    top: top,
+    left: left,
+    transform: transform,
+    arrowLeft: arrowLeft,
+    arrowTop: arrowTop
+  };
+}
+
+function calculatePosition(triggerBounding, ContentBounding, positions, arrow, _ref2, wrapperBox) {
+  var offsetX = _ref2.offsetX,
+      offsetY = _ref2.offsetY;
+  var bestCoords;
+  var i = 0;
+
+  while (i < positions.length) {
+    bestCoords = getCoordinatesForPosition(triggerBounding, ContentBounding, positions[i], arrow, {
+      offsetX: offsetX,
+      offsetY: offsetY
+    });
+    var contentBox = {
+      top: bestCoords.top,
+      left: bestCoords.left,
+      width: ContentBounding.width,
+      height: ContentBounding.height
+    };
+
+    if (contentBox.top <= wrapperBox.top || contentBox.left <= wrapperBox.left || contentBox.top + contentBox.height >= wrapperBox.top + wrapperBox.height || contentBox.left + contentBox.width >= wrapperBox.left + wrapperBox.width) {
+      i++;
+    } else {
+      break;
+    }
+  }
+
+  return bestCoords;
+}
+
+var styles = {
+  popupContent: {
+    tooltip: {
+      position: "absolute",
+      zIndex: "2",
+      width: "200px",
+      background: "rgb(255, 255, 255)",
+      border: "1px solid rgb(187, 187, 187)",
+      boxShadow: "rgba(0, 0, 0, 0.2) 0px 1px 3px",
+      padding: "5px"
+    },
+    modal: {
+      position: "relative",
+      background: "rgb(255, 255, 255)",
+      width: "50%",
+      margin: "auto",
+      border: "1px solid rgb(187, 187, 187)",
+      padding: "5px"
+    }
+  },
+  popupArrow: {
+    height: "10px",
+    width: "10px",
+    position: "absolute",
+    background: "rgb(255, 255, 255)",
+    transform: "rotate(45deg)",
+    margin: "-5px",
+    zIndex: "-1",
+    boxShadow: "rgba(0, 0, 0, 0.2) 1px 1px 1px"
+  },
+  overlay: {
+    tooltip: {
+      position: "fixed",
+      top: "0",
+      bottom: "0",
+      left: "0",
+      right: "0"
+    },
+    modal: {
+      position: "fixed",
+      top: "0",
+      bottom: "0",
+      left: "0",
+      right: "0",
+      background: "rgba(0, 0, 0,0.5)",
+      display: "flex",
+      zIndex: "999"
+    }
+  }
+};
+var POSITION_TYPES = ["top left", "top center", "top right", "right top", "right center", "right bottom", "bottom left", "bottom center", "bottom right", "left top", "left center", "left bottom"];
+
+var Popup =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  _inherits(Popup, _React$PureComponent);
+
+  function Popup(props) {
+    var _this;
+
+    _classCallCheck(this, Popup);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Popup).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      isOpen: _this.props.open || _this.props.defaultOpen,
+      modal: _this.props.modal ? true : !_this.props.trigger // we create this modal state because the popup can't be a tooltip if the trigger prop doesn't exist
+
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "repositionOnResize", function () {
+      _this.setPosition();
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onEscape", function (e) {
+      if (e.key === "Escape") _this.closePopup();
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "lockScroll", function () {
+      if (_this.state.modal && _this.props.lockScroll) document.getElementsByTagName("body")[0].style.overflow = "hidden";
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "resetScroll", function () {
+      if (_this.state.modal && _this.props.lockScroll) document.getElementsByTagName("body")[0].style.overflow = "auto";
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "togglePopup", function () {
+      if (_this.state.isOpen) _this.closePopup();else _this.openPopup();
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "openPopup", function () {
+      if (_this.state.isOpen || _this.props.disabled) return;
+
+      _this.setState({
+        isOpen: true
+      }, function () {
+        _this.setPosition();
+
+        _this.props.onOpen();
+
+        _this.lockScroll();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "closePopup", function () {
+      if (!_this.state.isOpen) return;
+
+      _this.props.onClose();
+
+      _this.setState({
+        isOpen: false
+      }, function () {
+        _this.resetScroll();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onMouseEnter", function () {
+      clearTimeout(_this.timeOut);
+      var mouseEnterDelay = _this.props.mouseEnterDelay;
+      _this.timeOut = setTimeout(function () {
+        return _this.openPopup();
+      }, mouseEnterDelay);
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onMouseLeave", function () {
+      clearTimeout(_this.timeOut);
+      var mouseLeaveDelay = _this.props.mouseLeaveDelay;
+      _this.timeOut = setTimeout(function () {
+        return _this.closePopup();
+      }, mouseLeaveDelay);
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "getTooltipBoundary", function () {
+      var keepTooltipInside = _this.props.keepTooltipInside;
+      var boundingBox = {
+        top: 0,
+        left: 0,
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+
+      if (typeof keepTooltipInside === "string") {
+        var selector = document.querySelector(keepTooltipInside);
+
+        if ("development" !== "production") {
+          if (selector === null) throw new Error("".concat(keepTooltipInside, " selector is not exist : keepTooltipInside must be a valid html selector 'class' or 'Id'  or a boolean value"));
+        }
+
+        boundingBox = selector.getBoundingClientRect();
+      }
+
+      return boundingBox;
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "setPosition", function () {
+      var _this$state = _this.state,
+          modal = _this$state.modal,
+          isOpen = _this$state.isOpen;
+      if (modal || !isOpen) return;
+      var _this$props = _this.props,
+          arrow = _this$props.arrow,
+          position = _this$props.position,
+          offsetX = _this$props.offsetX,
+          offsetY = _this$props.offsetY,
+          keepTooltipInside = _this$props.keepTooltipInside,
+          arrowStyle = _this$props.arrowStyle;
+
+      var helper = _this.HelperEl.getBoundingClientRect();
+
+      var trigger = _this.TriggerEl.getBoundingClientRect();
+
+      var content = _this.ContentEl.getBoundingClientRect();
+
+      var boundingBox = _this.getTooltipBoundary();
+
+      var positions = Array.isArray(position) ? position : [position]; // keepTooltipInside would be activated if the  keepTooltipInside exist or the position is Array
+
+      if (keepTooltipInside || Array.isArray(position)) positions = _toConsumableArray(positions).concat(POSITION_TYPES);
+      var cords = calculatePosition(trigger, content, positions, arrow, {
+        offsetX: offsetX,
+        offsetY: offsetY
+      }, boundingBox);
+      _this.ContentEl.style.top = cords.top - helper.top + "px";
+      _this.ContentEl.style.left = cords.left - helper.left + "px";
+
+      if (arrow) {
+        _this.ArrowEl.style["transform"] = cords.transform;
+        _this.ArrowEl.style["-ms-transform"] = cords.transform;
+        _this.ArrowEl.style["-webkit-transform"] = cords.transform;
+        _this.ArrowEl.style.top = arrowStyle.top || cords.arrowTop;
+        _this.ArrowEl.style.left = arrowStyle.left || cords.arrowLeft;
+      }
+
+      if (window.getComputedStyle(_this.TriggerEl, null).getPropertyValue("position") == "static" || window.getComputedStyle(_this.TriggerEl, null).getPropertyValue("position") == "") _this.TriggerEl.style.position = "relative";
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "addWarperAction", function () {
+      var _this$props2 = _this.props,
+          contentStyle = _this$props2.contentStyle,
+          className = _this$props2.className,
+          on = _this$props2.on;
+      var modal = _this.state.modal;
+      var popupContentStyle = modal ? styles.popupContent.modal : styles.popupContent.tooltip;
+      var childrenElementProps = {
+        className: "popup-content ".concat(className),
+        style: Object.assign({}, popupContentStyle, contentStyle),
+        ref: _this.setContentRef,
+        onClick: function onClick(e) {
+          e.stopPropagation();
+        }
+      };
+
+      if (!modal && on.indexOf("hover") >= 0) {
+        childrenElementProps.onMouseEnter = _this.onMouseEnter;
+        childrenElementProps.onMouseLeave = _this.onMouseLeave;
+      }
+
+      return childrenElementProps;
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "renderTrigger", function () {
+      var triggerProps = {
+        key: "T"
+      };
+      var _this$props3 = _this.props,
+          on = _this$props3.on,
+          trigger = _this$props3.trigger;
+      var onAsArray = Array.isArray(on) ? on : [on];
+
+      for (var i = 0, len = onAsArray.length; i < len; i++) {
+        switch (onAsArray[i]) {
+          case "click":
+            triggerProps.onClick = _this.togglePopup;
+            break;
+
+          case "hover":
+            triggerProps.onMouseEnter = _this.onMouseEnter;
+            triggerProps.onMouseLeave = _this.onMouseLeave;
+            break;
+
+          case "focus":
+            triggerProps.onFocus = _this.onMouseEnter;
+            break;
+        }
+      }
+
+      if (typeof trigger === "function") return _react.default.cloneElement(trigger(_this.state.isOpen), triggerProps);
+      return _react.default.cloneElement(trigger, triggerProps);
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "renderContent", function () {
+      var _this$props4 = _this.props,
+          arrow = _this$props4.arrow,
+          arrowStyle = _this$props4.arrowStyle;
+      var modal = _this.state.modal;
+      return _react.default.createElement("div", _extends({}, _this.addWarperAction(), {
+        key: "C"
+      }), arrow && !modal && _react.default.createElement("div", {
+        ref: _this.setArrowRef,
+        style: Object.assign({}, styles.popupArrow, arrowStyle)
+      }), typeof _this.props.children === "function" ? _this.props.children(_this.closePopup, _this.state.isOpen) : _this.props.children);
+    });
+
+    _this.setTriggerRef = function (r) {
+      return _this.TriggerEl = r;
+    };
+
+    _this.setContentRef = function (r) {
+      return _this.ContentEl = r;
+    };
+
+    _this.setArrowRef = function (r) {
+      return _this.ArrowEl = r;
+    };
+
+    _this.setHelperRef = function (r) {
+      return _this.HelperEl = r;
+    };
+
+    _this.timeOut = 0;
+    return _this;
+  }
+
+  _createClass(Popup, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this$props5 = this.props,
+          closeOnEscape = _this$props5.closeOnEscape,
+          defaultOpen = _this$props5.defaultOpen,
+          repositionOnResize = _this$props5.repositionOnResize;
+      if (defaultOpen) this.setPosition();
+
+      if (closeOnEscape) {
+        window.addEventListener("keyup", this.onEscape);
+      }
+
+      if (repositionOnResize) {
+        window.addEventListener('resize', this.repositionOnResize);
+      }
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.open === nextProps.open) return;
+      if (nextProps.open) this.openPopup();else this.closePopup();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.disabled !== this.props.disabled && this.props.disabled && this.state.isOpen) {
+        this.closePopup();
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      // kill any function to execute if the component is unmounted
+      clearTimeout(this.timeOut);
+      var _this$props6 = this.props,
+          closeOnEscape = _this$props6.closeOnEscape,
+          repositionOnResize = _this$props6.repositionOnResize; // remove events listeners
+
+      if (closeOnEscape) {
+        window.removeEventListener("keyup", this.onEscape);
+      }
+
+      if (repositionOnResize) {
+        window.removeEventListener('resize', this.repositionOnResize);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props7 = this.props,
+          overlayStyle = _this$props7.overlayStyle,
+          closeOnDocumentClick = _this$props7.closeOnDocumentClick,
+          on = _this$props7.on;
+      var modal = this.state.modal;
+      var overlay = this.state.isOpen && !(on.indexOf("hover") >= 0);
+      var ovStyle = modal ? styles.overlay.modal : styles.overlay.tooltip;
+      return [!!this.props.trigger && _react.default.createElement(Ref, {
+        innerRef: this.setTriggerRef,
+        key: "R"
+      }, this.renderTrigger()), this.state.isOpen && _react.default.createElement("div", {
+        key: "H",
+        style: {
+          position: "absolute",
+          top: "0px",
+          left: "0px"
+        },
+        ref: this.setHelperRef
+      }), overlay && _react.default.createElement("div", {
+        key: "O",
+        className: "popup-overlay",
+        style: Object.assign({}, ovStyle, overlayStyle),
+        onClick: closeOnDocumentClick ? this.closePopup : undefined
+      }, modal && this.renderContent()), this.state.isOpen && !modal && this.renderContent()];
+    }
+  }]);
+
+  return Popup;
+}(_react.default.PureComponent);
+
+_defineProperty(Popup, "defaultProps", {
+  children: function children() {
+    return _react.default.createElement("span", null, " Your Content Here !!");
+  },
+  trigger: null,
+  onOpen: function onOpen() {},
+  onClose: function onClose() {},
+  defaultOpen: false,
+  open: false,
+  disabled: false,
+  closeOnDocumentClick: true,
+  repositionOnResize: true,
+  closeOnEscape: true,
+  on: ["click"],
+  contentStyle: {},
+  arrowStyle: {},
+  overlayStyle: {},
+  className: "",
+  position: "bottom center",
+  modal: false,
+  lockScroll: false,
+  arrow: true,
+  offsetX: 0,
+  offsetY: 0,
+  mouseEnterDelay: 100,
+  mouseLeaveDelay: 100,
+  keepTooltipInside: false
+});
+
+if ("development" !== "production") {
+  var PropTypes = require("prop-types");
+
+  var TRIGGER_TYPES = ["hover", "click", "focus"];
+  Popup.propTypes = {
+    arrowStyle: PropTypes.object,
+    contentStyle: PropTypes.object,
+    overlayStyle: PropTypes.object,
+    className: PropTypes.string,
+    modal: PropTypes.bool,
+    closeOnDocumentClick: PropTypes.bool,
+    repositionOnResize: PropTypes.bool,
+    disabled: PropTypes.bool,
+    lockScroll: PropTypes.bool,
+    offsetX: PropTypes.number,
+    offsetY: PropTypes.number,
+    mouseEnterDelay: PropTypes.number,
+    mouseLeaveDelay: PropTypes.number,
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func,
+    open: PropTypes.bool,
+    defaultOpen: PropTypes.bool,
+    trigger: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+    // for uncontrolled component we don't need the trigger Element
+    on: PropTypes.oneOfType([PropTypes.oneOf(TRIGGER_TYPES), PropTypes.arrayOf(PropTypes.oneOf(TRIGGER_TYPES))]),
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element, PropTypes.string]).isRequired,
+    position: PropTypes.oneOfType([PropTypes.oneOf(POSITION_TYPES), PropTypes.arrayOf(PropTypes.oneOf(POSITION_TYPES))]),
+    keepTooltipInside: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+  };
+}
+
+var Ref =
+/*#__PURE__*/
+function (_React$PureComponent2) {
+  _inherits(Ref, _React$PureComponent2);
+
+  function Ref() {
+    _classCallCheck(this, Ref);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Ref).apply(this, arguments));
+  }
+
+  _createClass(Ref, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var innerRef = this.props.innerRef;
+      if (innerRef) innerRef((0, _reactDom.findDOMNode)(this));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var children = this.props.children;
+      return _react.default.Children.only(children);
+    }
+  }]);
+
+  return Ref;
+}(_react.default.PureComponent);
+
+var _default = Popup;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../src/comment/Comment.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40619,6 +41337,8 @@ var _utils = require("../utils");
 
 var _reactRouterDom = require("react-router-dom");
 
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -40633,13 +41353,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Comment =
 /*#__PURE__*/
@@ -40647,30 +41369,55 @@ function (_Component) {
   _inherits(Comment, _Component);
 
   function Comment() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Comment);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Comment).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Comment)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      open: false
+      /**
+       * user click like btn
+       */
+
+    });
+
+    return _this;
   }
 
   _createClass(Comment, [{
     key: "toggleLike",
-
-    /**
-     * user click like btn
-     */
     value: function toggleLike() {
-      var _this = this;
+      var _this2 = this;
 
       var id = this.props.comment.id;
 
       _axios.default.post("/comment/like/".concat(id)).then(function (response) {
-        _this.props.toggle(id);
+        _this2.props.toggle(id);
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this3 = this;
+
+      var comment = this.props.comment;
+
+      _axios.default.post("/comment/delete/".concat(comment.id)).then(function (response) {
+        _this3.props.onDelete(comment.id);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var comment = this.props.comment;
       var user = comment.user;
@@ -40705,13 +41452,34 @@ function (_Component) {
         className: "icon-heart-empty"
       })), _react.default.createElement("span", null, comment.like_count | 0), _react.default.createElement("span", {
         onClick: function onClick(e) {
-          _this2.props.replyTo(user, comment.id);
+          _this4.props.replyTo(user, comment.id);
         }
       }, "reply")))), _react.default.createElement("div", {
         className: "comment-time"
       }, comment.created_at), _react.default.createElement("div", {
         className: "comment-dot"
-      }, "..."));
+      }, user.username === this.props.user.username ? _react.default.createElement(_reactjsPopup.default, {
+        open: this.state.open,
+        onClose: function onClose() {
+          _this4.setState({
+            open: false
+          });
+        },
+        onOpen: function onOpen() {
+          _this4.setState({
+            open: true
+          });
+        },
+        keepTooltipInside: true,
+        lockScroll: false,
+        closeOnEscape: true,
+        closeOnDocumentClick: true,
+        position: "left center",
+        modal: false,
+        trigger: _react.default.createElement("span", null, "...")
+      }, _react.default.createElement("ul", null, _react.default.createElement("li", {
+        onClick: this.delete.bind(this)
+      }, "delete"))) : _react.default.createElement("span", null, "...")));
     }
   }]);
 
@@ -40719,7 +41487,108 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Comment;
-},{"react":"../node_modules/react/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","axios":"../../node_modules/axios/index.js","../utils":"../src/utils.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/comment/Comments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","axios":"../../node_modules/axios/index.js","../utils":"../src/utils.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"../src/header/events.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.reduce_followers = exports.load_profile = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PROFILE_LOADED = 'PROFILE_LOADED';
+exports.PROFILE_LOADED = PROFILE_LOADED;
+var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
+exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
+
+var load_profile = function load_profile() {
+  return function (dispatch) {
+    _axios.default.post('/profile').then(function (response) {
+      return dispatch({
+        type: PROFILE_LOADED,
+        data: response.data
+      });
+    });
+  };
+};
+
+exports.load_profile = load_profile;
+
+var reduce_followers = function reduce_followers() {
+  return function (dispatch) {
+    dispatch({
+      type: REDUCE_FOLLOWERS,
+      data: null
+    });
+  };
+};
+
+exports.reduce_followers = reduce_followers;
+},{"axios":"../../node_modules/axios/index.js"}],"../src/header/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _events = require("./events");
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    data: {
+      user: {}
+    }
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _events.REDUCE_FOLLOWERS:
+      {
+        return Object.assign({}, state, {
+          followers: state.followers - 1
+        });
+      }
+
+    case _events.PROFILE_LOADED:
+      {
+        return Object.assign({}, action.data);
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./events":"../src/header/events.js"}],"../src/header/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxLogger = require("redux-logger");
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _logger = new _reduxLogger.createLogger();
+
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/header/reducer.js"}],"../src/comment/Comments.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40730,6 +41599,8 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _Comment = _interopRequireDefault(require("./Comment"));
+
+var _store = _interopRequireDefault(require("../header/store"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40754,6 +41625,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var unListen = function unListen() {};
 
 var pushNewComment = function pushNewComment(comments, newComment) {
   if (newComment.parent) {
@@ -40794,13 +41667,49 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       moreLoaded: 0,
       comments: [],
-      hasMore: false
+      hasMore: false,
+      firstRender: false,
+      user: {}
     });
 
     return _this;
   }
 
   _createClass(Comments, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var user = _store.default.getState();
+
+      if (!user || !user.data) {
+        unListen = _store.default.subscribe(function () {
+          var user = _store.default.getState();
+
+          if (user.username) {
+            unListen();
+
+            _this2.setState(function () {
+              return {
+                user: user.data
+              };
+            });
+          }
+        });
+      } else {
+        this.setState(function () {
+          return {
+            user: user.data
+          };
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      unListen();
+    }
+  }, {
     key: "toggleLike",
     value: function toggleLike(comment_id) {
       this.setState(function (state) {
@@ -40824,9 +41733,20 @@ function (_Component) {
       });
     }
   }, {
+    key: "onCommentDelete",
+    value: function onCommentDelete(comment_id) {
+      this.setState(function (state) {
+        return {
+          comments: state.comments.filter(function (c) {
+            return c.id !== comment_id;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var comments = this.state.comments;
 
@@ -40845,24 +41765,28 @@ function (_Component) {
       }, "All Comments"))) : null, comments.map(function (comment) {
         if (comment.subs.length === 0) {
           return _react.default.createElement(_Comment.default, {
-            toggle: _this2.toggleLike.bind(_this2),
-            replyTo: _this2.props.replyTo,
+            user: _this3.state.user,
+            onDelete: _this3.onCommentDelete.bind(_this3),
+            toggle: _this3.toggleLike.bind(_this3),
+            replyTo: _this3.props.replyTo,
             comment: comment,
             key: comment.id
           });
         }
 
         return [_react.default.createElement(_Comment.default, {
-          toggle: _this2.toggleLike.bind(_this2),
-          replyTo: _this2.props.replyTo,
+          user: _this3.state.user,
+          onDelete: _this3.onCommentDelete.bind(_this3),
+          toggle: _this3.toggleLike.bind(_this3),
+          replyTo: _this3.props.replyTo,
           comment: comment,
           key: comment.id
         })].concat(_react.default.createElement(Comments, {
           replies: true,
-          key: "".concat(_this2.props.post, "_sub_comments"),
-          push: _this2.props.push,
-          replyTo: _this2.props.replyTo,
-          post: _this2.props.post,
+          key: "".concat(_this3.props.post, "_sub_comments"),
+          push: _this3.props.push,
+          replyTo: _this3.props.replyTo,
+          post: _this3.props.post,
           comments: comment.subs
         }));
       }));
@@ -40870,14 +41794,15 @@ function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(nextProps, prevState) {
-      if (prevState.comments.length === 0) {
+      if (!prevState.firstRender) {
         var comments = nextProps.comments;
         var hasMore = comments.length > 3;
         var comments_ = comments.length === 0 ? nextProps.push ? [nextProps.push] : [] : comments;
         return {
           comments: hasMore ? comments.slice(1, 4) : comments_,
           hasMore: hasMore,
-          post: nextProps.post
+          post: nextProps.post,
+          firstRender: true
         };
       } // end if
 
@@ -40909,7 +41834,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Comments;
-},{"react":"../node_modules/react/index.js","./Comment":"../src/comment/Comment.js"}],"../node_modules/@babel/runtime/helpers/esm/extends.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Comment":"../src/comment/Comment.js","../header/store":"../src/header/store.js"}],"../node_modules/@babel/runtime/helpers/esm/extends.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41325,664 +42250,7 @@ TextareaAutosize.defaultProps = {
 } : void 0;
 var _default = TextareaAutosize;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","@babel/runtime/helpers/esm/assertThisInitialized":"../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../node_modules/reactjs-popup/reactjs-popup.es.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = require("react-dom");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*!
- * reactjs-popup v1.3.0
- * (c) 2018-present Youssouf EL AZIZI <youssoufelazizi@gmail.com>
- * Released under the MIT License.
- */
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  _setPrototypeOf(subClass.prototype, superClass && superClass.prototype);
-
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.getPrototypeOf || function _getPrototypeOf(o) {
-    return o.__proto__;
-  };
-
-  return _getPrototypeOf(o);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-}
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-/* Algo to calculate position
-  1. center position for popup content : the center of the trigger will be the center of the content content
-      so the popup content position will be like this :
-      top => the y of the center for the trigger element : trigger.top + trigger.height/2
-      left => the x of the center for the trigger element : trigger.left + trigger.width/2
-
-  2. translate position according to the first  position attribute  passed  in the function argument
-      for example :
-        position = 'left top'
-        we need to handle the first argument in the position: 'left' => that's mean we need to translate the popup content according to the X axis by - content.width/2
-
-  3.translate position according to the first  position attribute  passed  in the function argument
-    for example :
-      position = 'left top'
-      the second argument 'top' => translate popup content by + content.height*4/5
-
-  4. check if calculated position is going out of bounds of wrapper box or not. If yes repeat 1-3 for next position enum. By default wrapper box is window element
-*/
-
-
-function getCoordinatesForPosition(triggerBounding, ContentBounding, position, arrow, _ref) {
-  var offsetX = _ref.offsetX,
-      offsetY = _ref.offsetY;
-  var margin = arrow ? 8 : 0;
-  var args = position.split(" "); // the step N 1 : center the popup content => ok
-
-  var CenterTop = triggerBounding.top + triggerBounding.height / 2;
-  var CenterLeft = triggerBounding.left + triggerBounding.width / 2;
-  var height = ContentBounding.height,
-      width = ContentBounding.width;
-  var top = CenterTop - height / 2;
-  var left = CenterLeft - width / 2;
-  var transform = "";
-  var arrowTop = "0%";
-  var arrowLeft = "0%"; // the  step N 2 : => ok
-
-  switch (args[0]) {
-    case "top":
-      top -= height / 2 + triggerBounding.height / 2 + margin;
-      transform = "rotate(45deg)";
-      arrowTop = "100%";
-      arrowLeft = "50%";
-      break;
-
-    case "bottom":
-      top += height / 2 + triggerBounding.height / 2 + margin;
-      transform = "rotate(225deg)";
-      arrowLeft = "50%";
-      break;
-
-    case "left":
-      left -= width / 2 + triggerBounding.width / 2 + margin;
-      transform = " rotate(-45deg)";
-      arrowLeft = "100%";
-      arrowTop = "50%";
-      break;
-
-    case "right":
-      left += width / 2 + triggerBounding.width / 2 + margin;
-      transform = "rotate(135deg)";
-      arrowTop = "50%";
-      break;
-  }
-
-  switch (args[1]) {
-    case "top":
-      top = triggerBounding.top;
-      arrowTop = triggerBounding.height / 2 + "px";
-      break;
-
-    case "bottom":
-      top = triggerBounding.top - height + triggerBounding.height;
-      arrowTop = height - triggerBounding.height / 2 + "px";
-      break;
-
-    case "left":
-      left = triggerBounding.left;
-      arrowLeft = triggerBounding.width / 2 + "px";
-      break;
-
-    case "right":
-      left = triggerBounding.left - width + triggerBounding.width;
-      arrowLeft = width - triggerBounding.width / 2 + "px";
-      break;
-  }
-
-  top = args[0] === "top" ? top - offsetY : top + offsetY;
-  left = args[0] === "left" ? left - offsetX : left + offsetX;
-  return {
-    top: top,
-    left: left,
-    transform: transform,
-    arrowLeft: arrowLeft,
-    arrowTop: arrowTop
-  };
-}
-
-function calculatePosition(triggerBounding, ContentBounding, positions, arrow, _ref2, wrapperBox) {
-  var offsetX = _ref2.offsetX,
-      offsetY = _ref2.offsetY;
-  var bestCoords;
-  var i = 0;
-
-  while (i < positions.length) {
-    bestCoords = getCoordinatesForPosition(triggerBounding, ContentBounding, positions[i], arrow, {
-      offsetX: offsetX,
-      offsetY: offsetY
-    });
-    var contentBox = {
-      top: bestCoords.top,
-      left: bestCoords.left,
-      width: ContentBounding.width,
-      height: ContentBounding.height
-    };
-
-    if (contentBox.top <= wrapperBox.top || contentBox.left <= wrapperBox.left || contentBox.top + contentBox.height >= wrapperBox.top + wrapperBox.height || contentBox.left + contentBox.width >= wrapperBox.left + wrapperBox.width) {
-      i++;
-    } else {
-      break;
-    }
-  }
-
-  return bestCoords;
-}
-
-var styles = {
-  popupContent: {
-    tooltip: {
-      position: "absolute",
-      zIndex: "2",
-      width: "200px",
-      background: "rgb(255, 255, 255)",
-      border: "1px solid rgb(187, 187, 187)",
-      boxShadow: "rgba(0, 0, 0, 0.2) 0px 1px 3px",
-      padding: "5px"
-    },
-    modal: {
-      position: "relative",
-      background: "rgb(255, 255, 255)",
-      width: "50%",
-      margin: "auto",
-      border: "1px solid rgb(187, 187, 187)",
-      padding: "5px"
-    }
-  },
-  popupArrow: {
-    height: "10px",
-    width: "10px",
-    position: "absolute",
-    background: "rgb(255, 255, 255)",
-    transform: "rotate(45deg)",
-    margin: "-5px",
-    zIndex: "-1",
-    boxShadow: "rgba(0, 0, 0, 0.2) 1px 1px 1px"
-  },
-  overlay: {
-    tooltip: {
-      position: "fixed",
-      top: "0",
-      bottom: "0",
-      left: "0",
-      right: "0"
-    },
-    modal: {
-      position: "fixed",
-      top: "0",
-      bottom: "0",
-      left: "0",
-      right: "0",
-      background: "rgba(0, 0, 0,0.5)",
-      display: "flex",
-      zIndex: "999"
-    }
-  }
-};
-var POSITION_TYPES = ["top left", "top center", "top right", "right top", "right center", "right bottom", "bottom left", "bottom center", "bottom right", "left top", "left center", "left bottom"];
-
-var Popup =
-/*#__PURE__*/
-function (_React$PureComponent) {
-  function Popup(props) {
-    var _this;
-
-    _classCallCheck(this, Popup);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Popup).call(this, props));
-
-    _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      isOpen: _this.props.open || _this.props.defaultOpen,
-      modal: _this.props.modal ? true : !_this.props.trigger // we create this modal state because the popup can't be a tooltip if the trigger prop doesn't exist
-
-    }), "lockScroll", function () {
-      if (_this.state.modal && _this.props.lockScroll) document.getElementsByTagName("body")[0].style.overflow = "hidden";
-    }), "resetScroll", function () {
-      if (_this.state.modal && _this.props.lockScroll) document.getElementsByTagName("body")[0].style.overflow = "auto";
-    }), "togglePopup", function () {
-      if (_this.state.isOpen) _this.closePopup();else _this.openPopup();
-    }), "openPopup", function () {
-      if (_this.state.isOpen) return;
-
-      _this.setState({
-        isOpen: true
-      }, function () {
-        _this.setPosition();
-
-        _this.props.onOpen();
-
-        _this.lockScroll();
-      });
-    }), "closePopup", function () {
-      if (!_this.state.isOpen) return;
-
-      _this.props.onClose();
-
-      _this.setState({
-        isOpen: false
-      }, function () {
-        _this.resetScroll();
-      });
-    }), "onMouseEnter", function () {
-      clearTimeout(_this.timeOut);
-      var mouseEnterDelay = _this.props.mouseEnterDelay;
-      _this.timeOut = setTimeout(function () {
-        return _this.openPopup();
-      }, mouseEnterDelay);
-    }), "onMouseLeave", function () {
-      clearTimeout(_this.timeOut);
-      var mouseLeaveDelay = _this.props.mouseLeaveDelay;
-      _this.timeOut = setTimeout(function () {
-        return _this.closePopup();
-      }, mouseLeaveDelay);
-    }), "getTooltipBoundary", function () {
-      var keepTooltipInside = _this.props.keepTooltipInside;
-      var boundingBox = {
-        top: 0,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight
-      };
-
-      if (typeof keepTooltipInside === "string") {
-        var selector = document.querySelector(keepTooltipInside);
-
-        if ("development" !== "production") {
-          if (selector === null) throw new Error("".concat(keepTooltipInside, " selector is not exist : keepTooltipInside must be a valid html selector 'class' or 'Id'  or a boolean value"));
-        }
-
-        boundingBox = selector.getBoundingClientRect();
-      }
-
-      return boundingBox;
-    }), "setPosition", function () {
-      var _this$props = _this.props,
-          arrow = _this$props.arrow,
-          position = _this$props.position,
-          offsetX = _this$props.offsetX,
-          offsetY = _this$props.offsetY,
-          keepTooltipInside = _this$props.keepTooltipInside,
-          arrowStyle = _this$props.arrowStyle;
-      var modal = _this.state.modal;
-      if (modal) return;
-
-      var helper = _this.HelperEl.getBoundingClientRect();
-
-      var trigger = _this.TriggerEl.getBoundingClientRect();
-
-      var content = _this.ContentEl.getBoundingClientRect();
-
-      var boundingBox = _this.getTooltipBoundary();
-
-      var positions = Array.isArray(position) ? position : [position]; // keepTooltipInside would be activated if the  keepTooltipInside exist or the position is Array
-
-      if (keepTooltipInside || Array.isArray(position)) positions = _toConsumableArray(positions).concat(POSITION_TYPES);
-      var cords = calculatePosition(trigger, content, positions, arrow, {
-        offsetX: offsetX,
-        offsetY: offsetY
-      }, boundingBox);
-      _this.ContentEl.style.top = cords.top - helper.top + "px";
-      _this.ContentEl.style.left = cords.left - helper.left + "px";
-
-      if (arrow) {
-        _this.ArrowEl.style["transform"] = cords.transform;
-        _this.ArrowEl.style["-ms-transform"] = cords.transform;
-        _this.ArrowEl.style["-webkit-transform"] = cords.transform;
-        _this.ArrowEl.style.top = arrowStyle.top || cords.arrowTop;
-        _this.ArrowEl.style.left = arrowStyle.left || cords.arrowLeft;
-      }
-
-      if (window.getComputedStyle(_this.TriggerEl, null).getPropertyValue("position") == "static" || window.getComputedStyle(_this.TriggerEl, null).getPropertyValue("position") == "") _this.TriggerEl.style.position = "relative";
-    }), "addWarperAction", function () {
-      var _this$props2 = _this.props,
-          contentStyle = _this$props2.contentStyle,
-          className = _this$props2.className,
-          on = _this$props2.on;
-      var modal = _this.state.modal;
-      var popupContentStyle = modal ? styles.popupContent.modal : styles.popupContent.tooltip;
-      var childrenElementProps = {
-        className: "popup-content ".concat(className),
-        style: Object.assign({}, popupContentStyle, contentStyle),
-        ref: _this.setContentRef,
-        onClick: function onClick(e) {
-          e.stopPropagation();
-        }
-      };
-
-      if (!modal && on.indexOf("hover") >= 0) {
-        childrenElementProps.onMouseEnter = _this.onMouseEnter;
-        childrenElementProps.onMouseLeave = _this.onMouseLeave;
-      }
-
-      return childrenElementProps;
-    }), "renderTrigger", function () {
-      var triggerProps = {
-        key: "T"
-      };
-      var _this$props3 = _this.props,
-          on = _this$props3.on,
-          trigger = _this$props3.trigger;
-      var onAsArray = Array.isArray(on) ? on : [on];
-
-      for (var i = 0, len = onAsArray.length; i < len; i++) {
-        switch (onAsArray[i]) {
-          case "click":
-            triggerProps.onClick = _this.togglePopup;
-            break;
-
-          case "hover":
-            triggerProps.onMouseEnter = _this.onMouseEnter;
-            triggerProps.onMouseLeave = _this.onMouseLeave;
-            break;
-
-          case "focus":
-            triggerProps.onFocus = _this.onMouseEnter;
-            break;
-        }
-      }
-
-      if (typeof trigger === "function") return _react.default.cloneElement(trigger(_this.state.isOpen), triggerProps);
-      return _react.default.cloneElement(trigger, triggerProps);
-    }), "renderContent", function () {
-      var _this$props4 = _this.props,
-          arrow = _this$props4.arrow,
-          arrowStyle = _this$props4.arrowStyle;
-      var modal = _this.state.modal;
-      return _react.default.createElement("div", _extends({}, _this.addWarperAction(), {
-        key: "C"
-      }), arrow && !modal && _react.default.createElement("div", {
-        ref: _this.setArrowRef,
-        style: Object.assign({}, styles.popupArrow, arrowStyle)
-      }), typeof _this.props.children === "function" ? _this.props.children(_this.closePopup, _this.state.isOpen) : _this.props.children);
-    });
-
-    _this.setTriggerRef = function (r) {
-      return _this.TriggerEl = r;
-    };
-
-    _this.setContentRef = function (r) {
-      return _this.ContentEl = r;
-    };
-
-    _this.setArrowRef = function (r) {
-      return _this.ArrowEl = r;
-    };
-
-    _this.setHelperRef = function (r) {
-      return _this.HelperEl = r;
-    };
-
-    _this.timeOut = 0;
-    return _this;
-  }
-
-  _createClass(Popup, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var _this$props5 = this.props,
-          closeOnEscape = _this$props5.closeOnEscape,
-          defaultOpen = _this$props5.defaultOpen;
-      if (defaultOpen) this.setPosition();
-
-      if (closeOnEscape) {
-        window.addEventListener("keyup", function (e) {
-          if (e.key === "Escape") _this2.closePopup();
-        });
-      }
-    }
-  }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.open === nextProps.open) return;
-      if (nextProps.open) this.openPopup();else this.closePopup();
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      // kill any function to execute if the component is unmounted
-      clearTimeout(this.timeOut);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$props6 = this.props,
-          overlayStyle = _this$props6.overlayStyle,
-          closeOnDocumentClick = _this$props6.closeOnDocumentClick,
-          on = _this$props6.on;
-      var modal = this.state.modal;
-      var overlay = this.state.isOpen && !(on.indexOf("hover") >= 0);
-      var ovStyle = modal ? styles.overlay.modal : styles.overlay.tooltip;
-      return [!!this.props.trigger && _react.default.createElement(Ref, {
-        innerRef: this.setTriggerRef,
-        key: "R"
-      }, this.renderTrigger()), this.state.isOpen && _react.default.createElement("div", {
-        key: "H",
-        style: {
-          position: "absolute",
-          top: "0px",
-          left: "0px"
-        },
-        ref: this.setHelperRef
-      }), overlay && _react.default.createElement("div", {
-        key: "O",
-        className: "popup-overlay",
-        style: Object.assign({}, ovStyle, overlayStyle),
-        onClick: closeOnDocumentClick ? this.closePopup : undefined
-      }, modal && this.renderContent()), this.state.isOpen && !modal && this.renderContent()];
-    }
-  }]);
-
-  _inherits(Popup, _React$PureComponent);
-
-  return Popup;
-}(_react.default.PureComponent);
-
-_defineProperty(Popup, "defaultProps", {
-  children: function children() {
-    return _react.default.createElement("span", null, " Your Content Here !!");
-  },
-  trigger: null,
-  onOpen: function onOpen() {},
-  onClose: function onClose() {},
-  defaultOpen: false,
-  open: false,
-  closeOnDocumentClick: true,
-  closeOnEscape: true,
-  on: ["click"],
-  contentStyle: {},
-  arrowStyle: {},
-  overlayStyle: {},
-  className: "",
-  position: "bottom center",
-  modal: false,
-  lockScroll: false,
-  arrow: true,
-  offsetX: 0,
-  offsetY: 0,
-  mouseEnterDelay: 100,
-  mouseLeaveDelay: 100,
-  keepTooltipInside: false
-});
-
-if ("development" !== "production") {
-  var PropTypes = require("prop-types");
-
-  var TRIGGER_TYPES = ["hover", "click", "focus"];
-  Popup.propTypes = {
-    arrowStyle: PropTypes.object,
-    contentStyle: PropTypes.object,
-    overlayStyle: PropTypes.object,
-    className: PropTypes.string,
-    modal: PropTypes.bool,
-    closeOnDocumentClick: PropTypes.bool,
-    lockScroll: PropTypes.bool,
-    offsetX: PropTypes.number,
-    offsetY: PropTypes.number,
-    mouseEnterDelay: PropTypes.number,
-    mouseLeaveDelay: PropTypes.number,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    open: PropTypes.bool,
-    defaultOpen: PropTypes.bool,
-    trigger: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    // for uncontrolled component we don't need the trigger Element
-    on: PropTypes.oneOfType([PropTypes.oneOf(TRIGGER_TYPES), PropTypes.arrayOf(PropTypes.oneOf(TRIGGER_TYPES))]),
-    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element, PropTypes.string]).isRequired,
-    position: PropTypes.oneOfType([PropTypes.oneOf(POSITION_TYPES), PropTypes.arrayOf(PropTypes.oneOf(POSITION_TYPES))]),
-    keepTooltipInside: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
-  };
-}
-
-var Ref =
-/*#__PURE__*/
-function (_React$PureComponent2) {
-  function Ref(props) {
-    _classCallCheck(this, Ref);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Ref).call(this, props));
-  }
-
-  _createClass(Ref, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var innerRef = this.props.innerRef;
-      if (innerRef) innerRef((0, _reactDom.findDOMNode)(this));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var children = this.props.children;
-      return _react.default.Children.only(children);
-    }
-  }]);
-
-  _inherits(Ref, _React$PureComponent2);
-
-  return Ref;
-}(_react.default.PureComponent);
-
-var _default = Popup;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../src/post-add/Preview.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","@babel/runtime/helpers/esm/assertThisInitialized":"../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../src/post-add/Preview.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42208,108 +42476,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = PostMedia;
-},{"react":"../node_modules/react/index.js","./Preview":"../src/post-add/Preview.js"}],"../src/header/events.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.reduce_followers = exports.load_profile = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PROFILE_LOADED = 'PROFILE_LOADED';
-exports.PROFILE_LOADED = PROFILE_LOADED;
-var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
-exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
-
-var load_profile = function load_profile() {
-  return function (dispatch) {
-    _axios.default.post('/profile').then(function (response) {
-      return dispatch({
-        type: PROFILE_LOADED,
-        data: response.data
-      });
-    });
-  };
-};
-
-exports.load_profile = load_profile;
-
-var reduce_followers = function reduce_followers() {
-  return function (dispatch) {
-    dispatch({
-      type: REDUCE_FOLLOWERS,
-      data: null
-    });
-  };
-};
-
-exports.reduce_followers = reduce_followers;
-},{"axios":"../../node_modules/axios/index.js"}],"../src/header/reducer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _events = require("./events");
-
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    data: {
-      user: {}
-    }
-  };
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _events.REDUCE_FOLLOWERS:
-      {
-        return Object.assign({}, state, {
-          followers: state.followers - 1
-        });
-      }
-
-    case _events.PROFILE_LOADED:
-      {
-        return Object.assign({}, action.data);
-      }
-
-    default:
-      return Object.assign({}, state);
-  }
-};
-
-var _default = reducer;
-exports.default = _default;
-},{"./events":"../src/header/events.js"}],"../src/header/store.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _redux = require("redux");
-
-var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
-
-var _reduxLogger = require("redux-logger");
-
-var _reducer = _interopRequireDefault(require("./reducer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _logger = new _reduxLogger.createLogger();
-
-var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
-var _default = store;
-exports.default = _default;
-},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/header/reducer.js"}],"../src/comment/AddComment.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Preview":"../src/post-add/Preview.js"}],"../src/comment/AddComment.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42552,7 +42719,7 @@ function (_Component) {
 
       var user = _store2.default.getState();
 
-      if (!user || !user.username) {
+      if (!user || !user.data) {
         unListen = _store2.default.subscribe(function () {
           var user = _store2.default.getState();
 
@@ -42561,7 +42728,7 @@ function (_Component) {
 
             _this3.setState(function () {
               return {
-                user: user
+                user: user.data
               };
             });
           }
@@ -42569,7 +42736,7 @@ function (_Component) {
       } else {
         this.setState(function () {
           return {
-            user: user
+            user: user.data
           };
         });
       }
@@ -43968,8 +44135,6 @@ var _AddComment = _interopRequireDefault(require("../../comment/AddComment"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _store = _interopRequireDefault(require("../fetch/store"));
-
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _reactInViewport = _interopRequireDefault(require("react-in-viewport"));
@@ -44017,7 +44182,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Post)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      reply: null
+      reply: null,
+      open: false
     });
 
     return _this;
@@ -44039,9 +44205,31 @@ function (_Component) {
       });
     }
   }, {
+    key: "deletePost",
+    value: function deletePost() {
+      var _this3 = this;
+
+      var post = this.state.post;
+
+      _axios.default.post("/post/delete/".concat(post.id)).then(function (_ref) {
+        var data = _ref.data;
+
+        if (data.action) {
+          _this3.setState(function (state) {
+            return {
+              open: false
+            };
+          }, function () {
+            return _this3.props.onDelete(_this3.state.post.id);
+          });
+        } // end if
+
+      });
+    }
+  }, {
     key: "reply",
     value: function reply(user, comment_id) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.setState(function () {
         return {
@@ -44051,7 +44239,7 @@ function (_Component) {
           }
         };
       }, function () {
-        _this3.setState(function () {
+        _this4.setState(function () {
           return {
             reply: null
           };
@@ -44060,16 +44248,16 @@ function (_Component) {
     }
   }, {
     key: "onCommentAdded",
-    value: function onCommentAdded(_ref) {
-      var _this4 = this;
+    value: function onCommentAdded(_ref2) {
+      var _this5 = this;
 
-      var data = _ref.data;
+      var data = _ref2.data;
       this.setState(function () {
         return {
           pushComment: data
         };
       }, function () {
-        _this4.setState(function () {
+        _this5.setState(function () {
           return {
             pushComment: null
           };
@@ -44081,13 +44269,16 @@ function (_Component) {
     value: function showAll() {
       this.setState(function () {
         return {
-          hasMore: false
+          hasMore: false,
+          open: false
         };
       });
     }
   }, {
     key: "render",
     value: function render() {
+      var _this6 = this;
+
       var post = this.state.post;
       var hasMore = this.state.hasMore;
       var content = post.content;
@@ -44121,7 +44312,18 @@ function (_Component) {
         className: "post-time"
       }, post.created_at)), _react.default.createElement("div", {
         className: "post-options"
-      }, _react.default.createElement(_reactjsPopup.default, {
+      }, !this.props.guest ? _react.default.createElement(_reactjsPopup.default, {
+        open: this.state.open,
+        onClose: function onClose() {
+          _this6.setState({
+            open: false
+          });
+        },
+        onOpen: function onOpen() {
+          _this6.setState({
+            open: true
+          });
+        },
         keepTooltipInside: true,
         lockScroll: false,
         closeOnEscape: true,
@@ -44129,7 +44331,9 @@ function (_Component) {
         position: "left center",
         modal: false,
         trigger: _react.default.createElement("span", null, "...")
-      }, _react.default.createElement("ul", null, _react.default.createElement("li", null, "pin post"), _react.default.createElement("li", null, "delete"))))), _react.default.createElement("div", {
+      }, _react.default.createElement("ul", null, _react.default.createElement("li", null, "pin post"), _react.default.createElement("li", {
+        onClick: this.deletePost.bind(this)
+      }, "delete"))) : _react.default.createElement("span", null, "..."))), _react.default.createElement("div", {
         className: "post-content"
       }, _react.default.createElement("p", null, (0, _utils.placeEmoji)(content), more), _react.default.createElement("div", {
         className: post.media.length > 1 ? "post-media n-".concat(post.media.length) : "post-media"
@@ -44184,7 +44388,7 @@ function (_Component) {
 var PostComponent = (0, _reactInViewport.default)(Post);
 var _default = PostComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js","axios":"../../node_modules/axios/index.js","../fetch/store":"../src/profile/fetch/store.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js"}],"../src/profile/feed/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js","axios":"../../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js"}],"../src/profile/feed/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44323,6 +44527,17 @@ function (_Component) {
       });
     }
   }, {
+    key: "onDelete",
+    value: function onDelete(post_id) {
+      this.setState(function (state) {
+        return {
+          list: state.list.filter(function (p) {
+            return p.id !== post_id;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -44335,6 +44550,8 @@ function (_Component) {
       }, list.map(function (item, index) {
         localeStore.set(item.id);
         return _react.default.createElement(_Post.default, {
+          guest: _this4.props.guest,
+          onDelete: _this4.onDelete.bind(_this4),
           toggle: _this4.toggleLike.bind(_this4),
           onEnterViewport: function onEnterViewport() {
             item.id === localeStore.get() && _this4.loadMore();
@@ -49907,7 +50124,8 @@ function (_Component) {
         className: "posts"
       }, _react.default.createElement(_feed.default, {
         list: feed,
-        user: profile.user.username
+        user: profile.user.username,
+        guest: true
       }))), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
@@ -68922,7 +69140,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45827" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
