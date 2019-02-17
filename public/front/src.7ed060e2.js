@@ -40664,13 +40664,7 @@ function (_Component) {
       var id = this.props.comment.id;
 
       _axios.default.post("/comment/like/".concat(id)).then(function (response) {
-        _store.default.dispatch({
-          type: _actions.COMMENT_LIKED,
-          data: {
-            comment: id,
-            post: _this.props.post
-          }
-        });
+        _this.props.toggle(id);
       });
     }
   }, {
@@ -40807,13 +40801,34 @@ function (_Component) {
   }
 
   _createClass(Comments, [{
+    key: "toggleLike",
+    value: function toggleLike(comment_id) {
+      this.setState(function (state) {
+        return {
+          comments: state.comments.map(function (c) {
+            if (c.id === comment_id) {
+              c.likes = !c.likes;
+
+              if (c.likes) {
+                c.like_count += 1;
+              } else {
+                c.like_count -= 1;
+              } // end if
+
+            } // end if
+
+
+            return c;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var _this$state = this.state,
-          comments = _this$state.comments,
-          post = _this$state.post;
+      var comments = this.state.comments;
 
       if (comments.length === 0) {
         return null;
@@ -40830,16 +40845,16 @@ function (_Component) {
       }, "All Comments"))) : null, comments.map(function (comment) {
         if (comment.subs.length === 0) {
           return _react.default.createElement(_Comment.default, {
+            toggle: _this2.toggleLike.bind(_this2),
             replyTo: _this2.props.replyTo,
-            post: post,
             comment: comment,
             key: comment.id
           });
         }
 
         return [_react.default.createElement(_Comment.default, {
+          toggle: _this2.toggleLike.bind(_this2),
           replyTo: _this2.props.replyTo,
-          post: post,
           comment: comment,
           key: comment.id
         })].concat(_react.default.createElement(Comments, {
@@ -44015,19 +44030,18 @@ function (_Component) {
      * user click like btn
      */
     value: function toggleLike() {
+      var _this2 = this;
+
       var post = this.state.post;
 
       _axios.default.post("/post/like/".concat(post.id)).then(function (response) {
-        return _store.default.dispatch({
-          type: 'POST_LIKED',
-          data: post.id
-        });
+        return _this2.props.toggle(post.id);
       });
     }
   }, {
     key: "reply",
     value: function reply(user, comment_id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.setState(function () {
         return {
@@ -44037,7 +44051,7 @@ function (_Component) {
           }
         };
       }, function () {
-        _this2.setState(function () {
+        _this3.setState(function () {
           return {
             reply: null
           };
@@ -44047,7 +44061,7 @@ function (_Component) {
   }, {
     key: "onCommentAdded",
     value: function onCommentAdded(_ref) {
-      var _this3 = this;
+      var _this4 = this;
 
       var data = _ref.data;
       this.setState(function () {
@@ -44055,7 +44069,7 @@ function (_Component) {
           pushComment: data
         };
       }, function () {
-        _this3.setState(function () {
+        _this4.setState(function () {
           return {
             pushComment: null
           };
@@ -44287,6 +44301,28 @@ function (_Component) {
       });
     }
   }, {
+    key: "toggleLike",
+    value: function toggleLike(post_id) {
+      this.setState(function (state) {
+        return {
+          lsit: state.list.map(function (post) {
+            if (post.id === post_id) {
+              post.likes = !post.likes;
+
+              if (post.likes) {
+                post.like_count += 1;
+              } else {
+                post.like_count -= 1;
+              }
+            } //end if
+
+
+            return post;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -44299,6 +44335,7 @@ function (_Component) {
       }, list.map(function (item, index) {
         localeStore.set(item.id);
         return _react.default.createElement(_Post.default, {
+          toggle: _this4.toggleLike.bind(_this4),
           onEnterViewport: function onEnterViewport() {
             item.id === localeStore.get() && _this4.loadMore();
           },
@@ -44310,7 +44347,7 @@ function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
-      if (state.list.length === 0 || props.user !== state.user) {
+      if (state.localeStore && (state.list.length === 0 || props.user !== state.user)) {
         return {
           list: props.list,
           user: props.user,
@@ -44319,8 +44356,9 @@ function (_Component) {
       }
 
       return {
-        localStorage: getStore()(),
-        user: props.user
+        localeStore: getStore()(),
+        user: props.user,
+        end: false
       };
     }
   }]);
@@ -46533,7 +46571,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement(_reactjsPopup.default, {
-        lockScroll: true,
+        lockScroll: false,
         contentStyle: {
           backgroundColor: 'transparent',
           border: 0,
@@ -47214,7 +47252,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement(_reactjsPopup.default, {
-        lockScroll: true,
+        lockScroll: false,
         contentStyle: {
           backgroundColor: 'transparent',
           border: 0,
@@ -52772,7 +52810,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(UsersComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      minimized: false
+      minimized: localStorage.getItem('minimized')
     });
 
     return _this;
@@ -52811,6 +52849,8 @@ function (_Component) {
         return {
           minimized: !_this3.state.minimized
         };
+      }, function () {
+        localStorage.setItem('minimized', true);
       });
     }
   }, {
