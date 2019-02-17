@@ -77,7 +77,7 @@ class CommentController extends Controller
 
         $result = 0;
 
-        if ($user->id === $comment->creator_id)
+        if ($user->id == $comment->creator_id)
         {
             $result = $comment->delete();
         }
