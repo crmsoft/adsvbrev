@@ -8321,6 +8321,66 @@ nav.user-profile {
     .profile-about .device-advice .popup-content textarea {
       display: block; }
 
+.profile-schedule {
+  margin-left: -9px;
+  margin-right: -9px;
+  margin-bottom: -9px;
+  margin-top: -9px;
+  padding: 0 !important; }
+  .profile-schedule .block-content {
+    padding: 0 !important;
+    margin-top: -4px; }
+  .profile-schedule .header {
+    background-color: #484B52;
+    text-transform: uppercase;
+    text-align: center;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px; }
+  .profile-schedule .flatpickr-input, .profile-schedule .numInputWrapper {
+    display: none; }
+  .profile-schedule .flatpickr-calendar {
+    width: 100%; }
+  .profile-schedule .flatpickr-days, .profile-schedule .dayContainer {
+    width: auto !important;
+    min-width: auto !important; }
+  .profile-schedule .flatpickr-weekdays {
+    background-color: #202225; }
+    .profile-schedule .flatpickr-weekdays .flatpickr-weekdaycontainer {
+      background-color: transparent; }
+      .profile-schedule .flatpickr-weekdays .flatpickr-weekdaycontainer span {
+        background-color: transparent;
+        color: white; }
+  .profile-schedule .flatpickr-days, .profile-schedule .flatpickr-innerContainer {
+    border: 0; }
+  .profile-schedule .dayContainer, .profile-schedule .flatpickr-day {
+    background-color: #2F3136;
+    color: white; }
+  .profile-schedule .flatpickr-day {
+    height: 33px !important; }
+    .profile-schedule .flatpickr-day:hover {
+      background-color: inherit !important;
+      border-color: transparent; }
+    .profile-schedule .flatpickr-day.today {
+      border-color: transparent; }
+  .profile-schedule .prevMonthDay, .profile-schedule .nextMonthDay {
+    opacity: 0.3; }
+  .profile-schedule .flatpickr-months {
+    background-color: #484B52;
+    justify-content: center; }
+    .profile-schedule .flatpickr-months .flatpickr-prev-month, .profile-schedule .flatpickr-months .flatpickr-next-month {
+      position: relative !important;
+      padding: 5px !important; }
+    .profile-schedule .flatpickr-months .flatpickr-month {
+      flex-grow: 0 !important;
+      flex-basis: 45px;
+      background-color: inherit !important; }
+      .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-current-month, .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-prev-month, .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-next-month {
+        position: relative !important;
+        width: auto;
+        left: 0; }
+      .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-current-month {
+        padding-top: 6px; }
+
 .user-middle {
   flex: 1; }
   .user-middle .posts {
@@ -8665,7 +8725,8 @@ nav.user-profile {
       .post .post-content .comment-shared .post-content {
         margin: 0px; }
     .post .post-content p {
-      color: #ffffff; }
+      color: #ffffff;
+      white-space: pre-wrap; }
     .post .post-content a {
       color: #F15A24;
       margin: 0px 15px;
@@ -8729,6 +8790,7 @@ nav.user-profile {
       .comments .comment .comment-body img {
         max-width: 100%; }
       .comments .comment .comment-body p {
+        white-space: pre-wrap;
         margin-bottom: 5px; }
         .comments .comment .comment-body p a {
           text-decoration: none;
