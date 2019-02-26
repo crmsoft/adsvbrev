@@ -56,7 +56,7 @@ class PostController extends Controller
             Storage::disk('public')
                 ->put("{$users_dir}original_{$name}", $image);
             // profile main image;
-            $image->fit(520);
+            $image->fit(635);
             $image->stream();
 
             Storage::disk('public')

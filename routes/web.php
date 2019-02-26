@@ -89,6 +89,16 @@ Route::group([
 
 });
 
+// Events Specific Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    'namespace' => '\Events',
+    'middleware' => ['auth']
+], function() {
+    Route::get('/events', 'EventController@list')->name('user-event-list');
+    Route::post('/event/store', 'EventController@store')->name('user-event-create');
+});
+
 // Search page specific routes
 //=================================================================
 Route::group([
