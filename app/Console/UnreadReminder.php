@@ -23,7 +23,7 @@ class UnreadReminder
                     (SELECT 
                         m.conversation_id AS c_id, m.id, m.message
                     FROM
-                        game.messages m
+                        messages m
                     WHERE
                         UNIX_TIMESTAMP(created_at) > (UNIX_TIMESTAMP() - 600)
                     GROUP BY conversation_id) AS t ON t.c_id = c.conversation_id
@@ -35,10 +35,11 @@ class UnreadReminder
                     u.user_communication_id = 0
                 GROUP BY c.user_id");
 
-        foreach ($recievers as $reciever)
-        {
-            Mail::to($reciever)
-            ->send(new UnreadMessagesEmail($this->reciever));
+            foreach ($recievers as $reciever)
+            {
+                Mail::to($reciever)
+                ->send(new UnreadMessagesEmail($this->
+            ));
         } // end foreach
     }
 }
