@@ -37,8 +37,8 @@ class UnreadReminder
 
         foreach ($recievers as $reciever)
         {
-            Mail::to($this->user)
-            ->send(new UnreadMessagesEmail($this->user));
+            Mail::to($reciever)
+            ->send(new UnreadMessagesEmail($this->reciever));
         } // end foreach
     }
 }
