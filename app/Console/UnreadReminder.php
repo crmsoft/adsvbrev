@@ -35,11 +35,10 @@ class UnreadReminder
                     u.user_communication_id = 0
                 GROUP BY c.user_id");
 
-            foreach ($recievers as $reciever)
-            {
-                Mail::to($reciever)
-                ->send(new UnreadMessagesEmail($this->
-            ));
+        foreach ($recievers as $reciever)
+        {
+            Mail::to($reciever)
+            ->send(new UnreadMessagesEmail($this->reciever));
         } // end foreach
     }
 }
