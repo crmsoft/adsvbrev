@@ -21,7 +21,7 @@ class UnreadMessagesEmail extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
-        $this->subject(__('Please Validate Your Account'));
+        $this->subject(__('Kindly informing you'));
     } //
 
     /**
