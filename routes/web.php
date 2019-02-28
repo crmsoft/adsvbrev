@@ -28,7 +28,7 @@ Auth::routes();
 // Application main routes that handled by react route, only get req's
 //=================================================================
 Route::group([
-    'namespace' => '\Profile',
+    'namespace' => 'Profile',
     'middleware' => [ 'auth' ]
 ], function(){
     Route::get('/', 'ProfileController@index')->name('profile-view');
@@ -41,7 +41,7 @@ Route::group([
 // Profile Specific Routes
 //---------------------------------------------------------------------------------
 Route::group([
-    'namespace' => '\Profile',
+    'namespace' => 'Profile',
     'middleware' => [ 'auth' ]
 ], function (){
 
@@ -92,7 +92,7 @@ Route::group([
 // Events Specific Routes
 //---------------------------------------------------------------------------------
 Route::group([
-    'namespace' => '\Events',
+    'namespace' => 'Events',
     'middleware' => ['auth']
 ], function() {
     Route::get('/events', 'EventController@list')->name('user-event-list');
@@ -122,7 +122,7 @@ Route::group([
 
 
 Route::group([
-    'namespace' => '\Chat',
+    'namespace' => 'Chat',
     'middleware' => [ 'auth', 'web' ]
 ], function(){
 
