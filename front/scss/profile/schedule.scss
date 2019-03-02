@@ -1,0 +1,112 @@
+.profile-schedule{
+    margin-left: -9px;
+    margin-right: -9px;
+    margin-bottom: -9px;
+    margin-top: -9px;
+    padding: 0 !important;
+
+    .block-content{
+        padding: 0 !important;
+        margin-top: -4px;
+    }
+
+    .header{
+        background-color: $lightGray;
+        text-transform: uppercase;
+        text-align: center;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+
+    .flatpickr-input, .numInputWrapper{
+        display: none;
+    }
+
+    .flatpickr-calendar{
+        width: 100%;
+    }
+
+    .flatpickr-days, .dayContainer{
+        width: auto !important;
+        min-width: auto !important;
+    }
+
+    .flatpickr-weekdays{
+        background-color: $darkGray;
+        .flatpickr-weekdaycontainer{
+            background-color: transparent;
+            span{
+                background-color: transparent;
+                color: white;
+            }
+        }
+    }
+
+    .flatpickr-days, .flatpickr-innerContainer{
+        border: 0;
+    }
+
+    .dayContainer, .flatpickr-day{
+        background-color: $halfGray;
+        color: white;
+    }
+
+    .flatpickr-day {
+        position: relative;
+        height: 33px !important;
+        &:hover{
+            background-color: inherit !important;
+            border-color: transparent;
+        }
+
+        &.selected,&.today,&:focus{
+            border-color: transparent;
+        }
+        .marks{
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+            .mark{
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                display: block;
+                padding: 0;
+            }
+            .with-dudes{
+                background-color: $mainColor;
+            }
+            .with-group{
+                background-color: gray;
+            }
+        }
+    }
+
+    .prevMonthDay, .nextMonthDay{
+        opacity: 0.3;
+    }
+
+    .flatpickr-months{
+        background-color: $lightGray;
+        justify-content:  center;
+        .flatpickr-prev-month,.flatpickr-next-month{
+            position: relative !important;
+            padding: 5px !important;
+        }
+        .flatpickr-month{
+            flex-grow: 0 !important;
+            flex-basis: 45px;
+            background-color: inherit !important;
+            .flatpickr-current-month,.flatpickr-prev-month,.flatpickr-next-month{
+                position: relative !important;
+                width: auto;
+                left: 0;
+            }
+            .flatpickr-current-month{
+                padding-top: 6px;
+            }
+        }
+    }
+
+}

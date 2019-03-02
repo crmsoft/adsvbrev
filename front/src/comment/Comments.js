@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Comment from './Comment';
+import headerStore from '../header/store';
+
+let unListen = () => {};
 
 const pushNewComment = (comments, newComment) => {
     
@@ -26,13 +29,47 @@ export default class Comments extends Component {
     state = {
         moreLoaded: 0,
         comments: [],
-        hasMore: false
+        hasMore: false,
+        firstRender: false,
+        user: {}
+    }
+
+    componentDidMount()
+    {
+        const user = headerStore.getState();
+        
+        if( !user || !user.data ){
+            unListen = headerStore.subscribe(() => {
+                const user = headerStore.getState();
+                
+                if(user.username)
+                {
+                    unListen();
+                    this.setState(() => {
+                        return {
+                            user: user.data
+                        }
+                    });
+                }
+            });
+        } else {
+            this.setState(() => {
+                return {
+                    user: user.data
+                }
+            });
+        }
+    }
+
+    componentWillUnmount()
+    {
+        unListen();
     }
 
     static getDerivedStateFromProps(nextProps, prevState)
     {
         
-        if (prevState.comments.length === 0)
+        if (!prevState.firstRender)
         {
             const {comments} = nextProps;
 
@@ -43,7 +80,8 @@ export default class Comments extends Component {
             return {
                 comments: hasMore ? comments.slice(1,4) : comments_,
                 hasMore: hasMore,
-                post: nextProps.post
+                post: nextProps.post,
+                firstRender: true
             }
         } // end if
 
@@ -74,10 +112,41 @@ export default class Comments extends Component {
         return null;
     }
 
+    toggleLike( comment_id )
+    {
+        this.setState(state => {
+            return {
+                comments: state.comments.map(c => {
+                    if (c.id === comment_id)
+                    {
+                        c.likes = !c.likes;
+                        if (c.likes)
+                        {
+                            c.like_count += 1;
+                        } else {
+                            c.like_count -= 1;
+                        } // end if
+                    } // end if
+
+                    return c;
+                })
+            }
+        });        
+    }
+
+    onCommentDelete(comment_id)
+    {
+        this.setState(state => {
+            return {
+                comments: state.comments.filter(c => c.id !== comment_id)
+            }
+        });
+    }
 
     render()
     {
-        let {comments, post} = this.state;
+        let {comments} = this.state; 
+              
 
         if(comments.length === 0){ return null; }
         
@@ -99,8 +168,10 @@ export default class Comments extends Component {
 
                         if (comment.subs.length === 0) {
                             return <Comment 
+                                    user={this.state.user}
+                                    onDelete={this.onCommentDelete.bind(this)}
+                                    toggle={this.toggleLike.bind(this)}
                                     replyTo={this.props.replyTo}  
-                                    post={post} 
                                     comment={comment} 
                                     key={comment.id} 
                                 />
@@ -109,8 +180,10 @@ export default class Comments extends Component {
 
                         return [
                             <Comment 
+                                    user={this.state.user}
+                                    onDelete={this.onCommentDelete.bind(this)}
+                                    toggle={this.toggleLike.bind(this)}
                                     replyTo={this.props.replyTo}  
-                                    post={post} 
                                     comment={comment} 
                                     key={comment.id} 
                                 />

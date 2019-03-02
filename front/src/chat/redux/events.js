@@ -31,7 +31,9 @@ const m_recieved = chat => {
 
 const load_chats = () => {
     return dispatch => axios.get(`/chats`)
-                        .then(response => dispatch({type:CHATS_LOADED, data: response.data.data}))
+                        .then(({data}) => {                            
+                            dispatch({type:CHATS_LOADED, data: data.data})
+                        })
 }
 
 const close_chat = hash => {

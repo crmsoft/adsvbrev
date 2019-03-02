@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { Emoji, emojiIndex } from 'emoji-mart'
 
 const placeEmoji = text => {
@@ -56,6 +56,10 @@ const placeEmoji = text => {
     return r;
 }
 
+String.prototype.nl2br = function() {
+    return this.replace(/(?:\r\n|\r|\n)/g, '<br />');
+}
+
 const inViewPort = (elem, parent) => {
     var bounding = elem.getBoundingClientRect();
     return (
@@ -66,7 +70,159 @@ const inViewPort = (elem, parent) => {
     );
 };
 
+class Youtube extends Component{
+
+    state = {
+		loaded: false
+	}
+
+	render()
+	{
+		const {loaded} = this.state;
+        const {url} = this.props;
+        
+        // find yt id
+        const parts = url.split('').reverse();
+        let id = [];
+        for(let i = 0; i < parts.length; i++ )
+        {   
+            if (parts[i] === '=' || parts[i] === '/')
+            {
+                break;
+            } // end if
+
+            id.push( parts[i] );
+        } // end for
+        id = id.reverse().join('');
+
+		return loaded ? (
+            <div className="yt-video">
+                <iframe 
+                        src={`https://www.youtube.com/embed/${id}?autoplay=1`} 
+                        height="360"
+                        frameBorder="0"
+                        className="w-100" />
+            </div>
+		) : (
+            <div 
+                className="yt-video"
+                onClick={
+                    e => {
+                        this.setState({loaded:true})
+                    }
+                }
+                key={url}>
+                <img
+                    className="w-100" 
+                    src={`https://img.youtube.com/vi/${id}/0.jpg`} 
+                />
+                <div className="yt-play-btn"></div>
+			</div>
+		)
+	}
+}
+
+class Twitch extends Component{
+
+    state = {
+		loaded: false
+	}
+
+	render()
+	{
+		const {loaded} = this.state;
+        const {url} = this.props;
+        
+        // find yt id
+        const parts = url.split('').reverse();
+        let id = [];
+        for(let i = 0; i < parts.length; i++ )
+        {   
+            if (parts[i] === '=' || parts[i] === '/')
+            {
+                break;
+            } // end if
+
+            id.push( parts[i] );
+        } // end for
+        id = id.reverse().join('');
+
+		return loaded ? (
+            <div className="yt-video">
+                <iframe 
+                        src={`https://www.youtube.com/embed/${id}?autoplay=1`} 
+                        height="360"
+                        frameBorder="0"
+                        className="w-100" />
+            </div>
+		) : (
+            <div 
+                className="yt-video"
+                onClick={
+                    e => {
+                        this.setState({loaded:true})
+                    }
+                }
+                key={url}>
+                <img
+                    className="w-100" 
+                    src={`https://img.youtube.com/vi/${id}/0.jpg`} 
+                />
+                <div className="yt-play-btn"></div>
+			</div>
+		)
+	}
+}
+
+class Url extends Component{
+
+    isLink(text)
+    {
+        return (text.indexOf('http://') !== -1) || (text.indexOf('https://') !== -1);
+    }
+
+    isYoutube( text )
+    {
+        return text.indexOf('https://youtu') !== -1 || (
+            text.indexOf('https://www.youtu') !== -1
+        );
+    }
+
+    render()
+    {
+        const {text} = this.props;
+        if (text.length === 0)
+        {
+            return null;
+        } // end if
+   
+        return <Fragment key={text}>
+            {
+                this.isYoutube(text) ? (
+                    <Youtube url={text} />
+                ) : (
+                    this.isLink(text) ? (
+                        <a href={text}>
+                            {text}
+                        </a>
+                    ) : (
+                        <span>
+                            {text}
+                        </span>
+                    )
+                )
+            }
+        </Fragment>
+    }
+}
+
+const urlify = (text) => {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.split(urlRegex).map(candidate => <Url text={candidate} />)
+}
+
 export {
     placeEmoji,
-    inViewPort
+    inViewPort,
+    urlify
 };

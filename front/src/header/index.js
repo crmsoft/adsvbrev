@@ -4,13 +4,13 @@ import { load_profile, reduce_followers } from './events';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import Followers from './Followers';
+import Notification from './Notification';
 import { acceptToFriends, declineFriendship } from '../friedship/event';
 
 class HeaderComponent extends Component{
 
     state = {
-        menu: false,
-        followersOpen: false
+        menu: false
     }
 
     componentDidMount()
@@ -23,24 +23,6 @@ class HeaderComponent extends Component{
         this.setState(() => {
             return {
                 menu: !this.state.menu
-            }
-        });
-    }
-
-    openFollowers()
-    {
-        this.setState(() => {
-            return {
-                followersOpen: true
-            }
-        })
-    }
-
-    closeFollowers()
-    {
-        this.setState(() => {
-            return {
-                followersOpen: false
             }
         });
     }
@@ -88,21 +70,18 @@ class HeaderComponent extends Component{
                                     <Followers 
                                         onDecline={u => {this.props.decline(u);this.props.reduce_followers();}}
                                         onAccept={u => {this.props.accept(u);this.props.reduce_followers();}}
-                                        open={this.state.followersOpen}
-                                        onOpen={this.openFollowers.bind(this)}
-                                        close={this.closeFollowers.bind(this)}
                                         trigger={
                                             <a href="javascript:void(0)" className="nav-link icon-friend"></a>
                                         }
                                     />
                                 </li>
                                 <li className="nav-item">
-                                    <span className="nav-item-count">5</span>
-                                    <a href="#sacvsd" className="nav-link icon-notification"></a>
-                                </li>
-                                <li className="nav-item">
-                                    <span className="nav-item-count">5</span>
-                                    <a href="#asdc" className="nav-link icon-notification"></a>
+                                    <span className="nav-item-count">0</span>
+                                    <Notification 
+                                        trigger={
+                                            <a href="javascript:void(0)" className="nav-link icon-notification"></a>
+                                        }
+                                    />
                                 </li>
                                 <li className="nav-item">
 
@@ -124,14 +103,14 @@ class HeaderComponent extends Component{
                                         onClick={this.onProfileOptionsClick.bind(this)}
                                         className={!this.state.menu ? 'dropdown-menu' : 'dropdown-menu show'}
                                     >
+                                        <Link to="/settings" className="dropdown-item" >
+                                            Settings
+                                        </Link>  
                                         <a 
                                             onClick={e => { axios.post('/logout').catch(r => window.location.reload()) }}
                                             className="dropdown-item" 
                                             href="javascript:void(0)"
-                                        >Logout</a>
-                                        <Link to="/settings" className="dropdown-item" >
-                                            Settings
-                                        </Link>                        
+                                        >Logout</a>                      
                                     </div>
 
                                 </li>

@@ -10,9 +10,15 @@ import {
 import {
     Link
 } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 
 export default class Comment extends Component{
+
+
+    state = {
+        open: false
+    }
 
     /**
      * user click like btn
@@ -23,14 +29,17 @@ export default class Comment extends Component{
 
         axios.post(`/comment/like/${id}`)
         .then(response => {
-            store.dispatch({
-                type: COMMENT_LIKED, 
-                data: { 
-                    comment: id, 
-                    post: this.props.post 
-                }
-            });
+            this.props.toggle(id);
         })
+    }
+
+    delete()
+    {
+        let {comment} = this.props;
+        axios.post(`/comment/delete/${comment.id}`)
+        .then(response => {
+            this.props.onDelete(comment.id);            
+        });
     }
 
     render()
@@ -77,7 +86,29 @@ export default class Comment extends Component{
                     {comment.created_at}
                 </div>
                 <div className="comment-dot">
-                    ...
+                    {
+                        user.username === this.props.user.username ? (
+                            <Popup
+                                open={this.state.open}
+                                onClose={() => {this.setState({open:false})}}
+                                onOpen={() => {this.setState({open:true})}}
+                                keepTooltipInside={true}
+                                lockScroll={false}
+                                closeOnEscape={true}
+                                closeOnDocumentClick
+                                position="left center"
+                                modal={false}
+                                trigger={<span>...</span>}
+                            >
+                                <ul>
+                                    <li
+                                        onClick={this.delete.bind(this)}
+                                    >delete</li>
+                                </ul>
+                            </Popup>
+                        ) : (<span>...</span>)
+                    }
+                    
                 </div>
             </div>
         )

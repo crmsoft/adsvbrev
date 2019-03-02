@@ -96,6 +96,7 @@ Route::group([
     'middleware' => ['auth']
 ], function() {
     Route::get('/events', 'EventController@list')->name('user-event-list');
+    Route::get('/event/{timestamp}', 'EventController@show')->name('user-event-show');
     Route::post('/event/store', 'EventController@store')->name('user-event-create');
 });
 

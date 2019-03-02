@@ -25,7 +25,12 @@ const initialState = {
 };
 
 const profileReducer = (state = initialState, action) => {   
-     
+    
+    if (initialState.fetching)
+    {
+        return state;
+    }
+
     switch(action.type){
         case COMMENT_LIKED : {
             return {
@@ -124,8 +129,8 @@ const profileReducer = (state = initialState, action) => {
         }
         case PROFILE_FETCH_START : {
             return {
-                ...state,
-                fetching: true,
+                ...initialState,
+                fetching: true
             }
         }
         case DEVICE_SETTINGS : {

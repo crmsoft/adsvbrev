@@ -38,4 +38,9 @@ class Event extends Model
         $value = \Hashids::decode($value);
         return $this->where($this->getRouteKeyName(), $value)->first();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class, 'creator_id');
+    }
 }

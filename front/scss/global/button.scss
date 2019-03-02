@@ -74,6 +74,17 @@ button{
     border: none;
 }
 
+.btn-empty{
+    background-color: transparent;
+    border-color: transparent;
+    color: $white;
+    &:hover{
+        border-color: $mainColor;
+        color: white;
+        background-color: transparent;
+    }
+}
+
 .btn-lg{
     padding: 15px 55px;
 }

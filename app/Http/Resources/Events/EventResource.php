@@ -4,6 +4,8 @@ namespace App\Http\Resources\Events;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\UserList\User;
+
 class EventResource extends JsonResource
 {
     /**
@@ -19,7 +21,8 @@ class EventResource extends JsonResource
             'type' => 'dudes',
             'name' => $this->name,
             'description' => $this->description,
-            'start' => $this->start->format('Y-m-d')
+            'start' => $this->start->format('d M, Y'),
+            'owner' => new User($this->user)
         ];
     }
 }

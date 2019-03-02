@@ -143,7 +143,7 @@ const reducer = (state = initialState, action) => {
                 action: null
             }
         }
-        case CHATS_LOADED : {
+        case CHATS_LOADED : {            
             return {
                 ...state,
                 messenger: action.data

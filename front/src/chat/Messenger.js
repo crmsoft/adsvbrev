@@ -7,12 +7,13 @@ import Popup from 'reactjs-popup';
 import MessengerOptions from './MessengerOptions';
 import axios from 'axios';
 
-const ChatList = ({chats, startConversation}) => {
+const ChatList = ({chats, startConversation, user}) => {
     return (
         <div className="chats">
         {
             chats.map(chat => {
                 return <Chat 
+                            user={user}
                             onClick={ startConversation }
                             key={chat.hash_id} 
                             data={chat}
@@ -42,7 +43,7 @@ const UserList = ({friends, createChat}) => {
 class UsersComponent extends Component {
 
     state = {
-        minimized: false
+        minimized: localStorage.getItem('minimized') === 'true'
     }
 
     componentDidMount(){
@@ -71,6 +72,8 @@ class UsersComponent extends Component {
             return {
                 minimized: !this.state.minimized
             }
+        }, () => {
+            localStorage.setItem('minimized', this.state.minimized);
         });
     }
 
@@ -80,7 +83,8 @@ class UsersComponent extends Component {
             friend, 
             chat, 
             m_status,
-            m_sound
+            m_sound,
+            username
         } = this.props.messenger;
 
         // no messenger when no friends;
@@ -120,6 +124,7 @@ class UsersComponent extends Component {
                     this.state.minimized ? null : (
                         <div className="chatable">
                             <ChatList 
+                                user={username}
                                 chats={chat} 
                                 startConversation={this.startConversation.bind(this)}
                             />

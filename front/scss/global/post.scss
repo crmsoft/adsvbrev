@@ -97,6 +97,29 @@
     +div{
       border-top: 1px solid $postDelimiter;
     }
+    .yt-video{
+      position: relative;
+      cursor: pointer;
+      iframe{
+        width: 100%;
+        height: 356px;
+      }
+      img{
+        object-fit: cover;
+        height: 356px;
+      }
+      .yt-play-btn{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        &:after{
+          content: 'Play';
+          margin-left: 5px;
+          display: block;
+        }
+      }
+    }
+
     .post-media
     {
 
@@ -300,12 +323,15 @@
 
     p {
       color:$white;
+      white-space: pre-wrap;
     }
     a
     {
       color: $mainColor;
-      margin:0px 15px;
-      font-weight:500;
+      &.more{
+        margin: 0px 10px;
+        font-weight:500;
+      }
     }
 
     .post-img

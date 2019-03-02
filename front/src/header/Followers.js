@@ -10,11 +10,6 @@ export default class Followers extends Component{
         open: false
     }
 
-    shouldComponentUpdate()
-    {
-        return true;
-    }
-
     componentDidUpdate()
     {
         if (this.state.load)
@@ -22,21 +17,6 @@ export default class Followers extends Component{
             axios.get(`/followers/list`)
             .then(response => this.setState(() => { return { load: false, list: response.data.data } }))
         } // end if
-    }
-
-    static getDerivedStateFromProps(props, state) {
-                
-        if (props.open && (state.open === false))
-        {
-            return {
-                load: true,
-                open: true
-            }
-        }
-
-        return {
-            load: false
-        };
     }
 
     onAccept(username)
@@ -49,10 +29,6 @@ export default class Followers extends Component{
                 load: false
             }
         }, () => {
-            if (this.state.list.length === 0)
-            {
-                this.props.close();
-            } // end if
             this.props.onAccept(username);
         });
     }
@@ -67,10 +43,6 @@ export default class Followers extends Component{
                 load: false
             }
         }, () => {
-            if (this.state.list.length === 0)
-            {
-                this.props.close();
-            } // end if
             this.props.onDecline(username);
         });
     }
@@ -81,9 +53,16 @@ export default class Followers extends Component{
             return {
                 open: false
             }
-        }, () => {
-            this.props.close();
         })
+    }
+
+    loadList()
+    {
+        this.setState(() => {
+            return {
+                load: true
+            }
+        });
     }
 
     render()
@@ -95,9 +74,7 @@ export default class Followers extends Component{
             return (
                 <div className="followers-popup">
                     <Popup
-                        onOpen={e => this.props.onOpen()}
-                        open={this.props.open}
-                        onClose={this.onClose.bind(this)}
+                        onOpen={this.loadList.bind(this)}
                         modal={false}
                         overlayStyle={{display:'none'}}
                         position="bottom right"
@@ -133,7 +110,7 @@ export default class Followers extends Component{
                         {
                             list.map(user => {
                                 return (
-                                    <li className="user">
+                                    <li className="user" key={user.username}>
                                         <div className="row">
                                             <div className="col p-0">
                                                 <Link to={`/gg/${user.username}`} className="user-list-item d-inline-flex">

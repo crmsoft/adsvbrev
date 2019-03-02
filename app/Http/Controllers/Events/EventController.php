@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Events;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 use \App\Http\Controllers\Controller;
 use App\Http\Resources\Events\EventCollection;
@@ -14,20 +15,7 @@ class EventController extends Controller
     {
         $user = auth()->user();
 
-        $events = Event::leftJoin('user_friends', function($query)  use ($user) {
-                    $query->on(function ($query) use($user) {
-                        $query->on('user_friends.friend_id', '=', 'events.creator_id');
-                        $query->on('user_friends.status', '=', \DB::raw("'friend'"));
-                        $query->on('user_friends.user_id', '=', \DB::raw($user->id));
-                    });
-                })
-                ->whereNull('events.deleted_at')
-                ->whereNull('user_friends.deleted_at')
-                ->orWhere(function ($query) use ($user) {
-                    $query->orWhere('events.creator_id','=', $user->id);
-                })
-                ->select(['events.*'])
-                ->get();
+        $events = $user->events()->get();
 
         return new EventCollection($events);
     }
@@ -60,4 +48,12 @@ class EventController extends Controller
 
         return $event->save() ? 1:0;
     }
+
+    public function show(int $timestamp)
+    {
+        $date = Carbon::createFromTimestamp($timestamp / 1000);
+        $user = auth()->user();
+
+        return new EventCollection($user->events($date)->whereDate('events.start', $date)->get());
+    } // end show
 }

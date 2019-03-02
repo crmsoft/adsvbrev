@@ -1,3 +1,5 @@
+@import './flatpickr.scss';
+
 $backcolor:#14191c;
 $whitecolor:#fff;
 $greycolor:#BAB7BE;
@@ -198,6 +200,15 @@ $schedulebordercolor:#354247;
                             min-height: 60px;
                             line-height: 78px;
                             font-size: 16px;
+                            &.selected{
+                                background-color: transparent !important;
+                            }
+                            &:hover{
+                                background-color: transparent !important;
+                            }
+                            &.today{
+                                border-color: transparent;
+                            }
 
                         }
                         .flatpickr-day:nth-child(7n+8),.flatpickr-day:nth-child(1)
@@ -482,4 +493,65 @@ $schedulebordercolor:#354247;
 
     }
 
+}
+
+.schedule{
+    .schedule-create-form{
+        margin:  20px 0;
+        @extend .container;
+
+        .row+.row{
+            margin-top: 25px;
+        }
+
+        .col-4 {
+            display: flex;
+            align-items: center;
+        }
+
+        label{
+            margin: 0;
+        }
+
+        .event-ava{
+            background-color: $lightGray;
+            height: 75px;
+            width: 75px;
+            border-radius: 50%;
+            border-color: $mainColor;
+            border-width: 1px;
+            border-style: solid;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .event-cover{
+            background-color: $lightGray;
+            height: 75px;
+            border-color: $mainColor;
+            border-width: 1px;
+            border-style: solid;
+            cursor: pointer;
+            &:before{
+                @include right-edge-cut(10px, $mainColor);
+            }
+        }
+
+        .back-img{
+            text-align: center;
+            background-size: cover;
+            background-position: center center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            span{
+                display: inline-block;
+            }
+            &.selected{
+                span{
+                    @extend .d-none;
+                }
+            }
+        }
+    }
 }

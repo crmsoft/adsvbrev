@@ -151,15 +151,17 @@ export default class AddComment extends Component {
     componentDidMount()
     {
         const user = headerStore.getState();
-        if( !user || !user.username ){
+        
+        if( !user || !user.data ){
             unListen = headerStore.subscribe(() => {
                 const user = headerStore.getState();
+                
                 if(user.username)
                 {
                     unListen();
                     this.setState(() => {
                         return {
-                            user: user
+                            user: user.data
                         }
                     });
                 }
@@ -167,7 +169,7 @@ export default class AddComment extends Component {
         } else {
             this.setState(() => {
                 return {
-                    user: user
+                    user: user.data
                 }
             });
         }

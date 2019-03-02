@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect  } from "react-redux";
+import { connect, Provider  } from "react-redux";
 
 import FeedList from './feed/index';
 import Friends from './friends/index';
@@ -12,6 +12,9 @@ import {
 } from './fetch/events';
 import CreatePostComponent from '../post-add/index';
 import About from './about';
+import ProfileSchedule from './schedule';
+import scheduleStore from './schedule/store';
+
 
 
 
@@ -80,6 +83,17 @@ class ProfileComponent extends Component{
                                 total={totals.groups} 
                             />                    
 
+                        </section>
+
+                        <section className="block">
+
+                            <Provider store={scheduleStore}>
+                                <ProfileSchedule 
+                                    isGuest={false}
+                                    list={groups} 
+                                    total={totals.groups} 
+                                />                    
+                            </Provider>
                         </section>
 
                     </aside>

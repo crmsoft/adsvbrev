@@ -215,4 +215,30 @@ class User extends Authenticatable implements JWTSubject, LikerContract
     public function feed(){
         return $this->hasMany(Post::class)->where('type', 'feed');
     }
+
+    public function events( $date = null)
+    {
+        $user = $this;
+
+        $user_friends_events = Entities\Event::join('user_friends', 
+                                function($query) use ($user) {
+                                    $query->on('user_friends.friend_id', 'events.creator_id');
+                                    $query->on('user_friends.user_id', '=', \DB::raw($user->id));
+                                })->select(['events.*']);
+
+        if ($date)
+        {
+            $user_friends_events->whereDate('start', $date);
+        } // end if
+
+        $user_events = Entities\Event::where('creator_id', $user->id)
+                        ->union($user_friends_events);
+                   
+        if ($date)
+        {
+            $user_events->whereDate('start', $date);
+        } // end if
+
+        return $user_events;
+    }
 }

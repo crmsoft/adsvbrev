@@ -20,17 +20,10 @@ class Guest extends Component{
         this.props.init(this.props.match.params.id);
     }
 
-    shouldComponentUpdate(nextProps)
-    {
-        
-        return (nextProps.routerTime !== this.props.routerTime) || 
-            !this.props.data.profile.user.username ||
-            (this.props.data.profile.user.username !== nextProps.data.profile.user.username)
-    }
-
     componentDidUpdate()
     {
-        if(this.props.data.profile.user.username !== this.props.match.params.id)
+        if( (this.props.match.params.id !== this.props.data.profile.user.username) 
+                && !this.props.fetching)
         {
             this.props.init(this.props.match.params.id);
         } // end if
@@ -41,7 +34,8 @@ class Guest extends Component{
             friends,
             groups,
             totals,
-            feed
+            feed,
+            profile
         } = this.props.data;
 
         return (
@@ -69,7 +63,7 @@ class Guest extends Component{
                         </section>
 
                         <section className="posts">
-                            <FeedList list={feed} />
+                            <FeedList list={feed} user={profile.user.username} guest={true} />
                         </section>
 
                     </section>
@@ -80,7 +74,7 @@ class Guest extends Component{
 
                             <Friends 
                                 isGuest={true}
-                                user={this.props.data.profile.user.username} 
+                                user={profile.user.username} 
                                 list={friends} 
                                 total={totals.friends} 
                             />                    

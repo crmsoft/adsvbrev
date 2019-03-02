@@ -52,6 +52,7 @@
       }
 
       p{
+        white-space: pre-wrap;
         margin-bottom: 5px;
         a{
           text-decoration: none;
@@ -73,6 +74,28 @@
       color:$white;
       cursor: pointer;
       line-height: 16px;
+
+      .popup-overlay{
+        display: none;
+      }
+      .popup-content{
+        width: 80px !important;
+        padding: 0 !important;
+        border: none !important;
+        >div{
+          background-color: $lighterGray !important;
+        }
+      }
+      ul{
+        background-color: $lighterGray;
+        margin: 0;
+        padding: 5px;
+        li{
+          max-width: 55px;
+          font-size: 12px;
+          list-style: none;
+        }
+      }
     }
     .comment-actions
     {

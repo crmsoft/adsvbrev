@@ -31,14 +31,7 @@ const App = () => {
                         <Route path="/settings" component={Settings} />
                     </Provider> 
                     <Provider store={guest}>
-                        <Route path="/gg/:id" component={(props) => {
-                            const myProps = {
-                                ...props,
-                                routerTime: (+(new Date))
-                            };
-                            
-                            return <GuestComponent {...myProps} />
-                        }} />
+                        <Route path="/gg/:id" component={GuestComponent} />
                     </Provider>
                     <Route path="/search" component={Search} />
                     <Route path="/schedule" component={Schedule} />

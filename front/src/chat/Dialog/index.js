@@ -93,7 +93,7 @@ class DialogComponent extends Component{
     pull()
     {
         return new Promise((resolve, reject) => {
-            this.props.sended();
+            //this.props.sended();
             const {hash_id} = this.props.chat;
             axios.post(`/chat/${hash_id}/pull`)
             .then(response => {

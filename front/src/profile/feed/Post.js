@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import {placeEmoji} from '../../utils';
+import {placeEmoji, urlify} from '../../utils';
 import Comments from '../../comment/Comments';
 import AddComment from '../../comment/AddComment';
 import axios from 'axios';
-import store from '../fetch/store';
 import Popup from 'reactjs-popup';
+import handleViewport from 'react-in-viewport';
 
-export default class Post extends Component{
+
+class Post extends Component{
 
 	state = {
-		reply: null
+		reply: null,
+		open: false
 	}
 
 	static getDerivedStateFromProps(nextProps, state)
@@ -21,6 +23,8 @@ export default class Post extends Component{
 				hasMore: nextProps.post.content.length > 250
 			};
 		}
+
+		return null
 	}
 
 	/**
@@ -30,7 +34,21 @@ export default class Post extends Component{
 	{		
 		const {post} = this.state;
 		axios.post(`/post/like/${post.id}`)
-		.then(response => store.dispatch({type: 'POST_LIKED', data: post.id}))
+		.then(response => this.props.toggle(post.id))
+	}
+
+	deletePost()
+	{
+		const {post} = this.state;
+		axios.post(`/post/delete/${post.id}`)
+		.then(({data}) => {
+			if (data.action)
+			{
+				this.setState(state => { 
+					return {open: false}; 
+				}, () => this.props.onDelete(this.state.post.id));
+			} // end if
+		});
 	}
 
 	reply(user, comment_id)
@@ -71,26 +89,40 @@ export default class Post extends Component{
 	{
 		this.setState(() => {
 			return {
-				hasMore: false
+				hasMore: false,
+				open: false
 			}
 		})
 	}
 
     render()
     {
+		
 		const {post} = this.state;
 		const {hasMore} = this.state;
 
-		let {content}  = post;
-		
+		let content  = (post.content);
+
 		if (hasMore)
 		{
 			content = content.substr(0,240)
 			content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")))
 		} // end if
 
+		content = placeEmoji(content);
+
+		if (typeof(content) === 'string')
+		{
+			content = urlify(content);
+		} else {
+			content = content.map(c => {
+				return (typeof c === 'string') ? urlify(c) : c;
+			})
+		} // end if
+
 		const more = hasMore ? (
 						<a 
+							className="more"
 							href="javascript:void(0)"
 							onClick={this.showAll.bind(this)}
 						>More...</a>
@@ -108,31 +140,40 @@ export default class Post extends Component{
 						<span className="post-time">{post.created_at}</span>
 					</div>
 					<div className="post-options">
-						<Popup
-							keepTooltipInside={true}
-							lockScroll={false}
-							closeOnEscape={true}
-							closeOnDocumentClick={true}
-							position="left center"
-							modal={false}
-							trigger={<span>...</span>}
-						>
-							<ul>
-								<li>
-									pin post
-								</li>
-								<li>
-									delete
-								</li>
-							</ul>	
-						</Popup>
+						{
+							!this.props.guest ? (
+								<Popup
+									open={this.state.open}
+									onClose={() => {this.setState({open:false})}}
+									onOpen={() => {this.setState({open:true})}}
+									keepTooltipInside={true}
+									lockScroll={false}
+									closeOnEscape={true}
+									closeOnDocumentClick
+									position="left center"
+									modal={false}
+									trigger={<span>...</span>}
+								>
+									<ul>
+										<li>
+											pin post
+										</li>
+										<li
+											onClick={this.deletePost.bind(this)}
+										>
+											delete
+										</li>
+									</ul>	
+								</Popup>
+							) : <span>...</span>
+						}
 					</div>
 				</div>
 
 				<div className="post-content">
 					<p>
 						{
-							placeEmoji(content)
+							content
 						}					
 						{
 							more
@@ -176,3 +217,7 @@ export default class Post extends Component{
         )
     }
 }
+
+const PostComponent =  handleViewport(Post);
+
+export default PostComponent;

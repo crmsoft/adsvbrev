@@ -1,0 +1,39 @@
+.dd-modal{
+    background-color: $postBack !important;
+    border: 0 !important;
+    padding: 0 !important;
+    border-radius: 3px;
+    overflow: hidden;
+    .dd-modal-header{
+        background-color: $mainColor;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title{
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0
+        }
+        .close{
+            cursor: pointer;
+        }
+    }
+
+    .dd-modal-footer{
+        padding: 10px;
+        text-align: right;
+        .dd-btn{
+            float: none !important;
+        }
+        .dd-btn + .dd-btn{
+            margin-left: 10px;
+        }
+        &:after{
+            clear: both;
+            content: ' ';
+            display: inline-block;
+        }
+    }
+}

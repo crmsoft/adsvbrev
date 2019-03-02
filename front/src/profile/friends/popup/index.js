@@ -16,7 +16,7 @@ class FriendAndFollowersList extends Component{
     render(){  
         return (
             <Popup
-                lockScroll={true}
+                lockScroll={false}
                 contentStyle={{backgroundColor: 'transparent', border:0,padding:0}} 
                 modal={true} 
                 open={this.props.show}
