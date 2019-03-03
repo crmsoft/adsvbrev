@@ -40624,7 +40624,9 @@ var initialState = {
     feed: [],
     profile: {
       ava: '',
-      user: {}
+      user: {
+        full_name: 'Loading...'
+      }
     },
     totals: {
       friends: 0,

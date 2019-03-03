@@ -1,8 +1,8 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/css/auth.css": "/css/auth.css",
-    "/js/auth.js": "/js/auth.js",
-    "/js/vendor.js": "/js/vendor.js",
-    "/js/manifest.js": "/js/manifest.js"
+    "/js/app.js": "/js/app.js?id=270d0f6f20fbe42c2d50",
+    "/css/app.css": "/css/app.css?id=e374e0549f5160ef63df",
+    "/css/auth.css": "/css/auth.css?id=e8c92d61877041301866",
+    "/js/auth.js": "/js/auth.js?id=d025083cd25e9d59d808",
+    "/js/vendor.js": "/js/vendor.js?id=5d0f33f3820db170ae8c",
+    "/js/manifest.js": "/js/manifest.js?id=0225916a5d4fbc86a881"
 }
