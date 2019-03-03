@@ -44528,6 +44528,7 @@ function (_Component) {
 
 
       var more = hasMore ? _react.default.createElement("a", {
+        className: "more",
         href: "javascript:void(0)",
         onClick: this.showAll.bind(this)
       }, "More...") : null;
@@ -60311,12 +60312,16 @@ function (_Component) {
       if (found.length) {
         var marks = document.createElement("div");
         marks.className = 'marks';
-        var withDudes = document.createElement('span');
-        withDudes.className = 'mark with-dudes';
-        marks.appendChild(withDudes);
-        var withGr = document.createElement('span');
-        withGr.className = 'mark with-group';
-        marks.appendChild(withGr);
+        var dudes;
+        found.map(function (event) {
+          if (!dudes) {
+            var withDudes = document.createElement('span');
+            withDudes.className = "mark with-".concat(event.type);
+            marks.appendChild(withDudes);
+            dudes = true;
+          } // end if
+
+        });
         dayElem.innerHTML = "<span>".concat(dayElem.textContent, "</span>").concat(marks.outerHTML);
       } // end if
 
@@ -60339,8 +60344,10 @@ function (_Component) {
           _this3.calendar = _ref;
         },
         onDayCreate: this.plotEvents.bind(this),
-        onChange: function onChange(dates) {
-          _this3.props.setDay(dates.pop().getTime());
+        onChange: function onChange(selectedDates, dateStr, instance) {
+          var selectedDate = selectedDates.pop();
+
+          _this3.props.setDay(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()));
         },
         "data-inline": true,
         "data-shorthand-current-month": true
@@ -60508,6 +60515,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      document.title = this.props.data.profile.user.full_name;
       var _this$props$data = this.props.data,
           feed = _this$props$data.feed,
           friends = _this$props$data.friends,
@@ -60649,6 +60657,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      document.title = this.props.data.profile.user.full_name;
       var _this$props$data = this.props.data,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
@@ -61672,6 +61681,7 @@ var _reactRedux = require("react-redux");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SettingsComponent = function SettingsComponent(props) {
+  document.title = "Settings";
   return _react.default.createElement("div", {
     className: "d-flex"
   }, _react.default.createElement(_index.default, null), _react.default.createElement("div", {
@@ -62807,6 +62817,8 @@ function (_Component) {
   _createClass(Search, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      document.title = "Search";
+
       var searchTerm = _queryString.default.parse(this.props.location.search);
 
       this.setState({
@@ -69491,7 +69503,6 @@ var Modal = function Modal(_ref) {
       _createClass(DDModal, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-          console.log(this.contentRef, onRef);
           onRef ? onRef(this.contentRef) : null;
         }
       }, {
@@ -69734,7 +69745,24 @@ function (_Component) {
         onChange: function onChange(e) {
           return _this5.setValue('description', e.target.value);
         }
-      }))));
+      }))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "This is private Event")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("label", {
+        className: "form-input-container"
+      }, _react.default.createElement("input", {
+        value: name,
+        onChange: function onChange(e) {
+          return _this5.setValue('is-private', e.target.value);
+        },
+        name: "event-is-private",
+        type: "checkbox"
+      }), _react.default.createElement("span", {
+        className: "checkmark"
+      })))));
     }
   }]);
 
@@ -69828,17 +69856,21 @@ function (_Component) {
   }, {
     key: "onSave",
     value: function onSave() {
+      var _this2 = this;
+
       _axios.default.post("/event/store", this.contentRef.current.state.form).then(function (_ref) {
         var data = _ref.data;
-        return console.log(data);
+        return _this2.setState({
+          open: false
+        });
       }).catch(function (err) {
-        return alert(err.response.data.message);
+        return console.log(err);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var Modal_ = (0, _Modal.Modal)({
         open: this.state.open,
@@ -69855,7 +69887,7 @@ function (_Component) {
           class: "btn-full"
         }],
         onRef: function onRef(ref) {
-          _this2.contentRef = ref;
+          _this3.contentRef = ref;
         }
       });
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement(Modal_, null), _react.default.createElement("button", {
@@ -69869,7 +69901,83 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = CreateEvent;
-},{"react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js","./Form":"../src/schedule/Form.js","axios":"../../node_modules/axios/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js","./Form":"../src/schedule/Form.js","axios":"../../node_modules/axios/index.js"}],"../src/schedule/Event.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Event =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Event, _Component);
+
+  function Event() {
+    _classCallCheck(this, Event);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Event).apply(this, arguments));
+  }
+
+  _createClass(Event, [{
+    key: "render",
+    value: function render() {
+      var data = this.props.data;
+      return _react.default.createElement("div", {
+        className: "schedule-content with".concat(data.type)
+      }, _react.default.createElement("h3", null, data.start_human), _react.default.createElement("div", {
+        className: "schedule-content-line"
+      }, _react.default.createElement("div", {
+        className: "title"
+      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "content"
+      }, data.owner.full_name), _react.default.createElement("div", {
+        className: "title"
+      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
+        className: "content"
+      }, data.name), _react.default.createElement("div", {
+        className: "title"
+      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "content"
+      }, "www.dudes.com"), _react.default.createElement("div", {
+        className: "title"
+      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
+        className: "fa fa-minus",
+        "aria-hidden": "true"
+      }), "Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "long-content"
+      }, data.description)));
+    }
+  }]);
+
+  return Event;
+}(_react.Component);
+
+exports.default = Event;
+},{"react":"../node_modules/react/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69888,6 +69996,12 @@ var _store = _interopRequireDefault(require("../profile/schedule/store"));
 var _events = require("../profile/schedule/store/events");
 
 var _CreateEvent = _interopRequireDefault(require("./CreateEvent"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Event = _interopRequireDefault(require("./Event"));
+
+var _luxon = require("luxon");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69930,7 +70044,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Schedule)).call.apply(_getPrototypeOf2, [this].concat(props)));
     _this.state = {
       date: new Date(),
-      schedule: _store.default.getState()
+      schedule: _store.default.getState(),
+      events: []
     };
     return _this;
   }
@@ -69938,7 +70053,27 @@ function (_Component) {
   _createClass(Schedule, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      document.title = "Schedule";
+
       _store.default.dispatch((0, _events.setDay)(null));
+
+      var describe = this.state.schedule.describe;
+      this.describe(describe = describe ? describe : new Date().getTime());
+    }
+  }, {
+    key: "describe",
+    value: function describe(_describe) {
+      var _this2 = this;
+
+      _axios.default.get("/event/".concat(_describe)).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.setState(function () {
+          return {
+            events: data.data
+          };
+        });
+      });
     }
     /**
      * to retrieve the Date object => dayElem.dateObj.getTime()
@@ -69953,40 +70088,79 @@ function (_Component) {
   }, {
     key: "onDayCreated",
     value: function onDayCreated(m, n, fp, dayElem) {
-      var timestamp = dayElem.dateObj.getTime();
+      var data = this.state.schedule.data;
 
-      if (timestamp < 1549231200000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<span class=\"event-day\">".concat(dayElem.textContent, "</span><div class=\"aside event-dd-mark\"></div><div class=\"aside event-group-mark\"></div><div class=\"user-event-mark\"></div>");
-      } else if (timestamp < 1549317600000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<span class=\"event-day\">".concat(dayElem.textContent, "</span><div class=\"aside event-dd-mark\"></div><div class=\"aside event-group-mark\"></div>");
-      } else if (timestamp < 1550786400000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<span class=\"event-day\">".concat(dayElem.textContent, "</span><div class=\"aside event-dd-mark\"></div><div class=\"user-event-mark\"></div>");
-      } else if (timestamp < 1551132000000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<span class=\"event-day\">".concat(dayElem.textContent, "</span></div><div class=\"aside event-group-mark\"></div><div class=\"user-event-mark\"></div>");
-      } else if (timestamp === 1551218400000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<span class=\"event-day\">".concat(dayElem.textContent, "</span><div class=\"aside event-dd-mark\"></div><div class=\"user-event-mark\"></div>");
-      } else if (timestamp === 1551304800000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<div class=\"aside event-dd-mark\">".concat(dayElem.textContent, "</div>");
-      } else if (timestamp === 1552082400000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<div class=\"aside event-group-mark\">".concat(dayElem.textContent, "</div>");
-      } else if (timestamp === 1551736800000) {
-        dayElem.classList.add('has-event');
-        dayElem.innerHTML = "<div class=\"aside user-event-mark\">".concat(dayElem.textContent, "</div>");
-      }
+      var date = _luxon.DateTime.fromJSDate(dayElem.dateObj);
+
+      var t = date.toISODate();
+      var found = data.filter(function (item) {
+        return item.start === t;
+      });
+
+      if (found.length) {
+        var marks = document.createElement("div");
+        marks.className = 'marks';
+        var dudes;
+        found.map(function (event) {
+          if (!dudes) {
+            var withDudes = document.createElement('span');
+            withDudes.className = "mark with-".concat(event.type);
+            marks.appendChild(withDudes);
+            dudes = true;
+          } // end if
+
+        });
+        dayElem.innerHTML = "<span>".concat(dayElem.textContent, "</span>").concat(marks.outerHTML);
+      } // end if
+
+    }
+  }, {
+    key: "describeChanged",
+    value: function describeChanged(dates) {
+      var date = dates.pop();
+      this.describe(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    }
+  }, {
+    key: "getTitle",
+    value: function getTitle() {
+      var date = this.state.date;
+      return _luxon.DateTime.fromJSDate(date).toLocaleString({
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+  }, {
+    key: "nextMonth",
+    value: function nextMonth() {
+      var _this3 = this;
+
+      this.setState(function (state) {
+        return {
+          date: _luxon.DateTime.fromJSDate(_this3.state.date).plus({
+            months: 1
+          }).toJSDate()
+        };
+      });
+    }
+  }, {
+    key: "prevMonth",
+    value: function prevMonth() {
+      var _this4 = this;
+
+      this.setState(function (state) {
+        return {
+          date: _luxon.DateTime.fromJSDate(_this4.state.date).minus({
+            months: 1
+          }).toJSDate()
+        };
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      var date = this.state.date;
+      var _this$state = this.state,
+          date = _this$state.date,
+          events = _this$state.events;
       return _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
@@ -69997,25 +70171,23 @@ function (_Component) {
         className: "schedule-header"
       }, _react.default.createElement("div", {
         className: "schedula-title"
-      }, _react.default.createElement("small", null, "JANUARY 2019")), _react.default.createElement("div", {
+      }, _react.default.createElement("h3", null, this.getTitle.call(this))), _react.default.createElement("div", {
         className: "schedule-change"
       }, _react.default.createElement("span", {
+        onClick: this.nextMonth.bind(this),
         className: "fa fa-angle-right",
         "aria-hidden": "true"
-      }), _react.default.createElement("span", {
+      }, ">"), _react.default.createElement("span", {
+        onClick: this.prevMonth.bind(this),
         className: "fa fa-angle-left",
         "aria-hidden": "true"
-      }))), _react.default.createElement("div", {
+      }, " ", "<", " "))), _react.default.createElement("div", {
         className: "schedule-canlendar"
       }, _react.default.createElement(_reactFlatpickr.default, {
+        onChange: this.describeChanged.bind(this),
         onDayCreate: this.onDayCreated.bind(this),
         "data-inline": true,
-        value: date,
-        onChange: function onChange(date) {
-          _this2.setState({
-            date: date
-          });
-        }
+        value: date
       })), _react.default.createElement("div", {
         className: "schedule-event"
       }, _react.default.createElement("div", {
@@ -70028,76 +70200,12 @@ function (_Component) {
         className: "schedule-me"
       }, _react.default.createElement("span", null), "Me"), _react.default.createElement(_CreateEvent.default, null)), _react.default.createElement("div", {
         className: "schedule-contents"
-      }, _react.default.createElement("div", {
-        className: "schedule-content withgroup"
-      }, _react.default.createElement("h3", null, "22 Jan 2019"), _react.default.createElement("div", {
-        className: "schedule-content-line"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Counter Strike Official"), _react.default.createElement("div", {
-        className: "title"
-      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Middle East Champions"), _react.default.createElement("div", {
-        className: "title"
-      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "www.steam.com"), _react.default.createElement("div", {
-        className: "title"
-      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
-        className: "fa fa-minus",
-        "aria-hidden": "true"
-      }), "Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "long-content"
-      }, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a turpis interdum, interdum orci ac, sagittis nisl. I nteger non metus augue. Quisque nunc est, laoreet id sapien dignissim sodales velit. Praesent pellentesque eu nibh vitae lobortis."))), _react.default.createElement("div", {
-        className: "schedule-content withdudes"
-      }, _react.default.createElement("h3", null, "22 Jan 2019"), _react.default.createElement("div", {
-        className: "schedule-content-line"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Counter Strike Official"), _react.default.createElement("div", {
-        className: "title"
-      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Middle East Champions"), _react.default.createElement("div", {
-        className: "title"
-      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "www.steam.com"), _react.default.createElement("div", {
-        className: "title"
-      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
-        className: "fa fa-minus",
-        "aria-hidden": "true"
-      }), "Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "long-content"
-      }, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a turpis interdum, interdum orci ac, sagittis nisl. I nteger non metus augue. Quisque nunc est, laoreet id sapien dignissim sodales velit. Praesent pellentesque eu nibh vitae lobortis."))), _react.default.createElement("div", {
-        className: "schedule-content withme"
-      }, _react.default.createElement("h3", null, "22 Jan 2019"), _react.default.createElement("div", {
-        className: "schedule-content-line"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Counter Strike Official"), _react.default.createElement("div", {
-        className: "title"
-      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "Middle East Champions"), _react.default.createElement("div", {
-        className: "title"
-      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "content"
-      }, "www.steam.com"), _react.default.createElement("div", {
-        className: "title"
-      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
-        className: "fa fa-minus",
-        "aria-hidden": "true"
-      }), "Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
-        className: "long-content"
-      }, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a turpis interdum, interdum orci ac, sagittis nisl. I nteger non metus augue. Quisque nunc est, laoreet id sapien dignissim sodales velit. Praesent pellentesque eu nibh vitae lobortis."))))))));
+      }, events.map(function (event) {
+        return _react.default.createElement(_Event.default, {
+          key: event.id,
+          data: event
+        });
+      }))))));
     }
   }]);
 
@@ -70105,7 +70213,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Schedule;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js"}],"../src/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -70200,7 +70308,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42574" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39394" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

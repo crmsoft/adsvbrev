@@ -7453,6 +7453,7 @@ span.flatpickr-weekday {
       float: right;
       width: 50%; }
       .schedule .schedule-header .schedule-change span {
+        cursor: pointer;
         float: right;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
@@ -7556,6 +7557,24 @@ span.flatpickr-weekday {
               min-height: 60px;
               line-height: 78px;
               font-size: 16px; }
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:hover {
+                background-color: transparent !important; }
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day.selected {
+                background-color: transparent; }
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks {
+                position: absolute;
+                right: 5px;
+                bottom: 5px; }
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark {
+                  width: 4px;
+                  height: 4px;
+                  border-radius: 50%;
+                  display: block;
+                  padding: 0; }
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes {
+                  background-color: #F15A24; }
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group {
+                  background-color: gray; }
             .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1) {
               border-left: 0px !important; }
             .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay {
@@ -7628,7 +7647,7 @@ span.flatpickr-weekday {
           .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title {
             width: 20%;
             float: left; }
-            .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title small {
+            .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 {
               cursor: pointer;
               height: 20px;
               line-height: 20px;
@@ -7638,7 +7657,7 @@ span.flatpickr-weekday {
               padding: 0px 0.5rem;
               border: 1px solid #F05A24;
               float: left; }
-              .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title small img {
+              .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 img {
                 height: 13px;
                 margin-top: 3px;
                 margin-right: 5px;
@@ -8848,6 +8867,9 @@ nav.user-profile {
       white-space: pre-wrap; }
     .post .post-content a {
       color: #F15A24; }
+      .post .post-content a.more {
+        margin: 0px 10px;
+        font-weight: 500; }
     .post .post-content .post-img {
       float: left;
       width: 100%; }

@@ -21,7 +21,8 @@ class EventResource extends JsonResource
             'type' => 'dudes',
             'name' => $this->name,
             'description' => $this->description,
-            'start' => $this->start->format('d M, Y'),
+            'start' => $this->start->format('Y-m-d'),
+            'start_human' => $this->start->format('d M, Y'),
             'owner' => new User($this->user)
         ];
     }
