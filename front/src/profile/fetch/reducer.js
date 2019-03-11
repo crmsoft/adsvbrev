@@ -15,7 +15,7 @@ const initialState = {
         friends: [],
         groups:[],
         feed:[],
-        profile: { ava : '', user:{} },
+        profile: { ava : '', user:{full_name:'Loading...'} },
         totals: {
             friends: 0,
             groups: 0

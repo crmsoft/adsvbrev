@@ -22,6 +22,8 @@ export default class Schedule extends Component {
 
     componentDidMount()
     {
+        document.title = `Schedule`;
+
         profileScheduleStore.dispatch(setDay(null));
         
         let {describe} = this.state.schedule;
@@ -31,11 +33,12 @@ export default class Schedule extends Component {
 
     describe(describe)
     {
-        axios.get(`/event/${describe}`).then(
+        axios.get(`/event/list/${describe}`).then(
             ({data}) => {
                 this.setState(() => {
                     return {
-                        events: data.data
+                        events: data.data,
+                        date: DateTime.fromMillis(describe).toJSDate()
                     }
                 })
             }
@@ -65,19 +68,21 @@ export default class Schedule extends Component {
         
         if (found.length)
         {
+
             const marks = document.createElement("div");
             marks.className = 'marks';
-            const withDudes = document.createElement('span');
-            withDudes.className = 'mark with-dudes';
-            marks.appendChild(
-                withDudes
-            );
-    
-            const withGr = document.createElement('span');
-            withGr.className = 'mark with-group';
-            marks.appendChild(
-                withGr
-            );
+            let dudes;
+            
+            found.map(event => {
+                if (!dudes) {   
+                    var withDudes = document.createElement('span');
+                    withDudes.className = `mark with-${event.type}`;
+                    marks.appendChild(
+                        withDudes
+                    );
+                    dudes = true;
+                } // end if
+            });
     
             dayElem.innerHTML = `<span>${dayElem.textContent}</span>${marks.outerHTML}`;
         }// end if
@@ -93,9 +98,35 @@ export default class Schedule extends Component {
         );    
     }
 
+    getTitle()
+    {
+        const {date} = this.state;
+
+        return DateTime.fromJSDate(date).toLocaleString({month: 'long', year: 'numeric'});
+    }
+
+    nextMonth()
+    {        
+        this.setState( state => {
+            return {
+                date: DateTime.fromJSDate(this.state.date).plus({months: 1}).toJSDate()
+            }
+        });
+    }
+
+    prevMonth()
+    {
+        this.setState( state => {
+            return {
+                date: DateTime.fromJSDate(this.state.date).minus({months: 1}).toJSDate()
+            }
+        });
+    }
+
     render()
     {
         const {date, events} = this.state;
+        
         return (
             <div className="d-flex">
 
@@ -106,12 +137,18 @@ export default class Schedule extends Component {
                     <section className="schedule">
                         <div className="schedule-header">
                                <div className="schedula-title">
-                                   <small>JANUARY 2019</small>
+                                   <h3>{this.getTitle.call(this)}</h3>
                                 </div>
                                 <div className="schedule-change">
 
-                                    <span className="fa fa-angle-right" aria-hidden="true"></span>
-                                    <span className="fa fa-angle-left" aria-hidden="true"></span>
+                                    <span 
+                                        onClick={this.nextMonth.bind(this)}
+                                        className="fa fa-angle-right" 
+                                        aria-hidden="true">></span>
+                                    <span
+                                        onClick={this.prevMonth.bind(this)} 
+                                        className="fa fa-angle-left" 
+                                        aria-hidden="true"> {`<`} </span>
                                 </div>
                             </div>
 
@@ -143,7 +180,7 @@ export default class Schedule extends Component {
                                 <div className="schedule-contents">
 
                                     {
-                                        events.map(event => <Event data={event} />)
+                                        events.map(event => <Event key={event.id} data={event} />)
                                     }
                                     
                                 </div>

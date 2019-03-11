@@ -25,6 +25,9 @@ class ProfileComponent extends Component{
     }
 
     render(){
+
+        document.title = this.props.data.profile.user.full_name;
+
         const {
                 feed, 
                 friends, 

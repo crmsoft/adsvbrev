@@ -32,6 +32,7 @@ export default class Form extends Component{
         }, () => {
             this.state.form.delete(name);
             this.state.form.append(name, value);
+            this.props.onForm(this.state.form);
         })
     }
 
@@ -51,8 +52,7 @@ export default class Form extends Component{
 
         if (files[0])
         {
-            this.state.form.delete('ava');
-            this.state.form.append('ava', files[0]);
+            this.setValue(`ava`, files[0]);
             const reader = new FileReader();
             reader.addEventListener('load', () =>
                 this.setState({ srcAva: reader.result }),
@@ -67,8 +67,7 @@ export default class Form extends Component{
 
         if (files[0])
         {
-            this.state.form.delete('poster');
-            this.state.form.append('poster', files[0]);
+            this.setValue(`poster`, files[0]);
             const reader = new FileReader();
             reader.addEventListener('load', () =>
                 this.setState({ srcCover: reader.result }),

@@ -58,17 +58,18 @@ class ProfileScheduleComponent extends Component{
         {
             const marks = document.createElement("div");
             marks.className = 'marks';
-            const withDudes = document.createElement('span');
-            withDudes.className = 'mark with-dudes';
-            marks.appendChild(
-                withDudes
-            );
-    
-            const withGr = document.createElement('span');
-            withGr.className = 'mark with-group';
-            marks.appendChild(
-                withGr
-            );
+            let dudes;
+            
+            found.map(event => {
+                if (!dudes) {   
+                    var withDudes = document.createElement('span');
+                    withDudes.className = `mark with-${event.type}`;
+                    marks.appendChild(
+                        withDudes
+                    );
+                    dudes = true;
+                } // end if
+            });
     
             dayElem.innerHTML = `<span>${dayElem.textContent}</span>${marks.outerHTML}`;
         }// end if

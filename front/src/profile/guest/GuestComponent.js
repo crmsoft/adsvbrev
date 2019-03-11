@@ -30,6 +30,9 @@ class Guest extends Component{
     }
 
     render(){
+
+        document.title = this.props.data.profile.user.full_name;
+        
         const {
             friends,
             groups,

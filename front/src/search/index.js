@@ -10,6 +10,7 @@ class Search extends Component {
     state = {}
 
     componentDidMount(){
+        document.title = `Search`;
         
         const searchTerm = queryString.parse(this.props.location.search);
 

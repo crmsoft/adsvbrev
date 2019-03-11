@@ -36,6 +36,7 @@ Route::group([
     Route::get('/search', 'ProfileController@index')->name('search-view');
     Route::get('/settings', 'ProfileController@index')->name('settings-view');
     Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
+    Route::get('/event/{id}', 'ProfileController@index')->name('event-page');
 });
 
 // Profile Specific Routes
@@ -96,8 +97,13 @@ Route::group([
     'middleware' => ['auth']
 ], function() {
     Route::get('/events', 'EventController@list')->name('user-event-list');
-    Route::get('/event/{timestamp}', 'EventController@show')->name('user-event-show');
+    Route::get('/event/list/{timestamp}', 'EventController@listDay')->name('user-event-list-day');
+    Route::get('/event/show/{event}', 'EventController@show')->name('user-event-show');
     Route::post('/event/store', 'EventController@store')->name('user-event-create');
+    Route::post('/event/join/{event}', 'EventController@join')->name('user-event-join');
+    Route::post('/event/leave/{event}', 'EventController@leave')->name('user-event-leave');
+    Route::get('/event/participants/{event}', 'EventController@listPartipicants')->name('user-event-list-p');
+
 });
 
 // Search page specific routes

@@ -3,57 +3,32 @@ import Popup from 'reactjs-popup';
 import Header from './Header';
 import {Footer} from './Footer';
 
-export const Modal = (
-    {
-        open, 
+export const Modal = (props) => {
+    
+    const  {
+        open,
         onClose,
-        Content,
-        actions,
         title,
-        onRef
-    }
-) => {
+        actions
+    } = props;
 
-
-    return class DDModal extends Component{
-
-        constructor(...props)
-        {
-            super(...props);
-            this.contentRef = React.createRef();
-        }
-
-        componentDidMount()
-        {
-            console.log(this.contentRef, onRef);
-            
-            onRef ? onRef(this.contentRef) : null;
-        }
-
-        render()
-        {
-            return (
-                <Popup
-                    className={`dd-modal`}
+    return (
+        <Popup
+            className={`dd-modal`}
+            onClose={onClose}
+            open={open}
+            modal={true}
+        >
+            <Fragment>
+                <Header 
+                    title={title}
                     onClose={onClose}
-                    open={open}
-                    modal={true}
-                >
-                    <Fragment>
-                        <Header 
-                            title={title}
-                            onClose={onClose}
-                        />
-                        <Content 
-                            ref={this.contentRef}
-                        />
-                        <Footer 
-                            actions={actions}
-                        />
-                    </Fragment>
-                </Popup>
-            )
-        }
-
-    }
+                />
+                {props.children}
+                <Footer 
+                    actions={actions}
+                />
+            </Fragment>
+        </Popup>
+    )
 }

@@ -5,6 +5,7 @@ namespace App\Http\Resources\Events;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\UserList\User;
+use App\Http\Resources\UserList\UserCollection;
 
 class EventResource extends JsonResource
 {
@@ -23,7 +24,13 @@ class EventResource extends JsonResource
             'description' => $this->description,
             'start' => $this->start->format('Y-m-d'),
             'start_human' => $this->start->format('d M, Y'),
-            'owner' => new User($this->user)
+            'owner' => new User($this->user),
+            'ava' => url(\Storage::url($this->ava)),
+            'poster' => url(\Storage::url($this->poster)),
+            'user_participiant' => $this->userParticipants(),
+            'participants' => [],
+            'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
+            'total_participiant' => $this->participants()->count(),
         ];
     }
 }

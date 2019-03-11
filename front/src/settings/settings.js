@@ -5,6 +5,7 @@ import { fetchProfile } from '../profile/fetch/events';
 import { connect } from 'react-redux'; 
 
 const SettingsComponent = (props) => {
+    document.title = `Settings`;
     return (
         <div className="d-flex">
 

@@ -8,7 +8,7 @@ import {createLogger} from 'redux-logger';
 import reducer from './reducer';
 
 const _logger = new createLogger({
-    collapsed: true
+    collapsed: false
 });
 
 const store = createStore(

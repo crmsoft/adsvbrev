@@ -39,8 +39,19 @@ class Event extends Model
         return $this->where($this->getRouteKeyName(), $value)->first();
     }
 
+    public function userParticipants()
+    {
+        $user = auth()->user();
+        return $this->participants()->where('user_id', $user->id)->count() > 0;
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\User::class, 'creator_id');
+    }
+
+    public function participants()
+    {
+        return $this->belongsToMany(\App\User::class, 'event_participants');
     }
 }

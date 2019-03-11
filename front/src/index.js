@@ -16,6 +16,9 @@ import Header from './header/index';
 import headerStore from './header/store';
 import Schedule from './schedule/Schedule';
 
+import EventProfile from './event/EventProfile';
+import EventProfileStore from './event/redux/store';
+
 const App = () => {
     return (
         <Router>
@@ -35,6 +38,9 @@ const App = () => {
                     </Provider>
                     <Route path="/search" component={Search} />
                     <Route path="/schedule" component={Schedule} />
+                    <Provider store={EventProfileStore}>
+                        <Route path="/event/:id" component={EventProfile} />
+                    </Provider>
                 </div>
                 <Chat />
             </Fragment>

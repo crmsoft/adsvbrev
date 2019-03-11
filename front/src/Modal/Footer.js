@@ -8,9 +8,10 @@ export const Footer = ({
             className={`dd-modal-footer`}
         >
             {
-                actions.map(act => {
+                actions.map((act, index) => {
                     return (
                         <button 
+                            key={index}
                             className={`dd-btn btn-sm ${act.class}`}
                             onClick={act.onAction}
                         >

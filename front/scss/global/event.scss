@@ -1,0 +1,21 @@
+.event-profile{
+    display: flex;
+    align-items: flex-end;
+    .profile{
+        height: 105px;
+    }
+
+    .ava-wrapper{
+        .ava{
+            position: relative;
+            top: 65px;
+        }
+    }
+
+    h1{
+        color: $mainColor;
+        font-size: 22px;
+        align-self: flex-end;
+        margin-bottom: 0;
+    }
+}

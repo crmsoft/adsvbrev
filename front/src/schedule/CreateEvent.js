@@ -29,36 +29,44 @@ export default class CreateEvent extends Component{
 
     onSave()
     {
-        axios.post(`/event/store`, this.contentRef.current.state.form)
+        axios.post(`/event/store`, this.contentRef)
         .then(({data}) => this.setState({open: false}))
         .catch(err => console.log(err))
     }
 
     render()
-    {
-        const Modal_ = Modal({
-            open: this.state.open,
-            onClose: this.doClose.bind(this),
-            Content: Form,
-            title: 'Merhaba, Bir event olusturmak istermiydiniz ?',
-            actions: [
-                {
-                    title: `Close`,
-                    onAction:this.doClose.bind(this),
-                    class: `btn-empty`
-                },
-                {
-                    title: `Create`,
-                    onAction: this.onSave.bind(this),
-                    class: `btn-full`
-                }
-            ],
-            onRef: ref => {this.contentRef = ref}
-        })
+    {   
+        const actions = [
+            {
+                title: `Close`,
+                onAction:this.doClose.bind(this),
+                class: `btn-empty`
+            },
+            {
+                title: `Create`,
+                onAction: this.onSave.bind(this),
+                class: `btn-full`
+            }
+        ];
 
         return (
             <Fragment>
-                <Modal_ />
+                <Modal 
+                    open={this.state.open}
+                    onClose={this.doClose.bind(this)}
+                    title={'Merhaba, Bir event olusturmak istermiydiniz ?'}
+                    actions={
+                        actions
+                    }
+                >
+                    <Form 
+                        onForm={
+                            form => {
+                                this.contentRef = form;
+                            }
+                        }
+                    />
+                </Modal>
                 <button 
                     onClick={this.doOpen.bind(this)}
                     className="dd-btn btn-sm btn-full"
