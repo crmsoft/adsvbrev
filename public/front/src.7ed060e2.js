@@ -70568,7 +70568,7 @@ function (_Component) {
         className: "col-auto flex-grow-1"
       }, _react.default.createElement("div", {
         className: "content-bottom flex-column-reverse"
-      }, editor ? null : data.user_participiant ? _react.default.createElement("button", {
+      }, editor ? null : data.user_participant ? _react.default.createElement("button", {
         onClick: this.props.leave,
         className: "dd-btn"
       }, "Leave Event") : _react.default.createElement("button", {
@@ -70685,15 +70685,15 @@ function (_Component) {
         href: "javascript:void(0)"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), _react.default.createElement("h3", null, "Partipicatns"), _react.default.createElement("span", {
+      }), _react.default.createElement("h3", null, "Participants"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", event.total_participiant ? event.total_participiant : '')), _react.default.createElement(_index.Modal, {
         open: this.state.open,
         onClose: this.closeModal.bind(this),
         actions: actions,
-        title: "Partipicants"
+        title: "Participants"
       }, _react.default.createElement("div", {
-        className: "container-fluid mt-3"
+        className: "container-fluid mt-3 event-user-list"
       }, event.participants && event.participants.map(function (user) {
         return _react.default.createElement("div", {
           key: user.username,
