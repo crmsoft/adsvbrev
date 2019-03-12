@@ -6632,6 +6632,11 @@ body {
 .react-tabs__tab {
   z-index: 0; }
 
+.content-bottom {
+  display: flex;
+  height: 100%;
+  align-items: flex-end; }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -7636,6 +7641,20 @@ span.flatpickr-weekday {
       .schedule .schedule-event .schedule-contents .schedule-content {
         float: left;
         margin-bottom: 1rem; }
+        .schedule .schedule-event .schedule-contents .schedule-content span {
+          width: 10%;
+          float: left;
+          text-align: center; }
+        .schedule .schedule-event .schedule-contents .schedule-content .content {
+          width: 70%;
+          float: left;
+          text-decoration: underline; }
+          .schedule .schedule-event .schedule-contents .schedule-content .content a {
+            color: inherit; }
+        .schedule .schedule-event .schedule-contents .schedule-content .long-content {
+          width: 70%;
+          float: left;
+          font-family: "Roboto thin"; }
         .schedule .schedule-event .schedule-contents .schedule-content.withgroup h3 {
           color: #f05a2480;
           font-size: 18px; }
@@ -7662,18 +7681,6 @@ span.flatpickr-weekday {
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line span {
-            width: 10%;
-            float: left;
-            text-align: center; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .content {
-            width: 70%;
-            float: left;
-            text-decoration: underline; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .long-content {
-            width: 70%;
-            float: left;
-            font-family: "Roboto thin"; }
         .schedule .schedule-event .schedule-contents .schedule-content.withdudes h3 {
           color: #6db10070;
           font-size: 18px; }
@@ -7700,18 +7707,6 @@ span.flatpickr-weekday {
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line span {
-            width: 10%;
-            float: left;
-            text-align: center; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .content {
-            width: 70%;
-            float: left;
-            text-decoration: underline; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .long-content {
-            width: 70%;
-            float: left;
-            font-family: "Roboto thin"; }
         .schedule .schedule-event .schedule-contents .schedule-content.withme h3 {
           color: #662d9170;
           font-size: 18px; }
@@ -7738,18 +7733,6 @@ span.flatpickr-weekday {
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line span {
-            width: 10%;
-            float: left;
-            text-align: center; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .content {
-            width: 70%;
-            float: left;
-            text-decoration: underline; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .long-content {
-            width: 70%;
-            float: left;
-            font-family: "Roboto thin"; }
 
 .schedule .schedule-create-form {
   margin: 20px 0; }
@@ -7828,6 +7811,20 @@ span.flatpickr-weekday {
       clear: both;
       content: ' ';
       display: inline-block; }
+
+.event-profile {
+  display: flex;
+  align-items: flex-end; }
+  .event-profile .profile {
+    height: 105px; }
+  .event-profile .ava-wrapper .ava {
+    position: relative;
+    top: 65px; }
+  .event-profile h1 {
+    color: #F15A24;
+    font-size: 22px;
+    align-self: flex-end;
+    margin-bottom: 0; }
 
 .nav-tabs {
   margin: 0 -10px;
@@ -8155,41 +8152,6 @@ nav.user-profile {
           font-family: 'icomoon' !important;
           padding-left: 5px;
           font-size: 12px; }
-    nav.user-profile .profile .ava-wrapper {
-      min-width: 225px;
-      position: relative;
-      cursor: pointer; }
-      nav.user-profile .profile .ava-wrapper .ava {
-        height: 200px;
-        width: 200px;
-        border-radius: 100px;
-        overflow: hidden;
-        border-color: #F05A24;
-        border-width: 2px;
-        border-style: solid;
-        position: absolute;
-        top: -40px; }
-        nav.user-profile .profile .ava-wrapper .ava .ava-holder .ava-edit {
-          padding: 10px;
-          display: none;
-          background-color: rgba(62, 63, 64, 0.5);
-          text-align: center;
-          position: absolute;
-          bottom: 0px;
-          width: 100%; }
-        nav.user-profile .profile .ava-wrapper .ava .ava-holder:hover .ava-edit {
-          display: block; }
-        nav.user-profile .profile .ava-wrapper .ava img {
-          width: 100%; }
-      nav.user-profile .profile .ava-wrapper a.icon-pencil {
-        padding: 5px;
-        border-radius: 14px;
-        background-color: #ffffff;
-        position: absolute;
-        color: #F05A24;
-        right: 5px;
-        top: -15px;
-        text-decoration: none; }
     nav.user-profile .profile .user {
       color: #F05A24; }
       nav.user-profile .profile .user .user-level {
@@ -8269,6 +8231,42 @@ nav.user-profile {
             font-size: 17px;
             top: 17px;
             left: 6px; }
+
+.ava-wrapper {
+  min-width: 225px;
+  position: relative;
+  cursor: pointer; }
+  .ava-wrapper .ava {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    overflow: hidden;
+    border-color: #F05A24;
+    border-width: 2px;
+    border-style: solid;
+    position: absolute;
+    top: -40px; }
+    .ava-wrapper .ava .ava-holder .ava-edit {
+      padding: 10px;
+      display: none;
+      background-color: rgba(62, 63, 64, 0.5);
+      text-align: center;
+      position: absolute;
+      bottom: 0px;
+      width: 100%; }
+    .ava-wrapper .ava .ava-holder:hover .ava-edit {
+      display: block; }
+    .ava-wrapper .ava img {
+      width: 100%; }
+  .ava-wrapper a.icon-pencil {
+    padding: 5px;
+    border-radius: 14px;
+    background-color: #ffffff;
+    position: absolute;
+    color: #F05A24;
+    right: 5px;
+    top: -15px;
+    text-decoration: none; }
 
 .user-uploads {
   padding: 10px;

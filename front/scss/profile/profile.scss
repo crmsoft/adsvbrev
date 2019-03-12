@@ -52,53 +52,6 @@ nav.user-profile{
                 }
             }
         }
-
-        .ava-wrapper{
-            min-width: 225px;
-            position: relative;
-            cursor: pointer;
-            .ava{
-                height: 200px;
-                width: 200px;
-                border-radius: 100px;
-                overflow: hidden;
-                border-color: #F05A24;
-                border-width: 2px;
-                border-style: solid;
-                position: absolute;
-                top: -40px;
-                .ava-holder{
-                    .ava-edit{
-                        padding: 10px;
-                        display: none;
-                        background-color: rgba(62, 63, 64, 0.5);
-                        text-align: center;
-                        position: absolute;
-                        bottom: 0px;
-                        width: 100%;
-                    }
-                    &:hover{
-                        .ava-edit{
-                            display: block;
-                        }
-                    }
-                }
-                img{
-                    width: 100%;
-                }
-            }
-            a.icon-pencil{
-                padding: 5px;
-                border-radius: 14px;
-                background-color: #ffffff;
-                position: absolute;
-                color: #F05A24;
-                right: 5px;
-                top: -15px;
-                text-decoration: none;
-
-            }
-        }
         
         .user{
             color: #F05A24;
@@ -207,5 +160,52 @@ nav.user-profile{
                 }
             }
         }
+    }
+}
+
+.ava-wrapper{
+    min-width: 225px;
+    position: relative;
+    cursor: pointer;
+    .ava{
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        overflow: hidden;
+        border-color: #F05A24;
+        border-width: 2px;
+        border-style: solid;
+        position: absolute;
+        top: -40px;
+        .ava-holder{
+            .ava-edit{
+                padding: 10px;
+                display: none;
+                background-color: rgba(62, 63, 64, 0.5);
+                text-align: center;
+                position: absolute;
+                bottom: 0px;
+                width: 100%;
+            }
+            &:hover{
+                .ava-edit{
+                    display: block;
+                }
+            }
+        }
+        img{
+            width: 100%;
+        }
+    }
+    a.icon-pencil{
+        padding: 5px;
+        border-radius: 14px;
+        background-color: #ffffff;
+        position: absolute;
+        color: #F05A24;
+        right: 5px;
+        top: -15px;
+        text-decoration: none;
+
     }
 }

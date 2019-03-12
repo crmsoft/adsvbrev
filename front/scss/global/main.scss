@@ -11,8 +11,16 @@ body{
     z-index: 0;
 }
 
+.content-bottom{
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+}
+
 @import './switch';
 
 @import './schedule';
 
 @import './modal.scss';
+
+@import './event.scss';

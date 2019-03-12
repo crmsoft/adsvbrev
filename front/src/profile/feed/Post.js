@@ -132,11 +132,11 @@ class Post extends Component{
 
 				<div className="post-header">
 					<div className="user-ava">
-						<img src={post.user.ava} alt={post.user.full_name} />
+						<img src={post.poster.ava} alt={post.poster.full_name} />
 					</div>
 					<div className="post-main-info">
-						<h3 className="post-user">{post.user.full_name}</h3>
-						<h4 className="post-username">{post.user.username}</h4>
+						<h3 className="post-user">{post.poster.full_name}</h3>
+						<h4 className="post-username">{post.poster.username}</h4>
 						<span className="post-time">{post.created_at}</span>
 					</div>
 					<div className="post-options">

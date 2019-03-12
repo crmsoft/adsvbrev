@@ -44,6 +44,7 @@ $schedulebordercolor:#354247;
             width:50%;
             span
             {
+                cursor: pointer;
                 float: right;
                 -webkit-border-radius: 100%;
                 -moz-border-radius: 100%;
@@ -200,16 +201,30 @@ $schedulebordercolor:#354247;
                             min-height: 60px;
                             line-height: 78px;
                             font-size: 16px;
-                            &.selected{
-                                background-color: transparent !important;
-                            }
                             &:hover{
                                 background-color: transparent !important;
                             }
-                            &.today{
-                                border-color: transparent;
+                            &.selected{
+                                background-color: transparent;
+                            }  
+                            .marks{
+                                position: absolute;
+                                right: 5px;
+                                bottom: 5px;
+                                .mark{
+                                    width: 4px;
+                                    height: 4px;
+                                    border-radius: 50%;
+                                    display: block;
+                                    padding: 0;
+                                }
+                                .with-dudes{
+                                    background-color: $mainColor;
+                                }
+                                .with-group{
+                                    background-color: gray;
+                                }
                             }
-
                         }
                         .flatpickr-day:nth-child(7n+8),.flatpickr-day:nth-child(1)
                         {
@@ -317,6 +332,28 @@ $schedulebordercolor:#354247;
                 float: left;
                 margin-bottom:1rem;
 
+                span
+                {
+                    width:10%;
+                    float: left;
+                    text-align:center
+                }
+                .content
+                {
+                    width:70%;
+                    float: left;
+                    text-decoration: underline;
+                    a{
+                        color: inherit;
+                    }
+                }
+                .long-content
+                {
+                    width:70%;
+                    float: left;
+                    font-family: "Roboto thin";
+                }
+
                 &.withgroup
                 {
 
@@ -334,7 +371,7 @@ $schedulebordercolor:#354247;
                         {
                             width:20%;
                             float: left;
-                            small{
+                            h3{
                                 cursor: pointer;
                                 height: 20px ;
                                 line-height: 20px;
@@ -353,24 +390,6 @@ $schedulebordercolor:#354247;
                                 }
 
                             }
-                        }
-                        span
-                        {
-                            width:10%;
-                            float: left;
-                            text-align:center
-                        }
-                        .content
-                        {
-                            width:70%;
-                            float: left;
-                            text-decoration: underline;
-                        }
-                        .long-content
-                        {
-                            width:70%;
-                            float: left;
-                            font-family: "Roboto thin";
                         }
                     }
                 }
@@ -411,24 +430,6 @@ $schedulebordercolor:#354247;
 
                             }
                         }
-                        span
-                        {
-                            width:10%;
-                            float: left;
-                            text-align:center
-                        }
-                        .content
-                        {
-                            width:70%;
-                            float: left;
-                            text-decoration: underline;
-                        }
-                        .long-content
-                        {
-                            width:70%;
-                            float: left;
-                            font-family: "Roboto thin";
-                        }
                     }
                 }
 
@@ -467,24 +468,6 @@ $schedulebordercolor:#354247;
                                 }
 
                             }
-                        }
-                        span
-                        {
-                            width:10%;
-                            float: left;
-                            text-align:center
-                        }
-                        .content
-                        {
-                            width:70%;
-                            float: left;
-                            text-decoration: underline;
-                        }
-                        .long-content
-                        {
-                            width:70%;
-                            float: left;
-                            font-family: "Roboto thin";
                         }
                     }
                 }

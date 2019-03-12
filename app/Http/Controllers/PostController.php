@@ -26,25 +26,30 @@ class PostController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'post' => 'required'
+            'post' => 'required',
+            'type' => 'in:event,feed'
         ]);
 
         $user = auth()->user();
 
         $post = new Post;
 
-        $post->type = 'feed';
-
         $post->content = $request->get('post', 'Hello World');
 
-        $post->user()->associate($user);
+        if ($request->has('type'))
+        {
+            if ($request->type == 'event')
+            {
+                $event = \App\Entities\Event::find(\Hashids::decode($request->get('id'))[0]);
+                $post->postable()->associate($event);
+            } else if ($request->type == 'feed')
+            {
+                $post->postable()->associate($user);
+            } // end if
+        } // end if
 
+        // save resource
         $post->save();
-
-        $post->hash_id = base64_encode(bcrypt($post->id));
-
-        $post->save();
-
 
         foreach ($request->file('media', []) as $media) {
             $image = Image::make($media->getRealPath());
@@ -96,6 +101,20 @@ class PostController extends Controller
         $request->validate([
             'last' => 'string|min:5'
         ]);
+
+        if ($request->type == 'event')
+        {
+            $event = \App\Entities\Event::where('id', \Hashids::decode($username))->first();
+
+            $last_post_id = \Hashids::decode( $request->last );
+
+            return new PostCollection(
+                $event->posts()
+                    ->where('id', '<', $last_post_id)
+                    ->with(['media', 'user'])
+                        ->orderBy('created_at', 'desc')->take(2)->get()
+            );
+        } // end if
 
         $user = $username ? \App\User::where('username', $username)->first() : auth()->user();
 

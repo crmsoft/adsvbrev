@@ -213,7 +213,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
     }
 
     public function feed(){
-        return $this->hasMany(Post::class)->where('type', 'feed');
+        return $this->morphMany(\App\Post::class, 'postable');
     }
 
     public function events( $date = null)

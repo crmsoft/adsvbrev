@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PostComponent from './Post';
 import axios from 'axios';
+import postCreateStore from '../../post-add/redux/store';
 
 /**
  * helper to show message user once 
@@ -19,10 +20,31 @@ const getStore = () => {
     }.bind(data)
 }
 
+let unRegister = () => {}
+
 export default class FeedList extends Component{
 
     state = {
         list: []
+    }
+
+    componentDidMount()
+    {
+        unRegister = postCreateStore.subscribe(() => {
+            this.setState(state => {
+                return {
+                    list: [
+                        postCreateStore.getState(),
+                        ...state.list    
+                    ]
+                }
+            });
+        })
+    }
+
+    componentWillUnmount()
+    {
+        unRegister();
     }
 
     static getDerivedStateFromProps(props, state)
@@ -32,6 +54,7 @@ export default class FeedList extends Component{
             return {
                 list: props.list,
                 user: props.user,
+                type: props.type,
                 localeStore: getStore()()
             }
         }
@@ -40,7 +63,7 @@ export default class FeedList extends Component{
         return {
             localeStore: getStore()(),
             user: props.user,
-            end: false
+            end: false || state.end
         };
     }
 
@@ -53,7 +76,8 @@ export default class FeedList extends Component{
         } // end if
 
         axios.post(this.state.user ? `/feed/more/${this.state.user}` : `/feed/more`, {
-            last: this.state.localeStore.get()
+            last: this.state.localeStore.get(),
+            type: this.state.type
         }).then(({data}) => {
             this.setState(() => {
                 return data.data.length ? {

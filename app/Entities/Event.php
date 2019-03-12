@@ -54,4 +54,9 @@ class Event extends Model
     {
         return $this->belongsToMany(\App\User::class, 'event_participants');
     }
+
+    public function posts()
+    {
+        return $this->morphMany(\App\Post::class, 'postable');
+    }
 }

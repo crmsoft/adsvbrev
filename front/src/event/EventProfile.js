@@ -7,6 +7,7 @@ import {
     load,
     join,
     leave,
+    postAdded,
     loadParticipants
 } from './redux/event';
 import CreatePostComponent from '../post-add';
@@ -14,7 +15,7 @@ import About from './About';
 import Profile from './Profile';
 import Partipicatns from './Participants';
 import headerStore from '../header/store';
-
+import FeedList from '../profile/feed';
 
 class EeventProfileComponent extends Component{
 
@@ -47,7 +48,7 @@ class EeventProfileComponent extends Component{
 
     render()
     {
-        const {description, poster, owner} = this.props;
+        const {description, poster, owner, feed} = this.props;
         const loggedIn = this.state.user;
         let editor = false;
 
@@ -89,12 +90,18 @@ class EeventProfileComponent extends Component{
                         </section>
                         
                         <section className="user-add-post">
-                            <CreatePostComponent />
+                            <CreatePostComponent 
+                                type={`event`}
+                                id={this.props.id}
+                            />
                         </section>
 
 
-                        <section className="posts">
-                        </section>
+                        <FeedList 
+                            list={feed ? feed:[]}
+                            user={this.props.id}
+                            type={`event`}
+                        />
 
                     </section>
 
@@ -130,7 +137,8 @@ const EeventProfile = connect(
             load: event => dispatch(load(event)),
             join: event => dispatch(join(event)),
             leave: event => dispatch(leave(event)),
-            loadParticipants: event => dispatch(loadParticipants(event))
+            loadParticipants: event => dispatch(loadParticipants(event)),
+            pushPost: post => dispatch(postAdded(post))
         }
     }
 )(EeventProfileComponent);

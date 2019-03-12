@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import store from '../profile/fetch/store';
+import store from './redux/store';
 import {
     POST_ADDED
-} from '../profile/fetch/actions';
+} from './redux/actions';
 import Input from './Input';
 import PostMedia from './Media';
 import Footer from './Footer';
@@ -44,7 +44,13 @@ export default class CreatePostComponent extends Component{
         data.append('post', this.state.post);
         this.state.files.map(
             file => data.append('media[]', file)
-        )
+        );
+
+        if (this.props.type)
+        {
+            data.append('type', this.props.type);
+            data.append('id', this.props.id);
+        }
 
         axios.post(`/post/store`, data)
         .then(({data}) => this.setState(state => { 

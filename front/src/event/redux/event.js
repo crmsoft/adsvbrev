@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { POST_ADDED } from '../../post-add/redux/actions';
 
 
 const LOADING = 'LOADING';
@@ -54,11 +55,21 @@ const loadParticipants = event => {
     }
 }
 
+const postAdded = post => {
+    return dispatch => {
+        dispatch({
+            type: POST_ADDED,
+            data: post
+        })   
+    }
+}
+
 export {
     load,
     join,
     leave,
     loadParticipants,
+    postAdded,
     FETCH_DONE,
     USER_JOIN,
     USER_LEAVE,

@@ -60,11 +60,15 @@ export default class Partipicatns extends Component {
                         actions={actions}
                         title={`Partipicants`}
                     >
-                        <div>
+                        <div
+                            className="container-fluid mt-3"
+                        >
                             {
                                 event.participants && event.participants.map(user => {
                                     return (
-                                        <div className="user-list-item">
+                                        <div 
+                                            key={user.username}
+                                            className="user-list-item">
                                             <Link to={`/gg/${user.username}`} className="d-flex">
                                                 <div className="user-list-ava">
                                                     <img src={`${user.ava}`}/>
@@ -84,7 +88,7 @@ export default class Partipicatns extends Component {
                 <div className="block-content">
                     <div className="friends">
                     {
-                        event.random && event.random.map(friend => <User friend={friend} />)
+                        event.random && event.random.map(friend => <User key={friend.username} friend={friend} />)
                     }
                     </div>
                 </div>

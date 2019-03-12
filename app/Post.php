@@ -43,11 +43,20 @@ class Post extends Model implements LikeableContract
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'postable_id');
+    }
+
+    public function event(){
+        return $this->belongsTo(\App\Entities\Event::class, 'postable_id');
     }
 
     public function media(){
         return $this->hasMany(Media::class, 'relation_id')
                 ->where('type', 'post');
+    }
+
+    public function postable()
+    {
+        return $this->morphTo();
     }
 }

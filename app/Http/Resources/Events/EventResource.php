@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\UserList\User;
 use App\Http\Resources\UserList\UserCollection;
+use App\Http\Resources\Post\PostCollection;
 
 class EventResource extends JsonResource
 {
@@ -31,6 +32,7 @@ class EventResource extends JsonResource
             'participants' => [],
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
             'total_participiant' => $this->participants()->count(),
+            'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get())
         ];
     }
 }

@@ -59,7 +59,9 @@ class ProfileComponent extends Component{
                         </section>
 
                         <section className="user-add-post">
-                            <CreatePostComponent />
+                            <CreatePostComponent 
+                                type={`feed`}
+                            />
                         </section>
                         
                         <FeedList list={feed} />

@@ -40816,7 +40816,9 @@ var _reduxLogger = require("redux-logger");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var logger = (0, _reduxLogger.createLogger)();
+var logger = (0, _reduxLogger.createLogger)({
+  collapsed: true
+});
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger)); // const guest = createStore(
 //     profileReducer,
 //     applyMiddleware(
@@ -41812,7 +41814,9 @@ var _reducer = _interopRequireDefault(require("./reducer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _logger = new _reduxLogger.createLogger();
+var _logger = new _reduxLogger.createLogger({
+  collapsed: true
+});
 
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
 var _default = store;
@@ -44541,15 +44545,15 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "user-ava"
       }, _react.default.createElement("img", {
-        src: post.user.ava,
-        alt: post.user.full_name
+        src: post.poster.ava,
+        alt: post.poster.full_name
       })), _react.default.createElement("div", {
         className: "post-main-info"
       }, _react.default.createElement("h3", {
         className: "post-user"
-      }, post.user.full_name), _react.default.createElement("h4", {
+      }, post.poster.full_name), _react.default.createElement("h4", {
         className: "post-username"
-      }, post.user.username), _react.default.createElement("span", {
+      }, post.poster.username), _react.default.createElement("span", {
         className: "post-time"
       }, post.created_at)), _react.default.createElement("div", {
         className: "post-options"
@@ -44629,7 +44633,67 @@ function (_Component) {
 var PostComponent = (0, _reactInViewport.default)(Post);
 var _default = PostComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js","axios":"../../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js"}],"../src/profile/feed/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js","axios":"../../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js"}],"../src/post-add/redux/actions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.POST_ADDED = void 0;
+var POST_ADDED = 'POST_ADDED';
+exports.POST_ADDED = POST_ADDED;
+},{}],"../src/post-add/redux/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _actions = require("./actions");
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.POST_ADDED:
+      {
+        return Object.assign({}, action.data);
+      }
+  } // end switch
+
+
+  return state;
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./actions":"../src/post-add/redux/actions.js"}],"../src/post-add/redux/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxLogger = require("redux-logger");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = (0, _reduxLogger.createLogger)({
+  collapsed: false
+});
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","./reducer":"../src/post-add/redux/reducer.js"}],"../src/profile/feed/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44642,6 +44706,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _Post = _interopRequireDefault(require("./Post"));
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../../post-add/redux/store"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44696,6 +44762,8 @@ var getStore = function getStore() {
   }.bind(data);
 };
 
+var unRegister = function unRegister() {};
+
 var FeedList =
 /*#__PURE__*/
 function (_Component) {
@@ -44722,9 +44790,27 @@ function (_Component) {
   }
 
   _createClass(FeedList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      unRegister = _store.default.subscribe(function () {
+        _this3.setState(function (state) {
+          return {
+            list: [_store.default.getState()].concat(_toConsumableArray(state.list))
+          };
+        });
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      unRegister();
+    }
+  }, {
     key: "loadMore",
     value: function loadMore() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.end) {
         return null;
@@ -44732,13 +44818,14 @@ function (_Component) {
 
 
       _axios.default.post(this.state.user ? "/feed/more/".concat(this.state.user) : "/feed/more", {
-        last: this.state.localeStore.get()
+        last: this.state.localeStore.get(),
+        type: this.state.type
       }).then(function (_ref) {
         var data = _ref.data;
 
-        _this3.setState(function () {
+        _this4.setState(function () {
           return data.data.length ? {
-            list: [].concat(_toConsumableArray(_this3.state.list), _toConsumableArray(data.data))
+            list: [].concat(_toConsumableArray(_this4.state.list), _toConsumableArray(data.data))
           } : {
             end: true
           };
@@ -44781,7 +44868,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _this$state = this.state,
           list = _this$state.list,
@@ -44791,11 +44878,11 @@ function (_Component) {
       }, list.map(function (item, index) {
         localeStore.set(item.id);
         return _react.default.createElement(_Post.default, {
-          guest: _this4.props.guest,
-          onDelete: _this4.onDelete.bind(_this4),
-          toggle: _this4.toggleLike.bind(_this4),
+          guest: _this5.props.guest,
+          onDelete: _this5.onDelete.bind(_this5),
+          toggle: _this5.toggleLike.bind(_this5),
           onEnterViewport: function onEnterViewport() {
-            item.id === localeStore.get() && _this4.loadMore();
+            item.id === localeStore.get() && _this5.loadMore();
           },
           key: index,
           post: item
@@ -44809,6 +44896,7 @@ function (_Component) {
         return {
           list: props.list,
           user: props.user,
+          type: props.type,
           localeStore: getStore()()
         };
       }
@@ -44816,7 +44904,7 @@ function (_Component) {
       return {
         localeStore: getStore()(),
         user: props.user,
-        end: false
+        end: false || state.end
       };
     }
   }]);
@@ -44825,7 +44913,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FeedList;
-},{"react":"../node_modules/react/index.js","./Post":"../src/profile/feed/Post.js","axios":"../../node_modules/axios/index.js"}],"../src/profile/friends/partials/header.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Post":"../src/profile/feed/Post.js","axios":"../../node_modules/axios/index.js","../../post-add/redux/store":"../src/post-add/redux/store.js"}],"../src/profile/friends/partials/header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49217,9 +49305,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _store = _interopRequireDefault(require("../profile/fetch/store"));
+var _store = _interopRequireDefault(require("./redux/store"));
 
-var _actions = require("../profile/fetch/actions");
+var _actions = require("./redux/actions");
 
 var _Input = _interopRequireDefault(require("./Input"));
 
@@ -49317,6 +49405,11 @@ function (_Component) {
       this.state.files.map(function (file) {
         return data.append('media[]', file);
       });
+
+      if (this.props.type) {
+        data.append('type', this.props.type);
+        data.append('id', this.props.id);
+      }
 
       _axios.default.post("/post/store", data).then(function (_ref) {
         var data = _ref.data;
@@ -49432,7 +49525,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = CreatePostComponent;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/AboutTab.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","./redux/store":"../src/post-add/redux/store.js","./redux/actions":"../src/post-add/redux/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/AboutTab.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -60540,7 +60633,9 @@ function (_Component) {
         id: "media-container"
       }, _react.default.createElement(_index4.default, null)), _react.default.createElement("section", {
         className: "user-add-post"
-      }, _react.default.createElement(_index6.default, null)), _react.default.createElement(_index.default, {
+      }, _react.default.createElement(_index6.default, {
+        type: "feed"
+      })), _react.default.createElement(_index.default, {
         list: feed
       })), _react.default.createElement("aside", {
         className: "profile-aside"
@@ -63341,7 +63436,9 @@ var _reduxLogger = require("redux-logger");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var logger = (0, _reduxLogger.createLogger)();
+var logger = (0, _reduxLogger.createLogger)({
+  collapsed: true
+});
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
 var _default = store;
 exports.default = _default;
@@ -69427,8 +69524,9 @@ var Footer = function Footer(_ref) {
   var actions = _ref.actions;
   return actions ? _react.default.createElement("div", {
     className: "dd-modal-footer"
-  }, actions.map(function (act) {
+  }, actions.map(function (act, index) {
     return _react.default.createElement("button", {
+      key: index,
       className: "dd-btn btn-sm ".concat(act.class),
       onClick: act.onAction
     }, act.title);
@@ -69456,79 +69554,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Modal = function Modal(_ref) {
-  var open = _ref.open,
-      onClose = _ref.onClose,
-      Content = _ref.Content,
-      actions = _ref.actions,
-      title = _ref.title,
-      onRef = _ref.onRef;
-  return (
-    /*#__PURE__*/
-    function (_Component) {
-      _inherits(DDModal, _Component);
-
-      function DDModal() {
-        var _getPrototypeOf2;
-
-        var _this;
-
-        _classCallCheck(this, DDModal);
-
-        for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-          props[_key] = arguments[_key];
-        }
-
-        _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DDModal)).call.apply(_getPrototypeOf2, [this].concat(props)));
-        _this.contentRef = _react.default.createRef();
-        return _this;
-      }
-
-      _createClass(DDModal, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-          onRef ? onRef(this.contentRef) : null;
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          return _react.default.createElement(_reactjsPopup.default, {
-            className: "dd-modal",
-            onClose: onClose,
-            open: open,
-            modal: true
-          }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Header.default, {
-            title: title,
-            onClose: onClose
-          }), _react.default.createElement(Content, {
-            ref: this.contentRef
-          }), _react.default.createElement(_Footer.Footer, {
-            actions: actions
-          })));
-        }
-      }]);
-
-      return DDModal;
-    }(_react.Component)
-  );
+var Modal = function Modal(props) {
+  var open = props.open,
+      onClose = props.onClose,
+      title = props.title,
+      actions = props.actions;
+  return _react.default.createElement(_reactjsPopup.default, {
+    className: "dd-modal",
+    onClose: onClose,
+    open: open,
+    modal: true
+  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Header.default, {
+    title: title,
+    onClose: onClose
+  }), props.children, _react.default.createElement(_Footer.Footer, {
+    actions: actions
+  })));
 };
 
 exports.Modal = Modal;
@@ -69610,6 +69651,8 @@ function (_Component) {
         _this2.state.form.delete(name);
 
         _this2.state.form.append(name, value);
+
+        _this2.props.onForm(_this2.state.form);
       });
     }
   }, {
@@ -69630,8 +69673,7 @@ function (_Component) {
       var files = e.target.files;
 
       if (files[0]) {
-        this.state.form.delete('ava');
-        this.state.form.append('ava', files[0]);
+        this.setValue("ava", files[0]);
         var reader = new FileReader();
         reader.addEventListener('load', function () {
           return _this3.setState({
@@ -69650,8 +69692,7 @@ function (_Component) {
       var files = e.target.files;
 
       if (files[0]) {
-        this.state.form.delete('poster');
-        this.state.form.append('poster', files[0]);
+        this.setValue("poster", files[0]);
         var reader = new FileReader();
         reader.addEventListener('load', function () {
           return _this4.setState({
@@ -69860,7 +69901,7 @@ function (_Component) {
     value: function onSave() {
       var _this2 = this;
 
-      _axios.default.post("/event/store", this.contentRef.current.state.form).then(function (_ref) {
+      _axios.default.post("/event/store", this.contentRef).then(function (_ref) {
         var data = _ref.data;
         return _this2.setState({
           open: false
@@ -69874,25 +69915,25 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var Modal_ = (0, _Modal.Modal)({
+      var actions = [{
+        title: "Close",
+        onAction: this.doClose.bind(this),
+        class: "btn-empty"
+      }, {
+        title: "Create",
+        onAction: this.onSave.bind(this),
+        class: "btn-full"
+      }];
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
         open: this.state.open,
         onClose: this.doClose.bind(this),
-        Content: _Form.default,
         title: 'Merhaba, Bir event olusturmak istermiydiniz ?',
-        actions: [{
-          title: "Close",
-          onAction: this.doClose.bind(this),
-          class: "btn-empty"
-        }, {
-          title: "Create",
-          onAction: this.onSave.bind(this),
-          class: "btn-full"
-        }],
-        onRef: function onRef(ref) {
-          _this3.contentRef = ref;
+        actions: actions
+      }, _react.default.createElement(_Form.default, {
+        onForm: function onForm(form) {
+          _this3.contentRef = form;
         }
-      });
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(Modal_, null), _react.default.createElement("button", {
+      })), _react.default.createElement("button", {
         onClick: this.doOpen.bind(this),
         className: "dd-btn btn-sm btn-full"
       }, "Create Event"));
@@ -69912,6 +69953,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -69956,11 +69999,15 @@ function (_Component) {
         className: "title"
       }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
         className: "content"
-      }, data.owner.full_name), _react.default.createElement("div", {
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/gg/".concat(data.owner.username)
+      }, data.owner.full_name)), _react.default.createElement("div", {
         className: "title"
-      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), " ", _react.default.createElement("div", {
+      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
         className: "content"
-      }, data.name), _react.default.createElement("div", {
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/event/".concat(data.id)
+      }, data.name)), _react.default.createElement("div", {
         className: "title"
       }, "Web Site "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
         className: "content"
@@ -69979,7 +70026,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Event;
-},{"react":"../node_modules/react/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -70067,12 +70114,13 @@ function (_Component) {
     value: function describe(_describe) {
       var _this2 = this;
 
-      _axios.default.get("/event/".concat(_describe)).then(function (_ref) {
+      _axios.default.get("/event/list/".concat(_describe)).then(function (_ref) {
         var data = _ref.data;
 
         _this2.setState(function () {
           return {
-            events: data.data
+            events: data.data,
+            date: _luxon.DateTime.fromMillis(_describe).toJSDate()
           };
         });
       });
@@ -70215,7 +70263,741 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Schedule;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FETCH_PARTICIPANTS = exports.USER_LEAVE = exports.USER_JOIN = exports.FETCH_DONE = exports.postAdded = exports.loadParticipants = exports.leave = exports.join = exports.load = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _actions = require("../../post-add/redux/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOADING = 'LOADING';
+var FETCH_DONE = 'FETCH_DONE';
+exports.FETCH_DONE = FETCH_DONE;
+var USER_JOIN = 'USER_JOIN';
+exports.USER_JOIN = USER_JOIN;
+var USER_LEAVE = 'USER_LEAVE';
+exports.USER_LEAVE = USER_LEAVE;
+var FETCH_PARTICIPANTS = 'FETCH_PARTICIPANTS';
+exports.FETCH_PARTICIPANTS = FETCH_PARTICIPANTS;
+
+var leave = function leave(event) {
+  return function (dispatch) {
+    _axios.default.post("/event/leave/".concat(event)).then(function (_ref) {
+      var data = _ref.data;
+      dispatch({
+        type: USER_LEAVE
+      });
+    });
+  };
+};
+
+exports.leave = leave;
+
+var join = function join(event) {
+  return function (dispatch) {
+    _axios.default.post("/event/join/".concat(event)).then(function (_ref2) {
+      var data = _ref2.data;
+      dispatch({
+        type: USER_JOIN
+      });
+    });
+  };
+};
+
+exports.join = join;
+
+var load = function load(event) {
+  return function (dispatch) {
+    dispatch({
+      type: LOADING
+    });
+
+    _axios.default.get("/event/show/".concat(event)).then(function (_ref3) {
+      var data = _ref3.data;
+      dispatch({
+        type: FETCH_DONE,
+        data: data.data
+      });
+    });
+  };
+};
+
+exports.load = load;
+
+var loadParticipants = function loadParticipants(event) {
+  return function (dispatch) {
+    _axios.default.get("/event/participants/".concat(event)).then(function (_ref4) {
+      var data = _ref4.data;
+      dispatch({
+        type: FETCH_PARTICIPANTS,
+        data: data
+      });
+    });
+  };
+};
+
+exports.loadParticipants = loadParticipants;
+
+var postAdded = function postAdded(post) {
+  return function (dispatch) {
+    dispatch({
+      type: _actions.POST_ADDED,
+      data: post
+    });
+  };
+};
+
+exports.postAdded = postAdded;
+},{"axios":"../../node_modules/axios/index.js","../../post-add/redux/actions":"../src/post-add/redux/actions.js"}],"../src/event/AboutTab.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AboutTab =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AboutTab, _Component);
+
+  function AboutTab() {
+    _classCallCheck(this, AboutTab);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(AboutTab).apply(this, arguments));
+  }
+
+  _createClass(AboutTab, [{
+    key: "render",
+    value: function render() {
+      var description = this.props.description;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", {
+        className: "p-2 m-0"
+      }, description));
+    }
+  }]);
+
+  return AboutTab;
+}(_react.Component);
+
+exports.default = AboutTab;
+},{"react":"../node_modules/react/index.js"}],"../src/event/About.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactTabs = require("react-tabs");
+
+var _AboutTab = _interopRequireDefault(require("./AboutTab"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var About =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(About, _Component);
+
+  function About() {
+    _classCallCheck(this, About);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(About).apply(this, arguments));
+  }
+
+  _createClass(About, [{
+    key: "render",
+    value: function render() {
+      var about = this.props.about;
+      return _react.default.createElement("div", {
+        className: "profile-about"
+      }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
+        className: "nav nav-tabs"
+      }, _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-profile"
+      }, " About Event")))), _react.default.createElement("div", {
+        className: "content"
+      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
+        description: about
+      })))));
+    }
+  }]);
+
+  return About;
+}(_react.Component);
+
+exports.default = About;
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/event/AboutTab.js"}],"../src/event/Profile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Ava = function Ava(_ref) {
+  var src = _ref.src;
+  return _react.default.createElement("div", {
+    className: "ava-wrapper"
+  }, _react.default.createElement("div", {
+    className: "ava",
+    id: "ava"
+  }, _react.default.createElement("div", {
+    className: "ava-holder"
+  }, _react.default.createElement("div", {
+    className: "ava-edit"
+  }, _react.default.createElement("span", null, "Edit Avatar")), _react.default.createElement("img", {
+    src: src
+  }))));
+};
+
+var Profile =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Profile, _Component);
+
+  function Profile() {
+    _classCallCheck(this, Profile);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Profile).apply(this, arguments));
+  }
+
+  _createClass(Profile, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          data = _this$props.data,
+          editor = _this$props.editor;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "profile"
+      }), _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement(Ava, {
+        src: data.ava
+      })), _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement("div", {
+        className: "content-bottom"
+      }, _react.default.createElement("h1", null, data.name))), _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement("div", {
+        className: "content-bottom"
+      }, _react.default.createElement("span", null, "Starts at:"), _react.default.createElement("span", null, data.start_human))), _react.default.createElement("div", {
+        className: "col-auto flex-grow-1"
+      }, _react.default.createElement("div", {
+        className: "content-bottom flex-column-reverse"
+      }, editor ? null : data.user_participiant ? _react.default.createElement("button", {
+        onClick: this.props.leave,
+        className: "dd-btn"
+      }, "Leave Event") : _react.default.createElement("button", {
+        onClick: this.props.join,
+        className: "dd-btn"
+      }, "Join"))))));
+    }
+  }]);
+
+  return Profile;
+}(_react.Component);
+
+exports.default = Profile;
+},{"react":"../node_modules/react/index.js"}],"../src/event/Participants.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _index = require("../Modal/index");
+
+var _friend = _interopRequireDefault(require("../profile/friends/partials/friend"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Partipicatns =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Partipicatns, _Component);
+
+  function Partipicatns() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Partipicatns);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Partipicatns)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      open: false
+    });
+
+    return _this;
+  }
+
+  _createClass(Partipicatns, [{
+    key: "closeModal",
+    value: function closeModal() {
+      this.setState(function () {
+        return {
+          open: false
+        };
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      var _this2 = this;
+
+      this.setState(function () {
+        return {
+          open: true
+        };
+      }, function () {
+        _this2.props.load();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var actions = [{
+        title: "Close",
+        onAction: this.closeModal.bind(this),
+        class: "btn-empty"
+      }];
+      var event = this.props.event;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("a", {
+        onClick: this.openModal.bind(this),
+        href: "javascript:void(0)"
+      }, _react.default.createElement("span", {
+        className: "icon-friends"
+      }), _react.default.createElement("h3", null, "Partipicatns"), _react.default.createElement("span", {
+        className: "items-count"
+      }, " ", event.total_participiant ? event.total_participiant : '')), _react.default.createElement(_index.Modal, {
+        open: this.state.open,
+        onClose: this.closeModal.bind(this),
+        actions: actions,
+        title: "Partipicants"
+      }, _react.default.createElement("div", {
+        className: "container-fluid mt-3"
+      }, event.participants && event.participants.map(function (user) {
+        return _react.default.createElement("div", {
+          key: user.username,
+          className: "user-list-item"
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/gg/".concat(user.username),
+          className: "d-flex"
+        }, _react.default.createElement("div", {
+          className: "user-list-ava"
+        }, _react.default.createElement("img", {
+          src: "".concat(user.ava)
+        })), _react.default.createElement("div", {
+          className: "user-list-user"
+        }, _react.default.createElement("span", {
+          style: {
+            fontWeight: 'bold'
+          }
+        }, user.full_name), _react.default.createElement("span", {
+          style: {
+            fontSize: '14px'
+          }
+        }, user.username))));
+      })))), _react.default.createElement("div", {
+        className: "block-content"
+      }, _react.default.createElement("div", {
+        className: "friends"
+      }, event.random && event.random.map(function (friend) {
+        return _react.default.createElement(_friend.default, {
+          key: friend.username,
+          friend: friend
+        });
+      }))));
+    }
+  }]);
+
+  return Partipicatns;
+}(_react.Component);
+
+exports.default = Partipicatns;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _index = _interopRequireDefault(require("../menu/index"));
+
+var _mediaTabs = _interopRequireDefault(require("../profile/media-tabs"));
+
+var _event = require("./redux/event");
+
+var _postAdd = _interopRequireDefault(require("../post-add"));
+
+var _About = _interopRequireDefault(require("./About"));
+
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _Participants = _interopRequireDefault(require("./Participants"));
+
+var _store = _interopRequireDefault(require("../header/store"));
+
+var _feed = _interopRequireDefault(require("../profile/feed"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var EeventProfileComponent =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(EeventProfileComponent, _Component);
+
+  function EeventProfileComponent() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, EeventProfileComponent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(EeventProfileComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      user: undefined
+    });
+
+    return _this;
+  }
+
+  _createClass(EeventProfileComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.load(this.props.match.params.id);
+      document.title = "Event: ".concat(this.props.name);
+      this.setState({
+        user: _store.default.getState()
+      });
+    }
+  }, {
+    key: "join",
+    value: function join() {
+      this.props.join(this.props.id);
+    }
+  }, {
+    key: "leave",
+    value: function leave() {
+      this.props.leave(this.props.id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          description = _this$props.description,
+          poster = _this$props.poster,
+          owner = _this$props.owner,
+          feed = _this$props.feed;
+      var loggedIn = this.state.user;
+      var editor = false;
+
+      if (owner && loggedIn) {
+        editor = owner.username === loggedIn.data.username;
+      } // end if
+
+
+      return _react.default.createElement("div", null, _react.default.createElement("nav", {
+        className: "user-profile event-profile",
+        style: {
+          backgroundImage: "url(".concat(poster, ")")
+        }
+      }, _react.default.createElement("div", {
+        className: "triangle-right"
+      }), _react.default.createElement(_Profile.default, {
+        leave: this.leave.bind(this),
+        join: this.join.bind(this),
+        data: this.props,
+        editor: editor
+      })), _react.default.createElement("div", {
+        className: "d-flex"
+      }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
+        className: "user-middle"
+      }, _react.default.createElement(_About.default, {
+        about: description
+      }), _react.default.createElement("section", {
+        className: "user-uploads w-100",
+        id: "media-container"
+      }, _react.default.createElement(_mediaTabs.default, null)), _react.default.createElement("section", {
+        className: "user-add-post"
+      }, _react.default.createElement(_postAdd.default, {
+        type: "event",
+        id: this.props.id
+      })), _react.default.createElement(_feed.default, {
+        list: feed ? feed : [],
+        user: this.props.id,
+        type: "event"
+      })), _react.default.createElement("aside", {
+        className: "profile-aside"
+      }, _react.default.createElement("section", {
+        className: "block",
+        id: "section-friends"
+      }, _react.default.createElement(_Participants.default, {
+        event: this.props,
+        load: function load() {
+          _this2.props.loadParticipants(_this2.props.id);
+        }
+      })))));
+    }
+  }]);
+
+  return EeventProfileComponent;
+}(_react.Component);
+
+var EeventProfile = (0, _reactRedux.connect)(function (state) {
+  return Object.assign({}, state);
+}, function (dispatch) {
+  return {
+    load: function load(event) {
+      return dispatch((0, _event.load)(event));
+    },
+    join: function join(event) {
+      return dispatch((0, _event.join)(event));
+    },
+    leave: function leave(event) {
+      return dispatch((0, _event.leave)(event));
+    },
+    loadParticipants: function loadParticipants(event) {
+      return dispatch((0, _event.loadParticipants)(event));
+    },
+    pushPost: function pushPost(post) {
+      return dispatch((0, _event.postAdded)(post));
+    }
+  };
+})(EeventProfileComponent);
+var _default = EeventProfile;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _event = require("./event");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case _event.FETCH_DONE:
+      {
+        return Object.assign({}, action.data);
+      }
+
+    case _event.USER_JOIN:
+      {
+        return Object.assign({}, state, {
+          user_paritcipiant: true
+        });
+      }
+
+    case _event.USER_LEAVE:
+      {
+        return Object.assign({}, state, {
+          user_paritcipiant: false
+        });
+      }
+
+    case _event.FETCH_PARTICIPANTS:
+      {
+        return Object.assign({}, state, {
+          participants: _toConsumableArray(action.data.data)
+        });
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./event":"../src/event/redux/event.js"}],"../src/event/redux/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxLogger = require("redux-logger");
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _logger = new _reduxLogger.createLogger({
+  collapsed: false
+});
+
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -70245,6 +71027,10 @@ var _index = _interopRequireDefault(require("./header/index"));
 var _store2 = _interopRequireDefault(require("./header/store"));
 
 var _Schedule = _interopRequireDefault(require("./schedule/Schedule"));
+
+var _EventProfile = _interopRequireDefault(require("./event/EventProfile"));
+
+var _store3 = _interopRequireDefault(require("./event/redux/store"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -70279,11 +71065,16 @@ var App = function App() {
   }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/schedule",
     component: _Schedule.default
-  })), _react.default.createElement(_chat.default, null)));
+  }), _react.default.createElement(_reactRedux.Provider, {
+    store: _store3.default
+  }, _react.default.createElement(_reactRouterDom.Route, {
+    path: "/event/:id",
+    component: _EventProfile.default
+  }))), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -70310,7 +71101,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39394" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33253" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
