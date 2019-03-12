@@ -9694,6 +9694,7 @@ nav.user-profile {
   justify-content: inherit;
   cursor: pointer; }
   .user .user-list-item .ava-wrapper {
+    min-width: auto;
     position: relative; }
     .user .user-list-item .ava-wrapper .status {
       width: 12px;
