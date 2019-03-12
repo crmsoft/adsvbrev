@@ -28,7 +28,7 @@ class EventResource extends JsonResource
             'owner' => new User($this->user),
             'ava' => url(\Storage::url($this->ava)),
             'poster' => url(\Storage::url($this->poster)),
-            'user_participiant' => $this->userParticipants(),
+            'user_participant' => $this->userParticipants(),
             'participants' => [],
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
             'total_participiant' => $this->participants()->count(),
