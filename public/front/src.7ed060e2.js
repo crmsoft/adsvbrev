@@ -70830,6 +70830,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var unlisten = function unlisten() {};
+
 var EeventProfileComponent =
 /*#__PURE__*/
 function (_Component) {
@@ -70856,13 +70858,35 @@ function (_Component) {
   }
 
   _createClass(EeventProfileComponent, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.props.name) {
+        document.title = "Event: ".concat(this.props.name);
+      } else {
+        document.title = "Loading...";
+      }
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       this.props.load(this.props.match.params.id);
-      document.title = "Event: ".concat(this.props.name);
-      this.setState({
-        user: _store.default.getState()
-      });
+
+      var user = _store.default.getState();
+
+      if (user.data.username) {
+        this.setState({
+          user: _store.default.getState()
+        });
+      } else {
+        _store.default.subscribe(function () {
+          _this2.setState({
+            user: _store.default.getState()
+          });
+        });
+      } // end if
+
     }
   }, {
     key: "join",
@@ -70877,7 +70901,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           description = _this$props.description,
@@ -70930,7 +70954,7 @@ function (_Component) {
       }, _react.default.createElement(_Participants.default, {
         event: this.props,
         load: function load() {
-          _this2.props.loadParticipants(_this2.props.id);
+          _this3.props.loadParticipants(_this3.props.id);
         }
       })))));
     }
