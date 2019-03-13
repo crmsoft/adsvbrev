@@ -7826,6 +7826,190 @@ span.flatpickr-weekday {
     align-self: flex-end;
     margin-bottom: 0; }
 
+.event-user-list {
+  max-height: 50vh;
+  overflow-y: scroll; }
+
+.find-your-dudes-title {
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 1rem;
+  margin-top: 60px; }
+  .find-your-dudes-title img {
+    height: 30px;
+    float: left;
+    margin-right: 0.5rem; }
+  .find-your-dudes-title h3 {
+    color: #F05A24;
+    font-size: 24px; }
+
+.find-your-dudes {
+  border: 1px solid #354247;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: #14191C; }
+  .find-your-dudes .row {
+    margin: 0px; }
+    .find-your-dudes .row .col-md-3 {
+      padding: 0px;
+      overflow-y: scroll;
+      /* width */
+      /* Track */
+      /* Handle */
+      /* Handle on hover */ }
+      .find-your-dudes .row .col-md-3::-webkit-scrollbar {
+        width: 5px; }
+      .find-your-dudes .row .col-md-3::-webkit-scrollbar-track {
+        background: none; }
+      .find-your-dudes .row .col-md-3::-webkit-scrollbar-thumb {
+        background: #354247;
+        border-radius: 10px; }
+      .find-your-dudes .row .col-md-3::-webkit-scrollbar-thumb:hover {
+        background: none; }
+    .find-your-dudes .row .col-md-6 {
+      padding: 0px;
+      border-left: 1px solid #354247;
+      border-right: 1px solid #354247;
+      overflow-y: scroll;
+      /* width */
+      /* Track */
+      /* Handle */
+      /* Handle on hover */ }
+      .find-your-dudes .row .col-md-6::-webkit-scrollbar {
+        width: 5px;
+        margin-right: -15px;
+        position: absolute; }
+      .find-your-dudes .row .col-md-6::-webkit-scrollbar-track {
+        background: none;
+        margin-right: -15px; }
+      .find-your-dudes .row .col-md-6::-webkit-scrollbar-thumb {
+        background: #354247;
+        border-radius: 10px; }
+      .find-your-dudes .row .col-md-6::-webkit-scrollbar-thumb:hover {
+        background: none; }
+  .find-your-dudes .my-games {
+    min-height: 50%; }
+    .find-your-dudes .my-games .my-games-title {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #354247; }
+      .find-your-dudes .my-games .my-games-title img {
+        height: 16px;
+        margin: 12px;
+        float: left; }
+      .find-your-dudes .my-games .my-games-title h3 {
+        text-transform: uppercase;
+        color: #D1D1D1;
+        font-size: 16px;
+        margin: 0px;
+        height: 40px;
+        line-height: 40px; }
+    .find-your-dudes .my-games .my-games-section .my-games-box {
+      height: 50px;
+      padding: 10px 0px;
+      border-bottom: 1px solid #354247; }
+      .find-your-dudes .my-games .my-games-section .my-games-box.active {
+        background-color: #3D4444; }
+      .find-your-dudes .my-games .my-games-section .my-games-box img {
+        height: 35px;
+        float: left;
+        margin: 0px 0.5rem; }
+      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content h3 {
+        font-size: 14px;
+        color: #F05A24;
+        margin-bottom: 3px; }
+      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc small {
+        font-size: 12px;
+        float: left;
+        margin-right: 5px; }
+      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc p {
+        font-size: 12px; }
+    .find-your-dudes .my-games .my-games-bottom {
+      position: absolute;
+      bottom: 0px; }
+      .find-your-dudes .my-games .my-games-bottom .my-games-notifications {
+        padding: 0.5rem; }
+        .find-your-dudes .my-games .my-games-bottom .my-games-notifications p {
+          font-family: 'Roboto';
+          font-size: 12px;
+          color: #989898; }
+      .find-your-dudes .my-games .my-games-bottom .my-games-search {
+        bottom: 0px; }
+        .find-your-dudes .my-games .my-games-bottom .my-games-search .input-group {
+          padding: 0.5rem; }
+          .find-your-dudes .my-games .my-games-bottom .my-games-search .input-group .input-group-prepend span {
+            background: none;
+            border: 1px solid #354247;
+            cursor: pointer;
+            color: #989898; }
+          .find-your-dudes .my-games .my-games-bottom .my-games-search .input-group input {
+            background: none;
+            border: 1px solid #354247;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            color: #989898;
+            height: 30px;
+            font-size: 14px; }
+            .find-your-dudes .my-games .my-games-bottom .my-games-search .input-group input ::placeholder {
+              color: #989898; }
+  .find-your-dudes .my-games-inside {
+    min-height: 50%; }
+    .find-your-dudes .my-games-inside .my-games-inside-title {
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-bottom: 1px solid #354247; }
+      .find-your-dudes .my-games-inside .my-games-inside-title h3 {
+        font-size: 16px;
+        margin: 0px;
+        height: 40px;
+        line-height: 40px;
+        color: #D1D1D1; }
+        .find-your-dudes .my-games-inside .my-games-inside-title h3 span {
+          height: 40px;
+          line-height: 40px;
+          margin-right: 0.5rem;
+          color: #D1D1D1; }
+  .find-your-dudes .dudes-on-channels {
+    min-height: 50%; }
+    .find-your-dudes .dudes-on-channels .on-channels-title {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #354247; }
+      .find-your-dudes .dudes-on-channels .on-channels-title img {
+        height: 24px;
+        margin: 6px;
+        float: left; }
+      .find-your-dudes .dudes-on-channels .on-channels-title h3 {
+        height: 40px;
+        line-height: 40px;
+        color: #D1D1D1;
+        font-size: 16px;
+        margin: 0px; }
+    .find-your-dudes .dudes-on-channels .my-games-bottom {
+      position: absolute;
+      bottom: 0px; }
+      .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search {
+        bottom: 0px; }
+        .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group {
+          padding: 0.5rem; }
+          .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group .input-group-prepend span {
+            background: none;
+            border: 1px solid #354247;
+            cursor: pointer;
+            color: #989898; }
+          .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group input {
+            background: none;
+            border: 1px solid #354247;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            color: #989898;
+            height: 30px;
+            font-size: 14px; }
+            .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group input ::placeholder {
+              color: #989898; }
+
 .nav-tabs {
   margin: 0 -10px;
   padding: 0 10px;

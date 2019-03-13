@@ -49048,10 +49048,14 @@ var Menu = function Menu() {
   }, _react.default.createElement("span", {
     className: "icon-profile"
   }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/fee"
+    to: "/feed"
   }, _react.default.createElement("span", {
     className: "icon-profile"
-  }, " feed")))));
+  }, " feed"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+    to: "/dudes"
+  }, _react.default.createElement("span", {
+    className: "icon-profile"
+  }, " Find Dudes")))));
 };
 
 var _default = Menu;
@@ -70947,14 +70951,14 @@ var reducer = function reducer(state, action) {
     case _event.USER_JOIN:
       {
         return Object.assign({}, state, {
-          user_paritcipiant: true
+          user_participant: true
         });
       }
 
     case _event.USER_LEAVE:
       {
         return Object.assign({}, state, {
-          user_paritcipiant: false
+          user_participant: false
         });
       }
 
@@ -70997,7 +71001,171 @@ var _logger = new _reduxLogger.createLogger({
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
 var _default = store;
 exports.default = _default;
-},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/index.js":[function(require,module,exports) {
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _menu = _interopRequireDefault(require("../menu"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var FDudes =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(FDudes, _Component);
+
+  function FDudes() {
+    _classCallCheck(this, FDudes);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(FDudes).apply(this, arguments));
+  }
+
+  _createClass(FDudes, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "d-flex"
+      }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
+        className: "user-middle"
+      }, _react.default.createElement("div", {
+        className: "find-your-dudes-title"
+      }, _react.default.createElement("img", {
+        src: "img/binoculars.svg",
+        alt: ""
+      }), _react.default.createElement("h3", null, "Find Your Dudes!")), _react.default.createElement("section", {
+        className: "find-your-dudes"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-md-3"
+      }, _react.default.createElement("div", {
+        className: "my-games"
+      }, _react.default.createElement("div", {
+        className: "my-games-title"
+      }, _react.default.createElement("img", {
+        src: "img/gamepad.svg",
+        alt: ""
+      }), _react.default.createElement("h3", null, "My Games")), _react.default.createElement("div", {
+        className: "my-games-section"
+      }, _react.default.createElement("div", {
+        className: "my-games-box active"
+      }, _react.default.createElement("img", {
+        src: "img/wow.svg",
+        alt: ""
+      }), _react.default.createElement("div", {
+        className: "my-games-content"
+      }, _react.default.createElement("h3", null, "Word Of Warcraft"), _react.default.createElement("div", {
+        className: "my-games-desc"
+      }, _react.default.createElement("small", null, "21.312"), _react.default.createElement("p", null, "Gamers Inside")))), _react.default.createElement("div", {
+        className: "my-games-box"
+      }, _react.default.createElement("img", {
+        src: "img/minecraft.svg",
+        alt: ""
+      }), _react.default.createElement("div", {
+        className: "my-games-content"
+      }, _react.default.createElement("h3", null, "Minecraft"), _react.default.createElement("div", {
+        className: "my-games-desc"
+      }, _react.default.createElement("small", null, "21.312"), _react.default.createElement("p", null, "Gamers Inside"))))), _react.default.createElement("div", {
+        className: "my-games-bottom"
+      }, _react.default.createElement("div", {
+        className: "my-games-notifications"
+      }, _react.default.createElement("p", null, "* You can only access the rooms of your chosen games. ", _react.default.createElement("b", null, " Click "), "to select a game!")), _react.default.createElement("div", {
+        className: "my-games-search"
+      }, _react.default.createElement("div", {
+        className: "input-group flex-nowrap"
+      }, _react.default.createElement("div", {
+        className: "input-group-prepend"
+      }, _react.default.createElement("span", {
+        className: "input-group-text",
+        id: "addon-wrapping"
+      }, _react.default.createElement("i", {
+        className: "fa fa-search"
+      }))), _react.default.createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search My games..",
+        "aria-label": "Search My games",
+        "aria-describedby": "addon-wrapping"
+      })))))), _react.default.createElement("div", {
+        className: "col-md-6"
+      }, _react.default.createElement("div", {
+        className: "my-games-inside"
+      }, _react.default.createElement("div", {
+        className: "my-games-inside-title"
+      }, _react.default.createElement("h3", null, " ", _react.default.createElement("span", {
+        className: "fa fa-users"
+      }), " WORLD OF WARCRAFTS GAME CHANNEL")), _react.default.createElement("div", {
+        className: "my-games-banner"
+      }, _react.default.createElement("img", {
+        src: "img/wow-banner.svg",
+        alt: ""
+      })), _react.default.createElement("div", {
+        className: "my-games-messages"
+      }))), _react.default.createElement("div", {
+        className: "col-md-3"
+      }, _react.default.createElement("div", {
+        className: "dudes-on-channels"
+      }, _react.default.createElement("div", {
+        className: "on-channels-title"
+      }, _react.default.createElement("img", {
+        src: "img/on-channels.svg",
+        alt: ""
+      }), _react.default.createElement("h3", null, "On Channels")), _react.default.createElement("div", {
+        className: "on-channels-messages"
+      }), _react.default.createElement("div", {
+        className: "my-games-bottom"
+      }, _react.default.createElement("div", {
+        className: "my-games-search"
+      }, _react.default.createElement("div", {
+        className: "input-group flex-nowrap"
+      }, _react.default.createElement("div", {
+        className: "input-group-prepend"
+      }, _react.default.createElement("span", {
+        className: "input-group-text",
+        id: "addon-wrapping"
+      }, _react.default.createElement("i", {
+        className: "fa fa-search"
+      }))), _react.default.createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search My games..",
+        "aria-label": "Search My games",
+        "aria-describedby": "addon-wrapping"
+      }))))))))));
+    }
+  }]);
+
+  return FDudes;
+}(_react.Component);
+
+exports.default = FDudes;
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -71031,6 +71199,8 @@ var _Schedule = _interopRequireDefault(require("./schedule/Schedule"));
 var _EventProfile = _interopRequireDefault(require("./event/EventProfile"));
 
 var _store3 = _interopRequireDefault(require("./event/redux/store"));
+
+var _findDude = _interopRequireDefault(require("./find-dude"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71070,11 +71240,14 @@ var App = function App() {
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/event/:id",
     component: _EventProfile.default
-  }))), _react.default.createElement(_chat.default, null)));
+  })), _react.default.createElement(_reactRouterDom.Route, {
+    path: "/dudes",
+    component: _findDude.default
+  })), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -71101,7 +71274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33253" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37998" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

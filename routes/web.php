@@ -37,6 +37,7 @@ Route::group([
     Route::get('/settings', 'ProfileController@index')->name('settings-view');
     Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
     Route::get('/event/{id}', 'ProfileController@index')->name('event-page');
+    Route::get('/dudes', 'ProfileController@index')->name('dudes-page');
 });
 
 // Profile Specific Routes
