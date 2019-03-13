@@ -41835,11 +41835,21 @@ var _Comment = _interopRequireDefault(require("./Comment"));
 
 var _store = _interopRequireDefault(require("../header/store"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -41977,11 +41987,37 @@ function (_Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "loadMore",
+    value: function loadMore() {
       var _this3 = this;
 
-      var comments = this.state.comments;
+      var _this$state = this.state,
+          post = _this$state.post,
+          comments = _this$state.comments,
+          replies = _this$state.replies;
+      var last = comments[0];
+
+      _axios.default.post(replies ? "/comment/more/".concat(post, "/").concat(replies) : "/comment/more/".concat(post), {
+        last: last.id
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        _this3.setState(function (state) {
+          return {
+            comments: [].concat(_toConsumableArray(data.data.length === 4 ? data.data.slice(0, 3) : data.data), _toConsumableArray(state.comments)),
+            hasMore: data.data.length === 4
+          };
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var _this$state2 = this.state,
+          comments = _this$state2.comments,
+          hasMore = _this$state2.hasMore;
 
       if (comments.length === 0) {
         return null;
@@ -41989,37 +42025,38 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         className: "comments"
-      }, this.state.hasMore ? _react.default.createElement("div", {
+      }, hasMore ? _react.default.createElement("div", {
         className: "d-flex pt-3"
       }, _react.default.createElement("div", {
         className: "all-comments"
       }, _react.default.createElement("a", {
-        href: "javascript:void(0)"
+        href: "javascript:void(0)",
+        onClick: this.loadMore.bind(this)
       }, "All Comments"))) : null, comments.map(function (comment) {
         if (comment.subs.length === 0) {
           return _react.default.createElement(_Comment.default, {
-            user: _this3.state.user,
-            onDelete: _this3.onCommentDelete.bind(_this3),
-            toggle: _this3.toggleLike.bind(_this3),
-            replyTo: _this3.props.replyTo,
+            user: _this4.state.user,
+            onDelete: _this4.onCommentDelete.bind(_this4),
+            toggle: _this4.toggleLike.bind(_this4),
+            replyTo: _this4.props.replyTo,
             comment: comment,
             key: comment.id
           });
         }
 
         return [_react.default.createElement(_Comment.default, {
-          user: _this3.state.user,
-          onDelete: _this3.onCommentDelete.bind(_this3),
-          toggle: _this3.toggleLike.bind(_this3),
-          replyTo: _this3.props.replyTo,
+          user: _this4.state.user,
+          onDelete: _this4.onCommentDelete.bind(_this4),
+          toggle: _this4.toggleLike.bind(_this4),
+          replyTo: _this4.props.replyTo,
           comment: comment,
           key: comment.id
         })].concat(_react.default.createElement(Comments, {
-          replies: true,
-          key: "".concat(_this3.props.post, "_sub_comments"),
-          push: _this3.props.push,
-          replyTo: _this3.props.replyTo,
-          post: _this3.props.post,
+          replies: comment.id,
+          key: "".concat(_this4.props.post, "_sub_comments"),
+          push: _this4.props.push,
+          replyTo: _this4.props.replyTo,
+          post: _this4.props.post,
           comments: comment.subs
         }));
       }));
@@ -42059,7 +42096,9 @@ function (_Component) {
       } // end if
 
 
-      return null;
+      return {
+        replies: nextProps.replies
+      };
     }
   }]);
 
@@ -42067,7 +42106,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Comments;
-},{"react":"../node_modules/react/index.js","./Comment":"../src/comment/Comment.js","../header/store":"../src/header/store.js"}],"../node_modules/@babel/runtime/helpers/esm/extends.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Comment":"../src/comment/Comment.js","../header/store":"../src/header/store.js","axios":"../../node_modules/axios/index.js"}],"../node_modules/@babel/runtime/helpers/esm/extends.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

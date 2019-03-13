@@ -11,6 +11,7 @@ use App\Post;
 use App\Media;
 use App\Entities\Comment;
 use App\Http\Resources\Comment\ResourceComment;
+use App\Http\Resources\Comment\CommentCollection;
 
 class CommentController extends Controller
 {
@@ -83,5 +84,33 @@ class CommentController extends Controller
         }
 
         return ['action' => $result];
+    } // end delete
+
+    public function loadMore( Request $request, Post $post, Comment $comment )
+    {
+        $request->validate([
+            'last' => 'required|string'
+        ]);
+
+        $last = Comment::where( 'id', \Hashids::decode($request->last) )->firstOrFail();
+
+        if ($comment->id)
+        {
+            if ($post->id == $comment->commentable_id)
+            {
+                return new CommentCollection(
+                    $comment->children()->take(4)
+                        ->where('id', '<', $last->id)->orderBy('id', 'desc')->get()
+                );
+            } // end if
+        } else {
+            return new CommentCollection(
+                $post->comments()->take(4)
+                ->where('parent_id', null)    
+                ->where('id', '<', $last->id)->orderBy('id', 'desc')->get()
+            );
+        } // end if
+
+        return response(null, 404);
     }
 }

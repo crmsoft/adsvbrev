@@ -86,6 +86,7 @@ Route::group([
 
     // User profile page
     Route::post('/comment/store/{post}/{comment?}', 'CommentController@store')->name('store-comment');
+    Route::post('/comment/more/{post}/{comment?}', 'CommentController@loadMore')->name('list-more');
     Route::post('/comment/like/{comment}', 'CommentController@toggleLike')->name('toggle-like-comment');
     Route::post('/comment/delete/{comment}', 'CommentController@delete')->name('delete-comment');
 
