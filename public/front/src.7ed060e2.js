@@ -44514,9 +44514,15 @@ function (_Component) {
     value: function deletePost() {
       var _this4 = this;
 
-      var post = this.state.post;
+      var _this$state = this.state,
+          post = _this$state.post,
+          pageType = _this$state.pageType,
+          pageId = _this$state.pageId;
 
-      _axios.default.post("/post/delete/".concat(post.id)).then(function (_ref2) {
+      _axios.default.post("/post/delete/".concat(post.id), {
+        type: pageType,
+        target: pageId
+      }).then(function (_ref2) {
         var data = _ref2.data;
 
         if (data.action) {
@@ -44584,9 +44590,9 @@ function (_Component) {
     value: function render() {
       var _this7 = this;
 
-      var _this$state = this.state,
-          post = _this$state.post,
-          repost = _this$state.repost;
+      var _this$state2 = this.state,
+          post = _this$state2.post,
+          repost = _this$state2.repost;
       var hasMore = this.state.hasMore;
       var content = post.content;
 
@@ -44691,7 +44697,9 @@ function (_Component) {
         return {
           post: nextProps.post,
           repost: nextProps.repost,
-          hasMore: nextProps.post.content.length > 250
+          hasMore: nextProps.post.content.length > 250,
+          pageType: nextProps.pageType,
+          pageId: nextProps.pageId
         };
       }
 
@@ -44966,12 +44974,16 @@ function (_Component) {
 
       var _this$state = this.state,
           list = _this$state.list,
-          localeStore = _this$state.localeStore;
+          localeStore = _this$state.localeStore,
+          type = _this$state.type,
+          user = _this$state.user;
       return _react.default.createElement("section", {
         className: "posts"
       }, list.map(function (item, index) {
         localeStore.set(item.id);
         return _react.default.createElement(_Post.default, {
+          pageType: type,
+          pageId: user,
           guest: _this5.props.guest,
           onDelete: _this5.onDelete.bind(_this5),
           toggle: _this5.toggleLike.bind(_this5),

@@ -24,9 +24,18 @@ class ResourceProfile extends JsonResource
         $profile = $this->profile;
         $profile['user'] = $user;
 
-        $feed = new PostCollection($this->feed()->with(['media', 'postable', 'parent' => function($query) {
-            $query->with(['media', 'postable']);
-        }])
+        $feed = new PostCollection($this->feed()->with(
+            [
+                'media', 
+                'postable', 
+                'loveReactant.reactions.reacter.reacterable',
+                'loveReactant.reactions.type',
+                'loveReactant.reactionCounters',
+                'loveReactant.reactionTotal',
+                'parent' => function($query) {
+                    $query->with(['media', 'postable']);
+                }   
+            ])
                     ->orderBy('created_at', 'desc')->take(2)->get());
 
         return [

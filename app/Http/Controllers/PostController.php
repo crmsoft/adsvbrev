@@ -151,11 +151,27 @@ class PostController extends Controller
         return $saved ? 1:0;
     }
 
-    public function deletePost(Post $post)
+    public function deletePost(Request $request, Post $post)
     {
         $user = auth()->user();
 
         $result = $user->feed()->where('id', $post->id)->first();
+
+        if (!isset($result->pivot) && 
+            $request->has('type') && 
+            $request->has('target') &&
+            $request->get('type') == 'event')
+        {
+            $result = \App\Entities\Event::where('id', \Hashids::decode($request->get('target')))
+                        ->with(['posts' => function($query) use ($post) {
+                            $query->where('id', $post->id);
+                        }])
+                        ->whereHas('user', function($query) use ($user) {
+                            $query->where('id', $user->id);
+                        })->first();
+
+            $result = $result->posts ? $result->posts->first() : $result;
+        } // end if
 
         return response()->json([
             'action' => isset($result->pivot) ? $result->pivot->delete() : 0
@@ -177,9 +193,18 @@ class PostController extends Controller
             return new PostCollection(
                 $event->posts()
                     ->where('id', '<', $last_post_id)
-                    ->with(['media', 'postable', 'parent' => function($query) {
-                        $query->with(['media', 'postable']);
-                    }])
+                    ->with(
+                        [
+                            'media', 
+                            'postable', 
+                            'loveReactant.reactions.reacter.reacterable',
+                            'loveReactant.reactions.type',
+                            'loveReactant.reactionCounters',
+                            'loveReactant.reactionTotal',
+                            'parent' => function($query) {
+                                $query->with(['media', 'postable']);
+                            }   
+                        ])
                         ->orderBy('created_at', 'desc')->take(2)->get()
             );
         } // end if
