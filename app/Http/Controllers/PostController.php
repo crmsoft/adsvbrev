@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -41,15 +42,30 @@ class PostController extends Controller
             if ($request->type == 'event')
             {
                 $event = \App\Entities\Event::find(\Hashids::decode($request->get('id'))[0]);
-                $post->postable()->associate($event);
+
+                $is_owner = User::where('id', $user->id)->whereHas('event', 
+                    function ($query) use ($event) {
+                        $query->where('id', $event->id);
+                    }
+                )->count();
+
+                $post->postable()->associate( $is_owner == 1 ? $event : $user);
+
+                // save resource
+                $post->save();
+                // attach post to event
+                $event->posts()->attach($post);
+
             } else if ($request->type == 'feed')
             {
                 $post->postable()->associate($user);
+
+                // save resource
+                $post->save();
+                $user->feed()->attach($post);
             } // end if
         } // end if
 
-        // save resource
-        $post->save();
 
         foreach ($request->file('media', []) as $media) {
             $image = Image::make($media->getRealPath());
@@ -82,17 +98,67 @@ class PostController extends Controller
 
     public function toggleLike(Post $post)
     {
-        return $post->toggleLikeBy();
+        $reactionType = \ReactionType::fromName('like');
+        $user = auth()->user();
+        
+        if ( !$user->isRegisteredAsLoveReacter() )
+        {
+            $user->registerAsLoveReacter();
+        } // end if
+        
+        if (!$post->isRegisteredAsLoveReactant())
+        {
+            $post->registerAsLoveReactant();
+        } // end if
+        
+        $reacter = $user->getLoveReacter();
+
+        return $reacter->isReactedToWithType( $post->getLoveReactant(), $reactionType ) ?
+                    $reacter->unreactTo($post->getLoveReactant(), $reactionType) :
+                    $reacter->reactTo($post->getLoveReactant(), $reactionType);
+    }
+
+    public function toggleShare( Post $post )
+    {
+
+        $saved = false;
+        $reactionType = \ReactionType::fromName('share');
+        $user = auth()->user();
+        
+        if ( !$user->isRegisteredAsLoveReacter() )
+        {
+            $user->registerAsLoveReacter();
+        } // end if
+        
+        if (!$post->isRegisteredAsLoveReactant())
+        {
+            $post->registerAsLoveReactant();
+        } // end if
+        
+        $reacter = $user->getLoveReacter();
+        if (!$reacter->isReactedToWithType( $post->getLoveReactant(), $reactionType ))
+        {
+            $user_post = new Post;
+            
+            $user_post->postable()->associate( $user );
+            $user_post->parent_id = $post->id;
+            $saved = $user_post->save();
+            $user->feed()->toggle($user_post);
+
+            $reacter->reactTo($post->getLoveReactant(), $reactionType);
+        } // end if
+
+        return $saved ? 1:0;
     }
 
     public function deletePost(Post $post)
     {
         $user = auth()->user();
 
-        $result = $user->feed()->where('id', $post->id)->delete();
+        $result = $user->feed()->where('id', $post->id)->first();
 
         return response()->json([
-            'action' => $result
+            'action' => isset($result->pivot) ? $result->pivot->delete() : 0
         ]);
     }
 
@@ -111,7 +177,9 @@ class PostController extends Controller
             return new PostCollection(
                 $event->posts()
                     ->where('id', '<', $last_post_id)
-                    ->with(['media', 'user'])
+                    ->with(['media', 'postable', 'parent' => function($query) {
+                        $query->with(['media', 'postable']);
+                    }])
                         ->orderBy('created_at', 'desc')->take(2)->get()
             );
         } // end if

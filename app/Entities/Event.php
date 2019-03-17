@@ -57,6 +57,6 @@ class Event extends Model
 
     public function posts()
     {
-        return $this->morphMany(\App\Post::class, 'postable');
+        return $this->morphToMany(\App\Post::class, 'postable');
     }
 }

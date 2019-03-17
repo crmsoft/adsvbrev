@@ -5,17 +5,17 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Cog\Contracts\Love\Liker\Models\Liker as LikerContract;
-use Cog\Laravel\Love\Liker\Models\Traits\Liker;
+use Cog\Contracts\Love\Reacterable\Models\Reacterable as ReacterableContract;
+use Cog\Laravel\Love\Reacterable\Models\Traits\Reacterable;
 
 use App\Entities\Profile;
 use \App\Entities\Group;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class User extends Authenticatable implements JWTSubject, LikerContract
+class User extends Authenticatable implements JWTSubject, ReacterableContract
 {
-    use Notifiable, Liker;
+    use Notifiable, Reacterable;
 
     const STATUS_SUBSCRIBE = 'subscribe';
     const STATUS_FRIEND = 'friend';
@@ -213,7 +213,7 @@ class User extends Authenticatable implements JWTSubject, LikerContract
     }
 
     public function feed(){
-        return $this->morphMany(\App\Post::class, 'postable');
+        return $this->morphToMany(Post::class, 'postable');
     }
 
     public function events( $date = null)
@@ -240,5 +240,10 @@ class User extends Authenticatable implements JWTSubject, LikerContract
         } // end if
 
         return $user_events;
+    }
+
+    public function event()
+    {
+        return $this->hasMany(Entities\Event::class, 'creator_id');
     }
 }

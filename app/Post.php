@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
-use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
+use Cog\Contracts\Love\Reactable\Models\Reactable as ReactableContract;
+use Cog\Laravel\Love\Reactable\Models\Traits\Reactable;
 
 use BrianFaust\Commentable\Traits\HasComments;
 
 
-class Post extends Model implements LikeableContract
+class Post extends Model implements ReactableContract
 {
-    use SoftDeletes, HasComments, Likeable;
+    use SoftDeletes, HasComments, Reactable;
 
     protected $appends = [
         'human_ago', 'hash'
@@ -58,5 +58,10 @@ class Post extends Model implements LikeableContract
     public function postable()
     {
         return $this->morphTo();
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Post::class, 'parent_id');
     }
 }

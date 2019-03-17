@@ -7988,8 +7988,9 @@ span.flatpickr-weekday {
         font-size: 16px;
         margin: 0px; }
     .find-your-dudes .dudes-on-channels .my-games-bottom {
-      position: absolute;
-      bottom: 0px; }
+      position: relative;
+      bottom: 0px;
+      margin: 20px 0px 0px 0px; }
       .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search {
         bottom: 0px; }
         .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group {
@@ -9024,9 +9025,9 @@ nav.user-profile {
       display: inline-block; }
     .post .post-content .post-actions > span:nth-child(odd) {
       cursor: pointer; }
-    .post .post-content .comment-shared {
+    .post .post-content .post-shared {
       border: 1px solid #3E3F42; }
-      .post .post-content .comment-shared .post-header .right-shared-menu {
+      .post .post-content .post-shared .post-header .right-shared-menu {
         right: 2rem;
         position: absolute;
         top: 1rem;
@@ -9040,10 +9041,11 @@ nav.user-profile {
         -moz-border-radius: 5px;
         border-radius: 5px;
         cursor: pointer; }
-        .post .post-content .comment-shared .post-header .right-shared-menu .right-shared-btn i {
+        .post .post-content .post-shared .post-header .right-shared-menu .right-shared-btn i {
           color: #F15A24; }
-      .post .post-content .comment-shared .post-content {
-        margin: 0px; }
+      .post .post-content .post-shared .post-content {
+        margin: 0px;
+        padding: 0 10px; }
     .post .post-content p {
       color: #ffffff;
       white-space: pre-wrap; }

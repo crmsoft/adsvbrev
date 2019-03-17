@@ -69,7 +69,24 @@ class CommentController extends Controller
 
     public function toggleLike(Comment $comment)
     {
-        return $comment->toggleLikeBy();
+        $reactionType = \ReactionType::fromName('like');
+        $user = auth()->user();
+        
+        if ( !$user->isRegisteredAsLoveReacter() )
+        {
+            $user->registerAsLoveReacter();
+        } // end if
+        
+        if (!$comment->isRegisteredAsLoveReactant())
+        {
+            $comment->registerAsLoveReactant();
+        } // end if
+        
+        $reacter = $user->getLoveReacter();
+
+        return $reacter->isReactedTo( $comment->getLoveReactant() ) ?
+                    $reacter->unreactTo($comment->getLoveReactant(), $reactionType) :
+                    $reacter->reactTo($comment->getLoveReactant(), $reactionType);
     }
 
     public function delete(Comment $comment)

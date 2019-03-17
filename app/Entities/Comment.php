@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use \App\User;
 use \App\Media;
 
-use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
-use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
+use Cog\Contracts\Love\Reactable\Models\Reactable as ReactableContract;
+use Cog\Laravel\Love\Reactable\Models\Traits\Reactable;
 
-class Comment extends \BrianFaust\Commentable\Models\Comment implements LikeableContract
+class Comment extends \BrianFaust\Commentable\Models\Comment implements ReactableContract
 {
-    use SoftDeletes, Likeable;
+    use SoftDeletes, Reactable;
 
     /**
      * Appends extra fields to model

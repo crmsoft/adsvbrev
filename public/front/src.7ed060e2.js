@@ -44435,6 +44435,28 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var PostContnet = function PostContnet(_ref) {
+  var more = _ref.more,
+      content = _ref.content,
+      repost = _ref.repost,
+      media = _ref.media;
+  return repost ? _react.default.createElement("div", {
+    className: "post-shared"
+  }, _react.default.createElement(Post, {
+    post: repost,
+    repost: true
+  })) : _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
+    className: media.length > 1 ? "post-media n-".concat(media.length) : "post-media"
+  }, media.map(function (url) {
+    return _react.default.createElement("div", {
+      className: "media",
+      key: url.full_path
+    }, _react.default.createElement("img", {
+      src: url.full_path
+    }));
+  })));
+};
+
 var Post =
 /*#__PURE__*/
 function (_Component) {
@@ -44477,22 +44499,33 @@ function (_Component) {
       });
     }
   }, {
-    key: "deletePost",
-    value: function deletePost() {
+    key: "toggleShare",
+    value: function toggleShare() {
       var _this3 = this;
 
       var post = this.state.post;
 
-      _axios.default.post("/post/delete/".concat(post.id)).then(function (_ref) {
-        var data = _ref.data;
+      _axios.default.post("/post/share/".concat(post.id)).then(function (response) {
+        return response.data === 1 && _this3.props.toggleShare(post.id);
+      });
+    }
+  }, {
+    key: "deletePost",
+    value: function deletePost() {
+      var _this4 = this;
+
+      var post = this.state.post;
+
+      _axios.default.post("/post/delete/".concat(post.id)).then(function (_ref2) {
+        var data = _ref2.data;
 
         if (data.action) {
-          _this3.setState(function (state) {
+          _this4.setState(function (state) {
             return {
               open: false
             };
           }, function () {
-            return _this3.props.onDelete(_this3.state.post.id);
+            return _this4.props.onDelete(_this4.state.post.id);
           });
         } // end if
 
@@ -44501,7 +44534,7 @@ function (_Component) {
   }, {
     key: "reply",
     value: function reply(user, comment_id) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.setState(function () {
         return {
@@ -44511,7 +44544,7 @@ function (_Component) {
           }
         };
       }, function () {
-        _this4.setState(function () {
+        _this5.setState(function () {
           return {
             reply: null
           };
@@ -44520,16 +44553,16 @@ function (_Component) {
     }
   }, {
     key: "onCommentAdded",
-    value: function onCommentAdded(_ref2) {
-      var _this5 = this;
+    value: function onCommentAdded(_ref3) {
+      var _this6 = this;
 
-      var data = _ref2.data;
+      var data = _ref3.data;
       this.setState(function () {
         return {
           pushComment: data
         };
       }, function () {
-        _this5.setState(function () {
+        _this6.setState(function () {
           return {
             pushComment: null
           };
@@ -44549,9 +44582,11 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
-      var post = this.state.post;
+      var _this$state = this.state,
+          post = _this$state.post,
+          repost = _this$state.repost;
       var hasMore = this.state.hasMore;
       var content = post.content;
 
@@ -44596,15 +44631,15 @@ function (_Component) {
         className: "post-time"
       }, post.created_at)), _react.default.createElement("div", {
         className: "post-options"
-      }, !this.props.guest ? _react.default.createElement(_reactjsPopup.default, {
+      }, !this.props.guest && !repost ? _react.default.createElement(_reactjsPopup.default, {
         open: this.state.open,
         onClose: function onClose() {
-          _this6.setState({
+          _this7.setState({
             open: false
           });
         },
         onOpen: function onOpen() {
-          _this6.setState({
+          _this7.setState({
             open: true
           });
         },
@@ -44617,18 +44652,14 @@ function (_Component) {
         trigger: _react.default.createElement("span", null, "...")
       }, _react.default.createElement("ul", null, _react.default.createElement("li", null, "pin post"), _react.default.createElement("li", {
         onClick: this.deletePost.bind(this)
-      }, "delete"))) : _react.default.createElement("span", null, "..."))), _react.default.createElement("div", {
+      }, "delete"))) : repost ? null : _react.default.createElement("span", null, "..."))), _react.default.createElement("div", {
         className: "post-content"
-      }, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
-        className: post.media.length > 1 ? "post-media n-".concat(post.media.length) : "post-media"
-      }, post.media.map(function (url) {
-        return _react.default.createElement("div", {
-          className: "media",
-          key: url.full_path
-        }, _react.default.createElement("img", {
-          src: url.full_path
-        }));
-      })), _react.default.createElement("div", {
+      }, _react.default.createElement(PostContnet, {
+        more: more,
+        content: content,
+        repost: post.repost,
+        media: post.media
+      }), repost ? null : _react.default.createElement("div", {
         className: "post-actions"
       }, _react.default.createElement("span", {
         className: post.likes ? "icon like active" : "icon like",
@@ -44638,8 +44669,9 @@ function (_Component) {
       }), _react.default.createElement("span", {
         className: "icon-heart-empty"
       })), _react.default.createElement("span", null, post.like_count | 0), _react.default.createElement("span", {
+        onClick: this.toggleShare.bind(this),
         className: "icon icon-share"
-      }), _react.default.createElement("span", null, post.share_count | 0))), _react.default.createElement(_Comments.default, {
+      }), _react.default.createElement("span", null, post.share_count | 0))), repost ? null : _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Comments.default, {
         key: "".concat(post.id, "_comment"),
         push: this.state.pushComment,
         replyTo: this.reply.bind(this),
@@ -44650,7 +44682,7 @@ function (_Component) {
         reply: this.state.reply,
         key: post.id,
         post: post
-      }));
+      })));
     }
   }], [{
     key: "getDerivedStateFromProps",
@@ -44658,6 +44690,7 @@ function (_Component) {
       if (state.hasMore === undefined || state.post.id !== nextProps.post.id) {
         return {
           post: nextProps.post,
+          repost: nextProps.repost,
           hasMore: nextProps.post.content.length > 250
         };
       }
@@ -44894,6 +44927,28 @@ function (_Component) {
       });
     }
   }, {
+    key: "toggleShare",
+    value: function toggleShare(post_id) {
+      this.setState(function (state) {
+        return {
+          lsit: state.list.map(function (post) {
+            if (post.id === post_id) {
+              post.shares = !post.shares;
+
+              if (post.shares) {
+                post.share_count += 1;
+              } else {
+                post.share_count -= 1;
+              }
+            } //end if
+
+
+            return post;
+          })
+        };
+      });
+    }
+  }, {
     key: "onDelete",
     value: function onDelete(post_id) {
       this.setState(function (state) {
@@ -44920,6 +44975,7 @@ function (_Component) {
           guest: _this5.props.guest,
           onDelete: _this5.onDelete.bind(_this5),
           toggle: _this5.toggleLike.bind(_this5),
+          toggleShare: _this5.toggleShare.bind(_this5),
           onEnterViewport: function onEnterViewport() {
             item.id === localeStore.get() && _this5.loadMore();
           },
@@ -71337,7 +71393,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37998" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46867" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

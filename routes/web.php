@@ -73,6 +73,7 @@ Route::group([
     // User profile page
     Route::post('/post/store', 'PostController@store')->name('store-post');
     Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
+    Route::post('/post/share/{post}', 'PostController@toggleShare')->name('toggle-share-post');
     Route::post('/post/delete/{post}', 'PostController@deletePost')->name('delete-post');
     Route::post('/feed/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
 });
