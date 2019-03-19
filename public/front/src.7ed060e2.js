@@ -69316,12 +69316,12 @@ function (_Component) {
         className: "followers-header"
       }, "Notifications"), list.map(function (not) {
         return _react.default.createElement("li", {
-          className: "user",
+          className: "user container",
           key: not.id
         }, _react.default.createElement("div", {
           className: "row"
         }, _react.default.createElement("div", {
-          className: "col p-0"
+          className: "col"
         }, not.message)));
       }))));
     }
@@ -71405,7 +71405,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43289" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
