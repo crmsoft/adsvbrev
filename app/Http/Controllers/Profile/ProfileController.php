@@ -76,7 +76,9 @@ class ProfileController extends Controller
         ]);
 
         return new NotificationCollection(
-           UserNotification::with('notifiable')->where('user_id', $user->id)
+           UserNotification::with('notifiable')
+           ->whereHas('notifiable')
+           ->where('user_id', $user->id)
                 ->orderBy('id', 'desc')->take(10)->get()
         );
     }
