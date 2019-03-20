@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Comment from './Comment';
 import headerStore from '../header/store';
+import axios from 'axios';
 
 let unListen = () => {};
 
@@ -109,7 +110,9 @@ export default class Comments extends Component {
             }
         } // end if
 
-        return null;
+        return {
+            replies: nextProps.replies
+        };
     }
 
     toggleLike( comment_id )
@@ -143,9 +146,37 @@ export default class Comments extends Component {
         });
     }
 
+    loadMore()
+    {
+        let {
+            post,
+            comments,
+            replies
+        } = this.state;
+        
+        let last = comments[0];
+
+        axios.post( replies ? `/comment/more/${post}/${replies}` : `/comment/more/${post}`, {
+            last: last.id
+        })
+        .then(({data}) => {            
+            this.setState(state => {
+                return {
+                    comments: [
+                        ...(data.data.length === 4 ? data.data.slice(0,3) : data.data),
+                        ...state.comments
+                    ],
+                    hasMore: data.data.length === 4
+                }
+            })
+        })
+        
+    }
+
     render()
     {
-        let {comments} = this.state; 
+        
+        let {comments, hasMore} = this.state; 
               
 
         if(comments.length === 0){ return null; }
@@ -154,10 +185,15 @@ export default class Comments extends Component {
             <div className="comments">
                 
                 {
-                    this.state.hasMore ? (
+                    hasMore ? (
                         <div className="d-flex pt-3">
                             <div className="all-comments">
-                                <a href="javascript:void(0)">All Comments</a>
+                                <a 
+                                    href="javascript:void(0)"
+                                    onClick={
+                                        this.loadMore.bind(this)
+                                    }
+                                >All Comments</a>
                             </div>
                         </div>       
                     ) : null
@@ -188,7 +224,7 @@ export default class Comments extends Component {
                                     key={comment.id} 
                                 />
                         ].concat(<Comments 
-                            replies={true}
+                            replies={comment.id}
                             key={`${this.props.post}_sub_comments`}
                             push={this.props.push}
                             replyTo={this.props.replyTo}

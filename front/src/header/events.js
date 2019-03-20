@@ -2,7 +2,11 @@ import axios from 'axios';
 
 const PROFILE_LOADED = 'PROFILE_LOADED';
 const REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
+const NOTIFICATIONS_VIEWED = 'NOTIFICATIONS_VIEWED';
 
+const n_viewed = () => {
+    return dispatch => dispatch({type: NOTIFICATIONS_VIEWED, data: null});
+}
 
 const load_profile = () => {
     return dispatch => {
@@ -20,6 +24,8 @@ const reduce_followers = () => {
 export {
     load_profile,
     reduce_followers,
+    n_viewed,
     PROFILE_LOADED,
-    REDUCE_FOLLOWERS
+    REDUCE_FOLLOWERS,
+    NOTIFICATIONS_VIEWED
 };

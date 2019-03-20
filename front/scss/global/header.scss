@@ -135,5 +135,20 @@ header{
                 }
             }
         }
+
+        .notification-list{
+            @extend .followers-list;
+
+            .user{
+                border-bottom: 1px solid $halfGray;
+            }
+            li .user-list-user{
+                width: auto;
+            }
+            li .user-list-user-name{
+                font-size: 15px;
+                text-overflow: unset;
+            }
+        }
     }
 }

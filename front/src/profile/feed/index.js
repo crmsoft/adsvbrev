@@ -113,6 +113,27 @@ export default class FeedList extends Component{
         })
     }
 
+    toggleShare(post_id)
+    {
+        this.setState(state => {
+            return {
+                lsit: state.list.map(post => {
+                    if (post.id === post_id)
+                    {
+                        post.shares = !post.shares;
+                        if (post.shares)
+                        {
+                            post.share_count += 1;
+                        } else {
+                            post.share_count -= 1;
+                        }
+                    } //end if
+                    return post;
+                })
+            }
+        })
+    }
+
     onDelete(post_id)
     {
         this.setState(state => {
@@ -125,7 +146,7 @@ export default class FeedList extends Component{
     }
 
     render(){
-        const {list, localeStore} = this.state;
+        const {list, localeStore, type, user} = this.state;
         
         return (
             <section className="posts">
@@ -134,9 +155,12 @@ export default class FeedList extends Component{
                         localeStore.set(item.id);
                         return (
                             <PostComponent
+                                pageType={type}
+                                pageId={user}
                                 guest={this.props.guest}
                                 onDelete={this.onDelete.bind(this)}
                                 toggle={this.toggleLike.bind(this)}
+                                toggleShare={this.toggleShare.bind(this)}
                                 onEnterViewport={
                                     () => {                                        
                                         (item.id === localeStore.get()) && this.loadMore();

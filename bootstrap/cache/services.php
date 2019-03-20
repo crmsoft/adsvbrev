@@ -23,21 +23,26 @@
     19 => 'Illuminate\\Translation\\TranslationServiceProvider',
     20 => 'Illuminate\\Validation\\ValidationServiceProvider',
     21 => 'Illuminate\\View\\ViewServiceProvider',
-    22 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    23 => 'SocialiteProviders\\Manager\\ServiceProvider',
-    24 => 'Intervention\\Image\\ImageServiceProvider',
-    25 => 'Barryvdh\\Cors\\ServiceProvider',
-    26 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    28 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    30 => 'App\\Providers\\AppServiceProvider',
-    31 => 'App\\Providers\\AuthServiceProvider',
-    32 => 'App\\Providers\\BroadcastServiceProvider',
-    33 => 'App\\Providers\\EventServiceProvider',
-    34 => 'App\\Providers\\RouteServiceProvider',
-    35 => 'SocialiteProviders\\Manager\\ServiceProvider',
-    36 => 'Intervention\\Image\\ImageServiceProvider',
+    22 => 'Intervention\\Image\\ImageServiceProvider',
+    23 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    24 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
+    25 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    26 => 'Carbon\\Laravel\\ServiceProvider',
+    27 => 'Vinkla\\Hashids\\HashidsServiceProvider',
+    28 => 'Barryvdh\\Cors\\ServiceProvider',
+    29 => 'Kalnoy\\Nestedset\\NestedSetServiceProvider',
+    30 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
+    31 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    32 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    33 => 'SocialiteProviders\\Manager\\ServiceProvider',
+    34 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    35 => 'App\\Providers\\AppServiceProvider',
+    36 => 'App\\Providers\\AuthServiceProvider',
+    37 => 'App\\Providers\\BroadcastServiceProvider',
+    38 => 'App\\Providers\\EventServiceProvider',
+    39 => 'App\\Providers\\RouteServiceProvider',
+    40 => 'SocialiteProviders\\Manager\\ServiceProvider',
+    41 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'eager' => 
   array (
@@ -51,16 +56,21 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
-    10 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    11 => 'Intervention\\Image\\ImageServiceProvider',
-    12 => 'Barryvdh\\Cors\\ServiceProvider',
-    13 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    14 => 'App\\Providers\\AppServiceProvider',
-    15 => 'App\\Providers\\AuthServiceProvider',
-    16 => 'App\\Providers\\BroadcastServiceProvider',
-    17 => 'App\\Providers\\EventServiceProvider',
-    18 => 'App\\Providers\\RouteServiceProvider',
-    19 => 'Intervention\\Image\\ImageServiceProvider',
+    10 => 'Intervention\\Image\\ImageServiceProvider',
+    11 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
+    12 => 'Carbon\\Laravel\\ServiceProvider',
+    13 => 'Vinkla\\Hashids\\HashidsServiceProvider',
+    14 => 'Barryvdh\\Cors\\ServiceProvider',
+    15 => 'Kalnoy\\Nestedset\\NestedSetServiceProvider',
+    16 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
+    17 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    18 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    19 => 'App\\Providers\\AppServiceProvider',
+    20 => 'App\\Providers\\AuthServiceProvider',
+    21 => 'App\\Providers\\BroadcastServiceProvider',
+    22 => 'App\\Providers\\EventServiceProvider',
+    23 => 'App\\Providers\\RouteServiceProvider',
+    24 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'deferred' => 
   array (
@@ -89,6 +99,8 @@
     'command.migrate.reset' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.migrate.rollback' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.migrate.status' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
+    'command.optimize' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
+    'command.optimize.clear' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.package.discover' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.preset' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.queue.failed' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
@@ -163,9 +175,9 @@
     'translation.loader' => 'Illuminate\\Translation\\TranslationServiceProvider',
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
-    'Laravel\\Socialite\\Contracts\\Factory' => 'SocialiteProviders\\Manager\\ServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
     'NunoMaduro\\Collision\\Contracts\\Provider' => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    'Laravel\\Socialite\\Contracts\\Factory' => 'SocialiteProviders\\Manager\\ServiceProvider',
   ),
   'when' => 
   array (
@@ -205,16 +217,16 @@
     'Illuminate\\Validation\\ValidationServiceProvider' => 
     array (
     ),
-    'SocialiteProviders\\Manager\\ServiceProvider' => 
+    'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
+    ),
+    'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => 
     array (
     ),
     'Laravel\\Socialite\\SocialiteServiceProvider' => 
     array (
     ),
-    'Laravel\\Tinker\\TinkerServiceProvider' => 
-    array (
-    ),
-    'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => 
+    'SocialiteProviders\\Manager\\ServiceProvider' => 
     array (
     ),
   ),

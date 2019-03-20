@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { load_profile, reduce_followers } from './events';
+import { load_profile, reduce_followers, n_viewed } from './events';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import Followers from './Followers';
@@ -44,7 +44,7 @@ class HeaderComponent extends Component{
     {
         
         const user = this.props.data;
-        const {followers} = this.props;
+        const {followers, notifications} = this.props;
         
         return (
             <header>
@@ -76,8 +76,11 @@ class HeaderComponent extends Component{
                                     />
                                 </li>
                                 <li className="nav-item">
-                                    <span className="nav-item-count">0</span>
+                                    <span className={ notifications === 0 ? 'd-none' : 'nav-item-count' }>
+                                        {notifications}
+                                    </span>
                                     <Notification 
+                                        clear={this.props.notifications_viewed.bind(this)}
                                         trigger={
                                             <a href="javascript:void(0)" className="nav-link icon-notification"></a>
                                         }
@@ -134,6 +137,7 @@ const Header = connect(
         return {
             load: () => dispatch(load_profile()),
             reduce_followers: () => dispatch(reduce_followers()),
+            notifications_viewed: () => dispatch(n_viewed()),
             accept: username => dispatch(acceptToFriends(username)),
             decline: username => dispatch(declineFriendship(username))
         }

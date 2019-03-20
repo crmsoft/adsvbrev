@@ -1,10 +1,50 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {placeEmoji, urlify} from '../../utils';
 import Comments from '../../comment/Comments';
 import AddComment from '../../comment/AddComment';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import handleViewport from 'react-in-viewport';
+
+const PostContnet = ({
+	more,
+	content,
+	repost,
+	media
+}) => {
+	return (
+		repost ? (
+			<div className="post-shared">
+				<Post 
+					post={repost}
+					repost={true}
+				/>
+			</div>
+		) : (
+			<Fragment>
+				<p>
+					{
+						content
+					}					
+					{
+						more
+					}
+				</p>
+				<div className={ media.length > 1 ? `post-media n-${media.length}` : "post-media"  }>
+					{
+						media.map(url => {
+							return (
+								<div className="media" key={url.full_path}>
+									<img src={url.full_path}/>
+								</div>
+							)
+						})
+					}
+				</div>
+			</Fragment>
+		)
+	)
+}
 
 
 class Post extends Component{
@@ -20,7 +60,10 @@ class Post extends Component{
 		{
 			return {
 				post: nextProps.post,
-				hasMore: nextProps.post.content.length > 250
+				repost: nextProps.repost,
+				hasMore: nextProps.post.content.length > 250,
+				pageType: nextProps.pageType,
+				pageId: nextProps.pageId
 			};
 		}
 
@@ -37,10 +80,20 @@ class Post extends Component{
 		.then(response => this.props.toggle(post.id))
 	}
 
-	deletePost()
+	toggleShare()
 	{
 		const {post} = this.state;
-		axios.post(`/post/delete/${post.id}`)
+		axios.post(`/post/share/${post.id}`)
+		.then(response => (response.data === 1) && this.props.toggleShare(post.id))
+	}
+
+	deletePost()
+	{
+		const {post, pageType, pageId} = this.state;
+		axios.post(`/post/delete/${post.id}`, {
+			type: pageType,
+			target: pageId
+		})
 		.then(({data}) => {
 			if (data.action)
 			{
@@ -98,7 +151,7 @@ class Post extends Component{
     render()
     {
 		
-		const {post} = this.state;
+		const {post, repost} = this.state;
 		const {hasMore} = this.state;
 
 		let content  = (post.content);
@@ -141,7 +194,7 @@ class Post extends Component{
 					</div>
 					<div className="post-options">
 						{
-							!this.props.guest ? (
+							!this.props.guest && !repost ? (
 								<Popup
 									open={this.state.open}
 									onClose={() => {this.setState({open:false})}}
@@ -165,54 +218,53 @@ class Post extends Component{
 										</li>
 									</ul>	
 								</Popup>
-							) : <span>...</span>
+							) : repost ? null : (<span>...</span>)
 						}
 					</div>
 				</div>
 
 				<div className="post-content">
-					<p>
-						{
-							content
-						}					
-						{
-							more
-						}
-					</p>
-					<div className={ post.media.length > 1 ? `post-media n-${post.media.length}` : "post-media"  }>
-                        {
-                            post.media.map(url => {
-								return (
-									<div className="media" key={url.full_path}>
-										<img src={url.full_path}/>
-									</div>
-								)
-							})
-						}
-                    </div>
-					<div className="post-actions">
-						<span className={ post.likes ? "icon like active" : "icon like" } onClick={this.toggleLike.bind(this)}>
-							<span className="icon-heart"></span>
-							<span className="icon-heart-empty"></span>
-						</span>
-						<span >{post.like_count | 0}</span>
-						<span className="icon icon-share"></span>
-						<span >{post.share_count | 0}</span>
-					</div>
+					<PostContnet 
+						more={more}
+						content={content}
+						repost={post.repost}
+						media={post.media}
+					/>
+					{
+						repost ? null : (
+							<div className="post-actions">
+								<span className={ post.likes ? "icon like active" : "icon like" } onClick={this.toggleLike.bind(this)}>
+									<span className="icon-heart"></span>
+									<span className="icon-heart-empty"></span>
+								</span>
+								<span >{post.like_count | 0}</span>
+								<span 
+									onClick={this.toggleShare.bind(this)}
+									className="icon icon-share"></span>
+								<span >{post.share_count | 0}</span>
+							</div>
+						)
+					}
 				</div>
-				<Comments 
-					key={`${post.id}_comment`}
-					push={this.state.pushComment}
-					replyTo={this.reply.bind(this)}
-					post={post.id} 
-					comments={post.comment} 
-				/>
-				<AddComment 
-					onComment={this.onCommentAdded.bind(this)}
-					reply={this.state.reply}
-					key={post.id}
-					post={post}
-				/>
+				{
+					repost ? null : (
+						<Fragment>
+							<Comments 
+								key={`${post.id}_comment`}
+								push={this.state.pushComment}
+								replyTo={this.reply.bind(this)}
+								post={post.id} 
+								comments={post.comment} 
+							/>
+							<AddComment 
+								onComment={this.onCommentAdded.bind(this)}
+								reply={this.state.reply}
+								key={post.id}
+								post={post}
+							/>
+						</Fragment>
+					)
+				}
 			</div>
         )
     }

@@ -16,13 +16,13 @@ const reducer = (state, action) => {
         case USER_JOIN : {
             return {
                 ...state,
-                user_paritcipiant: true
+                user_participant: true
             }
         }
         case USER_LEAVE: {
             return {
                 ...state,
-                user_paritcipiant: false
+                user_participant: false
             }
         }
         case FETCH_PARTICIPANTS : {

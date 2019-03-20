@@ -50,7 +50,7 @@ export default class Partipicatns extends Component {
                     >
                         <span className="icon-friends"></span>
                         <h3>
-                            Partipicatns 
+                            Participants 
                         </h3>
                         <span className="items-count"> {event.total_participiant ? event.total_participiant : ''}</span>
                     </a>
@@ -58,10 +58,10 @@ export default class Partipicatns extends Component {
                         open={this.state.open}
                         onClose={this.closeModal.bind(this)}
                         actions={actions}
-                        title={`Partipicants`}
+                        title={`Participants`}
                     >
                         <div
-                            className="container-fluid mt-3"
+                            className="container-fluid mt-3 event-user-list"
                         >
                             {
                                 event.participants && event.participants.map(user => {

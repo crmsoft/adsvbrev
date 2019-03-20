@@ -14,7 +14,9 @@ class NotificationCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($not){
+        return $this->collection->filter(function($not){
+            return !empty($not->notifiable);
+        })->map(function($not) {
             return new NotificationResource($not);
         });
     }

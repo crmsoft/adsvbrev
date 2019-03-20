@@ -284,7 +284,7 @@
     }
 
 
-    .comment-shared
+    .post-shared
     {
       border:1px solid $lighterGray;
       .post-header
@@ -318,6 +318,7 @@
       .post-content
       {
         margin:0px;
+        padding: 0 10px;
       }
     }
 

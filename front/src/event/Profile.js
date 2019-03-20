@@ -53,7 +53,7 @@ export default class Profile extends Component {
                                     editor ? (
                                         null
                                     ) : (
-                                        data.user_participiant ? (
+                                        data.user_participant ? (
                                             <button 
                                                 onClick={this.props.leave}
                                                 className="dd-btn">

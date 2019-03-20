@@ -19,6 +19,8 @@ import Schedule from './schedule/Schedule';
 import EventProfile from './event/EventProfile';
 import EventProfileStore from './event/redux/store';
 
+import FDudes from './find-dude';
+
 const App = () => {
     return (
         <Router>
@@ -41,6 +43,7 @@ const App = () => {
                     <Provider store={EventProfileStore}>
                         <Route path="/event/:id" component={EventProfile} />
                     </Provider>
+                    <Route path="/dudes" component={FDudes} />
                 </div>
                 <Chat />
             </Fragment>

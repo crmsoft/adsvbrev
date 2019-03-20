@@ -1,7 +1,8 @@
 
 import {
     PROFILE_LOADED,
-    REDUCE_FOLLOWERS
+    REDUCE_FOLLOWERS,
+    NOTIFICATIONS_VIEWED
 } from './events';
 
 const reducer = (state = {data: {user:{}}}, action) => {
@@ -16,6 +17,12 @@ const reducer = (state = {data: {user:{}}}, action) => {
         case PROFILE_LOADED : {
             return {
                 ...action.data
+            }
+        }
+        case NOTIFICATIONS_VIEWED : {
+            return {
+                ...state,
+                notifications: 0
             }
         }
         default: return {

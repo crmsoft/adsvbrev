@@ -17,10 +17,22 @@ import Partipicatns from './Participants';
 import headerStore from '../header/store';
 import FeedList from '../profile/feed';
 
+let unlisten = () => {}
+
 class EeventProfileComponent extends Component{
 
     state = {
         user: undefined
+    }
+
+    componentDidUpdate()
+    {
+        if (this.props.name)
+        {
+            document.title = `Event: ${this.props.name}`;
+        } else {
+            document.title = `Loading...`;
+        }
     }
 
     componentDidMount()
@@ -28,12 +40,21 @@ class EeventProfileComponent extends Component{
         this.props.load(
             this.props.match.params.id
         );
+        
+        const user = headerStore.getState();
 
-        document.title = `Event: ${this.props.name}`;
-
-        this.setState({
-            user: headerStore.getState()
-        }) 
+        if (user.data.username)
+        {
+            this.setState({
+                user: headerStore.getState() 
+            });
+        } else {
+            headerStore.subscribe(() => {
+                this.setState({
+                    user: headerStore.getState() 
+                });
+            });
+        } // end if
     }
 
     join()
@@ -71,6 +92,7 @@ class EeventProfileComponent extends Component{
                         data={this.props}
                         editor={editor}
                     />
+                    
                 </nav>
 
                 <div className="d-flex">
