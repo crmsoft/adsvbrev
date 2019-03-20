@@ -41724,7 +41724,7 @@ exports.default = Comment;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.reduce_followers = exports.load_profile = void 0;
+exports.NOTIFICATIONS_VIEWED = exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.n_viewed = exports.reduce_followers = exports.load_profile = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -41734,6 +41734,19 @@ var PROFILE_LOADED = 'PROFILE_LOADED';
 exports.PROFILE_LOADED = PROFILE_LOADED;
 var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
 exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
+var NOTIFICATIONS_VIEWED = 'NOTIFICATIONS_VIEWED';
+exports.NOTIFICATIONS_VIEWED = NOTIFICATIONS_VIEWED;
+
+var n_viewed = function n_viewed() {
+  return function (dispatch) {
+    return dispatch({
+      type: NOTIFICATIONS_VIEWED,
+      data: null
+    });
+  };
+};
+
+exports.n_viewed = n_viewed;
 
 var load_profile = function load_profile() {
   return function (dispatch) {
@@ -41787,6 +41800,13 @@ var reducer = function reducer() {
     case _events.PROFILE_LOADED:
       {
         return Object.assign({}, action.data);
+      }
+
+    case _events.NOTIFICATIONS_VIEWED:
+      {
+        return Object.assign({}, state, {
+          notifications: 0
+        });
       }
 
     default:
@@ -69280,6 +69300,8 @@ function (_Component) {
               load: false,
               list: response.data.data
             };
+          }, function () {
+            _this2.props.clear();
           });
         });
       } // end if
@@ -69318,11 +69340,11 @@ function (_Component) {
         className: "followers-header"
       }, "Notifications"), _react.default.createElement("ul", {
         className: "notification-list"
-      }, list.map(function (not) {
+      }, list.map(function (not, index) {
         var user = not.user;
         return _react.default.createElement("li", {
           className: "user",
-          key: user.username
+          key: index
         }, _react.default.createElement("div", {
           className: "row"
         }, _react.default.createElement("div", {
@@ -69524,6 +69546,7 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: notifications === 0 ? 'd-none' : 'nav-item-count'
       }, notifications), _react.default.createElement(_Notification.default, {
+        clear: this.props.notifications_viewed.bind(this),
         trigger: _react.default.createElement("a", {
           href: "javascript:void(0)",
           className: "nav-link icon-notification"
@@ -69573,6 +69596,9 @@ var Header = (0, _reactRedux.connect)(function (state) {
     },
     reduce_followers: function reduce_followers() {
       return dispatch((0, _events.reduce_followers)());
+    },
+    notifications_viewed: function notifications_viewed() {
+      return dispatch((0, _events.n_viewed)());
     },
     accept: function accept(username) {
       return dispatch((0, _event.acceptToFriends)(username));
