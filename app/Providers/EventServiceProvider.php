@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'SocialiteProviders\Manager\SocialiteWasCalled' => [
             'SocialiteProviders\\Twitch\\TwitchExtendSocialite@handle'
         ],
+        \Cog\Laravel\Love\Reaction\Events\ReactionHasBeenAdded::class => [
+            \App\Listeners\ReacterListener::class
+        ]
     ];
 
     /**

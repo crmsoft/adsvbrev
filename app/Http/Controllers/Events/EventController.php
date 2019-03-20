@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
 
 use \App\Http\Controllers\Controller;
 use App\Http\Resources\Events\EventCollection;
@@ -45,8 +47,40 @@ class EventController extends Controller
 
         $event->save();
 
-        $event->poster = $request->file('poster')->store('public/user-media/' . $user->dir . '/events/' . $event->id);
-        $event->ava = $request->file('ava')->store('public/user-media/' . $user->dir . '/events/' . $event->id);
+        // save avatar
+        $media = $request->file('ava');
+
+        $image = Image::make($media->getRealPath());
+
+        $image->stream();
+        $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
+        $users_dir = "user-media/{$user->dir}/events/{$event->id}";
+
+        // profile main image;
+        $image->fit(200);
+        $image->stream();
+
+        Storage::disk('public')
+                    ->put("{$users_dir}/{$name}", $image);
+
+        $event->ava = "public/{$users_dir}/{$name}";
+
+        // save poster
+        $media = $request->file('poster');
+
+        $image = Image::make($media->getRealPath());
+
+        $image->stream();
+        $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
+        $users_dir = "user-media/{$user->dir}/events/{$event->id}";
+
+        $image->fit(1110,250);
+        $image->stream();
+
+        Storage::disk('public')
+                    ->put("{$users_dir}/{$name}", $image);
+
+        $event->poster = "public/{$users_dir}/{$name}";
 
         return $event->save() ? 1:0;
     }

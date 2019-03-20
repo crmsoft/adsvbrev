@@ -23,6 +23,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->text('body');
+            $table->unsignedInteger('love_reactant_id');
             $table->morphs('commentable');
             $table->morphs('creator');
             NestedSet::columns($table);

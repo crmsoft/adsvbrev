@@ -64,4 +64,9 @@ class Post extends Model implements ReactableContract
     {
         return $this->belongsTo(Post::class, 'parent_id');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(Entities\UserNotification::class, 'notifiable');
+    }
 }

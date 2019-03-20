@@ -448,23 +448,23 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
-.container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+.container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 576px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 540px; } }
   @media (min-width: 768px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 720px; } }
   @media (min-width: 992px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 960px; } }
   @media (min-width: 1200px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 1140px; } }
 
 .container-fluid {
@@ -483,12 +483,12 @@ pre {
 .no-gutters {
   margin-right: 0;
   margin-left: 0; }
-  .no-gutters > .col, .followers-popup .popup-content .followers-list li .no-gutters > .actions,
+  .no-gutters > .col, .followers-popup .popup-content .followers-list li .no-gutters > .actions, .followers-popup .popup-content .notification-list li .no-gutters > .actions,
   .no-gutters > [class*="col-"] {
     padding-right: 0;
     padding-left: 0; }
 
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .followers-popup .popup-content .followers-list li .actions,
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions,
 .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm,
 .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md,
 .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg,
@@ -500,7 +500,7 @@ pre {
   padding-right: 15px;
   padding-left: 15px; }
 
-.col, .followers-popup .popup-content .followers-list li .actions {
+.col, .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions {
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%; }
@@ -1357,7 +1357,7 @@ textarea.form-control {
   flex-wrap: wrap;
   margin-right: -5px;
   margin-left: -5px; }
-  .form-row > .col, .followers-popup .popup-content .followers-list li .form-row > .actions,
+  .form-row > .col, .followers-popup .popup-content .followers-list li .form-row > .actions, .followers-popup .popup-content .notification-list li .form-row > .actions,
   .form-row > [class*="col-"] {
     padding-right: 5px;
     padding-left: 5px; }
@@ -2805,7 +2805,7 @@ input[type="button"].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem; }
-  .navbar > .container, .schedule .navbar > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar > li,
+  .navbar > .container, .schedule .navbar > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar > li, .followers-popup .popup-content .notification-list .navbar > li,
   .navbar > .container-fluid {
     display: flex;
     flex-wrap: wrap;
@@ -2868,7 +2868,7 @@ input[type="button"].btn-block {
   background-size: 100% 100%; }
 
 @media (max-width: 575.98px) {
-  .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li,
+  .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
   .navbar-expand-sm > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2884,7 +2884,7 @@ input[type="button"].btn-block {
       .navbar-expand-sm .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li,
+    .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
     .navbar-expand-sm > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-sm .navbar-collapse {
@@ -2894,7 +2894,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 767.98px) {
-  .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li,
+  .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
   .navbar-expand-md > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2910,7 +2910,7 @@ input[type="button"].btn-block {
       .navbar-expand-md .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li,
+    .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
     .navbar-expand-md > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-md .navbar-collapse {
@@ -2920,7 +2920,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 991.98px) {
-  .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li,
+  .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
   .navbar-expand-lg > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2936,7 +2936,7 @@ input[type="button"].btn-block {
       .navbar-expand-lg .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li,
+    .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
     .navbar-expand-lg > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-lg .navbar-collapse {
@@ -2946,7 +2946,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 1199.98px) {
-  .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li,
+  .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
   .navbar-expand-xl > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2962,7 +2962,7 @@ input[type="button"].btn-block {
       .navbar-expand-xl .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li,
+    .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
     .navbar-expand-xl > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-xl .navbar-collapse {
@@ -2974,7 +2974,7 @@ input[type="button"].btn-block {
 .navbar-expand {
   flex-flow: row nowrap;
   justify-content: flex-start; }
-  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li,
+  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
   .navbar-expand > .container-fluid {
     padding-right: 0;
     padding-left: 0; }
@@ -2985,7 +2985,7 @@ input[type="button"].btn-block {
     .navbar-expand .navbar-nav .nav-link {
       padding-right: 0.5rem;
       padding-left: 0.5rem; }
-  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li,
+  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
   .navbar-expand > .container-fluid {
     flex-wrap: nowrap; }
   .navbar-expand .navbar-collapse {
@@ -5236,7 +5236,7 @@ button.bg-dark:focus {
 .mx-5 {
   margin-left: 3rem !important; }
 
-.p-0, .followers-popup .popup-content .followers-list li .actions {
+.p-0, .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions {
   padding: 0 !important; }
 
 .pt-0,
@@ -6290,7 +6290,7 @@ a.text-dark:hover, a.text-dark:focus {
     size: a3; }
   body {
     min-width: 992px !important; }
-  .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li {
+  .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
     min-width: 992px !important; }
   .navbar {
     display: none; }
@@ -8288,32 +8288,39 @@ header {
   width: 380px !important; }
   .followers-popup .popup-content .followers-header {
     padding: 3px 10px; }
-  .followers-popup .popup-content .followers-list {
+  .followers-popup .popup-content .followers-list, .followers-popup .popup-content .notification-list {
     background-color: #36393F;
     margin: 0;
     padding: 0;
     max-height: 320px;
     overflow-y: auto; }
-    .followers-popup .popup-content .followers-list li {
+    .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       height: auto;
       list-style: none; }
-      .followers-popup .popup-content .followers-list li a {
+      .followers-popup .popup-content .followers-list li a, .followers-popup .popup-content .notification-list li a {
         color: #ffffff;
         border-bottom: none; }
-      .followers-popup .popup-content .followers-list li .user-list-user-name {
+      .followers-popup .popup-content .followers-list li .user-list-user-name, .followers-popup .popup-content .notification-list li .user-list-user-name {
         line-height: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
-      .followers-popup .popup-content .followers-list li .user-list-user {
+      .followers-popup .popup-content .followers-list li .user-list-user, .followers-popup .popup-content .notification-list li .user-list-user {
         width: 125px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
-        .followers-popup .popup-content .followers-list li .user-list-user .user-list-username {
+        .followers-popup .popup-content .followers-list li .user-list-user .user-list-username, .followers-popup .popup-content .notification-list li .user-list-user .user-list-username {
           display: block; }
-      .followers-popup .popup-content .followers-list li .actions {
+      .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions {
         padding-top: 11px !important; }
+  .followers-popup .popup-content .notification-list .user {
+    border-bottom: 1px solid #2F3136; }
+  .followers-popup .popup-content .notification-list li .user-list-user {
+    width: auto; }
+  .followers-popup .popup-content .notification-list li .user-list-user-name {
+    font-size: 15px;
+    text-overflow: unset; }
 
 /** Profile */
 nav.user-profile {
@@ -9296,13 +9303,13 @@ nav.user-profile {
     .user-settings .content .row, .search-results .content .row {
       border-top: 1px solid #CBCBCB;
       padding: 15px 0; }
-      .user-settings .content .row .col, .search-results .content .row .col, .user-settings .content .row .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .actions, .search-results .content .row .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .followers-list li .search-results .content .row .actions {
+      .user-settings .content .row .col, .search-results .content .row .col, .user-settings .content .row .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .actions, .search-results .content .row .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .followers-list li .search-results .content .row .actions, .user-settings .content .row .followers-popup .popup-content .notification-list li .actions, .followers-popup .popup-content .notification-list li .user-settings .content .row .actions, .search-results .content .row .followers-popup .popup-content .notification-list li .actions, .followers-popup .popup-content .notification-list li .search-results .content .row .actions {
         display: flex;
         justify-content: center;
         flex-direction: column; }
-        .user-settings .content .row .col.content-bottom, .search-results .content .row .col.content-bottom, .user-settings .content .row .followers-popup .popup-content .followers-list li .content-bottom.actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .content-bottom.actions, .search-results .content .row .followers-popup .popup-content .followers-list li .content-bottom.actions, .followers-popup .popup-content .followers-list li .search-results .content .row .content-bottom.actions {
+        .user-settings .content .row .col.content-bottom, .search-results .content .row .col.content-bottom, .user-settings .content .row .followers-popup .popup-content .followers-list li .content-bottom.actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .content-bottom.actions, .search-results .content .row .followers-popup .popup-content .followers-list li .content-bottom.actions, .followers-popup .popup-content .followers-list li .search-results .content .row .content-bottom.actions, .user-settings .content .row .followers-popup .popup-content .notification-list li .content-bottom.actions, .followers-popup .popup-content .notification-list li .user-settings .content .row .content-bottom.actions, .search-results .content .row .followers-popup .popup-content .notification-list li .content-bottom.actions, .followers-popup .popup-content .notification-list li .search-results .content .row .content-bottom.actions {
           justify-content: flex-end; }
-        .user-settings .content .row .col.content-top, .search-results .content .row .col.content-top, .user-settings .content .row .followers-popup .popup-content .followers-list li .content-top.actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .content-top.actions, .search-results .content .row .followers-popup .popup-content .followers-list li .content-top.actions, .followers-popup .popup-content .followers-list li .search-results .content .row .content-top.actions {
+        .user-settings .content .row .col.content-top, .search-results .content .row .col.content-top, .user-settings .content .row .followers-popup .popup-content .followers-list li .content-top.actions, .followers-popup .popup-content .followers-list li .user-settings .content .row .content-top.actions, .search-results .content .row .followers-popup .popup-content .followers-list li .content-top.actions, .followers-popup .popup-content .followers-list li .search-results .content .row .content-top.actions, .user-settings .content .row .followers-popup .popup-content .notification-list li .content-top.actions, .followers-popup .popup-content .notification-list li .user-settings .content .row .content-top.actions, .search-results .content .row .followers-popup .popup-content .notification-list li .content-top.actions, .followers-popup .popup-content .notification-list li .search-results .content .row .content-top.actions {
           justify-content: flex-start; }
     .user-settings .content label, .search-results .content label {
       margin-bottom: 5px;

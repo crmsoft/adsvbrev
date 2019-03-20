@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('ab', function(){
-    $u = \App\User::find(29);
-    dd($u->getMutualFriendsOf(1)->first());
-});
 
 /** validate email address of newly registered user */
 Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')

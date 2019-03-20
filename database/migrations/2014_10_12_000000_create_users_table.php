@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('user_communication_id')->nullable();
             $table->boolean('validated')->default(0);
             $table->string('email_verification_token')->nullable();
+            $table->unsignedInteger('love_reacter_id');
             $table->rememberToken();
             $table->timestamps();
         });

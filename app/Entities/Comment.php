@@ -49,4 +49,9 @@ class Comment extends \BrianFaust\Commentable\Models\Comment implements Reactabl
                 ->where('type', 'comment');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany(UserNotification::class, 'notifiable');
+    }
+
 } // end class Comment

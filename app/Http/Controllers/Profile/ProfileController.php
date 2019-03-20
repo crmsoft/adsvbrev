@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Entities\Profile;
+use App\Entities\UserNotification;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +41,8 @@ class ProfileController extends Controller
         $user = auth()->user();
         return (new ResourceUser($user))->additional(
             [
-                'followers' => $user->followers()->count()
+                'followers' => $user->followers()->count(),
+                'notifications' => UserNotification::where('user_id', $user->id)->where('viewed', 0)->count()
             ]
         );
     }
@@ -69,8 +71,12 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
+        UserNotification::with('notifiable')->where('user_id', $user->id)->update([
+            'viewed' => 1
+        ]);
+
         return new NotificationCollection(
-           \App\Entities\UserNotification::where('user_id', $user->id)
+           UserNotification::with('notifiable')->where('user_id', $user->id)
                 ->orderBy('id', 'desc')->take(10)->get()
         );
     }

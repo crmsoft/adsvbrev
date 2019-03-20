@@ -17,9 +17,7 @@ class CreateUserNotificationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
 
-            $table->unsignedInteger('target_id');
-
-            $table->string('type')->default('none');
+            $table->morphs('notifiable');
 
             $table->boolean('viewed')->default(false);
 

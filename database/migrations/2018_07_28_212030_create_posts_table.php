@@ -15,8 +15,11 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->string('hash_id');
+            
+            $table->unsignedInteger('parent_id');
+            $table->unsignedInteger('love_reactant_id');
+            
+            $table->morphs('postable');
             $table->text('content');
             $table->enum('type', [
                 'feed',
@@ -24,11 +27,6 @@ class CreatePostsTable extends Migration
             ])->default('feed');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

@@ -69212,6 +69212,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -69314,16 +69316,36 @@ function (_Component) {
         trigger: this.props.trigger
       }, _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "followers-header"
-      }, "Notifications"), list.map(function (not) {
+      }, "Notifications"), _react.default.createElement("ul", {
+        className: "notification-list"
+      }, list.map(function (not) {
+        var user = not.user;
         return _react.default.createElement("li", {
-          className: "user container",
-          key: not.id
+          className: "user",
+          key: user.username
         }, _react.default.createElement("div", {
           className: "row"
         }, _react.default.createElement("div", {
-          className: "col"
-        }, not.message)));
-      }))));
+          className: "col p-0"
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/gg/".concat(user.username),
+          className: "user-list-item d-inline-flex"
+        }, _react.default.createElement("div", {
+          className: "ava-wrapper"
+        }, _react.default.createElement("div", {
+          className: "status offline"
+        }), _react.default.createElement("div", {
+          className: "user-list-ava"
+        }, _react.default.createElement("img", {
+          src: user.ava
+        }))), _react.default.createElement("div", {
+          className: "user-list-user"
+        }, _react.default.createElement("span", {
+          className: "user-list-user-name"
+        }, user.full_name), _react.default.createElement("span", {
+          className: "user-list-username"
+        }, not.message))))));
+      })))));
     }
   }]);
 
@@ -69331,7 +69353,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Notification;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/header/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/header/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69440,7 +69462,9 @@ function (_Component) {
       var _this3 = this;
 
       var user = this.props.data;
-      var followers = this.props.followers;
+      var _this$props = this.props,
+          followers = _this$props.followers,
+          notifications = _this$props.notifications;
       return _react.default.createElement("header", null, _react.default.createElement("nav", {
         className: "navbar navbar-light navbar-expand-md bg-faded justify-content-center"
       }, _react.default.createElement("a", {
@@ -69498,8 +69522,8 @@ function (_Component) {
       })), _react.default.createElement("li", {
         className: "nav-item"
       }, _react.default.createElement("span", {
-        className: "nav-item-count"
-      }, "0"), _react.default.createElement(_Notification.default, {
+        className: notifications === 0 ? 'd-none' : 'nav-item-count'
+      }, notifications), _react.default.createElement(_Notification.default, {
         trigger: _react.default.createElement("a", {
           href: "javascript:void(0)",
           className: "nav-link icon-notification"
