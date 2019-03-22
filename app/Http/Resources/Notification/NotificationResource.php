@@ -8,6 +8,26 @@ use App\Http\Resources\UserList\User;
 
 class NotificationResource extends JsonResource
 {
+    public $skip = false;
+
+    public function __construct(...$parameters)
+    {
+        parent::__construct(...$parameters);
+        
+        $this->skip = empty($this->notifiable);
+
+        if (!$this->skip && $this->notifiable_type == 'Cog\Laravel\Love\Reactant\Models\Reactant')
+        {
+            $reactions = $this->notifiable->reactions;
+            $target = $this->target_id;
+            $reaction = $reactions->filter(function($reaction) use ($target) {
+                return $reaction->id == $target;
+            })->first();
+
+            $this->skip = empty($reaction);
+        } // end if
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -18,6 +38,11 @@ class NotificationResource extends JsonResource
     {
         $message = 'Not known...';
         $user = $this->user;
+
+        if ($this->skip)
+        {
+            return null;
+        } // end if
 
         switch ($this->notifiable_type)
         {
