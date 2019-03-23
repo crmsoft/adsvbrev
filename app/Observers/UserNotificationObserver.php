@@ -9,7 +9,7 @@ class UserNotificationObserver
     /**
      * Handle the comment "created" event.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\UserNotification  $notification
      * @return void
      */
     public function created(UserNotification $notification)
@@ -18,23 +18,23 @@ class UserNotificationObserver
     }
 
     /**
-     * Handle the comment "updated" event.
+     * Handle the UserNotification "updated" event.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\UserNotification  $UserNotification
      * @return void
      */
-    public function updated(Comment $comment)
+    public function updated(UserNotification $notification)
     {
         //
     }
 
     /**
-     * Handle the comment "deleted" event.
+     * Handle the UserNotification "deleted" event.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\UserNotification  $notification
      * @return void
      */
-    public function deleted(Comment $comment)
+    public function deleted(UserNotification $notification)
     {
         //
     }
@@ -42,10 +42,10 @@ class UserNotificationObserver
     /**
      * Handle the comment "restored" event.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\UserNotification  $notification
      * @return void
      */
-    public function restored(Comment $comment)
+    public function restored(UserNotification $notification)
     {
         //
     }
@@ -53,10 +53,10 @@ class UserNotificationObserver
     /**
      * Handle the comment "force deleted" event.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\UserNotification  $notification
      * @return void
      */
-    public function forceDeleted(Comment $comment)
+    public function forceDeleted(UserNotification $notification)
     {
         //
     }
