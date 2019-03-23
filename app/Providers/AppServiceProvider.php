@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use DB;
 use Log;
+
 use App\Entities\Comment;
+use App\Entities\UserNotification;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Comment::observe(\App\Observers\CommentObserver::class);
+        UserNotification::observe(\App\Observers\UserNotificationObserver::class);
         // DB::listen(function($query) {
         //     Log::info(
         //         $query->sql,
