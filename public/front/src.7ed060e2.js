@@ -41724,7 +41724,7 @@ exports.default = Comment;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.NOTIFICATIONS_VIEWED = exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.n_viewed = exports.reduce_followers = exports.load_profile = void 0;
+exports.INCREMENT_NOTIFICATION = exports.NOTIFICATIONS_VIEWED = exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.increment_notification = exports.n_viewed = exports.reduce_followers = exports.load_profile = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -41736,6 +41736,8 @@ var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
 exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
 var NOTIFICATIONS_VIEWED = 'NOTIFICATIONS_VIEWED';
 exports.NOTIFICATIONS_VIEWED = NOTIFICATIONS_VIEWED;
+var INCREMENT_NOTIFICATION = 'INCREMENT_NOTIFICATION';
+exports.INCREMENT_NOTIFICATION = INCREMENT_NOTIFICATION;
 
 var n_viewed = function n_viewed() {
   return function (dispatch) {
@@ -41771,6 +41773,17 @@ var reduce_followers = function reduce_followers() {
 };
 
 exports.reduce_followers = reduce_followers;
+
+var increment_notification = function increment_notification() {
+  return function (dispatch) {
+    dispatch({
+      type: INCREMENT_NOTIFICATION,
+      data: null
+    });
+  };
+};
+
+exports.increment_notification = increment_notification;
 },{"axios":"../../node_modules/axios/index.js"}],"../src/header/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -41806,6 +41819,13 @@ var reducer = function reducer() {
       {
         return Object.assign({}, state, {
           notifications: 0
+        });
+      }
+
+    case _events.INCREMENT_NOTIFICATION:
+      {
+        return Object.assign({}, state, {
+          notifications: state.notifications + 1
         });
       }
 
@@ -49160,33 +49180,69 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-var Menu = function Menu() {
-  return _react.default.createElement("nav", {
-    className: "menu"
-  }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-    className: "active",
-    to: "/"
-  }, _react.default.createElement("span", {
-    className: "icon-profile"
-  }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/feed"
-  }, _react.default.createElement("span", {
-    className: "icon-profile"
-  }, " feed"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/dudes"
-  }, _react.default.createElement("span", {
-    className: "icon-profile"
-  }, " Find Dudes")))));
-};
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var _default = Menu;
-exports.default = _default;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Menu =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Menu, _Component);
+
+  function Menu() {
+    _classCallCheck(this, Menu);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Menu).apply(this, arguments));
+  }
+
+  _createClass(Menu, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("nav", {
+        className: "menu"
+      }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+        activeClassName: "active",
+        to: "/"
+      }, _react.default.createElement("span", {
+        className: "icon-profile"
+      }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+        activeClassName: "active",
+        to: "/feed"
+      }, _react.default.createElement("span", {
+        className: "icon-profile"
+      }, " feed"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+        activeClassName: "active",
+        to: "/dudes"
+      }, _react.default.createElement("span", {
+        className: "icon-profile"
+      }, " Find Dudes")))));
+    }
+  }]);
+
+  return Menu;
+}(_react.Component);
+
+exports.default = Menu;
 },{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
 "use strict";
 
@@ -63402,7 +63458,8 @@ var initialState = {
   target: undefined,
   messenger: {
     friend: [],
-    chat: []
+    chat: [],
+    unread_chats: 0
   }
 };
 
@@ -63465,18 +63522,22 @@ var reducer = function reducer() {
 
     case _events.INC_CHAT_UNREAD:
       {
+        var chats = state.messenger.chat.map(function (chat) {
+          if (action.data === chat.hash_id) {
+            chat.unread++;
+          } // end if
+
+
+          return chat;
+        });
         return Object.assign({}, state, {
           action: null,
-          messenger: Object.assign({
-            chat: state.messenger.chat.map(function (chat) {
-              if (action.data === chat.hash_id) {
-                chat.unread++;
-              } // end if
-
-
-              return chat;
-            })
-          }, state.messenger)
+          messenger: Object.assign({}, state.messenger, {
+            chat: chats,
+            unread_chats: chats.reduce(function (count, chat) {
+              return chat.unread ? ++count : count;
+            }, 0)
+          })
         });
       }
 
@@ -63486,20 +63547,24 @@ var reducer = function reducer() {
         var added = state.messenger.chat.filter(function (chat) {
           return chat.hash_id === newChat.hash_id;
         });
-        var chats = state.messenger.chat;
+        var _chats = state.messenger.chat;
 
         if (added.length) {
-          var index = chats.indexOf(added.pop());
-          chats[index].unread = 0;
+          var index = _chats.indexOf(added.pop());
+
+          _chats[index].unread = 0;
         } else {
-          chats.push(newChat);
+          _chats.push(newChat);
         }
 
         return Object.assign({}, state, {
           action: null,
-          messenger: Object.assign({
-            chat: _toConsumableArray(chats)
-          }, state.messenger)
+          messenger: Object.assign({}, state.messenger, {
+            chat: _toConsumableArray(_chats),
+            unread_chats: _chats.reduce(function (count, chat) {
+              return chat.unread ? ++count : count;
+            }, 0)
+          })
         });
       }
 
@@ -63522,7 +63587,11 @@ var reducer = function reducer() {
     case _events.CHATS_LOADED:
       {
         return Object.assign({}, state, {
-          messenger: action.data
+          messenger: Object.assign({}, action.data, {
+            unread_chats: state.messenger.chat.reduce(function (count, chat) {
+              return chat.unread ? ++count : count;
+            }, 0)
+          })
         });
       }
 
@@ -63871,21 +63940,25 @@ function (_Component) {
       var _this$props$messenger = this.props.messenger,
           friend = _this$props$messenger.friend,
           chat = _this$props$messenger.chat,
+          unread_chats = _this$props$messenger.unread_chats,
           m_status = _this$props$messenger.m_status,
           m_sound = _this$props$messenger.m_sound,
-          username = _this$props$messenger.username; // no messenger when no friends;
+          username = _this$props$messenger.username;
+      var minimized = this.state.minimized; // no messenger when no friends;
 
       if (!friend.length) {
         return null;
       }
 
       return _react.default.createElement("div", {
-        className: this.state.minimized ? "chat-wrapper minimized" : "chat-wrapper"
+        className: minimized ? "chat-wrapper minimized" : "chat-wrapper"
       }, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement("span", {
         className: "title ".concat(m_status)
-      }, "Messenger"), _react.default.createElement("div", {
+      }, "Messenger ", unread_chats > 0 ? _react.default.createElement("span", {
+        className: "unread-chat-counter"
+      }, unread_chats) : null), _react.default.createElement("div", {
         className: "chat-actions"
       }, _react.default.createElement("span", {
         onClick: this.minimizeMessenger.bind(this),
@@ -63906,7 +63979,7 @@ function (_Component) {
       }, _react.default.createElement(_MessengerOptions.default, {
         status: m_status,
         sound: m_sound
-      })))), this.state.minimized ? null : _react.default.createElement("div", {
+      })))), minimized ? null : _react.default.createElement("div", {
         className: "chatable"
       }, _react.default.createElement(ChatList, {
         user: username,
@@ -68379,7 +68452,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = _BasicScrollToBottom.default;
 exports.default = _default;
 
-},{"./ScrollToBottom/AutoHideFollowButton":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js","./BasicScrollToBottom":"../node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js","./ScrollToBottom/Composer":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js","./ScrollToBottom/FunctionContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js","./ScrollToBottom/Panel":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js","./ScrollToBottom/StateContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"}],"../src/chat/redux/socket.js":[function(require,module,exports) {
+},{"./ScrollToBottom/AutoHideFollowButton":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js","./BasicScrollToBottom":"../node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js","./ScrollToBottom/Composer":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js","./ScrollToBottom/FunctionContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js","./ScrollToBottom/Panel":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js","./ScrollToBottom/StateContext":"../node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"}],"../src/socket/redux/events.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.send_message = exports.NOTIFICATION = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
+var MESSAGE = 'MESSAGE';
+exports.MESSAGE = MESSAGE;
+var SEND_MESSAGE = 'SEND_MESSAGE';
+exports.SEND_MESSAGE = SEND_MESSAGE;
+var NOTIFICATION = 'NOTIFICATION';
+exports.NOTIFICATION = NOTIFICATION;
+
+var send_message = function send_message(chat) {
+  return function (dispatch) {
+    return dispatch({
+      type: SEND_MESSAGE,
+      data: chat
+    });
+  };
+};
+
+exports.send_message = send_message;
+},{}],"../src/socket/redux/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -68387,39 +68484,68 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _store = _interopRequireDefault(require("./store"));
-
 var _events = require("./events");
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    recieved: null
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _events.NOTIFICATION:
+      {
+        return {
+          recieved: _events.NOTIFICATION
+        };
+      }
+
+    case _events.MESSAGE:
+      {
+        return {
+          recieved: _events.MESSAGE,
+          data: action.data
+        };
+      }
+
+    case _events.SEND_MESSAGE:
+      {
+        return {
+          recieved: _events.SEND_MESSAGE,
+          data: action.data
+        };
+      }
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./events":"../src/socket/redux/events.js"}],"../src/socket/redux/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxLogger = require("redux-logger");
+
+var _reducer = _interopRequireDefault(require("./reducer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
+var _logger = new _reduxLogger.createLogger({
+  collapsed: false
+});
 
-socket.onclose = function () {//document.location.reload();
-};
-
-socket.onmessage = function (_ref) {
-  var data = _ref.data;
-  var response = JSON.parse(data);
-
-  if (response.action === 'message') {
-    _store.default.dispatch({
-      type: _events.MESSAGE_RECIEVED,
-      data: response.target
-    });
-  }
-};
-
-var _default = {
-  chatMessagePush: function chatMessagePush(chat) {
-    socket.send(JSON.stringify({
-      action: 'message',
-      data: chat
-    }));
-  }
-};
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
+var _default = store;
 exports.default = _default;
-},{"./store":"../src/chat/redux/store.js","./events":"../src/chat/redux/events.js"}],"../src/chat/Dialog/index.js":[function(require,module,exports) {
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/socket/redux/reducer.js"}],"../src/chat/Dialog/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -68443,7 +68569,9 @@ var _DialogHead = _interopRequireDefault(require("./DialogHead"));
 
 var _reactScrollToBottom = _interopRequireDefault(require("react-scroll-to-bottom"));
 
-var _socket = _interopRequireDefault(require("../redux/socket"));
+var _store = _interopRequireDefault(require("../../socket/redux/store"));
+
+var _events2 = require("../../socket/redux/events");
 
 var _utils = require("../../utils");
 
@@ -68608,7 +68736,10 @@ function (_Component) {
           reload: false,
           messagesList: [].concat(_toConsumableArray(_this5.state.messagesList), [data.data])
         }, function () {
-          return _socket.default.chatMessagePush(hash);
+          return _store.default.dispatch({
+            type: _events2.SEND_MESSAGE,
+            data: hash
+          });
         });
       });
     }
@@ -68651,7 +68782,7 @@ function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(nextProps, prevState) {
-      if (nextProps.action === _events.MESSAGE_RECIEVED && nextProps.target === prevState.chat && !prevState.reload) {
+      if (nextProps.pullChat === nextProps.chat.hash_id) {
         return {
           reload: true
         };
@@ -68680,7 +68811,7 @@ var Dialog = (0, _reactRedux.connect)(function (state) {
 })(DialogComponent);
 var _default = Dialog;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Input":"../src/chat/Dialog/Input.js","../redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./MessageList":"../src/chat/Dialog/MessageList.js","./DialogHead":"../src/chat/Dialog/DialogHead.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","../redux/socket":"../src/chat/redux/socket.js","../../utils":"../src/utils.js"}],"../src/chat/Dialogs.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Input":"../src/chat/Dialog/Input.js","../redux/events":"../src/chat/redux/events.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./MessageList":"../src/chat/Dialog/MessageList.js","./DialogHead":"../src/chat/Dialog/DialogHead.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","../../socket/redux/store":"../src/socket/redux/store.js","../../socket/redux/events":"../src/socket/redux/events.js","../../utils":"../src/utils.js"}],"../src/chat/Dialogs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -68732,6 +68863,8 @@ function (_Component) {
   _createClass(Dialogs, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       return _react.default.createElement("div", {
         className: "dialog-wrapper"
       }, this.props.chats.map(function (chat) {
@@ -68739,6 +68872,7 @@ function (_Component) {
           key: chat.hash_id,
           store: _store.default
         }, _react.default.createElement(_Dialog.default, {
+          pullChat: _this.props.pullChat,
           chat: chat
         }));
       }));
@@ -68825,9 +68959,11 @@ var _reactRedux = require("react-redux");
 
 var _store = _interopRequireDefault(require("./redux/store"));
 
-var _events = require("./redux/events");
+var _store2 = _interopRequireDefault(require("../socket/redux/store"));
 
-var _socket = _interopRequireDefault(require("./redux/socket"));
+var _events = require("../socket/redux/events");
+
+var _events2 = require("./redux/events");
 
 var _NewMessage = _interopRequireDefault(require("./sounds/NewMessage"));
 
@@ -68896,40 +69032,9 @@ function (_Component) {
       this.unsubscrubeFromMainStore = _store.default.subscribe(function () {
         var _store$getState = _store.default.getState(),
             action = _store$getState.action,
-            target = _store$getState.target,
-            messenger = _store$getState.messenger,
             chatToClose = _store$getState.chatToClose;
 
-        _NewMessage.default.toggle(messenger.m_sound === 'off');
-
-        if (action === _events.MESSAGE_RECIEVED) {
-          var is_chat_open = _this2.state.activeChats.filter(function (chat) {
-            return chat.hash_id === target;
-          });
-
-          if (is_chat_open.length) {
-            // dispatch reload chat history
-            return;
-          } else {
-            var is_new_chat = messenger.chat.filter(function (chat) {
-              return chat.hash_id === target;
-            });
-
-            if (is_new_chat.length === 0) {
-              _store.default.dispatch((0, _events.load_chats)());
-            } else {
-              _store.default.dispatch({
-                type: _events.INC_CHAT_UNREAD,
-                data: is_new_chat.pop().hash_id
-              });
-            }
-
-            _NewMessage.default.play();
-          }
-        } // end if
-
-
-        if (action !== _events.CLOSE_CHAT || !chatToClose || _this2.state.activeChats.length === 0) {
+        if (action !== _events2.CLOSE_CHAT || !chatToClose || _this2.state.activeChats.length === 0) {
           return 0;
         }
 
@@ -68941,10 +69046,58 @@ function (_Component) {
           activeChats: actives
         }, function () {
           _store.default.dispatch({
-            type: _events.CHAT_CLOSED,
+            type: _events2.CHAT_CLOSED,
             data: chatToClose
           });
         });
+      });
+      this.unsubscrubeFromSocketStore = _store2.default.subscribe(function () {
+        var _socketStore$getState = _store2.default.getState(),
+            recieved = _socketStore$getState.recieved,
+            data = _socketStore$getState.data;
+
+        var _store$getState2 = _store.default.getState(),
+            messenger = _store$getState2.messenger;
+
+        _NewMessage.default.toggle(messenger.m_sound === 'off');
+
+        if (recieved === _events.MESSAGE) {
+          var is_chat_open = _this2.state.activeChats.filter(function (chat) {
+            return chat.hash_id === data;
+          });
+
+          if (is_chat_open.length) {
+            _this2.setState(function () {
+              return {
+                pullChat: data
+              };
+            }, function () {
+              _this2.setState(function () {
+                return {
+                  pullChat: undefined
+                };
+              });
+            });
+
+            return;
+          } else {
+            var is_new_chat = messenger.chat.filter(function (chat) {
+              return chat.hash_id === data;
+            });
+
+            if (is_new_chat.length === 0) {
+              _store.default.dispatch((0, _events2.load_chats)());
+            } else {
+              _store.default.dispatch({
+                type: _events2.INC_CHAT_UNREAD,
+                data: is_new_chat.pop().hash_id
+              });
+            }
+
+            _NewMessage.default.play();
+          }
+        } // end if
+
       });
     }
   }, {
@@ -68952,7 +69105,13 @@ function (_Component) {
     value: function componentWillUnmount() {
       if (this.unsubscrubeFromMainStore) {
         this.unsubscrubeFromMainStore();
-      }
+      } //end if 
+
+
+      if (this.unsubscrubeFromSocketStore) {
+        this.unsubscrubeFromSocketStore();
+      } // end if
+
     }
   }, {
     key: "addChat",
@@ -68970,7 +69129,7 @@ function (_Component) {
         activeChats: [].concat(_toConsumableArray(this.state.activeChats), [newChat])
       }, function () {
         _store.default.dispatch({
-          type: _events.CHAT_READED,
+          type: _events2.CHAT_READED,
           data: newChat
         });
       });
@@ -68981,6 +69140,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "chat"
       }, _react.default.createElement(_Dialogs.default, {
+        pullChat: this.state.pullChat,
         chats: this.state.activeChats
       }), _react.default.createElement(_reactRedux.Provider, {
         store: _store.default
@@ -68994,7 +69154,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Chat;
-},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","./redux/events":"../src/chat/redux/events.js","./redux/socket":"../src/chat/redux/socket.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/header/Followers.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./redux/events":"../src/chat/redux/events.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/header/Followers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69222,7 +69382,65 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Followers;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/header/Notification.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/chat/sounds/NewNotification.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var sound = "http://ahandfulof.me/fail/zvuk-soobshcheniya-v-kontakte.mp3";
+
+var NewNotification =
+/*#__PURE__*/
+function () {
+  function NewNotification() {
+    _classCallCheck(this, NewNotification);
+
+    this.playing = false;
+    this.locked = false;
+  }
+
+  _createClass(NewNotification, [{
+    key: "toggle",
+    value: function toggle(state) {
+      this.locked = state === true;
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      var _this = this;
+
+      if (this.locked) {
+        return false;
+      } // end if
+
+
+      if (!this.playing) {
+        var audio = new Audio(sound);
+        audio.play();
+
+        audio.onended = function (e) {
+          _this.playing = false;
+        };
+      }
+    }
+  }]);
+
+  return NewNotification;
+}();
+
+var player = new NewNotification();
+var _default = player;
+exports.default = _default;
+},{}],"../src/header/Notification.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69237,6 +69455,12 @@ var _reactRouterDom = require("react-router-dom");
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../socket/redux/store"));
+
+var _events = require("../socket/redux/events");
+
+var _NewNotification = _interopRequireDefault(require("../chat/sounds/NewNotification"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69289,19 +69513,43 @@ function (_Component) {
   }
 
   _createClass(Notification, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.socketSubscription = _store.default.subscribe(function () {
+        var state = _store.default.getState();
+
+        if (state.recieved === _events.NOTIFICATION) {
+          _NewNotification.default.play();
+
+          _this2.props.onNotificatoinRecieved();
+        } // end if
+
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.socketSubscription) {
+        this.socketSubscription();
+      } // end if
+
+    }
+  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.load) {
         _axios.default.get("/notification/list").then(function (response) {
-          return _this2.setState(function () {
+          return _this3.setState(function () {
             return {
               load: false,
               list: response.data.data
             };
           }, function () {
-            _this2.props.clear();
+            _this3.props.clear();
           });
         });
       } // end if
@@ -69319,14 +69567,14 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var list = this.state.list;
       return _react.default.createElement("div", {
         className: "followers-popup"
       }, _react.default.createElement(_reactjsPopup.default, {
         onOpen: function onOpen(e) {
-          return _this3.setState({
+          return _this4.setState({
             load: true
           });
         },
@@ -69375,7 +69623,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Notification;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/header/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/sounds/NewNotification":"../src/chat/sounds/NewNotification.js"}],"../src/header/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -69546,6 +69794,9 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: notifications === 0 ? 'd-none' : 'nav-item-count'
       }, notifications), _react.default.createElement(_Notification.default, {
+        onNotificatoinRecieved: function onNotificatoinRecieved() {
+          _this3.props.in_not();
+        },
         clear: this.props.notifications_viewed.bind(this),
         trigger: _react.default.createElement("a", {
           href: "javascript:void(0)",
@@ -69605,6 +69856,9 @@ var Header = (0, _reactRedux.connect)(function (state) {
     },
     decline: function decline(username) {
       return dispatch((0, _event.declineFriendship)(username));
+    },
+    in_not: function in_not() {
+      return dispatch((0, _events.increment_notification)());
     }
   };
 })(HeaderComponent);
@@ -71346,7 +71600,54 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FDudes;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/socket/index.js":[function(require,module,exports) {
+"use strict";
+
+var _store = _interopRequireDefault(require("./redux/store"));
+
+var _events = require("./redux/events");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//const socket = new WebSocket('ws://35.205.191.229/yraMgipTBPDo42aK/?token=' + window.gg.wsc());
+var socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
+
+socket.onclose = function () {//document.location.reload();
+};
+
+socket.onmessage = function (_ref) {
+  var data = _ref.data;
+  var response = JSON.parse(data);
+
+  if (response.action === 'message') {
+    _store.default.dispatch({
+      type: _events.MESSAGE,
+      data: response.target
+    });
+  } // end if
+
+
+  if (response.action === 'notification') {
+    _store.default.dispatch({
+      type: _events.NOTIFICATION,
+      data: null
+    });
+  } // end if
+
+};
+
+_store.default.subscribe(function () {
+  var state = _store.default.getState();
+
+  if (state.recieved === _events.SEND_MESSAGE) {
+    socket.send(JSON.stringify({
+      action: 'message',
+      data: state.data
+    }));
+  } // end if
+
+});
+},{"./redux/store":"../src/socket/redux/store.js","./redux/events":"../src/socket/redux/events.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -71382,6 +71683,8 @@ var _EventProfile = _interopRequireDefault(require("./event/EventProfile"));
 var _store3 = _interopRequireDefault(require("./event/redux/store"));
 
 var _findDude = _interopRequireDefault(require("./find-dude"));
+
+var _socket = _interopRequireDefault(require("./socket"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71428,7 +71731,7 @@ var App = function App() {
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -71455,7 +71758,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43289" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44993" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
