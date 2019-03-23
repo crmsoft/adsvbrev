@@ -14,7 +14,7 @@ class UserNotificationObserver
      */
     public function created(UserNotification $notification)
     {
-        file_get_contents('/tmp/.notreciever', $notification->user_id);
+        file_put_contents('/tmp/.notreciever', $notification->user_id);
     }
 
     /**
