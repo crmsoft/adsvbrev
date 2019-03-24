@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Entities\Profile;
-use App\Entities\UserNotification;
-use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
 use Intervention\Image\Facades\Image;
 
+
+use App\Entities\Profile;
+use App\Entities\UserNotification;
+use App\User;
+
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Notification\NotificationCollection;
-
 use App\Http\Resources\UserList\User as ResourceUser;
-
 use App\Http\Resources\Profile\ResourceProfile;
-
 use App\Http\Resources\UserList\UserCollection;
 
 class ProfileController extends Controller

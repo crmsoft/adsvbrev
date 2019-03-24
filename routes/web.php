@@ -34,6 +34,7 @@ Route::group([
     Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
     Route::get('/event/{id}', 'ProfileController@index')->name('event-page');
     Route::get('/dudes', 'ProfileController@index')->name('dudes-page');
+    Route::get('/feed', 'ProfileController@index')->name('feed-page');
 });
 
 // Profile Specific Routes
@@ -56,6 +57,8 @@ Route::group([
 
     Route::post('/setting/devices', 'ProfileController@setDevices')->name('settings-set-devices');
 
+    Route::get('/feed/index', 'FeedController@index')->name('feed-list');
+    Route::post('/feed/more', 'FeedController@more')->name('feed-load-more');
 
 });
 
@@ -71,7 +74,7 @@ Route::group([
     Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
     Route::post('/post/share/{post}', 'PostController@toggleShare')->name('toggle-share-post');
     Route::post('/post/delete/{post}', 'PostController@deletePost')->name('delete-post');
-    Route::post('/feed/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
+    Route::post('/post/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
 });
 
 // Comment Specific Routes

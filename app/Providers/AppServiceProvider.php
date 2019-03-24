@@ -23,13 +23,13 @@ class AppServiceProvider extends ServiceProvider
 
         Comment::observe(\App\Observers\CommentObserver::class);
         UserNotification::observe(\App\Observers\UserNotificationObserver::class);
-        // DB::listen(function($query) {
-        //     Log::info(
-        //         $query->sql,
-        //         $query->bindings,
-        //         $query->time
-        //     );
-        // });
+        DB::listen(function($query) {
+            Log::info(
+                $query->sql,
+                $query->bindings,
+                $query->time
+            );
+        });
 
     }
 
