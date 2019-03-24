@@ -75,7 +75,14 @@ export default class FeedList extends Component{
             return null;
         } // end if
 
-        axios.post(this.state.user ? `/feed/more/${this.state.user}` : `/feed/more`, {
+        let url = this.state.user ? `/post/more/${this.state.user}` : `/post/more`;
+
+        if (this.props.url)
+        {
+            url = this.props.url;
+        } // end if
+
+        axios.post(url, {
             last: this.state.localeStore.get(),
             type: this.state.type
         }).then(({data}) => {

@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import { Provider  } from "react-redux";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import axios from 'axios';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 //import $ from '../node_modules/jquery/dist/jquery.min';
 //import '../node_modules/bootstrap/dist/js/bootstrap';
 
@@ -20,6 +19,8 @@ import EventProfile from './event/EventProfile';
 import EventProfileStore from './event/redux/store';
 
 import FDudes from './find-dude';
+
+import Feed from './feed';
 
 const App = () => {
     return (
@@ -44,6 +45,7 @@ const App = () => {
                         <Route path="/event/:id" component={EventProfile} />
                     </Provider>
                     <Route path="/dudes" component={FDudes} />
+                    <Route path="/feed" component={Feed} />
                 </div>
                 <Chat />
             </Fragment>

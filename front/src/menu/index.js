@@ -5,10 +5,17 @@ export default class Menu extends Component {
     render()
     {
         return(
-            <nav className="menu">
+            <nav className="menu" style={this.props.style}>
                 <ul>
                     <li>
-                        <NavLink activeClassName="active" to="/">
+                        <NavLink 
+                            exact 
+                            activeClassName="active" 
+                            to="/"
+                            isActive={(match, location) => {
+                                return match || location.pathname === '/schedule' || location.pathname === '/settings';
+                            }}
+                        >
                             <span className="icon-profile"> my profile</span>
                         </NavLink>
                     </li>

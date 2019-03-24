@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import { Emoji, emojiIndex } from 'emoji-mart'
+import qString from 'query-string';
 
 const placeEmoji = text => {
     const emojies = text.match(/\:[\S]*\:/g);
@@ -70,6 +71,14 @@ const inViewPort = (elem, parent) => {
     );
 };
 
+const extractIframe = text => {
+    let div = document.createElement('div');
+    div.innerHTML = text;
+    let iframe = div.querySelector('iframe');
+
+    return iframe ? iframe.src : text;
+}
+
 class Youtube extends Component{
 
     state = {
@@ -78,27 +87,33 @@ class Youtube extends Component{
 
 	render()
 	{
+        
 		const {loaded} = this.state;
         const {url} = this.props;
         
-        // find yt id
-        const parts = url.split('').reverse();
-        let id = [];
-        for(let i = 0; i < parts.length; i++ )
-        {   
-            if (parts[i] === '=' || parts[i] === '/')
-            {
-                break;
-            } // end if
+        const parts = qString.parseUrl(url);
+        let id = parts.query.v;
+        let extra = '';
 
-            id.push( parts[i] );
-        } // end for
-        id = id.reverse().join('');
+        if (!id)
+        {
+            id = parts.url.split('/').pop();
+
+            if (Object.keys(parts.query).length)
+            {
+                id = id.split('?')[0];
+            } // end if
+        } // end if
+        
+        if (parts.query.t)
+        {
+            extra = `&start=${parts.query.t}`;
+        } // end if
 
 		return loaded ? (
             <div className="yt-video">
                 <iframe 
-                        src={`https://www.youtube.com/embed/${id}?autoplay=1`} 
+                        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&showinfo=0&playsinline=1${extra}`} 
                         height="360"
                         frameBorder="0"
                         className="w-100" />
@@ -134,23 +149,32 @@ class Twitch extends Component{
         const {url} = this.props;
         
         // find yt id
-        const parts = url.split('').reverse();
-        let id = [];
-        for(let i = 0; i < parts.length; i++ )
-        {   
-            if (parts[i] === '=' || parts[i] === '/')
-            {
-                break;
-            } // end if
+        const parts = qString.parseUrl( url );
+        
+        const channel = `https://player.twitch.tv/?channel=#channel&muted=true&autoplay=true`;
+        const video = `https://player.twitch.tv/?autoplay=true&video=#video&muted=true`;
 
-            id.push( parts[i] );
-        } // end for
-        id = id.reverse().join('');
+        let iframeUrl = '';
+
+        if (Object.keys(parts.query).length === 0)
+        {
+            let id = parts.url.split('/').pop();
+            iframeUrl = parts.url.indexOf('video') !== -1 ? video.replace('#video', id) : channel.replace('#channel', id);
+        } // end if
+
+        if (parts.query.channel)
+        {
+            iframeUrl = channel.replace('#channel', parts.query.channel);
+        } // end if
+
+        if (parts.query.video)
+        {
+            iframeUrl = video.replace('#video', parts.query.video);
+        } // end if
 
 		return loaded ? (
             <div className="yt-video">
-                <iframe 
-                        src={`https://www.youtube.com/embed/${id}?autoplay=1`} 
+                <iframe src={iframeUrl} 
                         height="360"
                         frameBorder="0"
                         className="w-100" />
@@ -166,12 +190,20 @@ class Twitch extends Component{
                 key={url}>
                 <img
                     className="w-100" 
-                    src={`https://img.youtube.com/vi/${id}/0.jpg`} 
+                    src={`https://img.youtube.com/vi/0.jpg`} 
                 />
                 <div className="yt-play-btn"></div>
 			</div>
 		)
 	}
+}
+
+const Anchor = ({url}) => {
+    return (
+        <a href={url} target="_blank">
+            {url}
+        </a>
+    )
 }
 
 class Url extends Component{
@@ -188,6 +220,11 @@ class Url extends Component{
         );
     }
 
+    isTwitch( text )
+    {
+        return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
+    }
+
     render()
     {
         const {text} = this.props;
@@ -198,27 +235,42 @@ class Url extends Component{
    
         return <Fragment key={text}>
             {
-                this.isYoutube(text) ? (
-                    <Youtube url={text} />
-                ) : (
-                    this.isLink(text) ? (
-                        <a href={text}>
-                            {text}
-                        </a>
-                    ) : (
-                        <span>
-                            {text}
-                        </span>
+                this.isLink(text) ? (
+                    this.isYoutube( text ) ? <Youtube url={text} /> : (
+                        this.isTwitch( text ) ? <Twitch url={text} /> : <Anchor url={text} />
                     )
-                )
+                ) : text
             }
         </Fragment>
     }
 }
 
 const urlify = (text) => {
+    let results = [];
+    let div = document.createElement('div');
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.split(urlRegex).map(candidate => <Url text={candidate} />)
+
+    div.innerHTML = text;
+
+    for(let i=0; i<div.childNodes.length; i++)
+    {
+        let node = div.childNodes[i];
+        let name = node.nodeName.toLocaleLowerCase();
+
+        if ( name === 'iframe')
+        {
+            results.push(
+                <Url text={node.src}/>
+            )
+        } else if ( node.nodeType === Node.TEXT_NODE )
+        {
+            node.textContent.split(urlRegex).map(candidate => results.push(<Url text={candidate} />));
+        } else  {
+            results.push(node.textContent);
+        }// end if
+    } // end for
+
+    return results;
 }
 
 export {

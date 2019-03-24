@@ -31,6 +31,8 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
         'last_name',
         'unique',
         'email',
+        'ava',
+        'validated',
         'dir',
         'username',
         'password',
