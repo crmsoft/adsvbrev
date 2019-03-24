@@ -39291,15 +39291,14 @@ var urlify = function urlify(text) {
       results.push(_react.default.createElement(Url, {
         text: node.src
       }));
-    } // end if
-
-
-    if (node.nodeType === Node.TEXT_NODE) {
+    } else if (node.nodeType === Node.TEXT_NODE) {
       node.textContent.split(urlRegex).map(function (candidate) {
         return results.push(_react.default.createElement(Url, {
           text: candidate
         }));
       });
+    } else {
+      results.push(node.textContent);
     } // end if
 
   } // end for
