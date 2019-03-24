@@ -19,7 +19,7 @@ class FeedController extends Controller
                                 AND (postable_id IN (SELECT 
                                     user_id
                                 FROM
-                                    game.user_friends
+                                    user_friends
                                 WHERE
                                     friend_id = ? AND status = 'friend'
                                         AND deleted_at IS NULL)
