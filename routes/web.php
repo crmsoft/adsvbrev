@@ -172,6 +172,10 @@ Route::group([
             'name' => 'github|twitter|facebook|twitch|google'
         ]);
 
+    // handle social callback
+    Route::get('/twitch/sub', 'SocialeLoginController@ts')
+    ->name('twitch.sub.callback');
+
 });
 
 
