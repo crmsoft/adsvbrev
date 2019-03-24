@@ -65,7 +65,7 @@ class SocialeLoginController extends Controller
         \Log::debug(
             $request->all()
         );
-        return $request->get('hub.challenge');
+        return $request->get('hub_challenge');
     }
 
 }
