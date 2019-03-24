@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { load_profile, reduce_followers, n_viewed } from './events';
+import { load_profile, reduce_followers, n_viewed, increment_notification } from './events';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import Followers from './Followers';
@@ -80,6 +80,9 @@ class HeaderComponent extends Component{
                                         {notifications}
                                     </span>
                                     <Notification 
+                                        onNotificatoinRecieved={() => {
+                                            this.props.in_not()
+                                        }}
                                         clear={this.props.notifications_viewed.bind(this)}
                                         trigger={
                                             <a href="javascript:void(0)" className="nav-link icon-notification"></a>
@@ -139,7 +142,8 @@ const Header = connect(
             reduce_followers: () => dispatch(reduce_followers()),
             notifications_viewed: () => dispatch(n_viewed()),
             accept: username => dispatch(acceptToFriends(username)),
-            decline: username => dispatch(declineFriendship(username))
+            decline: username => dispatch(declineFriendship(username)),
+            in_not: () => dispatch(increment_notification())
         }
     }
 )(HeaderComponent);

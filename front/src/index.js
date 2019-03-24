@@ -52,3 +52,6 @@ const App = () => {
 }
 
 ReactDOM.render( <App />, document.getElementById('app') )
+
+
+import socket from './socket';

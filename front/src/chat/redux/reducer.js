@@ -20,7 +20,8 @@ const initialState = {
     target: undefined,
     messenger: {
         friend: [],
-        chat: []
+        chat: [],
+        unread_chats: 0
     }
 }
 
@@ -79,19 +80,24 @@ const reducer = (state = initialState, action) => {
             }
         }
         case INC_CHAT_UNREAD : {
+            const chats = state.messenger.chat.map(chat => {                        
+                if(action.data === chat.hash_id)
+                {
+                    chat.unread++;
+                } // end if
+
+                return chat;
+            });
+
             return {
                 ...state,
                 action: null,
                 messenger: {
-                    chat: state.messenger.chat.map(chat => {                        
-                        if(action.data === chat.hash_id)
-                        {
-                            chat.unread++;
-                        } // end if
-
-                        return chat;
-                    }),
-                    ...state.messenger
+                    ...state.messenger,
+                    chat: chats,
+                    unread_chats: chats.reduce((count, chat) => {
+                        return chat.unread ? (++count) : count;
+                    }, 0)
                 }
             }
         }
@@ -121,10 +127,13 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 action: null,
                 messenger: {
+                    ...state.messenger,
                     chat: [
                         ...chats
                     ],
-                    ...state.messenger
+                    unread_chats: chats.reduce((count, chat) => {
+                        return chat.unread ? (++count) : count;
+                    }, 0)
                 }
             }
         }
@@ -146,7 +155,12 @@ const reducer = (state = initialState, action) => {
         case CHATS_LOADED : {            
             return {
                 ...state,
-                messenger: action.data
+                messenger: {
+                    ...action.data,
+                    unread_chats: state.messenger.chat.reduce((count, chat) => {
+                        return chat.unread ? (++count) : count;
+                    }, 0)
+                }
             }
         }
         case CLOSE_CHAT : {

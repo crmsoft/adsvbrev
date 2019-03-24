@@ -93,7 +93,26 @@
                     width: 20px;
                     text-align: center;
                     vertical-align: middle;
+                    line-height: 180%;
                 }
+            }
+        }
+
+        .unread-chat-counter{
+            background-color: $mainColor;
+            width: 18px;
+            height: 18px;
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 170%;
+            display: none;
+        }
+
+        &.minimized{
+            .unread-chat-counter{
+                display: inline-block;
             }
         }
     }

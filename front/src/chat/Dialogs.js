@@ -12,7 +12,10 @@ export default class Dialogs extends Component{
                     this.props.chats.map(chat => {
                         return (
                             <Provider key={chat.hash_id} store={store}>
-                                <Dialog chat={chat} />
+                                <Dialog 
+                                    pullChat={this.props.pullChat}
+                                    chat={chat} 
+                                />
                             </Provider>
                         )
                     })

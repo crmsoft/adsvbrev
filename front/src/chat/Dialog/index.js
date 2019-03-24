@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import MessageList from './MessageList';
 import Header from './DialogHead';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import socket from '../redux/socket';
+import socketStore from '../../socket/redux/store';
+import {SEND_MESSAGE} from '../../socket/redux/events';
 import {inViewPort} from '../../utils';
 
 class DialogComponent extends Component{
@@ -128,7 +129,7 @@ class DialogComponent extends Component{
                     ...this.state.messagesList,
                     data.data                   
                 ]
-            }, () => socket.chatMessagePush(hash))
+            }, () => socketStore.dispatch({type: SEND_MESSAGE, data: hash}))
         });   
     }
 
@@ -152,9 +153,7 @@ class DialogComponent extends Component{
 
     static getDerivedStateFromProps(nextProps, prevState){
 
-        if((nextProps.action === MESSAGE_RECIEVED) && 
-            (nextProps.target === prevState.chat) &&
-            !prevState.reload)
+        if(nextProps.pullChat === nextProps.chat.hash_id)
         {            
             return {reload: true};
         }

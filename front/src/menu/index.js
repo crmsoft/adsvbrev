@@ -1,28 +1,29 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react';
+import {NavLink} from 'react-router-dom';
 
-const Menu = () => {
-    return(
-        <nav className="menu">
-            <ul>
-                <li>
-                    <Link className="active" to="/">
-                        <span className="icon-profile"> my profile</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/feed">
-                        <span className="icon-profile"> feed</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/dudes">
-                        <span className="icon-profile"> Find Dudes</span>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
-    )
+export default class Menu extends Component {
+    render()
+    {
+        return(
+            <nav className="menu">
+                <ul>
+                    <li>
+                        <NavLink activeClassName="active" to="/">
+                            <span className="icon-profile"> my profile</span>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="active" to="/feed">
+                            <span className="icon-profile"> feed</span>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="active" to="/dudes">
+                            <span className="icon-profile"> Find Dudes</span>
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
+        )
+    }
 }
-
-export default Menu;

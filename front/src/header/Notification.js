@@ -2,12 +2,39 @@ import React,{Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import axios from 'axios';
+import socketStore from '../socket/redux/store';
+import {
+    NOTIFICATION
+} from '../socket/redux/events';
+import NewNotification from '../chat/sounds/NewNotification';
 
 export default class Notification extends Component{
 
     state = {
         list: [],
         open: false
+    }
+
+    componentDidMount()
+    {
+        this.socketSubscription = socketStore.subscribe(() => {
+            const state = socketStore.getState();
+
+            if (state.recieved === NOTIFICATION)
+            {
+                NewNotification.play();
+                this.props.onNotificatoinRecieved();   
+            } // end if
+
+        });
+    }
+
+    componentWillUnmount()
+    {
+        if (this.socketSubscription)
+        {
+            this.socketSubscription();
+        } // end if
     }
 
     componentDidUpdate()

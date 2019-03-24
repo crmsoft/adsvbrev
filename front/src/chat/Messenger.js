@@ -82,10 +82,15 @@ class UsersComponent extends Component {
         const {
             friend, 
             chat, 
+            unread_chats,
             m_status,
             m_sound,
             username
         } = this.props.messenger;
+
+        const {
+            minimized
+        } = this.state;
 
         // no messenger when no friends;
         if(!friend.length)
@@ -94,10 +99,14 @@ class UsersComponent extends Component {
         }
         
         return (
-            <div className={this.state.minimized ? "chat-wrapper minimized" : "chat-wrapper"}>
+            <div className={minimized ? "chat-wrapper minimized" : "chat-wrapper"}>
                 <div className="header">
                     <span className={`title ${m_status}`}>
-                        Messenger
+                        Messenger {
+                            unread_chats > 0 ? (
+                                <span className="unread-chat-counter">{unread_chats}</span>       
+                            ) : null
+                        }
                     </span>
                     <div className="chat-actions">
                         <span 
@@ -121,7 +130,7 @@ class UsersComponent extends Component {
                     </div>
                 </div>
                 {
-                    this.state.minimized ? null : (
+                    minimized ? null : (
                         <div className="chatable">
                             <ChatList 
                                 user={username}
