@@ -38620,7 +38620,326 @@ var _nimbleEmoji = _interopRequireDefault(require("./components/emoji/nimble-emo
 var _category = _interopRequireDefault(require("./components/category"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./utils/emoji-index/emoji-index":"../node_modules/emoji-mart/dist-es/utils/emoji-index/emoji-index.js","./utils/emoji-index/nimble-emoji-index":"../node_modules/emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index.js","./utils/store":"../node_modules/emoji-mart/dist-es/utils/store.js","./utils/frequently":"../node_modules/emoji-mart/dist-es/utils/frequently.js","./components/picker/picker":"../node_modules/emoji-mart/dist-es/components/picker/picker.js","./components/picker/nimble-picker":"../node_modules/emoji-mart/dist-es/components/picker/nimble-picker.js","./components/emoji/emoji":"../node_modules/emoji-mart/dist-es/components/emoji/emoji.js","./components/emoji/nimble-emoji":"../node_modules/emoji-mart/dist-es/components/emoji/nimble-emoji.js","./components/category":"../node_modules/emoji-mart/dist-es/components/category.js"}],"../src/utils.js":[function(require,module,exports) {
+},{"./utils/emoji-index/emoji-index":"../node_modules/emoji-mart/dist-es/utils/emoji-index/emoji-index.js","./utils/emoji-index/nimble-emoji-index":"../node_modules/emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index.js","./utils/store":"../node_modules/emoji-mart/dist-es/utils/store.js","./utils/frequently":"../node_modules/emoji-mart/dist-es/utils/frequently.js","./components/picker/picker":"../node_modules/emoji-mart/dist-es/components/picker/picker.js","./components/picker/nimble-picker":"../node_modules/emoji-mart/dist-es/components/picker/nimble-picker.js","./components/emoji/emoji":"../node_modules/emoji-mart/dist-es/components/emoji/emoji.js","./components/emoji/nimble-emoji":"../node_modules/emoji-mart/dist-es/components/emoji/nimble-emoji.js","./components/category":"../node_modules/emoji-mart/dist-es/components/category.js"}],"../node_modules/strict-uri-encode/index.js":[function(require,module,exports) {
+'use strict';
+
+module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => "%".concat(x.charCodeAt(0).toString(16).toUpperCase()));
+},{}],"../node_modules/decode-uri-component/index.js":[function(require,module,exports) {
+'use strict';
+
+var token = '%[a-f0-9]{2}';
+var singleMatcher = new RegExp(token, 'gi');
+var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+function decodeComponents(components, split) {
+  try {
+    // Try to decode the entire string first
+    return decodeURIComponent(components.join(''));
+  } catch (err) {// Do nothing
+  }
+
+  if (components.length === 1) {
+    return components;
+  }
+
+  split = split || 1; // Split the array in 2 parts
+
+  var left = components.slice(0, split);
+  var right = components.slice(split);
+  return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+}
+
+function decode(input) {
+  try {
+    return decodeURIComponent(input);
+  } catch (err) {
+    var tokens = input.match(singleMatcher);
+
+    for (var i = 1; i < tokens.length; i++) {
+      input = decodeComponents(tokens, i).join('');
+      tokens = input.match(singleMatcher);
+    }
+
+    return input;
+  }
+}
+
+function customDecodeURIComponent(input) {
+  // Keep track of all the replacements and prefill the map with the `BOM`
+  var replaceMap = {
+    '%FE%FF': '\uFFFD\uFFFD',
+    '%FF%FE': '\uFFFD\uFFFD'
+  };
+  var match = multiMatcher.exec(input);
+
+  while (match) {
+    try {
+      // Decode as big chunks as possible
+      replaceMap[match[0]] = decodeURIComponent(match[0]);
+    } catch (err) {
+      var result = decode(match[0]);
+
+      if (result !== match[0]) {
+        replaceMap[match[0]] = result;
+      }
+    }
+
+    match = multiMatcher.exec(input);
+  } // Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+
+
+  replaceMap['%C2'] = '\uFFFD';
+  var entries = Object.keys(replaceMap);
+
+  for (var i = 0; i < entries.length; i++) {
+    // Replace all decoded components
+    var key = entries[i];
+    input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+  }
+
+  return input;
+}
+
+module.exports = function (encodedURI) {
+  if (typeof encodedURI !== 'string') {
+    throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
+  }
+
+  try {
+    encodedURI = encodedURI.replace(/\+/g, ' '); // Try the built in decoder first
+
+    return decodeURIComponent(encodedURI);
+  } catch (err) {
+    // Fallback to a more advanced decoder
+    return customDecodeURIComponent(encodedURI);
+  }
+};
+},{}],"../node_modules/query-string/index.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var strictUriEncode = require('strict-uri-encode');
+
+var decodeComponent = require('decode-uri-component');
+
+function encoderForArrayFormat(options) {
+  switch (options.arrayFormat) {
+    case 'index':
+      return function (key, value, index) {
+        return value === null ? [encode(key, options), '[', index, ']'].join('') : [encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('');
+      };
+
+    case 'bracket':
+      return function (key, value) {
+        return value === null ? [encode(key, options), '[]'].join('') : [encode(key, options), '[]=', encode(value, options)].join('');
+      };
+
+    default:
+      return function (key, value) {
+        return value === null ? encode(key, options) : [encode(key, options), '=', encode(value, options)].join('');
+      };
+  }
+}
+
+function parserForArrayFormat(options) {
+  var result;
+
+  switch (options.arrayFormat) {
+    case 'index':
+      return function (key, value, accumulator) {
+        result = /\[(\d*)\]$/.exec(key);
+        key = key.replace(/\[\d*\]$/, '');
+
+        if (!result) {
+          accumulator[key] = value;
+          return;
+        }
+
+        if (accumulator[key] === undefined) {
+          accumulator[key] = {};
+        }
+
+        accumulator[key][result[1]] = value;
+      };
+
+    case 'bracket':
+      return function (key, value, accumulator) {
+        result = /(\[\])$/.exec(key);
+        key = key.replace(/\[\]$/, '');
+
+        if (!result) {
+          accumulator[key] = value;
+          return;
+        }
+
+        if (accumulator[key] === undefined) {
+          accumulator[key] = [value];
+          return;
+        }
+
+        accumulator[key] = [].concat(accumulator[key], value);
+      };
+
+    default:
+      return function (key, value, accumulator) {
+        if (accumulator[key] === undefined) {
+          accumulator[key] = value;
+          return;
+        }
+
+        accumulator[key] = [].concat(accumulator[key], value);
+      };
+  }
+}
+
+function encode(value, options) {
+  if (options.encode) {
+    return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
+  }
+
+  return value;
+}
+
+function decode(value, options) {
+  if (options.decode) {
+    return decodeComponent(value);
+  }
+
+  return value;
+}
+
+function keysSorter(input) {
+  if (Array.isArray(input)) {
+    return input.sort();
+  }
+
+  if (_typeof(input) === 'object') {
+    return keysSorter(Object.keys(input)).sort(function (a, b) {
+      return Number(a) - Number(b);
+    }).map(function (key) {
+      return input[key];
+    });
+  }
+
+  return input;
+}
+
+function extract(input) {
+  var queryStart = input.indexOf('?');
+
+  if (queryStart === -1) {
+    return '';
+  }
+
+  return input.slice(queryStart + 1);
+}
+
+function parse(input, options) {
+  options = Object.assign({
+    decode: true,
+    arrayFormat: 'none'
+  }, options);
+  var formatter = parserForArrayFormat(options); // Create an object with no prototype
+
+  var ret = Object.create(null);
+
+  if (typeof input !== 'string') {
+    return ret;
+  }
+
+  input = input.trim().replace(/^[?#&]/, '');
+
+  if (!input) {
+    return ret;
+  }
+
+  for (var param of input.split('&')) {
+    var [key, value] = param.replace(/\+/g, ' ').split('='); // Missing `=` should be `null`:
+    // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+
+    value = value === undefined ? null : decode(value, options);
+    formatter(decode(key, options), value, ret);
+  }
+
+  return Object.keys(ret).sort().reduce(function (result, key) {
+    var value = ret[key];
+
+    if (Boolean(value) && _typeof(value) === 'object' && !Array.isArray(value)) {
+      // Sort object keys, not values
+      result[key] = keysSorter(value);
+    } else {
+      result[key] = value;
+    }
+
+    return result;
+  }, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = function (obj, options) {
+  if (!obj) {
+    return '';
+  }
+
+  options = Object.assign({
+    encode: true,
+    strict: true,
+    arrayFormat: 'none'
+  }, options);
+  var formatter = encoderForArrayFormat(options);
+  var keys = Object.keys(obj);
+
+  if (options.sort !== false) {
+    keys.sort(options.sort);
+  }
+
+  return keys.map(function (key) {
+    var value = obj[key];
+
+    if (value === undefined) {
+      return '';
+    }
+
+    if (value === null) {
+      return encode(key, options);
+    }
+
+    if (Array.isArray(value)) {
+      var result = [];
+
+      for (var value2 of value.slice()) {
+        if (value2 === undefined) {
+          continue;
+        }
+
+        result.push(formatter(key, value2, result.length));
+      }
+
+      return result.join('&');
+    }
+
+    return encode(key, options) + '=' + encode(value, options);
+  }).filter(function (x) {
+    return x.length > 0;
+  }).join('&');
+};
+
+exports.parseUrl = function (input, options) {
+  var hashStart = input.indexOf('#');
+
+  if (hashStart !== -1) {
+    input = input.slice(0, hashStart);
+  }
+
+  return {
+    url: input.split('?')[0] || '',
+    query: parse(extract(input), options)
+  };
+};
+},{"strict-uri-encode":"../node_modules/strict-uri-encode/index.js","decode-uri-component":"../node_modules/decode-uri-component/index.js"}],"../src/utils.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38631,6 +38950,10 @@ exports.urlify = exports.inViewPort = exports.placeEmoji = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _emojiMart = require("emoji-mart");
+
+var _queryString = _interopRequireDefault(require("query-string"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -38726,6 +39049,13 @@ var inViewPort = function inViewPort(elem, parent) {
 
 exports.inViewPort = inViewPort;
 
+var extractIframe = function extractIframe(text) {
+  var div = document.createElement('div');
+  div.innerHTML = text;
+  var iframe = div.querySelector('iframe');
+  return iframe ? iframe.src : text;
+};
+
 var Youtube =
 /*#__PURE__*/
 function (_Component) {
@@ -38757,26 +39087,32 @@ function (_Component) {
       var _this2 = this;
 
       var loaded = this.state.loaded;
-      var url = this.props.url; // find yt id
+      var url = this.props.url;
 
-      var parts = url.split('').reverse();
-      var id = [];
+      var parts = _queryString.default.parseUrl(url);
 
-      for (var i = 0; i < parts.length; i++) {
-        if (parts[i] === '=' || parts[i] === '/') {
-          break;
+      var id = parts.query.v;
+      var extra = '';
+
+      if (!id) {
+        id = parts.url.split('/').pop();
+
+        if (Object.keys(parts.query).length) {
+          id = id.split('?')[0];
         } // end if
 
-
-        id.push(parts[i]);
-      } // end for
+      } // end if
 
 
-      id = id.reverse().join('');
+      if (parts.query.t) {
+        extra = "&start=".concat(parts.query.t);
+      } // end if
+
+
       return loaded ? _react.default.createElement("div", {
         className: "yt-video"
       }, _react.default.createElement("iframe", {
-        src: "https://www.youtube.com/embed/".concat(id, "?autoplay=1"),
+        src: "https://www.youtube.com/embed/".concat(id, "?autoplay=1&mute=1&showinfo=0&playsinline=1").concat(extra),
         height: "360",
         frameBorder: "0",
         className: "w-100"
@@ -38833,24 +39169,32 @@ function (_Component2) {
       var loaded = this.state.loaded;
       var url = this.props.url; // find yt id
 
-      var parts = url.split('').reverse();
-      var id = [];
+      var parts = _queryString.default.parseUrl(url);
 
-      for (var i = 0; i < parts.length; i++) {
-        if (parts[i] === '=' || parts[i] === '/') {
-          break;
-        } // end if
+      var channel = "https://player.twitch.tv/?channel=#channel&muted=true&autoplay=true";
+      var video = "https://player.twitch.tv/?autoplay=true&video=#video&muted=true";
+      var iframeUrl = '';
+
+      if (Object.keys(parts.query).length === 0) {
+        var id = parts.url.split('/').pop();
+        iframeUrl = parts.url.indexOf('video') !== -1 ? video.replace('#video', id) : channel.replace('#channel', id);
+      } // end if
 
 
-        id.push(parts[i]);
-      } // end for
+      if (parts.query.channel) {
+        iframeUrl = channel.replace('#channel', parts.query.channel);
+      } // end if
 
 
-      id = id.reverse().join('');
+      if (parts.query.video) {
+        iframeUrl = video.replace('#video', parts.query.video);
+      } // end if
+
+
       return loaded ? _react.default.createElement("div", {
         className: "yt-video"
       }, _react.default.createElement("iframe", {
-        src: "https://www.youtube.com/embed/".concat(id, "?autoplay=1"),
+        src: iframeUrl,
         height: "360",
         frameBorder: "0",
         className: "w-100"
@@ -38864,7 +39208,7 @@ function (_Component2) {
         key: url
       }, _react.default.createElement("img", {
         className: "w-100",
-        src: "https://img.youtube.com/vi/".concat(id, "/0.jpg")
+        src: "https://img.youtube.com/vi/0.jpg"
       }), _react.default.createElement("div", {
         className: "yt-play-btn"
       }));
@@ -38873,6 +39217,14 @@ function (_Component2) {
 
   return Twitch;
 }(_react.Component);
+
+var Anchor = function Anchor(_ref) {
+  var url = _ref.url;
+  return _react.default.createElement("a", {
+    href: url,
+    target: "_blank"
+  }, url);
+};
 
 var Url =
 /*#__PURE__*/
@@ -38896,6 +39248,11 @@ function (_Component3) {
       return text.indexOf('https://youtu') !== -1 || text.indexOf('https://www.youtu') !== -1;
     }
   }, {
+    key: "isTwitch",
+    value: function isTwitch(text) {
+      return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
+    }
+  }, {
     key: "render",
     value: function render() {
       var text = this.props.text;
@@ -38907,11 +39264,13 @@ function (_Component3) {
 
       return _react.default.createElement(_react.Fragment, {
         key: text
-      }, this.isYoutube(text) ? _react.default.createElement(Youtube, {
+      }, this.isLink(text) ? this.isYoutube(text) ? _react.default.createElement(Youtube, {
         url: text
-      }) : this.isLink(text) ? _react.default.createElement("a", {
-        href: text
-      }, text) : _react.default.createElement("span", null, text));
+      }) : this.isTwitch(text) ? _react.default.createElement(Twitch, {
+        url: text
+      }) : _react.default.createElement(Anchor, {
+        url: text
+      }) : text);
     }
   }]);
 
@@ -38919,16 +39278,38 @@ function (_Component3) {
 }(_react.Component);
 
 var urlify = function urlify(text) {
+  var results = [];
+  var div = document.createElement('div');
   var urlRegex = /(https?:\/\/[^\s]+)/g;
-  return text.split(urlRegex).map(function (candidate) {
-    return _react.default.createElement(Url, {
-      text: candidate
-    });
-  });
+  div.innerHTML = text;
+
+  for (var i = 0; i < div.childNodes.length; i++) {
+    var node = div.childNodes[i];
+    var name = node.nodeName.toLocaleLowerCase();
+
+    if (name === 'iframe') {
+      results.push(_react.default.createElement(Url, {
+        text: node.src
+      }));
+    } // end if
+
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.textContent.split(urlRegex).map(function (candidate) {
+        return results.push(_react.default.createElement(Url, {
+          text: candidate
+        }));
+      });
+    } // end if
+
+  } // end for
+
+
+  return results;
 };
 
 exports.urlify = urlify;
-},{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","query-string":"../node_modules/query-string/index.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -62236,326 +62617,7 @@ var performSearch = function performSearch(queryString) {
 };
 
 exports.performSearch = performSearch;
-},{"./actions":"../src/search/redux/actions.js","axios":"../../node_modules/axios/index.js"}],"../node_modules/strict-uri-encode/index.js":[function(require,module,exports) {
-'use strict';
-
-module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => "%".concat(x.charCodeAt(0).toString(16).toUpperCase()));
-},{}],"../node_modules/decode-uri-component/index.js":[function(require,module,exports) {
-'use strict';
-
-var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
-var multiMatcher = new RegExp('(' + token + ')+', 'gi');
-
-function decodeComponents(components, split) {
-  try {
-    // Try to decode the entire string first
-    return decodeURIComponent(components.join(''));
-  } catch (err) {// Do nothing
-  }
-
-  if (components.length === 1) {
-    return components;
-  }
-
-  split = split || 1; // Split the array in 2 parts
-
-  var left = components.slice(0, split);
-  var right = components.slice(split);
-  return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
-}
-
-function decode(input) {
-  try {
-    return decodeURIComponent(input);
-  } catch (err) {
-    var tokens = input.match(singleMatcher);
-
-    for (var i = 1; i < tokens.length; i++) {
-      input = decodeComponents(tokens, i).join('');
-      tokens = input.match(singleMatcher);
-    }
-
-    return input;
-  }
-}
-
-function customDecodeURIComponent(input) {
-  // Keep track of all the replacements and prefill the map with the `BOM`
-  var replaceMap = {
-    '%FE%FF': '\uFFFD\uFFFD',
-    '%FF%FE': '\uFFFD\uFFFD'
-  };
-  var match = multiMatcher.exec(input);
-
-  while (match) {
-    try {
-      // Decode as big chunks as possible
-      replaceMap[match[0]] = decodeURIComponent(match[0]);
-    } catch (err) {
-      var result = decode(match[0]);
-
-      if (result !== match[0]) {
-        replaceMap[match[0]] = result;
-      }
-    }
-
-    match = multiMatcher.exec(input);
-  } // Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
-
-
-  replaceMap['%C2'] = '\uFFFD';
-  var entries = Object.keys(replaceMap);
-
-  for (var i = 0; i < entries.length; i++) {
-    // Replace all decoded components
-    var key = entries[i];
-    input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
-  }
-
-  return input;
-}
-
-module.exports = function (encodedURI) {
-  if (typeof encodedURI !== 'string') {
-    throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
-  }
-
-  try {
-    encodedURI = encodedURI.replace(/\+/g, ' '); // Try the built in decoder first
-
-    return decodeURIComponent(encodedURI);
-  } catch (err) {
-    // Fallback to a more advanced decoder
-    return customDecodeURIComponent(encodedURI);
-  }
-};
-},{}],"../node_modules/query-string/index.js":[function(require,module,exports) {
-'use strict';
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-var strictUriEncode = require('strict-uri-encode');
-
-var decodeComponent = require('decode-uri-component');
-
-function encoderForArrayFormat(options) {
-  switch (options.arrayFormat) {
-    case 'index':
-      return function (key, value, index) {
-        return value === null ? [encode(key, options), '[', index, ']'].join('') : [encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('');
-      };
-
-    case 'bracket':
-      return function (key, value) {
-        return value === null ? [encode(key, options), '[]'].join('') : [encode(key, options), '[]=', encode(value, options)].join('');
-      };
-
-    default:
-      return function (key, value) {
-        return value === null ? encode(key, options) : [encode(key, options), '=', encode(value, options)].join('');
-      };
-  }
-}
-
-function parserForArrayFormat(options) {
-  var result;
-
-  switch (options.arrayFormat) {
-    case 'index':
-      return function (key, value, accumulator) {
-        result = /\[(\d*)\]$/.exec(key);
-        key = key.replace(/\[\d*\]$/, '');
-
-        if (!result) {
-          accumulator[key] = value;
-          return;
-        }
-
-        if (accumulator[key] === undefined) {
-          accumulator[key] = {};
-        }
-
-        accumulator[key][result[1]] = value;
-      };
-
-    case 'bracket':
-      return function (key, value, accumulator) {
-        result = /(\[\])$/.exec(key);
-        key = key.replace(/\[\]$/, '');
-
-        if (!result) {
-          accumulator[key] = value;
-          return;
-        }
-
-        if (accumulator[key] === undefined) {
-          accumulator[key] = [value];
-          return;
-        }
-
-        accumulator[key] = [].concat(accumulator[key], value);
-      };
-
-    default:
-      return function (key, value, accumulator) {
-        if (accumulator[key] === undefined) {
-          accumulator[key] = value;
-          return;
-        }
-
-        accumulator[key] = [].concat(accumulator[key], value);
-      };
-  }
-}
-
-function encode(value, options) {
-  if (options.encode) {
-    return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
-  }
-
-  return value;
-}
-
-function decode(value, options) {
-  if (options.decode) {
-    return decodeComponent(value);
-  }
-
-  return value;
-}
-
-function keysSorter(input) {
-  if (Array.isArray(input)) {
-    return input.sort();
-  }
-
-  if (_typeof(input) === 'object') {
-    return keysSorter(Object.keys(input)).sort(function (a, b) {
-      return Number(a) - Number(b);
-    }).map(function (key) {
-      return input[key];
-    });
-  }
-
-  return input;
-}
-
-function extract(input) {
-  var queryStart = input.indexOf('?');
-
-  if (queryStart === -1) {
-    return '';
-  }
-
-  return input.slice(queryStart + 1);
-}
-
-function parse(input, options) {
-  options = Object.assign({
-    decode: true,
-    arrayFormat: 'none'
-  }, options);
-  var formatter = parserForArrayFormat(options); // Create an object with no prototype
-
-  var ret = Object.create(null);
-
-  if (typeof input !== 'string') {
-    return ret;
-  }
-
-  input = input.trim().replace(/^[?#&]/, '');
-
-  if (!input) {
-    return ret;
-  }
-
-  for (var param of input.split('&')) {
-    var [key, value] = param.replace(/\+/g, ' ').split('='); // Missing `=` should be `null`:
-    // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-
-    value = value === undefined ? null : decode(value, options);
-    formatter(decode(key, options), value, ret);
-  }
-
-  return Object.keys(ret).sort().reduce(function (result, key) {
-    var value = ret[key];
-
-    if (Boolean(value) && _typeof(value) === 'object' && !Array.isArray(value)) {
-      // Sort object keys, not values
-      result[key] = keysSorter(value);
-    } else {
-      result[key] = value;
-    }
-
-    return result;
-  }, Object.create(null));
-}
-
-exports.extract = extract;
-exports.parse = parse;
-
-exports.stringify = function (obj, options) {
-  if (!obj) {
-    return '';
-  }
-
-  options = Object.assign({
-    encode: true,
-    strict: true,
-    arrayFormat: 'none'
-  }, options);
-  var formatter = encoderForArrayFormat(options);
-  var keys = Object.keys(obj);
-
-  if (options.sort !== false) {
-    keys.sort(options.sort);
-  }
-
-  return keys.map(function (key) {
-    var value = obj[key];
-
-    if (value === undefined) {
-      return '';
-    }
-
-    if (value === null) {
-      return encode(key, options);
-    }
-
-    if (Array.isArray(value)) {
-      var result = [];
-
-      for (var value2 of value.slice()) {
-        if (value2 === undefined) {
-          continue;
-        }
-
-        result.push(formatter(key, value2, result.length));
-      }
-
-      return result.join('&');
-    }
-
-    return encode(key, options) + '=' + encode(value, options);
-  }).filter(function (x) {
-    return x.length > 0;
-  }).join('&');
-};
-
-exports.parseUrl = function (input, options) {
-  var hashStart = input.indexOf('#');
-
-  if (hashStart !== -1) {
-    input = input.slice(0, hashStart);
-  }
-
-  return {
-    url: input.split('?')[0] || '',
-    query: parse(extract(input), options)
-  };
-};
-},{"strict-uri-encode":"../node_modules/strict-uri-encode/index.js","decode-uri-component":"../node_modules/decode-uri-component/index.js"}],"../src/search/Components/UserListComponent.js":[function(require,module,exports) {
+},{"./actions":"../src/search/redux/actions.js","axios":"../../node_modules/axios/index.js"}],"../src/search/Components/UserListComponent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
