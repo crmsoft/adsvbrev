@@ -15,15 +15,36 @@ class FeedController extends Controller
         $user = auth()->user();
 
         return new PostCollection(
-            Post::whereRaw("(postable_type = ?
-                                AND (postable_id IN (SELECT 
-                                    user_id
-                                FROM
-                                    user_friends
-                                WHERE
-                                    friend_id = ? AND status = 'friend'
-                                        AND deleted_at IS NULL)
-                                OR postable_id = ?))", [ 'App\User', $user->id, $user->id ])
+            Post::join('postables', 'postables.post_id', '=', 'posts.id')
+            ->whereRaw("(postables.postable_type = ?
+                            AND (postables.postable_id IN (SELECT 
+                                user_id
+                            FROM
+                                game.user_friends
+                            WHERE
+                                friend_id = ? AND status = 'friend'
+                                    AND deleted_at IS NULL)
+                            OR postables.postable_id = ?))
+                            OR (postables.postable_type = ?
+                            AND postables.postable_id IN (SELECT DISTINCT
+                                user_id
+                            FROM
+                                user_friends
+                                    JOIN
+                                events e ON e.creator_id = user_friends.user_id
+                            WHERE
+                                (friend_id = ? AND status = 'friend'
+                                    AND user_friends.deleted_at IS NULL
+                                    AND e.deleted_at IS NULL)
+                                    OR (e.creator_id = ? 
+                                    AND e.deleted_at IS NULL)))", [ 
+                                        'App\User', 
+                                        $user->id, 
+                                        $user->id, 
+                                        'App\Entities\Event' ,
+                                        $user->id, 
+                                        $user->id 
+                                    ])
                                 ->with([
                                     'media', 
                                     'postable', 
@@ -35,7 +56,7 @@ class FeedController extends Controller
                                         $query->with(['media', 'postable']);
                                     }
                                 ])
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy('posts.created_at', 'desc')
                                 ->take(2)
                                 ->get()
         );
@@ -53,15 +74,39 @@ class FeedController extends Controller
 
 
         return new PostCollection(
-            Post::whereRaw("(postable_type = ?
-                                AND (postable_id IN (SELECT 
-                                    user_id
-                                FROM
-                                    user_friends
-                                WHERE
-                                    friend_id = ? AND status = 'friend'
-                                        AND deleted_at IS NULL)
-                                OR postable_id = ?))", [ 'App\User', $user->id, $user->id ])
+            Post::join('postables', function($query) use ($last_id) {
+                $query->on('postables.post_id', '=', 'posts.id');
+                $query->on('postables.post_id', '<', \DB::raw($last_id));
+            })
+                    ->whereRaw("(postables.postable_type = ?
+                            AND (postables.postable_id IN (SELECT 
+                                user_id
+                            FROM
+                                game.user_friends
+                            WHERE
+                                friend_id = ? AND status = 'friend'
+                                    AND deleted_at IS NULL)
+                            OR postables.postable_id = ?))
+                            OR (postables.postable_type = ?
+                            AND postables.postable_id IN (SELECT DISTINCT
+                                user_id
+                            FROM
+                                user_friends
+                                    JOIN
+                                events e ON e.creator_id = user_friends.user_id
+                            WHERE
+                                (friend_id = ? AND status = 'friend'
+                                    AND user_friends.deleted_at IS NULL
+                                    AND e.deleted_at IS NULL)
+                                    OR (e.creator_id = ? 
+                                    AND e.deleted_at IS NULL)))", [ 
+                                        'App\User', 
+                                        $user->id, 
+                                        $user->id, 
+                                        'App\Entities\Event' ,
+                                        $user->id, 
+                                        $user->id 
+                                    ])
                                 ->with([
                                     'media', 
                                     'postable', 
@@ -73,8 +118,7 @@ class FeedController extends Controller
                                         $query->with(['media', 'postable']);
                                     }
                                 ])
-                                ->where('id', '<', $last_id)
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy('posts.created_at', 'desc')
                                 ->take(2)
                                 ->get()
         );
