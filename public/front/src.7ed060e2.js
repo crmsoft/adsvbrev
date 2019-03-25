@@ -40815,14 +40815,17 @@ function (_Component2) {
     value: function fetchPoster(id) {
       var _this4 = this;
 
-      _axios.default.get("/api/v1/twitch/video/".concat(id, "/thumb")).then(function (_ref) {
-        var data = _ref.data;
-        !_this4.state.loaded && _this4.setState(function () {
-          return {
-            poster: data.medium
-          };
+      if (this.state.poster === undefined) {
+        _axios.default.get("/api/v1/twitch/video/".concat(id, "/thumb")).then(function (_ref) {
+          var data = _ref.data;
+          !_this4.state.loaded && _this4.setState(function () {
+            return {
+              poster: data.medium
+            };
+          });
         });
-      });
+      } // end if
+
     }
   }, {
     key: "render",
@@ -40843,7 +40846,15 @@ function (_Component2) {
 
       if (Object.keys(parts.query).length === 0) {
         var id = parts.url.split('/').pop();
-        iframeUrl = parts.url.indexOf('video') !== -1 ? video.replace('#video', id) && (poster ? thumb = poster : this.fetchPoster(id)) : channel.replace('#channel', id) && (thumb = "https://static-cdn.jtvnw.net/previews-ttv/live_user_".concat(id, "-640x360.jpg"));
+
+        if (parts.url.indexOf('video') !== -1) {
+          iframeUrl = video.replace('#video', id);
+          poster ? thumb = poster : this.fetchPoster(id);
+        } else {
+          iframeUrl = channel.replace('#channel', id);
+          thumb = "https://static-cdn.jtvnw.net/previews-ttv/live_user_".concat(id, "-640x360.jpg");
+        } // end if
+
       } // end if
 
 
@@ -40853,8 +40864,12 @@ function (_Component2) {
       } // end if
 
 
-      if (parts.query.video) {
-        iframeUrl = video.replace('#video', parts.query.video);
+      if (parts.query.video || parts.query.t) {
+        var _id = parts.query.video ? parts.query.video : parts.url.split('/').pop();
+
+        iframeUrl = video.replace('#video', _id);
+        poster ? thumb = poster : this.fetchPoster(_id);
+        parts.query.t ? iframeUrl += "&t=".concat(parts.query.t) : "";
       } // end if
 
 
@@ -69708,7 +69723,9 @@ function (_Component) {
           className: "user-list-user-name"
         }, user.full_name), _react.default.createElement("span", {
           className: "user-list-username"
-        }, not.message))))));
+        }, not.message, " ", _react.default.createElement("span", {
+          className: "notification-time"
+        }, not.time)))))));
       })))));
     }
   }]);

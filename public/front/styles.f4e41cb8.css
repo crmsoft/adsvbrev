@@ -8314,10 +8314,13 @@ header {
           display: block; }
       .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions {
         padding-top: 11px !important; }
+  .followers-popup .popup-content .notification-list .notification-time {
+    color: #F15A24; }
   .followers-popup .popup-content .notification-list .user {
     border-bottom: 1px solid #2F3136; }
   .followers-popup .popup-content .notification-list li .user-list-user {
-    width: auto; }
+    width: auto;
+    max-width: initial; }
   .followers-popup .popup-content .notification-list li .user-list-user-name {
     font-size: 15px;
     text-overflow: unset; }
