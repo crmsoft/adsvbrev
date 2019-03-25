@@ -173,7 +173,7 @@ Route::group([
         ]);
 
     // handle social callback
-    Route::get('/twitch/sub', 'SocialeLoginController@ts')
+    Route::any('/twitch/sub', 'SocialeLoginController@ts')
     ->name('twitch.sub.callback');
 
 });

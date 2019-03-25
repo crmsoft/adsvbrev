@@ -27,7 +27,7 @@ class FeedController extends Controller
                             OR postables.postable_id = ?))
                             OR (postables.postable_type = ?
                             AND postables.postable_id IN (SELECT DISTINCT
-                                user_id
+                                e.id
                             FROM
                                 user_friends
                                     JOIN
@@ -89,7 +89,7 @@ class FeedController extends Controller
                             OR postables.postable_id = ?))
                             OR (postables.postable_type = ?
                             AND postables.postable_id IN (SELECT DISTINCT
-                                user_id
+                                e.id
                             FROM
                                 user_friends
                                     JOIN
