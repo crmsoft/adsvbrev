@@ -6356,7 +6356,7 @@ a.text-dark:hover, a.text-dark:focus {
 .icon-binocolo-2:before {
   content: "\e907"; }
 
-.icon-cacke:before {
+.icon-cake:before {
   content: "\e908"; }
 
 .icon-cog:before {
@@ -8454,11 +8454,6 @@ nav.user-profile {
       nav.user-profile .profile.editable .edit:hover {
         text-decoration: underline;
         text-decoration-color: #F15A24; }
-        nav.user-profile .profile.editable .edit:hover:after {
-          content: "\e912";
-          font-family: 'icomoon' !important;
-          padding-left: 5px;
-          font-size: 12px; }
     nav.user-profile .profile .user {
       color: #F05A24; }
       nav.user-profile .profile .user .user-level {
@@ -8487,7 +8482,7 @@ nav.user-profile {
   nav.user-profile .user-pc {
     display: flex;
     align-self: flex-end; }
-    nav.user-profile .user-pc .icon-pc {
+    nav.user-profile .user-pc .icon-location {
       padding-top: 5px;
       color: #F05A24;
       margin: 0 5px; }
@@ -8513,7 +8508,10 @@ nav.user-profile {
       margin: 0;
       align-self: flex-end; }
       nav.user-profile .right-block-wrapper .social-list li {
+        margin-right: 5px;
         display: inline; }
+        nav.user-profile .right-block-wrapper .social-list li:last-child {
+          margin-right: 0; }
         nav.user-profile .right-block-wrapper .social-list li a {
           position: relative;
           height: 50px;
@@ -8658,7 +8656,8 @@ nav.user-profile {
           margin: 0 auto; }
         .profile-aside .block .block-content .friends .friend h2 {
           font-size: 12px;
-          text-align: center; }
+          text-align: center;
+          height: 42px; }
         .profile-aside .block .block-content .friends .friend .search-more {
           background-color: #2F3136;
           position: relative;
@@ -9026,7 +9025,7 @@ nav.user-profile {
         font-size: 12px; }
     .post .post-header .post-options {
       flex-basis: 15px;
-      font-size: 25px;
+      font-size: 5px;
       font-weight: 900;
       align-self: center;
       cursor: pointer; }
@@ -9257,7 +9256,8 @@ nav.user-profile {
     .comments .comment .comment-dot {
       color: #ffffff;
       cursor: pointer;
-      line-height: 16px; }
+      line-height: 16px;
+      font-size: 4px; }
       .comments .comment .comment-dot .popup-overlay {
         display: none; }
       .comments .comment .comment-dot .popup-content {
@@ -9581,17 +9581,13 @@ nav.user-profile {
             height: 24px;
             margin-left: 5px; }
         .chat .dialog-wrapper .dialog .input .attach {
-          padding: 0 5px;
           display: flex;
           align-items: center;
-          font-size: 9px; }
+          font-size: 17px;
+          width: 27px; }
           .chat .dialog-wrapper .dialog .input .attach span {
-            background-color: #CBCBCB;
-            border-radius: 45px;
-            width: 12px;
             text-align: center;
             vertical-align: middle;
-            height: 12px;
             cursor: pointer; }
         .chat .dialog-wrapper .dialog .input .emoji-container {
           position: absolute;
@@ -9601,6 +9597,8 @@ nav.user-profile {
           display: none; }
           .chat .dialog-wrapper .dialog .input .emoji-container.show {
             display: block; }
+            .chat .dialog-wrapper .dialog .input .emoji-container.show + .emoji {
+              color: #F15A24; }
       .chat .dialog-wrapper .dialog .dialog-head {
         border-bottom: 1px solid gray;
         display: flex;
