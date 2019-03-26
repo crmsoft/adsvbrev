@@ -43562,7 +43562,7 @@ function (_Component) {
         onClick: this.selectFile.bind(this),
         className: "icon-photo-cam"
       }), _react.default.createElement("span", {
-        className: "icon-video-cam"
+        className: "icon-v-cam"
       })));
     }
   }], [{
@@ -45111,10 +45111,14 @@ function (_Component) {
         closeOnDocumentClick: true,
         position: "left center",
         modal: false,
-        trigger: _react.default.createElement("span", null, "...")
+        trigger: _react.default.createElement("span", {
+          className: "icon-more"
+        })
       }, _react.default.createElement("ul", null, _react.default.createElement("li", null, "pin post"), _react.default.createElement("li", {
         onClick: this.deletePost.bind(this)
-      }, "delete"))) : repost ? null : _react.default.createElement("span", null, "..."))), _react.default.createElement("div", {
+      }, "delete"))) : repost ? null : _react.default.createElement("span", {
+        className: "icon-more"
+      }))), _react.default.createElement("div", {
         className: "post-content"
       }, _react.default.createElement(PostContnet, {
         more: more,
@@ -47838,9 +47842,8 @@ function (_Component) {
       }), this.props.isGuest ? null : _react.default.createElement(_reactRouterDom.Link, {
         to: "/search",
         className: "friend"
-      }, _react.default.createElement("img", {
-        src: "/img/add-friends.jpg",
-        alt: "body"
+      }, _react.default.createElement("span", {
+        className: "search-more"
       })))));
     }
   }]);
@@ -48517,9 +48520,8 @@ function (_Component) {
       }), this.props.isGuest ? null : _react.default.createElement(_reactRouterDom.Link, {
         to: "/search?i=gr",
         className: "friend"
-      }, _react.default.createElement("img", {
-        src: "/img/add-friends.jpg",
-        alt: "body"
+      }, _react.default.createElement("span", {
+        className: "search-more"
       })))));
     }
   }]);
@@ -48742,7 +48744,7 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-art"
+        className: "icon-picture"
       }, " Images"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
@@ -49586,7 +49588,7 @@ var UserProfile = function UserProfile(data) {
     className: "icon-twitch"
   })), _react.default.createElement("li", null, _react.default.createElement("a", {
     href: "#",
-    className: "icon-yt"
+    className: "icon-youtube"
   })), _react.default.createElement("li", null, _react.default.createElement("a", {
     href: "#",
     className: "icon-steam"
@@ -50128,7 +50130,7 @@ function (_Component) {
         }
       }, _react.default.createElement("a", {
         href: "javascript:void(0)",
-        className: "icon-video-cam"
+        className: "icon-v-cam"
       }), _react.default.createElement("a", {
         href: "javascript:void(0)",
         className: "icon-photo-cam"
@@ -50820,7 +50822,7 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-profile"
+        className: "icon-info"
       }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
@@ -64083,8 +64085,8 @@ function (_Component) {
         closeOnEscape: true,
         modal: false,
         trigger: _react.default.createElement("span", {
-          className: "settings"
-        }, "\u26EF")
+          className: "settings icon-cog"
+        })
       }, _react.default.createElement(_MessengerOptions.default, {
         status: m_status,
         sound: m_sound
@@ -64324,7 +64326,9 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "emoji",
         onClick: this.toggleEmoji.bind(this)
-      }, "\u03C8"), _react.default.createElement(_reactTextareaAutosize.default, {
+      }, _react.default.createElement("span", {
+        className: "icon-icons"
+      })), _react.default.createElement(_reactTextareaAutosize.default, {
         inputRef: function inputRef(ref) {
           _this3.inputRef = ref;
         },
@@ -64335,7 +64339,9 @@ function (_Component) {
         onChange: this.onText.bind(this)
       }), _react.default.createElement("div", {
         className: "attach"
-      }, _react.default.createElement("span", null, "E")));
+      }, _react.default.createElement("span", {
+        className: "icon-pine"
+      })));
     }
   }]);
 
@@ -69482,7 +69488,9 @@ function (_Component) {
             return _this5.onDecline.call(_this5, user.username);
           },
           className: "dd-btn btn-red btn-sm m-1"
-        }, "Deny"))));
+        }, _react.default.createElement("span", {
+          className: "icon-remove"
+        }), "Deny"))));
       })))));
     }
   }]);
@@ -69870,7 +69878,7 @@ function (_Component) {
         className: "form-inline my-2 my-lg-0 w-100",
         action: "/search"
       }, _react.default.createElement("span", {
-        className: "icon-search-icon"
+        className: "icon-search"
       }), _react.default.createElement("input", {
         className: "form-control mr-sm-2 w-100",
         name: "q",
@@ -72036,7 +72044,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35168" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38146" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

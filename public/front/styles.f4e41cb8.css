@@ -6317,8 +6317,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 @font-face {
   font-family: 'icomoon';
-  src: url("icomoon.d20398a5.eot?vdr6wg");
-  src: url("icomoon.d20398a5.eot?vdr6wg#iefix") format("embedded-opentype"), url("icomoon.a131a1b3.ttf?vdr6wg") format("truetype"), url("icomoon.9cf68eed.woff?vdr6wg") format("woff"), url("icomoon.2c812770.svg?vdr6wg#icomoon") format("svg");
+  src: url("icomoon.d20398a5.eot?qwn824");
+  src: url("icomoon.d20398a5.eot?qwn824#iefix") format("embedded-opentype"), url("icomoon.a131a1b3.ttf?qwn824") format("truetype"), url("icomoon.9cf68eed.woff?qwn824") format("woff"), url("icomoon.2c812770.svg?qwn824#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -6335,104 +6335,191 @@ a.text-dark:hover, a.text-dark:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.icon-add-friends .path1:before {
-  content: "\e900";
-  color: #484b52; }
+.icon-uniE900:before {
+  content: "\e900"; }
 
-.icon-add-friends .path2:before {
-  content: "\e91f";
-  margin-left: -1em;
-  color: #2f3136; }
-
-.icon-art:before {
+.icon-add-dude:before {
   content: "\e901"; }
 
-.icon-cake:before {
+.icon-add-o:before {
   content: "\e902"; }
 
-.icon-caret-down:before {
-  content: "\e903"; }
-
-.icon-clan:before {
+.icon-arrow-down:before {
   content: "\e904"; }
 
-.icon-event:before {
+.icon-basket:before {
   content: "\e905"; }
 
-.icon-friend:before {
+.icon-binocolo:before {
   content: "\e906"; }
 
-.icon-friends:before {
+.icon-binocolo-2:before {
   content: "\e907"; }
 
-.icon-gamepad:before {
+.icon-cacke:before {
   content: "\e908"; }
 
-.icon-groups:before {
+.icon-cog:before {
   content: "\e909"; }
 
-.icon-heart:before {
+.icon-comment:before {
   content: "\e90a"; }
 
-.icon-heart-empty:before {
+.icon-cross:before {
   content: "\e90b"; }
 
-.icon-kubok:before {
+.icon-finger-down:before {
   content: "\e90c"; }
 
-.icon-location:before {
+.icon-finger-up:before {
   content: "\e90d"; }
 
-.icon-m-groups:before {
+.icon-fist:before {
   content: "\e90e"; }
 
-.icon-news:before {
+.icon-friend:before {
   content: "\e90f"; }
 
-.icon-notification:before {
+.icon-friends:before {
   content: "\e910"; }
 
-.icon-pc:before {
+.icon-gamepad:before {
   content: "\e911"; }
 
-.icon-pencil:before {
+.icon-group:before {
   content: "\e912"; }
 
-.icon-photo-cam:before {
+.icon-group-2:before {
   content: "\e913"; }
 
-.icon-play:before {
+.icon-heart:before {
   content: "\e914"; }
 
-.icon-profile:before {
+.icon-icons:before {
   content: "\e915"; }
 
-.icon-reply-to-comment:before {
+.icon-info:before {
   content: "\e916"; }
 
-.icon-search-icon:before {
+.icon-info-o:before {
   content: "\e917"; }
 
-.icon-share:before {
+.icon-location:before {
   content: "\e918"; }
 
-.icon-steam:before {
+.icon-man-listening:before {
   content: "\e919"; }
 
-.icon-tournament:before {
+.icon-message:before {
   content: "\e91a"; }
 
-.icon-trade:before {
+.icon-more:before {
   content: "\e91b"; }
 
-.icon-twitch:before {
+.icon-notification:before {
   content: "\e91c"; }
 
-.icon-video-cam:before {
+.icon-pc:before {
   content: "\e91d"; }
 
-.icon-yt:before {
+.icon-photo-cam:before {
   content: "\e91e"; }
+
+.icon-picture:before {
+  content: "\e91f"; }
+
+.icon-pine:before {
+  content: "\e920"; }
+
+.icon-play:before {
+  content: "\e921"; }
+
+.icon-plus:before, .profile-aside .block .block-content .friends .friend .search-more:before {
+  content: "\e922"; }
+
+.icon-prise:before {
+  content: "\e925"; }
+
+.icon-remove:before {
+  content: "\e926"; }
+
+.icon-schedule:before {
+  content: "\e929"; }
+
+.icon-search:before {
+  content: "\e92a"; }
+
+.icon-search-o:before {
+  content: "\e92b"; }
+
+.icon-select-picture:before {
+  content: "\e92c"; }
+
+.icon-share:before {
+  content: "\e92d"; }
+
+.icon-ticke:before {
+  content: "\e92e"; }
+
+.icon-v-cam:before {
+  content: "\e92f"; }
+
+.icon-circle-right:before {
+  content: "\ea42"; }
+
+.icon-circle-left:before {
+  content: "\ea44"; }
+
+.icon-embed2:before {
+  content: "\ea80"; }
+
+.icon-google:before {
+  content: "\ea88"; }
+
+.icon-google-plus:before {
+  content: "\ea8b"; }
+
+.icon-facebook:before {
+  content: "\ea90"; }
+
+.icon-instagram:before {
+  content: "\ea92"; }
+
+.icon-whatsapp:before {
+  content: "\ea93"; }
+
+.icon-spotify:before {
+  content: "\ea94"; }
+
+.icon-telegram:before {
+  content: "\ea95"; }
+
+.icon-twitter:before {
+  content: "\ea96"; }
+
+.icon-youtube:before {
+  content: "\ea9d"; }
+
+.icon-twitch:before {
+  content: "\ea9f"; }
+
+.icon-github:before {
+  content: "\eab0"; }
+
+.icon-tumblr:before {
+  content: "\eab9"; }
+
+.icon-appleinc:before {
+  content: "\eabe"; }
+
+.icon-android:before {
+  content: "\eac0"; }
+
+.icon-skype:before {
+  content: "\eac5"; }
+
+.icon-linkedin2:before {
+  content: "\eaca"; }
 
 body {
   font-family: 'Roboto', sans-serif; }
@@ -8252,13 +8339,13 @@ header {
     padding: 5px; }
     header .navbar-nav .nav-item .header-ava-text::after {
       font-family: 'icomoon';
-      content: '\e903';
+      content: '\e904';
       font-size: 9px; }
   header .navbar-brand img {
     height: 50px; }
   header .nav-search form {
     position: relative; }
-  header .nav-search .icon-search-icon {
+  header .nav-search .icon-search {
     width: 15px;
     height: 15px;
     position: absolute;
@@ -8294,6 +8381,8 @@ header {
     padding: 0;
     max-height: 320px;
     overflow-y: auto; }
+    .followers-popup .popup-content .followers-list .dd-btn, .followers-popup .popup-content .notification-list .dd-btn {
+      font-size: 12px; }
     .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       height: auto;
       list-style: none; }
@@ -8439,11 +8528,11 @@ nav.user-profile {
             font-size: 21px;
             top: 15px;
             left: 15px; }
-          nav.user-profile .right-block-wrapper .social-list li a.icon-yt::before {
+          nav.user-profile .right-block-wrapper .social-list li a.icon-youtube::before {
             position: absolute;
             font-size: 20px;
             top: 15px;
-            left: 11px; }
+            left: 15px; }
           nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
             position: absolute;
             font-size: 17px;
@@ -8570,14 +8659,21 @@ nav.user-profile {
         .profile-aside .block .block-content .friends .friend h2 {
           font-size: 12px;
           text-align: center; }
-        .profile-aside .block .block-content .friends .friend .item-plus {
+        .profile-aside .block .block-content .friends .friend .search-more {
+          background-color: #2F3136;
+          position: relative;
+          margin-left: 10px;
+          width: 50px;
+          height: 50px;
           display: inline-block;
-          background: #484B52;
-          border-radius: 32px;
-          text-align: center;
-          display: block;
-          font-size: 32px;
-          margin: 0 2px; }
+          font-family: 'icomoon';
+          border-radius: 50%; }
+          .profile-aside .block .block-content .friends .friend .search-more:before {
+            color: #F15A24;
+            position: absolute;
+            margin: -16px 0 0 14px;
+            font-size: 22px;
+            top: 50%; }
       .profile-aside .block .block-content .friends:after {
         content: ' ';
         clear: both;
@@ -8781,7 +8877,7 @@ nav.user-profile {
     .textarea .emoji.active {
       color: #F15A24; }
     .textarea .emoji:before {
-      content: "\e907"; }
+      content: "\e915"; }
 
 .user-add-post {
   padding: 10px;
@@ -8969,8 +9065,10 @@ nav.user-profile {
         top: 50%;
         left: 50%; }
         .post .post-content .yt-video .yt-play-btn:after {
-          content: 'Play';
-          margin-left: 5px;
+          content: '\e921';
+          font-size: 35px;
+          font-family: 'icomoon';
+          margin-top: -17.5px;
           display: block; }
     .post .post-content .post-media {
       max-height: 750px;
