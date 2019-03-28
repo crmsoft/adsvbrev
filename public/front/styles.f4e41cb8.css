@@ -9490,7 +9490,9 @@ nav.user-profile {
       .chat .chat-wrapper .header .chat-actions {
         display: flex; }
         .chat .chat-wrapper .header .chat-actions .minimize {
-          margin-right: 5px; }
+          margin-right: 5px;
+          border-bottom: 1px solid white;
+          width: 10px; }
     .chat .chat-wrapper .chatable {
       overflow: auto;
       max-height: 280px; }

@@ -47608,13 +47608,13 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-art"
+        className: "icon-friends"
       }, " Friends"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-play"
+        className: "icon-add-dude"
       }, " Followers")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_reactRedux.Provider, {
@@ -64076,7 +64076,7 @@ function (_Component) {
       }, _react.default.createElement("span", {
         onClick: this.minimizeMessenger.bind(this),
         className: "minimize"
-      }, "\u2693"), _react.default.createElement(_reactjsPopup.default, {
+      }), _react.default.createElement(_reactjsPopup.default, {
         className: "options-pop-up",
         contentStyle: popupStyle,
         position: "top right",
