@@ -9254,10 +9254,13 @@ nav.user-profile {
     .comments .comment .comment-time {
       color: #F15A24; }
     .comments .comment .comment-dot {
+      padding-top: 5px;
       color: #ffffff;
       cursor: pointer;
       line-height: 16px;
-      font-size: 4px; }
+      font-size: 3px; }
+      .comments .comment .comment-dot > span {
+        padding: 5px 0; }
       .comments .comment .comment-dot .popup-overlay {
         display: none; }
       .comments .comment .comment-dot .popup-content {

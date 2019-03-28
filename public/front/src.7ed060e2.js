@@ -42123,12 +42123,14 @@ function (_Component) {
         closeOnDocumentClick: true,
         position: "left center",
         modal: false,
-        trigger: _react.default.createElement("span", null, "...")
+        trigger: _react.default.createElement("span", {
+          className: "icon-more"
+        }, "\xA0")
       }, _react.default.createElement("ul", null, _react.default.createElement("li", {
         onClick: this.delete.bind(this)
       }, "delete"))) : _react.default.createElement("span", {
         className: "icon-more"
-      }, "...")));
+      })));
     }
   }]);
 
@@ -47906,7 +47908,7 @@ function (_Component) {
           _this.props.total && _this.props.showModal();
         }
       }, _react.default.createElement("span", {
-        className: "icon-groups"
+        className: "icon-group"
       }), _react.default.createElement("h3", null, "Groups"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", this.props.total));
@@ -57332,12 +57334,12 @@ function (_Component) {
           return match || location.pathname === '/schedule' || location.pathname === '/settings';
         }
       }, _react.default.createElement("span", {
-        className: "icon-profile"
+        className: "icon-profile icon-info"
       }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
         activeClassName: "active",
         to: "/feed"
       }, _react.default.createElement("span", {
-        className: "icon-profile"
+        className: "icon-profile icon-schedule"
       }, " feed"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
         activeClassName: "active",
         to: "/dudes"
@@ -72044,7 +72046,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35246" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42285" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
