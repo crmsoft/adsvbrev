@@ -47609,13 +47609,13 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }, " Friends"))), _react.default.createElement(_reactTabs.Tab, {
+      }), " Friends")), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-add-dude"
-      }, " Followers")))), _react.default.createElement("div", {
+      }), " Followers"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_reactRedux.Provider, {
         store: _index.default
@@ -47694,6 +47694,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return _react.default.createElement(_reactjsPopup.default, {
         lockScroll: false,
         contentStyle: {
@@ -47722,7 +47724,12 @@ function (_Component) {
         user: this.props.user
       })), _react.default.createElement("div", {
         className: "popup-footer"
-      }, _react.default.createElement("div", null, _react.default.createElement("button", null, "Close"), _react.default.createElement("button", null, "Ok")))));
+      }, _react.default.createElement("div", null, _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.closeModal();
+        },
+        className: "dd-btn btn-sm"
+      }, "Close")))));
     }
   }]);
 
@@ -48749,13 +48756,13 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-picture"
-      }, " Images"))), _react.default.createElement(_reactTabs.Tab, {
+      }), " Images")), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-play"
-      }, " Videos")))), _react.default.createElement("div", {
+      }), " Videos"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, null)), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_videoCotent.default, null))));
     }
@@ -62352,14 +62359,14 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-art"
-      }, " Profile"))), _react.default.createElement(_reactTabs.Tab, {
+        className: "icon-info"
+      }), " Profile")), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-art"
-      }, " Security")))), _react.default.createElement("div", {
+      }), " Security"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_profile.default, {
         profile: data.profile,
@@ -63025,13 +63032,13 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }, " Gamers"))), _react.default.createElement(_reactTabs.Tab, {
+      }), " Gamers")), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-groups"
-      }, " Groups")))), _react.default.createElement("div", {
+      }), " Groups"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_SearchField.default, {
         onQuery: this.onQueryChange,

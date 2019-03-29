@@ -6717,7 +6717,8 @@ body {
   color: #F15A24 !important; }
 
 .react-tabs__tab {
-  z-index: 0; }
+  z-index: 0;
+  font-weight: 800; }
 
 .content-bottom {
   display: flex;
