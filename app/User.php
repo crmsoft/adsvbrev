@@ -215,7 +215,7 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
     }
 
     public function feed(){
-        return $this->morphToMany(Post::class, 'postable');
+        return $this->morphToMany(Post::class, 'postable')->withTimestamps();
     }
 
     public function events( $date = null)

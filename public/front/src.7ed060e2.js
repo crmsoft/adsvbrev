@@ -57335,17 +57335,17 @@ function (_Component) {
         }
       }, _react.default.createElement("span", {
         className: "icon-profile icon-info"
-      }, " my profile"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+      }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
         activeClassName: "active",
         to: "/feed"
       }, _react.default.createElement("span", {
         className: "icon-profile icon-schedule"
-      }, " feed"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+      }), " ", " feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
         activeClassName: "active",
         to: "/dudes"
       }, _react.default.createElement("span", {
         className: "icon-profile"
-      }, " Find Dudes")))));
+      }), " ", " Find Dudes"))));
     }
   }]);
 
@@ -58503,13 +58503,13 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-info"
-      }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
+      }), " About Me")), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-pc"
-      }, " My Devices")))), _react.default.createElement("div", {
+      }), " My Devices"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         profile: user.profile
@@ -61259,7 +61259,7 @@ function (_Component) {
       })), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
-        className: "block"
+        className: "block friends"
       }, _react.default.createElement(_index2.default, {
         isGuest: false,
         list: friends,
@@ -64068,15 +64068,13 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement("span", {
+        onClick: this.minimizeMessenger.bind(this),
         className: "title ".concat(m_status)
       }, "Messenger ", unread_chats > 0 ? _react.default.createElement("span", {
         className: "unread-chat-counter"
       }, unread_chats) : null), _react.default.createElement("div", {
         className: "chat-actions"
-      }, _react.default.createElement("span", {
-        onClick: this.minimizeMessenger.bind(this),
-        className: "minimize"
-      }), _react.default.createElement(_reactjsPopup.default, {
+      }, _react.default.createElement(_reactjsPopup.default, {
         className: "options-pop-up",
         contentStyle: popupStyle,
         position: "top right",
@@ -69485,7 +69483,9 @@ function (_Component) {
             return _this5.onAccept.call(_this5, user.username);
           },
           className: "dd-btn btn-yellow btn-sm m-1"
-        }, "Accept"), _react.default.createElement("button", {
+        }, _react.default.createElement("span", {
+          className: "icon-handshake"
+        }), "Accept"), _react.default.createElement("button", {
           onClick: function onClick(e) {
             return _this5.onDecline.call(_this5, user.username);
           },
@@ -71006,8 +71006,8 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-profile"
-      }, " About Event")))), _react.default.createElement("div", {
+        className: "icon-info"
+      }), " About Event"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         description: about
@@ -72046,7 +72046,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42285" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34673" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
