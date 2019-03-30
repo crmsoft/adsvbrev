@@ -70,7 +70,7 @@ class ProfileComponent extends Component{
 
                     <aside className="profile-aside">
 
-                        <section className="block">
+                        <section className="block friends">
 
                             <Friends 
                                 isGuest={false}

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import { Emoji, emojiIndex } from 'emoji-mart'
 import qString from 'query-string';
+import axios from 'axios';
 
 const placeEmoji = text => {
     const emojies = text.match(/\:[\S]*\:/g);
@@ -140,12 +141,26 @@ class Youtube extends Component{
 class Twitch extends Component{
 
     state = {
-		loaded: false
-	}
+        loaded: false,
+        poster: undefined
+    }
+    
+    fetchPoster( id )
+    {
+        if (this.state.poster === undefined)
+        {
+            axios.get(`/api/v1/twitch/video/${id}/thumb`)
+            .then(({data}) => {
+                !this.state.loaded && this.setState(() => {
+                    return {poster: data.medium}
+                })
+            });
+        } // end if
+    }
 
 	render()
 	{
-		const {loaded} = this.state;
+		const {loaded, poster} = this.state;
         const {url} = this.props;
         
         // find yt id
@@ -153,23 +168,37 @@ class Twitch extends Component{
         
         const channel = `https://player.twitch.tv/?channel=#channel&muted=true&autoplay=true`;
         const video = `https://player.twitch.tv/?autoplay=true&video=#video&muted=true`;
+        let thumb = ``;
 
         let iframeUrl = '';
 
         if (Object.keys(parts.query).length === 0)
         {
             let id = parts.url.split('/').pop();
-            iframeUrl = parts.url.indexOf('video') !== -1 ? video.replace('#video', id) : channel.replace('#channel', id);
+            if (parts.url.indexOf('video') !== -1)
+            {
+                iframeUrl = video.replace('#video', id);
+                poster ? (thumb = poster) : this.fetchPoster(id);
+            } else {
+                iframeUrl  = channel.replace('#channel', id);
+                thumb = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${id}-640x360.jpg`;
+            } // end if
         } // end if
 
         if (parts.query.channel)
         {
             iframeUrl = channel.replace('#channel', parts.query.channel);
+            thumb = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parts.query.channel}-640x360.jpg`
         } // end if
 
-        if (parts.query.video)
+        if (parts.query.video || parts.query.t)
         {
-            iframeUrl = video.replace('#video', parts.query.video);
+            let id = parts.query.video ? parts.query.video : (
+                parts.url.split('/').pop()
+            );
+            iframeUrl = video.replace('#video', id);
+            poster ? (thumb = poster) : this.fetchPoster(id);
+            parts.query.t ? (iframeUrl += `&t=${parts.query.t}`) : ``
         } // end if
 
 		return loaded ? (
@@ -190,7 +219,7 @@ class Twitch extends Component{
                 key={url}>
                 <img
                     className="w-100" 
-                    src={`https://img.youtube.com/vi/0.jpg`} 
+                    src={thumb} 
                 />
                 <div className="yt-play-btn"></div>
 			</div>

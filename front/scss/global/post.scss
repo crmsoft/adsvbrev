@@ -62,7 +62,7 @@
     }
     .post-options{
       flex-basis: 15px;
-      font-size: 25px;
+      font-size: 5px;
       font-weight: 900;
       align-self: center;
       cursor: pointer;
@@ -113,8 +113,10 @@
         top: 50%;
         left: 50%;
         &:after{
-          content: 'Play';
-          margin-left: 5px;
+          content: '\e921';
+          font-size: 35px;
+          font-family: 'icomoon';
+          margin-top: -17.5px;
           display: block;
         }
       }

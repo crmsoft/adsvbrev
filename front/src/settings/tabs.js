@@ -48,16 +48,14 @@ export default class SettingsContnet extends Component {
                 <TabList className="nav nav-tabs">
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-art">
-                                {" Profile"}
-                            </span>
+                            <span className="icon-info"></span>
+                            {" Profile"}
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-art">
-                                {" Security"}
-                            </span>
+                            <span className="icon-art"></span>
+                            {" Security"}
                         </a>
                     </Tab>
                 </TabList>

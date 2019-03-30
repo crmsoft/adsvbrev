@@ -96,7 +96,7 @@ export default class Notification extends Component{
                                                         <div className="user-list-user">
                                                             <span className="user-list-user-name">{user.full_name}</span>
                                                             <span className="user-list-username">
-                                                                {not.message}
+                                                                {not.message} <span className="notification-time">{not.time}</span>
                                                             </span>
                                                         </div>
                                                     </Link>

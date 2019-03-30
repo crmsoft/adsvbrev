@@ -260,7 +260,7 @@ export default class AddComment extends Component {
                         lockScroll={false}
                         closeOnEscape={true}
                         modal={false}
-                        trigger={<button className={this.state.emoji ? "emoji icon-friends active" : "icon-friends emoji"}></button>}
+                        trigger={<button className={this.state.emoji ? "emoji icon-icons active" : "icon-icons emoji"}></button>}
                     >
                         <Picker 
                             onSelect={this.insertEmoji.bind(this)}
@@ -270,7 +270,7 @@ export default class AddComment extends Component {
                         />
                     </Popup>
                     <span onClick={this.selectFile.bind(this)} className="icon-photo-cam"></span>
-                    <span className="icon-video-cam"></span>
+                    <span className="icon-v-cam"></span>
                 </div>
             </div>
         )

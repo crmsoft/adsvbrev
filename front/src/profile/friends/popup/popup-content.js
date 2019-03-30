@@ -13,16 +13,14 @@ export default class FriendsAndFollowersContent extends Component{
                 <TabList className="nav nav-tabs">
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-art">
-                                {" Friends"}
-                            </span>
+                            <span className="icon-friends"></span>
+                            {" Friends"}
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-play">
-                                {" Followers"}
-                            </span>
+                            <span className="icon-add-dude"></span>
+                            {" Followers"}
                         </a>
                     </Tab>
                 </TabList>

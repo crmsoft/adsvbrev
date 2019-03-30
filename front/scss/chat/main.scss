@@ -22,6 +22,7 @@
             justify-content: space-between;
             align-items: center;
             .title{
+                flex: 1;
                 &::before{
                     @include status-buble(10px)
                 }
@@ -40,6 +41,8 @@
               display: flex;
               .minimize{
                 margin-right: 5px;
+                border-bottom: 1px solid white;
+                width: 10px;
               }
             }
         }
@@ -160,17 +163,13 @@
                     }
                 }
                 .attach{
-                    padding: 0 5px;
                     display: flex;
                     align-items: center;
-                    font-size: 9px;
+                    font-size: 17px;
+                    width: 27px;
                     span{
-                        background-color: $mainGray;
-                        border-radius: 45px;
-                        width: 12px;
                         text-align: center;
                         vertical-align: middle;
-                        height: 12px;
                         cursor: pointer;
                     }
                 }
@@ -182,6 +181,9 @@
                     display: none;
                     &.show{
                         display: block;
+                        +.emoji{
+                            color: $mainColor;
+                        }
                     }
                 }
             }

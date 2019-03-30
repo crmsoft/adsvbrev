@@ -1,6 +1,7 @@
 import React from 'react';
+import {DateTime} from 'luxon';
+
 import Ava from './ava';
-import {Link} from 'react-router-dom';
 import ProfileActions from './profile-actions';
 
 const EditableArea = ({text,icon, guest}) => {
@@ -49,13 +50,12 @@ const UserProfile = (data) => {
                     </div>
                     <div className="w-25 user-about-wrapper">
                         <div className="user-about">
-                            <EditableArea guest={guest} text="July 24, 1985" icon="icon-cake" />
+                            <EditableArea guest={guest} text={DateTime.fromISO(profile.dob).toLocaleString(DateTime.DATE_MED)} icon="icon-cake" />
                         </div>
                     </div>
                     <div className="w-25 user-pc">
-                        <div className="d-inline-block icon-pc"></div>
                         <div className="d-inline-block mb-1">
-                            <EditableArea guest={guest} text="Istanbul - Turkey" icon="icon-location" />
+                            <EditableArea guest={guest} text={profile.timezone} icon="icon-location" />
                         </div>
                     </div>
                     <div className="right-block-wrapper">
@@ -66,7 +66,7 @@ const UserProfile = (data) => {
                             <li>
                                 <a href="#" className="icon-twitch"></a>
                             </li>
-                            <li><a href="#" className="icon-yt"></a></li>
+                            <li><a href="#" className="icon-youtube"></a></li>
                             <li>
                                 <a href="#" className="icon-steam"></a>
                             </li>

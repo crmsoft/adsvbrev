@@ -43,12 +43,6 @@ nav.user-profile{
                 &:hover{
                     text-decoration: underline;
                     text-decoration-color: $mainColor;
-                    &:after{
-                        content: "\e912";
-                        font-family:  'icomoon' !important;
-                        padding-left: 5px;
-                        font-size: 12px;
-                    }
                 }
             }
         }
@@ -95,7 +89,7 @@ nav.user-profile{
     .user-pc{
         display: flex;
         align-self: flex-end;
-        .icon-pc{
+        .icon-location{
             padding-top: 5px;
             color: #F05A24;
             margin: 0 5px;
@@ -128,7 +122,11 @@ nav.user-profile{
             margin: 0;
             align-self: flex-end;
             li{
+                margin-right: 5px;
                 display: inline;
+                &:last-child{
+                    margin-right: 0;
+                }
                 a{
                     position: relative;
                     height: 50px;
@@ -145,11 +143,11 @@ nav.user-profile{
                         top: 15px;
                         left: 15px;
                     }
-                    &.icon-yt::before{
+                    &.icon-youtube::before{
                         position: absolute;
                         font-size: 20px;
                         top: 15px;
-                        left: 11px;
+                        left: 15px;
                     }
                     &.icon-steam::before{
                         position: absolute;

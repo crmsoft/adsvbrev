@@ -43,8 +43,9 @@ class FriendAndFollowersList extends Component{
                     </div>
                     <div className="popup-footer">
                         <div>
-                            <button>Close</button>
-                            <button>Ok</button>
+                            <button 
+                                onClick={() => this.props.closeModal()}
+                                className="dd-btn btn-sm">Close</button>
                         </div>
                     </div>
                 </div>

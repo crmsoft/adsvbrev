@@ -98,7 +98,7 @@ export default class Comment extends Component{
                                 closeOnDocumentClick
                                 position="left center"
                                 modal={false}
-                                trigger={<span>...</span>}
+                                trigger={<span className="icon-more">&nbsp;</span>}
                             >
                                 <ul>
                                     <li
@@ -106,7 +106,7 @@ export default class Comment extends Component{
                                     >delete</li>
                                 </ul>
                             </Popup>
-                        ) : (<span>...</span>)
+                        ) : (<span className="icon-more"></span>)
                     }
                     
                 </div>

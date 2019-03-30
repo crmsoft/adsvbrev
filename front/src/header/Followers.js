@@ -132,10 +132,13 @@ export default class Followers extends Component{
                                                 <button 
                                                     onClick={e => this.onAccept.call(this,user.username)}
                                                     className="dd-btn btn-yellow btn-sm m-1"
-                                                >Accept</button>
+                                                ><span className="icon-handshake"></span>Accept</button>
                                                 <button 
                                                     onClick={e => this.onDecline.call(this, user.username)}
-                                                    className="dd-btn btn-red btn-sm m-1">Deny</button>
+                                                    className="dd-btn btn-red btn-sm m-1">
+                                                    <span className="icon-remove"></span>
+                                                    Deny
+                                                    </button>
                                             </div>
                                         </div>
                                     </li>

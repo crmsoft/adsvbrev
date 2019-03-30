@@ -43,7 +43,7 @@ header{
                 padding: 5px;
                 &::after{
                     font-family: 'icomoon';
-                    content: '\e903';
+                    content: '\e904';
                     font-size: 9px;
                 }
             }
@@ -60,7 +60,7 @@ header{
         form{
             position: relative;
         }
-        .icon-search-icon{
+        .icon-search{
             width: 15px;
             height: 15px;
             position: absolute;
@@ -105,6 +105,9 @@ header{
             padding: 0;
             max-height: 320px;
             overflow-y: auto;
+            .dd-btn{
+                font-size: 12px;
+            }
             li{
                 @extend .container;
                 height: auto;
@@ -138,12 +141,15 @@ header{
 
         .notification-list{
             @extend .followers-list;
-
+            .notification-time{
+                color: $mainColor;
+            }
             .user{
                 border-bottom: 1px solid $halfGray;
             }
             li .user-list-user{
                 width: auto;
+                max-width: initial;
             }
             li .user-list-user-name{
                 font-size: 15px;

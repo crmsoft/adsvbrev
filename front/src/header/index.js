@@ -59,7 +59,7 @@ class HeaderComponent extends Component{
                     <div className="navbar-collapse collapse w-100" id="collapsingNavbar3">
                         <div className="navbar-nav w-100 justify-content-center nav-search">
                             <form className="form-inline my-2 my-lg-0 w-100" action="/search">
-                                <span className="icon-search-icon"></span>
+                                <span className="icon-search"></span>
                                 <input className="form-control mr-sm-2 w-100" name="q" type="search" placeholder="Search" aria-label="Search" />
                             </form>
                         </div>

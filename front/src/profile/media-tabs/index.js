@@ -22,16 +22,14 @@ export default class MediaTabs extends Component {
                 <TabList className="nav nav-tabs">
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-art">
-                                {" Images"}
-                            </span>
+                            <span className="icon-picture"></span>
+                            {" Images"}
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
-                            <span className="icon-play">
-                                {" Videos"}
-                            </span>
+                            <span className="icon-play"></span>
+                            {" Videos"}
                         </a>
                     </Tab>
                 </TabList>

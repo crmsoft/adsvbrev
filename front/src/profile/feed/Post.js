@@ -205,7 +205,7 @@ class Post extends Component{
 									closeOnDocumentClick
 									position="left center"
 									modal={false}
-									trigger={<span>...</span>}
+									trigger={<span className="icon-more"></span>}
 								>
 									<ul>
 										<li>
@@ -218,7 +218,7 @@ class Post extends Component{
 										</li>
 									</ul>	
 								</Popup>
-							) : repost ? null : (<span>...</span>)
+							) : repost ? null : (<span className="icon-more"></span>)
 						}
 					</div>
 				</div>

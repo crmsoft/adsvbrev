@@ -101,7 +101,9 @@ class UsersComponent extends Component {
         return (
             <div className={minimized ? "chat-wrapper minimized" : "chat-wrapper"}>
                 <div className="header">
-                    <span className={`title ${m_status}`}>
+                    <span
+                        onClick={this.minimizeMessenger.bind(this)} 
+                        className={`title ${m_status}`}>
                         Messenger {
                             unread_chats > 0 ? (
                                 <span className="unread-chat-counter">{unread_chats}</span>       
@@ -109,12 +111,6 @@ class UsersComponent extends Component {
                         }
                     </span>
                     <div className="chat-actions">
-                        <span 
-                            onClick={this.minimizeMessenger.bind(this)} 
-                            className="minimize"
-                        >
-                            &#x2693;
-                        </span>
                         <Popup
                             className="options-pop-up"
                             contentStyle={popupStyle}
@@ -123,7 +119,7 @@ class UsersComponent extends Component {
                             lockScroll={false}
                             closeOnEscape={true}
                             modal={false}
-                            trigger={<span className="settings">&#x26EF;</span>}
+                            trigger={<span className="settings icon-cog"></span>}
                         >
                             <MessengerOptions status={m_status} sound={m_sound} />
                         </Popup>

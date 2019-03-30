@@ -145,7 +145,7 @@ export default class CreatePostComponent extends Component{
                     submitPost={this.submitPost}
                 />
                 <div className="user-actions" onClick={() => { this.onEnter() }}>
-                    <a href="javascript:void(0)" className="icon-video-cam"></a>
+                    <a href="javascript:void(0)" className="icon-v-cam"></a>
                     <a href="javascript:void(0)" className="icon-photo-cam"></a>
                 </div>
             </div>

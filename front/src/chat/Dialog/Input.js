@@ -74,7 +74,7 @@ export default class Input extends Component{
                     />
                 </div>
                 <div className="emoji" onClick={this.toggleEmoji.bind(this)}>
-                    &psi;
+                    <span className="icon-icons"></span>
                 </div>
                 <Textarea 
                     inputRef={ref => {this.inputRef = ref;}}
@@ -85,9 +85,7 @@ export default class Input extends Component{
                     onChange={this.onText.bind(this)}
                 />
                 <div className="attach">
-                    <span>
-                        E
-                    </span>
+                    <span className="icon-pine"></span>
                 </div>
             </div>
         )

@@ -57,7 +57,7 @@ export default class Groups extends Component{
                         {
                             this.props.isGuest ? null : (
                                 <Link to="/search?i=gr" className="friend">
-                                    <img src="/img/add-friends.jpg" alt="body" />
+                                    <span className="search-more"></span>
                                 </Link>
                             )
                         }

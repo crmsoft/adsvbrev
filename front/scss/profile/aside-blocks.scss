@@ -1,6 +1,11 @@
 .profile-aside{
     width: 20.9%;
     padding-left: 10px;
+    .friends{
+        .icon-friends{
+            font-size: 18px;
+        }
+    }
     .block{
 
         @include section-border-radius();
@@ -70,15 +75,25 @@
                     h2{
                         font-size: 12px;
                         text-align: center;
+                        height: 42px;
                     }
-                    .item-plus{
+                    .search-more{
+                        &:before{
+                            @extend .icon-plus;
+                            color: $mainColor;
+                            position: absolute;
+                            margin: -16px 0 0 14px;
+                            font-size: 22px;
+                            top: 50%;
+                        }
+                        background-color: $halfGray;
+                        position: relative;
+                        margin-left: 10px;
+                        width: 50px;
+                        height: 50px;
                         display: inline-block;
-                        background: $sectionInnerColor;
-                        border-radius: 32px;
-                        text-align: center;
-                        display: block;
-                        font-size: 32px;
-                        margin: 0 2px;
+                        font-family: 'icomoon';
+                        border-radius: 50%;
                     }
                 }
                 &:after{

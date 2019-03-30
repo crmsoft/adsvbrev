@@ -16,17 +16,17 @@ export default class Menu extends Component {
                                 return match || location.pathname === '/schedule' || location.pathname === '/settings';
                             }}
                         >
-                            <span className="icon-profile"> my profile</span>
+                            <span className="icon-profile icon-info"></span> {` my profile`}
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeClassName="active" to="/feed">
-                            <span className="icon-profile"> feed</span>
+                            <span className="icon-profile icon-schedule"></span> {` feed`}
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeClassName="active" to="/dudes">
-                            <span className="icon-profile"> Find Dudes</span>
+                            <span className="icon-profile"></span> {` Find Dudes`}
                         </NavLink>
                     </li>
                 </ul>

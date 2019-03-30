@@ -81,16 +81,14 @@ class ContentComponent extends Component{
 
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
-                                <span className="icon-friends">
-                                    {" Gamers"}
-                                </span>
+                                <span className="icon-friends"></span>
+                                {" Gamers"}
                             </a>
                         </Tab>
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
-                                <span className="icon-groups">
-                                    {" Groups"}
-                                </span>
+                                <span className="icon-groups"></span>
+                                {" Groups"}
                             </a>
                         </Tab>
                         
