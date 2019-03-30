@@ -44903,6 +44903,7 @@ var PostContnet = function PostContnet(_ref) {
   return repost ? _react.default.createElement("div", {
     className: "post-shared"
   }, _react.default.createElement(Post, {
+    key: repost.id,
     post: repost,
     repost: true
   })) : _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
@@ -45135,12 +45136,12 @@ function (_Component) {
         className: post.likes ? "icon like active" : "icon like",
         onClick: this.toggleLike.bind(this)
       }, _react.default.createElement("span", {
-        className: "icon-heart"
+        className: "icon-liked"
       }), _react.default.createElement("span", {
-        className: "icon-heart-empty"
+        className: "icon-heart"
       })), _react.default.createElement("span", null, post.like_count | 0), _react.default.createElement("span", {
         onClick: this.toggleShare.bind(this),
-        className: "icon icon-share"
+        className: post.shares ? "icon icon-shared" : "icon icon-share"
       }), _react.default.createElement("span", null, post.share_count | 0))), repost ? null : _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Comments.default, {
         key: "".concat(post.id, "_comment"),
         push: this.state.pushComment,
@@ -45543,7 +45544,7 @@ function (_Component) {
           _this.props.total && _this.props.showModal();
         }
       }, _react.default.createElement("span", {
-        className: "icon-friends"
+        className: "icon-friends aside-firends-icon"
       }), _react.default.createElement("h3", null, "friends"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", this.props.total));
@@ -47226,7 +47227,9 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      return _react.default.createElement("div", null, this.props.items.map(function (item) {
+      return _react.default.createElement("div", {
+        className: "user-friend-list"
+      }, this.props.items.map(function (item) {
         return _react.default.createElement(_friendListItem.default, {
           isGuest: _this.props.isGuest,
           unfriend: _this.props.unfriend,
@@ -47325,12 +47328,14 @@ function (_Component) {
         style: {
           fontSize: '14px'
         }
-      }, userData.username))), _react.default.createElement("div", null, _react.default.createElement("button", null, "Write a message"), this.props.isGuest ? null : _react.default.createElement("button", {
+      }, userData.username))), _react.default.createElement("div", null, this.props.isGuest ? null : _react.default.createElement("button", {
         className: "dd-btn btn-sm",
         onClick: function onClick() {
           return _this.props.accept(userData.username);
         }
-      }, "Accept")));
+      }, _react.default.createElement("span", {
+        className: "icon-accept-friendship"
+      }), "   Accept")));
     }
   }]);
 
@@ -47635,7 +47640,131 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FriendsAndFollowersContent;
-},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./friends-list":"../src/profile/friends/popup/friends-list.js","./follower-list":"../src/profile/friends/popup/follower-list.js","react-redux":"../../node_modules/react-redux/es/index.js","../stores/index":"../src/profile/friends/stores/index.js"}],"../src/profile/friends/popup/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./friends-list":"../src/profile/friends/popup/friends-list.js","./follower-list":"../src/profile/friends/popup/follower-list.js","react-redux":"../../node_modules/react-redux/es/index.js","../stores/index":"../src/profile/friends/stores/index.js"}],"../src/Modal/Header.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Header =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Header, _Component);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "dd-modal-header"
+      }, _react.default.createElement("h3", {
+        className: "title"
+      }, this.props.title), _react.default.createElement("span", {
+        className: "close",
+        onClick: this.props.onClose
+      }, "\xD7"));
+    }
+  }]);
+
+  return Header;
+}(_react.Component);
+
+exports.default = Header;
+},{"react":"../node_modules/react/index.js"}],"../src/Modal/Footer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Footer = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Footer = function Footer(_ref) {
+  var actions = _ref.actions;
+  return actions ? _react.default.createElement("div", {
+    className: "dd-modal-footer"
+  }, actions.map(function (act, index) {
+    return _react.default.createElement("button", {
+      key: index,
+      className: "dd-btn btn-sm ".concat(act.class),
+      onClick: act.onAction
+    }, act.title);
+  })) : null;
+};
+
+exports.Footer = Footer;
+},{"react":"../node_modules/react/index.js"}],"../src/Modal/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Modal = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+var _Header = _interopRequireDefault(require("./Header"));
+
+var _Footer = require("./Footer");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+var Modal = function Modal(props) {
+  var open = props.open,
+      onClose = props.onClose,
+      title = props.title,
+      actions = props.actions;
+  return _react.default.createElement(_reactjsPopup.default, {
+    className: "dd-modal",
+    onClose: onClose,
+    open: open,
+    modal: true
+  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Header.default, {
+    title: title,
+    onClose: onClose
+  }), props.children, _react.default.createElement(_Footer.Footer, {
+    actions: actions
+  })));
+};
+
+exports.Modal = Modal;
+},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./Header":"../src/Modal/Header.js","./Footer":"../src/Modal/Footer.js"}],"../src/profile/friends/popup/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47648,6 +47777,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _popupContent = _interopRequireDefault(require("./popup-content"));
+
+var _index = require("../../../Modal/index");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47694,42 +47825,20 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      return _react.default.createElement(_reactjsPopup.default, {
-        lockScroll: false,
-        contentStyle: {
-          backgroundColor: 'transparent',
-          border: 0,
-          padding: 0
-        },
-        modal: true,
+      var actions = [{
+        title: "Ok",
+        onAction: this.closeModal,
+        class: "btn-empty"
+      }];
+      return _react.default.createElement(_index.Modal, {
         open: this.props.show,
-        closeOnDocumentClick: true,
-        closeOnEscape: true,
-        onClose: this.closeModal
-      }, _react.default.createElement("div", {
-        className: "popup"
-      }, _react.default.createElement("div", {
-        className: "popup-header"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, _react.default.createElement("h2", null, "Friend List")), _react.default.createElement("div", {
-        className: "close",
-        onClick: this.closeModal
-      }, _react.default.createElement("span", null, "\xD7"))), _react.default.createElement("div", {
-        className: "popup-content"
+        onClose: this.closeModal,
+        actions: actions,
+        title: this.props.isGuest ? "Friend List" : "My Friends"
       }, _react.default.createElement(_popupContent.default, {
         isGuest: this.props.isGuest,
         user: this.props.user
-      })), _react.default.createElement("div", {
-        className: "popup-footer"
-      }, _react.default.createElement("div", null, _react.default.createElement("button", {
-        onClick: function onClick() {
-          return _this2.props.closeModal();
-        },
-        className: "dd-btn btn-sm"
-      }, "Close")))));
+      }));
     }
   }]);
 
@@ -47738,7 +47847,7 @@ function (_Component) {
 
 var _default = FriendAndFollowersList;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./popup-content":"../src/profile/friends/popup/popup-content.js"}],"../src/profile/friends/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./popup-content":"../src/profile/friends/popup/popup-content.js","../../../Modal/index":"../src/Modal/index.js"}],"../src/profile/friends/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47831,7 +47940,9 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
+      return _react.default.createElement("div", {
+        className: "block-friends"
+      }, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement(_header.default, {
         showModal: this.showModal,
@@ -47855,7 +47966,10 @@ function (_Component) {
         className: "friend"
       }, _react.default.createElement("span", {
         className: "search-more"
-      })))));
+      }))), _react.default.createElement("img", {
+        src: "../img/friends-dec.png",
+        className: "dec"
+      })));
     }
   }]);
 
@@ -56952,34 +57066,36 @@ function (_Component) {
 
       var username = data.profile.user.username;
       var status = this.state.status;
-      return _react.default.createElement("div", null, status === _actions.FRIENDSHIP_NONE ? _react.default.createElement("button", {
+      return _react.default.createElement("div", {
+        className: "friendship-btns"
+      }, status === _actions.FRIENDSHIP_NONE ? _react.default.createElement("button", {
         onClick: function onClick() {
           return _this2.props.addToFriends(username);
         },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
-        className: "icon-yt"
+        className: "icon-add-dude"
       }), "Add to Friends") : null, status === _actions.FRIENDSHIP_FRIENDS ? _react.default.createElement("button", {
         onClick: function onClick() {
           return _this2.props.unfriend(username);
         },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
-        className: "icon-yt"
+        className: "icon-remove"
       }), "Unfriend") : null, status === _actions.FRIENDSHIP_FOLLOWING ? _react.default.createElement("button", {
         onClick: function onClick() {
           return _this2.props.unsubscribe(username);
         },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
-        className: "icon-yt"
+        className: "icon-remove"
       }), "Unsubscribe") : null, status === _actions.FRIENDSHIP_SUBSCRIBED ? _react.default.createElement("button", {
         onClick: function onClick() {
           return _this2.props.accept(username);
         },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
-        className: "icon-yt"
+        className: "icon-accept-friendship"
       }), "Accept") : null);
     }
   }], [{
@@ -57067,10 +57183,12 @@ function (_Component) {
       }, _react.default.createElement("button", {
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
-        className: "icon-yt"
+        className: "icon-message"
       }), "Write"), _react.default.createElement("button", {
         className: "dd-btn btn-sm btn-full btn-more"
-      }, "..."));
+      }, _react.default.createElement("span", {
+        className: "icon-more"
+      })));
     }
   }]);
 
@@ -61054,7 +61172,11 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         className: "profile-schedule"
-      }, this.props.describe ? _react.default.createElement(_reactRouterDom.Redirect, {
+      }, _react.default.createElement("img", {
+        className: "dec",
+        src: "../img/schedule-dec.png",
+        alt: "schedule-dec"
+      }), this.props.describe ? _react.default.createElement(_reactRouterDom.Redirect, {
         to: "schedule"
       }) : null, _react.default.createElement("div", {
         className: "header"
@@ -61413,8 +61535,7 @@ function (_Component) {
       }))), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
-        className: "block",
-        id: "section-friends"
+        className: "block"
       }, _react.default.createElement(_index.default, {
         isGuest: true,
         user: profile.user.username,
@@ -61460,6 +61581,7 @@ var Submit = function Submit(props) {
   return _react.default.createElement("div", {
     className: "row submit-wrapper"
   }, _react.default.createElement("button", {
+    className: "dd-btn btn-sm",
     disabled: Object.keys(props.active).length === 0,
     onClick: props.handleSubmit
   }, "Save"));
@@ -62526,13 +62648,25 @@ function (_Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "search-field"
+        className: "search-field container"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "search-icon"
+      }, _react.default.createElement("span", {
+        className: "icon-search"
+      })), _react.default.createElement("div", {
+        className: "col-auto flex-grow-1"
       }, _react.default.createElement("input", {
         onChange: this.onUserInput,
         placeholder: "Search",
         type: "text",
         value: this.state.value
-      }));
+      })), _react.default.createElement("div", {
+        className: "reset-icon"
+      }, _react.default.createElement("span", {
+        className: "icon-cross"
+      }))));
     }
   }]);
 
@@ -62798,24 +62932,41 @@ function (_Component) {
         className: "user-ava"
       }, _react.default.createElement("img", {
         src: user.ava
-      })), _react.default.createElement("div", null, _react.default.createElement("div", null, user.full_name), _react.default.createElement("div", null, user.username))), _react.default.createElement("div", null, user.has_status === 'none' ? _react.default.createElement("button", {
+      })), _react.default.createElement("div", {
+        className: "user-info"
+      }, _react.default.createElement("div", {
+        className: "user-name"
+      }, user.full_name), _react.default.createElement("div", {
+        className: "user-username"
+      }, user.username))), _react.default.createElement("div", null, user.has_status === 'none' ? _react.default.createElement("button", {
+        className: "dd-btn btn-sm",
         onClick: function onClick(event) {
           _this6.addToFriends.call(_this6, user.username);
         }
-      }, " Add to friends ") : '', user.has_status === 'subscribed' ? _react.default.createElement("button", {
+      }, " ", _react.default.createElement("span", {
+        className: "icon-add-dude"
+      }), " Add to friends ") : '', user.has_status === 'subscribed' ? _react.default.createElement("button", {
+        className: "dd-btn btn-sm btn-gray",
         onClick: function onClick(event) {
           _this6.unsubscribe.call(_this6, user.username);
         }
-      }, " Unsubscribe ") : '', user.has_status === 'following' ? _react.default.createElement("button", {
+      }, " ", _react.default.createElement("span", {
+        className: "icon-remove"
+      }), " Unsubscribe ") : '', user.has_status === 'following' ? _react.default.createElement("button", {
+        className: "dd-btn btn-sm",
         onClick: function onClick(event) {
           _this6.acceptToFriends.call(_this6, user.username);
         }
-      }, " Accept ") : '', user.has_status === 'friends' ? _react.default.createElement("button", {
+      }, " ", _react.default.createElement("span", {
+        className: "icon-accept-friendship"
+      }), " Accept ") : '', user.has_status === 'friends' ? _react.default.createElement("button", {
         className: "dd-btn btn-sm btn-gray",
         onClick: function onClick(event) {
           _this6.unfriend.call(_this6, user.username);
         }
-      }, " Unfriend ") : '', _react.default.createElement("button", null, "Write a message")));
+      }, " ", _react.default.createElement("span", {
+        className: "icon-remove"
+      }), " Unfriend ") : ''));
     }
   }]);
 
@@ -63037,7 +63188,7 @@ function (_Component) {
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
-        className: "icon-groups"
+        className: "icon-group"
       }), " Groups"))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_SearchField.default, {
@@ -64097,7 +64248,10 @@ function (_Component) {
       }, _react.default.createElement(_MessengerOptions.default, {
         status: m_status,
         sound: m_sound
-      })))), minimized ? null : _react.default.createElement("div", {
+      }))), _react.default.createElement("img", {
+        className: "dec",
+        src: "../img/message-dec.png"
+      })), minimized ? null : _react.default.createElement("div", {
         className: "chatable"
       }, _react.default.createElement(ChatList, {
         user: username,
@@ -64434,6 +64588,7 @@ function (_Component) {
     value: function render() {
       var message = this.props.message;
       var showUser = this.props.showUser;
+      var author = this.props.author;
       return _react.default.createElement("div", {
         className: "chat-message"
       }, showUser ? _react.default.createElement(MessageUserAva, {
@@ -64450,8 +64605,10 @@ function (_Component) {
         className: "message-content"
       }, _react.default.createElement("span", {
         className: "message-text"
-      }, (0, _utils.placeEmoji)(message.message)), message.readed ? _react.default.createElement("span", {
+      }, (0, _utils.placeEmoji)(message.message)), author ? message.readed ? _react.default.createElement("span", {
         className: "message-status readed"
+      }) : _react.default.createElement("span", {
+        className: "message-status"
       }) : null)));
     }
   }]);
@@ -64544,6 +64701,7 @@ function (_Component) {
       return _react.default.createElement(_react.Fragment, null, this.props.messages.map(function (message) {
         var user = message.user;
         return _react.default.createElement(_Message.default, {
+          author: message.user.username === _this2.props.me,
           key: message.id,
           showUser: _this2.state.localeStore(user.username),
           message: message
@@ -68896,6 +69054,7 @@ function (_Component) {
         animating: false,
         className: "message-container"
       }, _react.default.createElement(_MessageList.default, {
+        me: this.props.messenger.username,
         messages: this.state.messagesList
       })), _react.default.createElement(_Input.default, {
         onMessage: this.onMessage.bind(this)
@@ -69439,13 +69598,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "followers-popup"
       }, _react.default.createElement(_reactjsPopup.default, {
-        onOpen: function onOpen(e) {
-          return _this5.props.onOpen();
-        },
-        open: this.props.open,
-        onClose: function onClose(e) {
-          return _this5.props.close();
-        },
+        onOpen: this.loadList.bind(this),
         modal: false,
         overlayStyle: {
           display: 'none'
@@ -69491,7 +69644,7 @@ function (_Component) {
           },
           className: "dd-btn btn-yellow btn-sm m-1"
         }, _react.default.createElement("span", {
-          className: "icon-handshake"
+          className: "icon-accept-friendship"
         }), "Accept"), _react.default.createElement("button", {
           onClick: function onClick(e) {
             return _this5.onDecline.call(_this5, user.username);
@@ -69992,131 +70145,7 @@ var Header = (0, _reactRedux.connect)(function (state) {
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friedship/event":"../src/friedship/event.js"}],"../src/Modal/Header.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Header =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Header, _Component);
-
-  function Header() {
-    _classCallCheck(this, Header);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "dd-modal-header"
-      }, _react.default.createElement("h3", {
-        className: "title"
-      }, this.props.title), _react.default.createElement("span", {
-        className: "close",
-        onClick: this.props.onClose
-      }, "\xD7"));
-    }
-  }]);
-
-  return Header;
-}(_react.Component);
-
-exports.default = Header;
-},{"react":"../node_modules/react/index.js"}],"../src/Modal/Footer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Footer = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Footer = function Footer(_ref) {
-  var actions = _ref.actions;
-  return actions ? _react.default.createElement("div", {
-    className: "dd-modal-footer"
-  }, actions.map(function (act, index) {
-    return _react.default.createElement("button", {
-      key: index,
-      className: "dd-btn btn-sm ".concat(act.class),
-      onClick: act.onAction
-    }, act.title);
-  })) : null;
-};
-
-exports.Footer = Footer;
-},{"react":"../node_modules/react/index.js"}],"../src/Modal/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Modal = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
-
-var _Header = _interopRequireDefault(require("./Header"));
-
-var _Footer = require("./Footer");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-var Modal = function Modal(props) {
-  var open = props.open,
-      onClose = props.onClose,
-      title = props.title,
-      actions = props.actions;
-  return _react.default.createElement(_reactjsPopup.default, {
-    className: "dd-modal",
-    onClose: onClose,
-    open: open,
-    modal: true
-  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Header.default, {
-    title: title,
-    onClose: onClose
-  }), props.children, _react.default.createElement(_Footer.Footer, {
-    actions: actions
-  })));
-};
-
-exports.Modal = Modal;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./Header":"../src/Modal/Header.js","./Footer":"../src/Modal/Footer.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./events":"../src/header/events.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friedship/event":"../src/friedship/event.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72053,7 +72082,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34673" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40368" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
