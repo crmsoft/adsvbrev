@@ -24,107 +24,116 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-uniE900:before {
+.icon-at:before {
   content: "\e900";
 }
-.icon-add-dude:before {
+.icon-accept-friendship:before {
   content: "\e901";
 }
-.icon-add-o:before {
+.icon-add-dude:before {
   content: "\e902";
 }
 .icon-arrow-down:before {
-  content: "\e904";
+  content: "\e903";
 }
 .icon-basket:before {
-  content: "\e905";
+  content: "\e904";
 }
 .icon-binocolo:before {
-  content: "\e906";
+  content: "\e905";
 }
 .icon-binocolo-2:before {
-  content: "\e907";
+  content: "\e906";
 }
 .icon-cake:before {
-  content: "\e908";
+  content: "\e907";
 }
 .icon-cog:before {
-  content: "\e909";
+  content: "\e908";
 }
 .icon-comment:before {
-  content: "\e90a";
+  content: "\e909";
 }
 .icon-cross:before {
-  content: "\e90b";
+  content: "\e90a";
 }
 .icon-finger-down:before {
-  content: "\e90c";
+  content: "\e90b";
 }
 .icon-finger-up:before {
-  content: "\e90d";
+  content: "\e90c";
 }
 .icon-fist:before {
-  content: "\e90e";
+  content: "\e90d";
 }
 .icon-friend:before {
-  content: "\e90f";
+  content: "\e90e";
 }
 .icon-friends:before {
-  content: "\e910";
+  content: "\e90f";
 }
 .icon-gamepad:before {
-  content: "\e911";
+  content: "\e910";
 }
 .icon-group:before {
-  content: "\e912";
+  content: "\e911";
 }
 .icon-group-2:before {
-  content: "\e913";
+  content: "\e912";
 }
 .icon-heart:before {
-  content: "\e914";
+  content: "\e913";
 }
 .icon-icons:before {
-  content: "\e915";
+  content: "\e914";
 }
 .icon-info:before {
-  content: "\e916";
+  content: "\e915";
 }
 .icon-info-o:before {
+  content: "\e916";
+}
+.icon-join-community:before {
   content: "\e917";
 }
-.icon-location:before {
+.icon-liked:before {
   content: "\e918";
 }
-.icon-man-listening:before {
+.icon-location:before {
   content: "\e919";
 }
-.icon-message:before {
+.icon-man-listening:before {
   content: "\e91a";
 }
-.icon-more:before {
+.icon-message:before {
   content: "\e91b";
 }
-.icon-notification:before {
+.icon-message-status:before {
   content: "\e91c";
 }
-.icon-pc:before {
+.icon-more:before {
   content: "\e91d";
 }
-.icon-photo-cam:before {
+.icon-notification:before {
   content: "\e91e";
 }
-.icon-picture:before {
+.icon-pc:before {
   content: "\e91f";
 }
-.icon-pine:before {
+.icon-photo-cam:before {
   content: "\e920";
 }
-.icon-play:before {
+.icon-picture:before {
   content: "\e921";
 }
-.icon-plus:before {
+.icon-pine:before {
   content: "\e922";
+}
+.icon-play:before {
+  content: "\e923";
+}
+.icon-plus:before {
+  content: "\e924";
 }
 .icon-prise:before {
   content: "\e925";
@@ -133,18 +142,24 @@
   content: "\e926";
 }
 .icon-schedule:before {
-  content: "\e929";
+  content: "\e927";
 }
 .icon-search:before {
-  content: "\e92a";
+  content: "\e928";
 }
 .icon-search-o:before {
-  content: "\e92b";
+  content: "\e929";
 }
 .icon-select-picture:before {
-  content: "\e92c";
+  content: "\e92a";
 }
 .icon-share:before {
+  content: "\e92b";
+}
+.icon-shared:before {
+  content: "\e92c";
+}
+.icon-sm:before {
   content: "\e92d";
 }
 .icon-ticke:before {
@@ -153,23 +168,14 @@
 .icon-v-cam:before {
   content: "\e92f";
 }
-.icon-circle-right:before {
-  content: "\ea42";
-}
-.icon-circle-left:before {
-  content: "\ea44";
-}
-.icon-embed2:before {
-  content: "\ea80";
-}
-.icon-google:before {
-  content: "\ea88";
-}
 .icon-google-plus:before {
   content: "\ea8b";
 }
 .icon-facebook:before {
   content: "\ea90";
+}
+.icon-facebook2:before {
+  content: "\ea91";
 }
 .icon-instagram:before {
   content: "\ea92";
@@ -177,20 +183,14 @@
 .icon-whatsapp:before {
   content: "\ea93";
 }
-.icon-spotify:before {
-  content: "\ea94";
-}
-.icon-telegram:before {
-  content: "\ea95";
-}
-.icon-twitter:before {
-  content: "\ea96";
-}
 .icon-youtube:before {
   content: "\ea9d";
 }
 .icon-twitch:before {
   content: "\ea9f";
+}
+.icon-steam:before {
+  content: "\eaac";
 }
 .icon-github:before {
   content: "\eab0";
@@ -198,15 +198,15 @@
 .icon-tumblr:before {
   content: "\eab9";
 }
+.icon-tumblr2:before {
+  content: "\eaba";
+}
 .icon-appleinc:before {
   content: "\eabe";
 }
 .icon-android:before {
   content: "\eac0";
 }
-.icon-skype:before {
-  content: "\eac5";
-}
-.icon-linkedin2:before {
-  content: "\eaca";
+.icon-linkedin:before {
+  content: "\eac9";
 }

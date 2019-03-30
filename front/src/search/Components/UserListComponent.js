@@ -48,11 +48,11 @@ export default class UserListComponent extends Component {
                     <div className="user-ava">
                         <img src={user.ava} />
                     </div>
-                    <div>
-                        <div>
+                    <div className="user-info">
+                        <div className="user-name">
                             {user.full_name}
                         </div>
-                        <div>
+                        <div className="user-username">
                             {user.username}
                         </div>
                     </div>
@@ -61,29 +61,31 @@ export default class UserListComponent extends Component {
                     {
                         user.has_status === 'none' ? 
                             (<button 
+                                className="dd-btn btn-sm"
                                 onClick={event => {this.addToFriends.call(this,user.username)}}
-                            > Add to friends </button>) : ''
+                            > <span className="icon-add-dude"></span> Add to friends </button>) : ''
                     }
                     {
                         user.has_status === 'subscribed' ? 
                             (<button 
+                                className="dd-btn btn-sm btn-gray"
                                 onClick={event => {this.unsubscribe.call(this,user.username)}}
-                            > Unsubscribe </button>) : ''
+                            > <span className="icon-remove"></span> Unsubscribe </button>) : ''
                     }
                     {
                         user.has_status === 'following' ? 
                             (<button 
+                                className="dd-btn btn-sm"
                                 onClick={event => {this.acceptToFriends.call(this,user.username)}}
-                            > Accept </button>) : ''
+                            > <span className="icon-accept-friendship"></span> Accept </button>) : ''
                     }
                     {
                         user.has_status === 'friends' ? 
                             (<button 
                                 className="dd-btn btn-sm btn-gray"
                                 onClick={event => {this.unfriend.call(this,user.username)}}
-                            > Unfriend </button>) : ''
+                            > <span className="icon-remove"></span> Unfriend </button>) : ''
                     }
-                    <button>Write a message</button>
                 </div>
             </div>
         )

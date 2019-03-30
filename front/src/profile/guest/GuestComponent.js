@@ -73,7 +73,7 @@ class Guest extends Component{
 
                     <aside className="profile-aside">
 
-                        <section className="block" id="section-friends">
+                        <section className="block">
 
                             <Friends 
                                 isGuest={true}

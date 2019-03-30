@@ -94,9 +94,7 @@ export default class Followers extends Component{
         return (
             <div className="followers-popup">
                 <Popup
-                    onOpen={e => this.props.onOpen()}
-                    open={this.props.open}
-                    onClose={e => this.props.close()}
+                    onOpen={this.loadList.bind(this)}
                     modal={false}
                     overlayStyle={{display:'none'}}
                     position="bottom right"
@@ -132,7 +130,7 @@ export default class Followers extends Component{
                                                 <button 
                                                     onClick={e => this.onAccept.call(this,user.username)}
                                                     className="dd-btn btn-yellow btn-sm m-1"
-                                                ><span className="icon-handshake"></span>Accept</button>
+                                                ><span className="icon-accept-friendship"></span>Accept</button>
                                                 <button 
                                                     onClick={e => this.onDecline.call(this, user.username)}
                                                     className="dd-btn btn-red btn-sm m-1">

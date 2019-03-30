@@ -35,6 +35,7 @@ export default class Message extends Component{
     render(){
         const {message} = this.props;
         const {showUser} = this.props;
+        const {author} = this.props;
         
         
         return (
@@ -47,8 +48,10 @@ export default class Message extends Component{
                             {placeEmoji(message.message)}
                         </span>
                         {
-                            message.readed ? (
-                                <span className="message-status readed"></span>
+                            author ? (
+                                message.readed ? (
+                                    <span className="message-status readed"></span>
+                                ) : <span className="message-status"></span>
                             ) : null
                         }
                     </div>

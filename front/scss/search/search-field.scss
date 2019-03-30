@@ -1,4 +1,19 @@
 .search-field{
+    .search-icon{
+        @extend .col-auto;
+        @extend .d-flex;
+        color: $mainColor;
+        padding-top: 9px;
+        padding-right: 0;
+    }
+    .reset-icon{
+        @extend .col-auto;
+        @extend .d-flex;
+        padding-top: 14px;
+        font-size: 10px;
+        color: $lightGray;
+        cursor: pointer;
+    }
     input{
         width: 100%;
         background-color: transparent;
@@ -7,6 +22,6 @@
         }
     }
 
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid $postDelimiter;
     margin-bottom: 30px;
 }

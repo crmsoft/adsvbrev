@@ -44,14 +44,21 @@
 
             .message-status{
                 align-self: flex-end;
+                
+                &:before{
+                    content: '\e91c';
+                    font-size: 12px;
+                    margin-left: 3px;
+                    display: inline-block;
+                    font-family: icomoon;
+                    font-weight: 900;
+                    color: $lighterGray;
+                }
+
                 &.readed
                 {
                     &:before{
-                        content: '\221E';
-                        color: $mainColor;
-                        font-size: 12px;
-                        margin-left: 3px;
-                        display: inline-block;
+                        color: $mainColor;                        
                     }
                 }
             }

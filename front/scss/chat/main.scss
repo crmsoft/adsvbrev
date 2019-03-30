@@ -21,6 +21,11 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            .dec{
+                position: absolute;
+                right: 35px;
+            }
             .title{
                 flex: 1;
                 &::before{

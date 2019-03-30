@@ -15,4 +15,13 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid gray;
+    a{
+        text-decoration: none;
+    }
+    .user-info{
+        color: $white;
+        .user-name{
+            font-weight: 500;
+        }
+    }
 }

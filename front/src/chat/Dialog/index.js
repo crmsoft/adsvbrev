@@ -174,7 +174,10 @@ class DialogComponent extends Component{
                     animating={false}
                     className="message-container"
                 >
-                <MessageList messages={this.state.messagesList} />
+                <MessageList 
+                    me={this.props.messenger.username}
+                    messages={this.state.messagesList} 
+                />
                 </ScrollToBottom>
                 <Input 
                     onMessage={this.onMessage.bind(this)} 

@@ -87,7 +87,7 @@ class ContentComponent extends Component{
                         </Tab>
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
-                                <span className="icon-groups"></span>
+                                <span className="icon-group"></span>
                                 {" Groups"}
                             </a>
                         </Tab>

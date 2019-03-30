@@ -48,13 +48,23 @@ class SearchField extends Component{
 
     render(){
         return (
-            <div className="search-field">
-                <input 
-                    onChange={this.onUserInput}
-                    placeholder={`Search`}
-                    type="text" 
-                    value={this.state.value}
-                />
+            <div className="search-field container">
+                <div className="row">
+                    <div className="search-icon">
+                        <span className="icon-search"></span>
+                    </div>
+                    <div className="col-auto flex-grow-1">
+                        <input 
+                            onChange={this.onUserInput}
+                            placeholder={`Search`}
+                            type="text" 
+                            value={this.state.value}
+                        />
+                    </div>
+                    <div className="reset-icon">
+                        <span className="icon-cross"></span>
+                    </div>
+                </div>
             </div>
         )
     }

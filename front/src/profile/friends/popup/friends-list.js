@@ -12,7 +12,7 @@ class FriendsListComponent extends Component {
 
     render(){
         return (
-            <div>
+            <div className="user-friend-list">
                 {
                     this.props.items.map( item => {
                         return (

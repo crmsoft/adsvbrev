@@ -41,6 +41,7 @@ export default class MessageList extends Component {
                         const {user} = message;
                         
                         return <Message 
+                                    author={message.user.username === this.props.me}
                                     key={message.id}
                                     showUser={this.state.localeStore(user.username)}
                                     message={message}

@@ -16,11 +16,12 @@ class FollowerListItem extends Component{
                     </div>
                 </Link>
                 <div>
-                    <button>Write a message</button>
                     {
                         this.props.isGuest ? null : (
                             <button className="dd-btn btn-sm" 
-                            onClick={() => this.props.accept(userData.username)}>Accept</button>
+                            onClick={() => this.props.accept(userData.username)}>
+                                <span className="icon-accept-friendship"></span>   Accept
+                            </button>
                         )
                     }
                 </div>

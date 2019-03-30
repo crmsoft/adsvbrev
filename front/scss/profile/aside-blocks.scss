@@ -1,9 +1,31 @@
 .profile-aside{
     width: 20.9%;
     padding-left: 10px;
+    .block-friends{
+        .dd-modal{
+            .react-tabs{
+                margin: 10px 10px 0;
+            }
+            .content{
+                max-height: 75vh;
+                overflow-y: auto;
+                margin-right: -10px;
+                padding-right: 10px;
+            }
+        }
+    }
     .friends{
-        .icon-friends{
-            font-size: 18px;
+        .header{
+            .aside-firends-icon{
+                font-size: 18px;
+            }
+        }
+        +.dec{
+            height: 55px;
+            width: auto !important;
+            position: absolute;
+            right: -31px;
+            bottom: -1px;
         }
     }
     .block{
@@ -11,6 +33,7 @@
         @include section-border-radius();
         background-color: $sectionBg; 
         padding: 10px;
+        overflow: hidden;
 
         +.block{
             margin-top: $sectionTop;
@@ -36,6 +59,7 @@
 
         .block-content{
             padding: 5px;
+            position: relative;
             img{
                 width: 100%;
             }
@@ -75,7 +99,7 @@
                     h2{
                         font-size: 12px;
                         text-align: center;
-                        height: 42px;
+                        height: 21px;
                     }
                     .search-more{
                         &:before{

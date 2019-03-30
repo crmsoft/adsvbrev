@@ -37,7 +37,7 @@ export default class Friends extends Component{
 
     render(){
         return (
-            <div>
+            <div className="block-friends">
                 <div className="header">
                     <Header showModal={this.showModal} total={this.props.total} />
                     <FriendAndFollowersList 
@@ -67,7 +67,7 @@ export default class Friends extends Component{
                         }
 
                     </div>
-
+                    <img src="../img/friends-dec.png" className="dec" />
                 </div>
             </div>
         )

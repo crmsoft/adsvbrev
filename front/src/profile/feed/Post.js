@@ -16,6 +16,7 @@ const PostContnet = ({
 		repost ? (
 			<div className="post-shared">
 				<Post 
+					key={repost.id}
 					post={repost}
 					repost={true}
 				/>
@@ -234,13 +235,13 @@ class Post extends Component{
 						repost ? null : (
 							<div className="post-actions">
 								<span className={ post.likes ? "icon like active" : "icon like" } onClick={this.toggleLike.bind(this)}>
+									<span className="icon-liked"></span>
 									<span className="icon-heart"></span>
-									<span className="icon-heart-empty"></span>
 								</span>
 								<span >{post.like_count | 0}</span>
 								<span 
 									onClick={this.toggleShare.bind(this)}
-									className="icon icon-share"></span>
+									className={post.shares ? `icon icon-shared` : `icon icon-share`}></span>
 								<span >{post.share_count | 0}</span>
 							</div>
 						)

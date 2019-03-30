@@ -124,6 +124,7 @@ class UsersComponent extends Component {
                             <MessengerOptions status={m_status} sound={m_sound} />
                         </Popup>
                     </div>
+                    <img className="dec" src="../img/message-dec.png" />
                 </div>
                 {
                     minimized ? null : (

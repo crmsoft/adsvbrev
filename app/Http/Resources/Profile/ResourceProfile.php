@@ -24,6 +24,8 @@ class ResourceProfile extends JsonResource
         $profile = $this->profile;
         $profile['user'] = $user;
 
+        $guest = $this->additional['guest'];
+
         $feed = new PostCollection($this->feed()->with(
             [
                 'media', 
@@ -39,7 +41,7 @@ class ResourceProfile extends JsonResource
                     ->orderBy('created_at', 'desc')->take(2)->get());
 
         return [
-            'friends' => new UserCollection($this->friend()->take(5)->inRandomOrder()->get()),
+            'friends' => new UserCollection($this->friend()->take( $guest ? 6 : 5)->inRandomOrder()->get()),
             'groups' => $this->group(function($query){
                             $query->inRandomOrder();
                             $query->limit(3);

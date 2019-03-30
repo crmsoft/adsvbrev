@@ -4,6 +4,16 @@
     margin-bottom: -9px;
     margin-top: -9px;
     padding: 0 !important;
+    position: relative;
+    overflow: hidden;
+
+    .dec{
+        position: absolute;
+        height: 45px;
+        z-index: 1;
+        left: -8px;
+        top: -8px;
+    }
 
     .block-content{
         padding: 0 !important;

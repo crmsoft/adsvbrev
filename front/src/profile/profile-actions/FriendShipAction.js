@@ -63,7 +63,7 @@ class FriendShipActionComponent extends Component{
         
         
         return (
-            <div>
+            <div className="friendship-btns">
                 {
                     status === FRIENDSHIP_NONE ? 
                     (
@@ -71,7 +71,7 @@ class FriendShipActionComponent extends Component{
                             onClick={() => this.props.addToFriends(username)}
                             className="dd-btn btn-sm btn-full"
                         >
-                            <span className="icon-yt"></span>
+                            <span className="icon-add-dude"></span>
                             Add to Friends
                         </button>
                     ) : null
@@ -84,7 +84,7 @@ class FriendShipActionComponent extends Component{
                             onClick={() => this.props.unfriend(username)}
                             className="dd-btn btn-sm btn-full"
                         >
-                            <span className="icon-yt"></span>
+                            <span className="icon-remove"></span>
                             Unfriend
                         </button>
                     ) : null
@@ -97,7 +97,7 @@ class FriendShipActionComponent extends Component{
                             onClick={() => this.props.unsubscribe(username)}
                             className="dd-btn btn-sm btn-full"
                         >
-                            <span className="icon-yt"></span>
+                            <span className="icon-remove"></span>
                             Unsubscribe
                         </button>
                     ) : null
@@ -110,7 +110,7 @@ class FriendShipActionComponent extends Component{
                             onClick={() => this.props.accept(username)}
                             className="dd-btn btn-sm btn-full"
                         >
-                            <span className="icon-yt"></span>
+                            <span className="icon-accept-friendship"></span>
                             Accept
                         </button>
                     ) : null
