@@ -64,8 +64,7 @@ class Message extends Model
      * message may have a media file|files
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messageMedia(){
-        return $this->hasMany(Media::class, 'relation_id')
-            ->where('type', 'message');
+    public function mediable(){
+        return $this->morphMany(Media::class, 'mediable');
     }
 }

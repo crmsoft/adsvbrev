@@ -22,6 +22,10 @@ class Media extends Model
         'full_path'
     ];
 
+    protected $casts = [
+        'options' => 'array'
+    ];
+
     /**
      * append full path to file
      * @return string
@@ -44,5 +48,10 @@ class Media extends Model
      */
     public function message(){
        return $this->belongsTo(Message::class, 'relation_id');
+    }
+
+    public function mediable()
+    {
+        return $this->morphTo();
     }
 }

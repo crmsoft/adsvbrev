@@ -37,7 +37,7 @@ class ResourceComment extends JsonResource
             'subs' => $this->parent_hash ? [] : new CommentCollection($this->children()->take(4)->orderBy('id', 'desc')->get()),
             'like_count' => $reactant->getReactionCounterOfType( $reactionType )->getCount(),
             'likes' => $isLikes,
-            'media' => new MediaCollection($this->media)
+            'media' => new MediaCollection($this->mediable)
         ];
     }
 }

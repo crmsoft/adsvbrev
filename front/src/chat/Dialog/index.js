@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Input from './Input';
 import {
     MESSAGE_RECIEVED,
@@ -9,7 +9,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import MessageList from './MessageList';
 import Header from './DialogHead';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import ScrollToBottom, {StateContext} from 'react-scroll-to-bottom';
 import socketStore from '../../socket/redux/store';
 import {SEND_MESSAGE} from '../../socket/redux/events';
 import {inViewPort} from '../../utils';
@@ -31,8 +31,20 @@ class DialogComponent extends Component{
     componentDidMount()
     {                
         this.pull()
-        .then(done => {
-            this.containerRef.current.addEventListener('scroll', this.containerScrollListener.bind(this), true);
+        .then((items, chat) => {
+            this.setState(state => {
+                return {
+                    chat: chat,
+                    messagesList: [
+                        ...state.messagesList,
+                        ...items
+                    ]
+                }
+            }, () => {
+                console.log(this.containerRef);
+                
+                this.containerRef.current.parentNode.addEventListener('scroll', this.containerScrollListener.bind(this), true);
+            });
         });
     }
 
@@ -65,7 +77,7 @@ class DialogComponent extends Component{
             })
             .then(({data}) => this.setState(state => {
 
-                const parent = this.containerRef.current.querySelector('.css-y1c0xs');
+                const parent = this.containerRef.current.parentNode;
                 const childs = Array.prototype.slice.call(
                                     parent.querySelectorAll('div.message')
                                 );
@@ -99,30 +111,31 @@ class DialogComponent extends Component{
             axios.post(`/chat/${hash_id}/pull`)
             .then(response => {
                 const {data} = response.data;
-                this.setState(state => {
-                    const ids = state.messagesList.map(m => m.id);
-                    return {
-                        chat: hash_id,
-                        messagesList: [
-                            ...state.messagesList,
-                            ...data.reverse().filter(m => {
-                                return ids.indexOf(m.id) === -1
-                            })
-                        ]
-                    }
-                });
-                return true;
-            })
-            .then(done => setTimeout(resolve, 450))
+                const ids = this.state.messagesList.map(m => m.id);
+                resolve(
+                    data.reverse().filter(m => {
+                        return ids.indexOf(m.id) === -1
+                    }), hash_id
+                );
+            });
         });
     }
 
-    onMessage(message)
+    onMessage(message, attachment)
     {
         const hash = this.props.chat.hash_id;
-        axios.post(`/chat/${hash}/message`, {
-            message: message
-        }).then(({data}) => {            
+        const frm = new FormData();
+
+        frm.append(`message`, message);
+        console.log(attachment);
+        
+        if (attachment)
+        {
+            frm.append(`file`, attachment);
+        } // end if
+
+        axios.post(`/chat/${hash}/message`, frm)
+        .then(({data}) => {            
             this.setState({
                 reload: false,
                 messagesList: [
@@ -142,13 +155,22 @@ class DialogComponent extends Component{
     {
         if(this.state.reload)
         {
-            this.pull();
+            this.pull()
+            .then(items => {
+                this.setState({
+                    reload: false,
+                    messagesList: [
+                        ...this.state.messagesList,
+                        ...items                   
+                    ]
+                });
+            });
         }
     }
 
     componentWillUnmount()
     {
-        this.containerRef.current.removeEventListener('scroll', this.containerScrollListener);
+        this.containerRef.current.parentNode.removeEventListener('scroll', this.containerScrollListener);
     }
 
     static getDerivedStateFromProps(nextProps, prevState){
@@ -184,7 +206,7 @@ class DialogComponent extends Component{
     render(){   
             
         return (
-            <div className="dialog" ref={this.containerRef}>
+            <div className="dialog">
                 <Header members={this.props.chat.members} 
                         closeChat={this.closeChat.bind(this)}
                         me={this.props.messenger.username}
@@ -192,11 +214,20 @@ class DialogComponent extends Component{
                 <ScrollToBottom 
                     animating={false}
                     className="message-container"
+                    followButtonClassName="message-list-show-last"
                 >
-                <MessageList 
-                    me={this.props.messenger.username}
-                    messages={this.state.messagesList} 
-                />
+                    <StateContext.Consumer>
+                        {
+                            () => (
+                                <div ref={this.containerRef} className="messages-wrapper">
+                                    <MessageList 
+                                        me={this.props.messenger.username}
+                                        messages={this.state.messagesList} 
+                                    />
+                                </div>
+                            )
+                        }
+                    </StateContext.Consumer>
                 </ScrollToBottom>
                 <Input 
                     onMessage={this.onMessage.bind(this)} 

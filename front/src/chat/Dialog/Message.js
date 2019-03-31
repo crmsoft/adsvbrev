@@ -45,16 +45,25 @@ export default class Message extends Component{
                 <div className="message">
                     { showUser ? <MessageUserInfo data={message} /> : null }
                     <div className="message-content">
-                        <span className="message-text">
-                            {placeEmoji(message.message)}
-                        </span>
-                        {
-                            author ? (
-                                message.readed ? (
-                                    <span className="message-status readed"></span>
-                                ) : <span className="message-status"></span>
-                            ) : null
-                        }
+                        <div className="message-media">
+                            {
+                                message.media.map((image, index) => {
+                                    return <img key={index} src={image.full_path} style={{height: image.options ? image.options['chat']['height']:`auto`}} />
+                                })
+                            }
+                        </div>
+                        <div className="message-footer">
+                            <span className="message-text">
+                                {placeEmoji(message.message)}
+                            </span>
+                            {
+                                author ? (
+                                    message.readed ? (
+                                        <span className="message-status readed"></span>
+                                    ) : <span className="message-status"></span>
+                                ) : null
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

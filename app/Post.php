@@ -51,8 +51,7 @@ class Post extends Model implements ReactableContract
     }
 
     public function media(){
-        return $this->hasMany(Media::class, 'relation_id')
-                ->where('type', 'post');
+        return $this->morphMany(Media::class, 'mediable');
     }
 
     public function postable()

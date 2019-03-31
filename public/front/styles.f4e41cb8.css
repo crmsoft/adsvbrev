@@ -6344,7 +6344,7 @@ a.text-dark:hover, a.text-dark:focus {
 .icon-add-dude:before {
   content: "\e902"; }
 
-.icon-arrow-down:before {
+.icon-arrow-down:before, .chat .dialog-wrapper .dialog .message-list-show-last:before {
   content: "\e903"; }
 
 .icon-basket:before {
@@ -9622,16 +9622,20 @@ nav.user-profile {
     .chat .dialog-wrapper .dialog {
       position: relative;
       max-width: 250px;
-      height: 320px;
       flex: 1;
       display: flex;
       flex-direction: column;
       background-color: #2F3136;
       margin-right: 3px; }
+      .chat .dialog-wrapper .dialog .message-list-show-last {
+        font-family: icomoon;
+        font-size: 5px;
+        color: #F15A24; }
       .chat .dialog-wrapper .dialog .message-container {
         background-image: url("message_background-01.9bc267a9.png");
         flex: 1;
         max-height: 250px;
+        min-height: 250px;
         overflow: auto;
         padding: 5px; }
       .chat .dialog-wrapper .dialog .input {
@@ -9662,6 +9666,10 @@ nav.user-profile {
             text-align: center;
             vertical-align: middle;
             cursor: pointer; }
+            .chat .dialog-wrapper .dialog .input .attach span.icon-cross {
+              font-size: 9px;
+              padding-left: 5px;
+              color: #F15A24; }
         .chat .dialog-wrapper .dialog .input .emoji-container {
           position: absolute;
           left: 0;
@@ -9687,6 +9695,22 @@ nav.user-profile {
         .chat .dialog-wrapper .dialog .dialog-head .dialog-actions {
           font-size: 15px;
           cursor: pointer; }
+      .chat .dialog-wrapper .dialog .file-upload {
+        position: absolute;
+        background: rgba(32, 34, 37, 0.75);
+        top: 20px;
+        bottom: 50px;
+        right: 0;
+        left: 0;
+        overflow: hidden; }
+        .chat .dialog-wrapper .dialog .file-upload input {
+          display: none; }
+        .chat .dialog-wrapper .dialog .file-upload .preview {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; }
+        .chat .dialog-wrapper .dialog .file-upload .container, .chat .dialog-wrapper .dialog .file-upload .schedule .schedule-create-form, .schedule .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .followers-list .chat .dialog-wrapper .dialog .file-upload li, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .notification-list li, .followers-popup .popup-content .notification-list .chat .dialog-wrapper .dialog .file-upload li {
+          padding-top: 15px; }
 
 .emoji-mart,
 .emoji-mart * {
@@ -10072,10 +10096,11 @@ nav.user-profile {
     .chat-message .message .message-content {
       color: black;
       line-height: 1;
-      align-self: flex-start;
-      word-break: break-all;
-      font-size: 13px;
-      display: flex; }
+      font-size: 13px; }
+      .chat-message .message .message-content .message-footer {
+        align-self: flex-start;
+        word-break: break-all;
+        display: flex; }
       .chat-message .message .message-content .message-text {
         border-radius: 3px;
         padding: 2px 3px;

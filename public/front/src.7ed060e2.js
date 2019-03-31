@@ -64380,7 +64380,141 @@ module.exports = reloadCSS;
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/chat/Dialog/Input.js":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/chat/Dialog/FileUpload.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var FileUpload =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(FileUpload, _Component);
+
+  function FileUpload() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, FileUpload);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FileUpload)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      open: false
+    });
+
+    return _this;
+  }
+
+  _createClass(FileUpload, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevState) {
+      if (this.inputRef && prevState.open !== this.state.open) {
+        document.body.onfocus = this.handleInput.bind(this);
+        this.inputRef.click();
+      }
+    }
+  }, {
+    key: "handleInput",
+    value: function handleInput(e) {
+      var _this2 = this;
+
+      var files = e.target.files;
+
+      if (files && files.length) {
+        var file = files[0];
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+          return _this2.setState({
+            src: reader.result,
+            file: file
+          });
+        });
+        reader.readAsDataURL(file);
+        this.props.onFileChosen(file);
+      } else {
+        this.setState(function () {
+          return {
+            src: null
+          };
+        }, function () {
+          _this2.props.onFileChosen(null);
+        });
+      } // end if
+
+
+      document.body.onfocus = null;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _this$state = this.state,
+          open = _this$state.open,
+          src = _this$state.src;
+      this.inputRef = null;
+      return open ? _react.default.createElement("div", {
+        className: "file-upload"
+      }, _react.default.createElement("input", {
+        type: "file",
+        className: "hidden",
+        ref: function ref(_ref) {
+          _this3.inputRef = _ref;
+        },
+        onChange: this.handleInput.bind(this)
+      }), _react.default.createElement("div", {
+        className: "container"
+      }, src ? _react.default.createElement("img", {
+        src: src,
+        className: "preview"
+      }) : null)) : null;
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      return {
+        open: nextProps.open
+      };
+    }
+  }]);
+
+  return FileUpload;
+}(_react.Component);
+
+exports.default = FileUpload;
+},{"react":"../node_modules/react/index.js"}],"../src/chat/Dialog/Input.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -64395,6 +64529,8 @@ var _reactTextareaAutosize = _interopRequireDefault(require("react-textarea-auto
 require("emoji-mart/css/emoji-mart.css");
 
 var _emojiMart2 = require("emoji-mart");
+
+var _FileUpload = _interopRequireDefault(require("./FileUpload"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64435,7 +64571,8 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       message: '',
       sended: false,
-      emoji: false
+      emoji: false,
+      gallery: false
     });
 
     _this.inputRef = _react.default.createRef();
@@ -64452,7 +64589,9 @@ function (_Component) {
     value: function onText(e) {
       this.setState(this.state.sended ? {
         message: '',
-        sended: false
+        sended: false,
+        gallery: false,
+        attachment: null
       } : {
         message: e.target.value
       });
@@ -64462,7 +64601,7 @@ function (_Component) {
     value: function sendMessage(e) {
       if (this.state.message.trim() && e.key === 'Enter') {
         e.stopPropagation();
-        this.props.onMessage(this.state.message.trim());
+        this.props.onMessage(this.state.message.trim(), this.state.attachment);
         this.setState({
           sended: true
         });
@@ -64490,13 +64629,50 @@ function (_Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "toggleGallery",
+    value: function toggleGallery() {
       var _this3 = this;
 
+      this.setState(function () {
+        return {
+          gallery: !_this3.state.gallery
+        };
+      });
+    }
+  }, {
+    key: "onFileSelected",
+    value: function onFileSelected(file) {
+      var _this4 = this;
+
+      if (file) {
+        this.setState(function () {
+          return {
+            attachment: file
+          };
+        }, function () {
+          return _this4.inputRef.focus();
+        });
+      } else {
+        this.setState(function () {
+          return {
+            gallery: false
+          };
+        });
+      } // end if
+
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var gallery = this.state.gallery;
       return _react.default.createElement("div", {
         className: "input has-emoji"
-      }, _react.default.createElement("div", {
+      }, _react.default.createElement(_FileUpload.default, {
+        onFileChosen: this.onFileSelected.bind(this),
+        open: gallery
+      }), _react.default.createElement("div", {
         className: this.state.emoji ? "emoji-container show" : "emoji-container"
       }, _react.default.createElement(_emojiMart2.Picker, {
         onSelect: this.insertEmoji.bind(this),
@@ -64510,7 +64686,7 @@ function (_Component) {
         className: "icon-icons"
       })), _react.default.createElement(_reactTextareaAutosize.default, {
         inputRef: function inputRef(ref) {
-          _this3.inputRef = ref;
+          _this5.inputRef = ref;
         },
         placeholder: "Hello my friend...",
         maxRows: 2,
@@ -64518,9 +64694,10 @@ function (_Component) {
         value: this.state.message,
         onChange: this.onText.bind(this)
       }), _react.default.createElement("div", {
+        onClick: this.toggleGallery.bind(this),
         className: "attach"
       }, _react.default.createElement("span", {
-        className: "icon-pine"
+        className: gallery ? "icon-cross" : "icon-pine"
       })));
     }
   }]);
@@ -64529,7 +64706,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Input;
-},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","emoji-mart/css/emoji-mart.css":"../node_modules/emoji-mart/css/emoji-mart.css","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js"}],"../src/chat/Dialog/Message.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","emoji-mart/css/emoji-mart.css":"../node_modules/emoji-mart/css/emoji-mart.css","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","./FileUpload":"../src/chat/Dialog/FileUpload.js"}],"../src/chat/Dialog/Message.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -64621,13 +64798,25 @@ function (_Component) {
         data: message
       }) : null, _react.default.createElement("div", {
         className: "message-content"
+      }, _react.default.createElement("div", {
+        className: "message-media"
+      }, message.media.map(function (image, index) {
+        return _react.default.createElement("img", {
+          key: index,
+          src: image.full_path,
+          style: {
+            height: image.options ? image.options['chat']['height'] : "auto"
+          }
+        });
+      })), _react.default.createElement("div", {
+        className: "message-footer"
       }, _react.default.createElement("span", {
         className: "message-text"
       }, (0, _utils.placeEmoji)(message.message)), author ? message.readed ? _react.default.createElement("span", {
         className: "message-status readed"
       }) : _react.default.createElement("span", {
         className: "message-status"
-      }) : null)));
+      }) : null))));
     }
   }]);
 
@@ -68875,7 +69064,7 @@ var _MessageList = _interopRequireDefault(require("./MessageList"));
 
 var _DialogHead = _interopRequireDefault(require("./DialogHead"));
 
-var _reactScrollToBottom = _interopRequireDefault(require("react-scroll-to-bottom"));
+var _reactScrollToBottom = _interopRequireWildcard(require("react-scroll-to-bottom"));
 
 var _store = _interopRequireDefault(require("../../socket/redux/store"));
 
@@ -68942,8 +69131,17 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.pull().then(function (done) {
-        _this2.containerRef.current.addEventListener('scroll', _this2.containerScrollListener.bind(_this2), true);
+      this.pull().then(function (items, chat) {
+        _this2.setState(function (state) {
+          return {
+            chat: chat,
+            messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(items))
+          };
+        }, function () {
+          console.log(_this2.containerRef);
+
+          _this2.containerRef.current.parentNode.addEventListener('scroll', _this2.containerScrollListener.bind(_this2), true);
+        });
       });
     }
   }, {
@@ -68976,8 +69174,7 @@ function (_Component) {
         }).then(function (_ref) {
           var data = _ref.data;
           return _this3.setState(function (state) {
-            var parent = _this3.containerRef.current.querySelector('.css-y1c0xs');
-
+            var parent = _this3.containerRef.current.parentNode;
             var childs = Array.prototype.slice.call(parent.querySelectorAll('div.message'));
 
             for (var l = childs.length, i = 0; i < l; i++) {
@@ -69010,34 +69207,32 @@ function (_Component) {
         _axios.default.post("/chat/".concat(hash_id, "/pull")).then(function (response) {
           var data = response.data.data;
 
-          _this4.setState(function (state) {
-            var ids = state.messagesList.map(function (m) {
-              return m.id;
-            });
-            return {
-              chat: hash_id,
-              messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(data.reverse().filter(function (m) {
-                return ids.indexOf(m.id) === -1;
-              })))
-            };
+          var ids = _this4.state.messagesList.map(function (m) {
+            return m.id;
           });
 
-          return true;
-        }).then(function (done) {
-          return setTimeout(resolve, 450);
+          resolve(data.reverse().filter(function (m) {
+            return ids.indexOf(m.id) === -1;
+          }), hash_id);
         });
       });
     }
   }, {
     key: "onMessage",
-    value: function onMessage(message) {
+    value: function onMessage(message, attachment) {
       var _this5 = this;
 
       var hash = this.props.chat.hash_id;
+      var frm = new FormData();
+      frm.append("message", message);
+      console.log(attachment);
 
-      _axios.default.post("/chat/".concat(hash, "/message"), {
-        message: message
-      }).then(function (_ref2) {
+      if (attachment) {
+        frm.append("file", attachment);
+      } // end if
+
+
+      _axios.default.post("/chat/".concat(hash, "/message"), frm).then(function (_ref2) {
         var data = _ref2.data;
 
         _this5.setState({
@@ -69059,31 +69254,45 @@ function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
+      var _this6 = this;
+
       if (this.state.reload) {
-        this.pull();
+        this.pull().then(function (items) {
+          _this6.setState({
+            reload: false,
+            messagesList: [].concat(_toConsumableArray(_this6.state.messagesList), _toConsumableArray(items))
+          });
+        });
       }
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      this.containerRef.current.removeEventListener('scroll', this.containerScrollListener);
+      this.containerRef.current.parentNode.removeEventListener('scroll', this.containerScrollListener);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       return _react.default.createElement("div", {
-        className: "dialog",
-        ref: this.containerRef
+        className: "dialog"
       }, _react.default.createElement(_DialogHead.default, {
         members: this.props.chat.members,
         closeChat: this.closeChat.bind(this),
         me: this.props.messenger.username
       }), _react.default.createElement(_reactScrollToBottom.default, {
         animating: false,
-        className: "message-container"
-      }, _react.default.createElement(_MessageList.default, {
-        me: this.props.messenger.username,
-        messages: this.state.messagesList
+        className: "message-container",
+        followButtonClassName: "message-list-show-last"
+      }, _react.default.createElement(_reactScrollToBottom.StateContext.Consumer, null, function () {
+        return _react.default.createElement("div", {
+          ref: _this7.containerRef,
+          className: "messages-wrapper"
+        }, _react.default.createElement(_MessageList.default, {
+          me: _this7.props.messenger.username,
+          messages: _this7.state.messagesList
+        }));
       })), _react.default.createElement(_Input.default, {
         onMessage: this.onMessage.bind(this)
       }));
@@ -72143,7 +72352,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40368" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39327" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

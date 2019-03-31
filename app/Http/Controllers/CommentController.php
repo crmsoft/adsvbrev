@@ -57,9 +57,8 @@ class CommentController extends Controller
 
             $media = new Media;
             $media->path = $name;
-            $media->type = 'comment';
             $media->user()->associate($user);
-            $media->relation_id = $comment->id;
+            $media->mediable()->associate($comment);
             $media->save();
 
         }

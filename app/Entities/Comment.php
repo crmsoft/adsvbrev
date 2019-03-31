@@ -44,9 +44,8 @@ class Comment extends \BrianFaust\Commentable\Models\Comment implements Reactabl
         return $this->where($this->getRouteKeyName(), $value)->first();
     }
 
-    public function media(){
-        return $this->hasMany(Media::class, 'relation_id')
-                ->where('type', 'comment');
+    public function mediable(){
+        return $this->morphMany(Media::class, 'mediable');
     }
 
     public function notifications()

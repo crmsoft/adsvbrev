@@ -85,9 +85,8 @@ class PostController extends Controller
 
             $media = new Media;
             $media->path = $name;
-            $media->type = 'post';
             $media->user()->associate($user);
-            $media->relation_id = $post->id;
+            $media->mediable()->associate($post);
             $media->save();
 
         }

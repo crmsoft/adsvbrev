@@ -4,6 +4,7 @@ namespace App\Http\Resources\Chat\Dialog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserList\User;
+use App\Http\Resources\Media\MediaCollection;
 
 class ResourceMessage extends JsonResource
 {
@@ -20,7 +21,8 @@ class ResourceMessage extends JsonResource
             'message' => $this->message,
             'created_at' => $this->created_at->getTimestamp(),
             'user' => new User($this->user),
-            'readed' => $this->readed
+            'readed' => $this->readed,
+            'media' => new MediaCollection($this->mediable)
         ];
     }
 }

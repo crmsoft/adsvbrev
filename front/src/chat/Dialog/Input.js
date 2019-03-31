@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import Textarea from 'react-textarea-autosize';
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
+import FileUpload from './FileUpload';
 
 export default class Input extends Component{
 
     state = {
         message: '',
         sended: false,
-        emoji: false
+        emoji: false,
+        gallery: false
     }
 
     constructor(props, context)
@@ -26,7 +28,9 @@ export default class Input extends Component{
         this.setState(this.state.sended ? 
             {   
                 message: '',
-                sended: false
+                sended: false,
+                gallery: false,
+                attachment: null
             }
             :
             {
@@ -40,7 +44,7 @@ export default class Input extends Component{
         if(this.state.message.trim() && e.key === 'Enter')
         {
             e.stopPropagation();
-            this.props.onMessage(this.state.message.trim());
+            this.props.onMessage(this.state.message.trim(), this.state.attachment);
             this.setState({sended: true});
         }
 
@@ -62,9 +66,43 @@ export default class Input extends Component{
         
     }
 
+    toggleGallery()
+    {
+        this.setState(() => {
+            return {
+                gallery: !this.state.gallery
+            }
+        })
+    }
+
+    onFileSelected(file)
+    {
+        if (file)
+        {
+            this.setState(() => {
+                return {
+                    attachment: file
+                }
+            }, () => this.inputRef.focus())
+        } else {
+            this.setState(() => {
+                return {
+                    gallery: false
+                }
+            });
+        } // end if
+    }
+
     render(){
+
+        const {gallery} = this.state;
+
         return (
             <div className="input has-emoji">
+                <FileUpload 
+                    onFileChosen={this.onFileSelected.bind(this)}
+                    open={gallery}
+                />
                 <div className={this.state.emoji ? "emoji-container show" : "emoji-container"}>   
                     <Picker 
                         onSelect={this.insertEmoji.bind(this)}
@@ -84,8 +122,10 @@ export default class Input extends Component{
                     value={this.state.message}
                     onChange={this.onText.bind(this)}
                 />
-                <div className="attach">
-                    <span className="icon-pine"></span>
+                <div
+                    onClick={this.toggleGallery.bind(this)} 
+                    className="attach">
+                    <span className={gallery ? `icon-cross` : `icon-pine`}></span>
                 </div>
             </div>
         )

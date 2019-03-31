@@ -14,6 +14,16 @@ class ResourceMedia extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $full_path = $this->full_path;
+
+        if ($this->mediable_type == 'App\Message')
+        {
+            $full_path = asset( '/storage/user-media/' . $this->user->dir . '/chat_' . $this->path);
+        } // end if
+
+        return [
+            'full_path' => $full_path,
+            'options' => $this->options
+        ];
     }
 }

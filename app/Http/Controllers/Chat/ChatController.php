@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Chat;
 
-use App\Conversation;
-use App\Http\Controllers\Controller;
-use App\Message;
-use App\User;
-use App\UserConversation;
-use App\MessageRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
+use Intervention\Image\Facades\Image;
+
+use App\User;
+use App\Media;
+use App\Message;
+use App\MessageRead;
+use App\Conversation;
+use App\UserConversation;
+
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Chat\ResourceChat;
-
 use App\Http\Resources\Chat\Dialog\ResourceMessage;
-
 use App\Http\Resources\Chat\ChatUser;
 
 class ChatController extends Controller{
@@ -75,7 +78,8 @@ class ChatController extends Controller{
     public function store(Conversation $conversation, Request $request)
     {
         $request->validate([
-            'message' => 'required'
+            'message' => 'required',
+            'file' => ['image', 'mimes:jpeg,jpg,gif,png', 'max:8000']
         ]);
 
         $user = auth()->user();
@@ -90,6 +94,40 @@ class ChatController extends Controller{
             $message->user()->associate($user);
             $message->conversation()->associate($conversation);
             $message->save();
+
+            if ($request->hasFile('file')) {
+                $media = $request->file('file');
+    
+                $image = Image::make($media->getRealPath());
+    
+                $image->stream();
+                $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
+                $users_dir = "user-media/{$user->dir}/";
+    
+                Storage::disk('public')
+                    ->put("{$users_dir}original_{$name}", $image);
+                // profile main image;
+                $image->resize(200, 120, function($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $image->stream();
+    
+                Storage::disk('public')
+                    ->put("{$users_dir}chat_{$name}", $image);
+    
+                $media = new Media;
+                $media->path = $name;
+                $media->options = [
+                    'chat' => [
+                        'width' => $image->width(),
+                        'height' => $image->height()  
+                    ]
+                ];
+                $media->mediable()->associate($message);
+                $media->user()->associate($user);
+                $media->save();
+    
+            } // end if
 
             $messageRead = new MessageRead;
             $messageRead->message()->associate($message);
