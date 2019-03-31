@@ -42094,9 +42094,9 @@ function (_Component) {
         className: comment.likes ? 'active' : '',
         onClick: this.toggleLike.bind(this)
       }, _react.default.createElement("span", {
-        className: "icon-heart"
+        className: "icon-liked"
       }), _react.default.createElement("span", {
-        className: "icon-heart-empty"
+        className: "icon-heart"
       })), _react.default.createElement("span", null, comment.like_count | 0), _react.default.createElement("span", {
         onClick: function onClick(e) {
           _this4.props.replyTo(user, comment.id);
@@ -63624,7 +63624,7 @@ exports.default = Chat;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
+exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MARK_MESSAGES_AS_READED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -63636,6 +63636,8 @@ var MESSAGE_RECIEVED = 'MESSAGE_RECIEVED';
 exports.MESSAGE_RECIEVED = MESSAGE_RECIEVED;
 var MESSAGE_NOTIFIED = 'MESSAGE_NOTIFIED';
 exports.MESSAGE_NOTIFIED = MESSAGE_NOTIFIED;
+var MARK_MESSAGES_AS_READED = 'MARK_MESSAGES_AS_READED';
+exports.MARK_MESSAGES_AS_READED = MARK_MESSAGES_AS_READED;
 var CHATS_LOADED = 'CHATS_LOADED';
 exports.CHATS_LOADED = CHATS_LOADED;
 var CLOSE_CHAT = 'CLOSE_CHAT';
@@ -63780,6 +63782,23 @@ var reducer = function reducer() {
         return Object.assign({}, state, {
           messenger: Object.assign({}, state.messenger, {
             m_status: 'offline'
+          })
+        });
+      }
+
+    case _events.MARK_MESSAGES_AS_READED:
+      {
+        var chat_id = action.data;
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            chat: state.messenger.chat.map(function (chat) {
+              if (chat.hash_id === chat_id) {
+                chat.readed = new Date().getTime();
+              } // end if
+
+
+              return chat;
+            })
           })
         });
       }
@@ -64572,23 +64591,22 @@ var Message =
 function (_Component) {
   _inherits(Message, _Component);
 
-  function Message() {
+  function Message(props) {
+    var _this;
+
     _classCallCheck(this, Message);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Message).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Message).call(this, props));
+    _this.state = Object.assign({}, props);
+    return _this;
   }
 
   _createClass(Message, [{
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(props, state) {
-      return this.props.message.id !== props.message.id;
-    }
-  }, {
     key: "render",
     value: function render() {
-      var message = this.props.message;
-      var showUser = this.props.showUser;
-      var author = this.props.author;
+      var message = this.state.message;
+      var showUser = this.state.showUser;
+      var author = this.state.author;
       return _react.default.createElement("div", {
         className: "chat-message"
       }, showUser ? _react.default.createElement(MessageUserAva, {
@@ -68738,13 +68756,15 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.send_message = exports.NOTIFICATION = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
+exports.send_message = exports.CHAT_MESSAGES_READED = exports.NOTIFICATION = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
 var MESSAGE = 'MESSAGE';
 exports.MESSAGE = MESSAGE;
 var SEND_MESSAGE = 'SEND_MESSAGE';
 exports.SEND_MESSAGE = SEND_MESSAGE;
 var NOTIFICATION = 'NOTIFICATION';
 exports.NOTIFICATION = NOTIFICATION;
+var CHAT_MESSAGES_READED = 'CHAT_MESSAGES_READED';
+exports.CHAT_MESSAGES_READED = CHAT_MESSAGES_READED;
 
 var send_message = function send_message(chat) {
   return function (dispatch) {
@@ -68792,6 +68812,14 @@ var reducer = function reducer() {
       {
         return {
           recieved: _events.SEND_MESSAGE,
+          data: action.data
+        };
+      }
+
+    case _events.CHAT_MESSAGES_READED:
+      {
+        return {
+          recieved: _events.CHAT_MESSAGES_READED,
           data: action.data
         };
       }
@@ -69065,12 +69093,29 @@ function (_Component) {
     value: function getDerivedStateFromProps(nextProps, prevState) {
       if (nextProps.pullChat === nextProps.chat.hash_id) {
         return {
-          reload: true
+          reload: true,
+          readed: nextProps.chat.readed
         };
       }
 
+      var messagesList = prevState.messagesList;
+
+      if (nextProps.chat.readed && nextProps.chat.readed !== prevState.readed) {
+        messagesList = messagesList.map(function (message) {
+          if (!message.readed && message.user.username === nextProps.messenger.username) {
+            message.readed = true;
+          } // end if
+
+
+          return message;
+        });
+      } // end if
+
+
       return {
-        reload: false
+        reload: false,
+        messagesList: messagesList,
+        readed: nextProps.chat.readed
       };
     }
   }]);
@@ -69377,6 +69422,14 @@ function (_Component) {
 
             _NewMessage.default.play();
           }
+        } // end if
+
+
+        if (recieved === _events.CHAT_MESSAGES_READED) {
+          _store.default.dispatch({
+            type: _events2.MARK_MESSAGES_AS_READED,
+            data: data
+          });
         } // end if
 
       });
@@ -71954,6 +72007,14 @@ socket.onmessage = function (_ref) {
       data: null
     });
   } // end if
+
+
+  if (response.action === 'messages-viewed') {
+    _store.default.dispatch({
+      type: _events.CHAT_MESSAGES_READED,
+      data: response.target
+    });
+  } // end if 
 
 };
 

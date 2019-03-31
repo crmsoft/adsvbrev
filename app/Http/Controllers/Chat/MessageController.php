@@ -28,7 +28,7 @@ class MessageController extends Controller{
                     ->with(['messages' => function($query){
                         $query->orderBy('id', 'desc');
                         $query->limit(self::$limit_per_pull);
-                    }])->first();
+                    }, 'members'])->first();
 
         $conversation->markReaded();
 

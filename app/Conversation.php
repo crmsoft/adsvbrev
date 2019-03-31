@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class Conversation extends Model
 {
@@ -60,9 +61,9 @@ class Conversation extends Model
         $conversation = $this->id;
         $user_id = auth()->user()->id;
 
-        DB::update("insert into message_reads (message_id, user_id, created_at, updated_at)
-                    SELECT 
-                        m.id, uc.user_id, now(), now()
+        // find messages that user view for the first time
+        $readed_messages = DB::select("SELECT 
+                        m.id as id, uc.user_id as user_id
                     FROM
                         user_conversations uc
                             JOIN
@@ -73,6 +74,32 @@ class Conversation extends Model
                         uc.user_id = $user_id
                             AND m.conversation_id = $conversation
                             AND mr.id IS NULL");
+
+        $insert_to_reads = [];
+        $now = now();
+        // mark messages as viewed
+        foreach($readed_messages as $message)
+        {
+            $insert_to_reads[] = [
+                'message_id' => $message->id,
+                'user_id' => $message->user_id,
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
+        } // end foreach
+
+        if (!empty($insert_to_reads))
+        {
+            \DB::table('message_reads')->insert($insert_to_reads);
+            // notify users about view event
+            Redis::publish(config('app.pub-sub-channel'), json_encode([
+                'header' => 'message-readed',
+                'chat' => $this->hash_id,
+                'users' => $this->members->pluck('id')->filter(function($user) use($user_id) {
+                    return $user != $user_id;
+                })->values()
+            ]));
+        } // end if
     }
 
     public function user(){
