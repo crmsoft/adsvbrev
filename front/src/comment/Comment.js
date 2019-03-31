@@ -74,8 +74,8 @@ export default class Comment extends Component{
                                 className={comment.likes ? 'active':''}
                                 onClick={this.toggleLike.bind(this)}
                             >
+                                <span className="icon-liked"></span>
                                 <span className="icon-heart"></span>
-                                <span className="icon-heart-empty"></span>
                             </span>
                             <span >{comment.like_count | 0}</span>
                             <span onClick={ e => { this.props.replyTo(user, comment.id); }} >reply</span>

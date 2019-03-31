@@ -1,7 +1,8 @@
 import {
     MESSAGE,
     SEND_MESSAGE,
-    NOTIFICATION
+    NOTIFICATION,
+    CHAT_MESSAGES_READED
 } from './events';
 
 
@@ -26,6 +27,12 @@ const reducer = (state = {
                 recieved: SEND_MESSAGE,
                 data: action.data
             }            
+        }
+        case CHAT_MESSAGES_READED : {
+            return {
+                recieved: CHAT_MESSAGES_READED,
+                data: action.data
+            }
         }
     }
 }

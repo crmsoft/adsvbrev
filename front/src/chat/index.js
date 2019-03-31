@@ -5,12 +5,13 @@ import {Provider} from 'react-redux';
 import store from './redux/store';
 import socketStore from '../socket/redux/store';
 import {
-    MESSAGE
+    MESSAGE,
+    CHAT_MESSAGES_READED
 } from '../socket/redux/events';
 import {
     load_chats, 
     CHAT_CLOSED, 
-    MESSAGE_RECIEVED, 
+    MARK_MESSAGES_AS_READED, 
     INC_CHAT_UNREAD, 
     CLOSE_CHAT, 
     CHAT_READED
@@ -84,6 +85,14 @@ export default class Chat extends Component{
                     newMessageSound.play();
                 }
                 
+            } // end if
+
+            if (recieved === CHAT_MESSAGES_READED)
+            {
+                store.dispatch({
+                    type: MARK_MESSAGES_AS_READED,
+                    data: data
+                })
             } // end if
         })
     }

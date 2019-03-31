@@ -2,6 +2,7 @@
 import {
     MESSAGE_SENDED,
     MESSAGE_RECIEVED,
+    MARK_MESSAGES_AS_READED,
     CHATS_LOADED,
     CLOSE_CHAT,
     CHAT_CLOSED,
@@ -73,6 +74,23 @@ const reducer = (state = initialState, action) => {
             }
         }
 
+        case MARK_MESSAGES_AS_READED : {
+            const chat_id = action.data;
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    chat: state.messenger.chat.map(chat => {
+                        if (chat.hash_id === chat_id)
+                        {
+                            chat.readed = (new Date()).getTime()
+                        } // end if
+
+                        return chat;
+                    })
+                }
+            }
+        }
         case MESSAGE_SENDED : {
             return {
                 ...state,

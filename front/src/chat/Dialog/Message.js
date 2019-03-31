@@ -27,16 +27,17 @@ const MessageUserAva = ({data}) => {
 
 export default class Message extends Component{
 
-    shouldComponentUpdate(props, state)
+    constructor(props)
     {
-        return this.props.message.id !== props.message.id;
+        super(props);
+        
+        this.state = {...props};
     }
 
     render(){
-        const {message} = this.props;
-        const {showUser} = this.props;
-        const {author} = this.props;
-        
+        const {message} = this.state;
+        const {showUser} = this.state;
+        const {author} = this.state;
         
         return (
             <div className="chat-message">

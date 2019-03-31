@@ -155,11 +155,30 @@ class DialogComponent extends Component{
 
         if(nextProps.pullChat === nextProps.chat.hash_id)
         {            
-            return {reload: true};
+            return {reload: true, readed: nextProps.chat.readed};
         }
        
+        let messagesList = prevState.messagesList;
+
+        if (nextProps.chat.readed && (
+            nextProps.chat.readed !== prevState.readed
+        ))
+        {
+            
+            messagesList = messagesList.map(message => {
+                if (!message.readed && (message.user.username === nextProps.messenger.username))
+                {
+                    message.readed = true;
+                } // end if
+                return message;
+            })            
+        } // end if
        
-        return {reload: false};
+        return {
+            reload: false, 
+            messagesList: messagesList,
+            readed: nextProps.chat.readed
+        };
     }
 
     render(){   
