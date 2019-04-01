@@ -17,9 +17,23 @@ export default class FileUpload extends Component{
     {        
         if (this.inputRef && (prevState.open !== this.state.open))
         {
-            document.body.onfocus = this.handleInput.bind(this);
+            document.body.onfocus = this.handleFileCancel.bind(this);
             this.inputRef.click();
         }
+    }
+    
+    handleFileCancel( e )
+    {
+        setTimeout(() => {
+            !this.state.file && this.state.open && this.setState(() => {
+                return {
+                    src: null
+                }
+            }, () => {
+                this.props.onFileChosen(null);
+            });
+        }, 150);        
+        document.body.onfocus = null;
     }
 
     handleInput( e )
@@ -37,16 +51,7 @@ export default class FileUpload extends Component{
             this.props.onFileChosen(
                 file
             );
-        } else {
-            this.setState(() => {
-                return {
-                    src: null
-                }
-            }, () => {
-                this.props.onFileChosen(null);
-            });
-        } // end if
-
+        }
         document.body.onfocus = null;
     }
 

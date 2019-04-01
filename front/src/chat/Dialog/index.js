@@ -41,8 +41,6 @@ class DialogComponent extends Component{
                     ]
                 }
             }, () => {
-                console.log(this.containerRef);
-                
                 this.containerRef.current.parentNode.addEventListener('scroll', this.containerScrollListener.bind(this), true);
             });
         });
@@ -127,7 +125,6 @@ class DialogComponent extends Component{
         const frm = new FormData();
 
         frm.append(`message`, message);
-        console.log(attachment);
         
         if (attachment)
         {
@@ -143,6 +140,9 @@ class DialogComponent extends Component{
                     data.data                   
                 ]
             }, () => socketStore.dispatch({type: SEND_MESSAGE, data: hash}))
+        }).catch(err => {
+            console.log(err);
+            alert(`Failed to send message.`)
         });   
     }
 

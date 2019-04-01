@@ -15,7 +15,7 @@ import About from './about';
 import ProfileSchedule from './schedule';
 import scheduleStore from './schedule/store';
 
-
+import Poster from './ava/Poster';
 
 
 class ProfileComponent extends Component{
@@ -32,11 +32,16 @@ class ProfileComponent extends Component{
                 feed, 
                 friends, 
                 groups,
-                totals
+                totals,
+                profile
             } = this.props.data;
         return (
             <div>
-                <nav className="user-profile">
+                <nav className="user-profile" style={ profile.cover ? {backgroundImage:`url(${profile.cover})`} : {}}>
+
+                    <Poster 
+                        src={this.props.data}
+                    />
                     
                     <div className="triangle-right"></div>
 

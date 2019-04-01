@@ -168,7 +168,9 @@ class ProfileController extends Controller
             'ava' => 'required|image|mimes:jpeg,jpg,gif,png|max:8000'
         ]);
 
+        $response = '';
         $user = Auth::user();
+        $profile = $user->profile;
 
         $ava = $request->file('ava');
 
@@ -180,27 +182,43 @@ class ProfileController extends Controller
 
         Storage::disk('public')
             ->put("{$users_dir}original_{$name}", $image);
-        // profile main image;
-        $image->fit(200);
-        $image->stream();
 
-        Storage::disk('public')
-            ->put("{$users_dir}200_{$name}", $image);
+        if (!$request->get('cover', false))
+        {
+            // profile main image;
+            $image->fit(200);
+            $image->stream();
 
-        $image->fit(50);
-        $image->stream();
+            Storage::disk('public')
+                ->put("{$users_dir}200_{$name}", $image);
 
-        Storage::disk('public')
-            ->put("{$users_dir}50_{$name}", $image);
+            $image->fit(50);
+            $image->stream();
 
-        $profile = $user->profile;
-        $profile->ava = $name;
-        $profile->save();
+            Storage::disk('public')
+                ->put("{$users_dir}50_{$name}", $image);
 
-        $user->ava = "/storage/{$users_dir}50_{$name}";
-        $user->save();
+            $profile->ava = $name;
+            $profile->save();
 
-        return response(Storage::url("{$users_dir}200_{$name}"));
+            $user->ava = "/storage/{$users_dir}50_{$name}";
+            $user->save();
+
+            $response = Storage::url("{$users_dir}200_{$name}");
+        } else {
+            $image->fit(1110,250);
+            $image->stream();
+
+            Storage::disk('public')
+                ->put("{$users_dir}cover_{$name}", $image);
+
+            $profile->cover = $name;
+            $profile->save();
+
+            $response = Storage::url("{$users_dir}cover_{$name}");
+        }// end if
+
+        return response($response);
     }
 
     /**

@@ -26,6 +26,7 @@ class ProfileConfig extends JsonResource
 
         return [
             'main_photo' => $this->main_photo,
+            'cover' => $this->cover ? \Storage::url("user-media/{$this->user->dir}/cover_{$this->cover}") : null, 
             'user' => $this->user,
             'about' => $this->about,
             'dob' => $this->dob,

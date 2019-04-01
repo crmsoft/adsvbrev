@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import Popup from 'reactjs-popup';
 import Header from './Header';
 import {Footer} from './Footer';

@@ -15,7 +15,9 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
+            
             $table->string('ava')->default('http://via.placeholder.com/160/95a/fff?text=?');
+            $table->string('cover')->nullable();
 
             $table->text('about')->nullable();
             $table->timestamp('dob')->nullable();

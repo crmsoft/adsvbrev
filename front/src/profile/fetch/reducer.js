@@ -3,6 +3,7 @@ import {
     PROFILE_FETCH_START,
     PROFILE_FETCH_ERROR,
     PROFILE_REFRESH,
+    COVER_UPLOADED,
     POST_ADDED,
     POST_LIKED,
     APPEND_COMMENT,
@@ -32,6 +33,18 @@ const profileReducer = (state = initialState, action) => {
     }
 
     switch(action.type){
+        case COVER_UPLOADED: {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    profile: {
+                        ...state.data.profile,
+                        cover: action.data
+                    }
+                }
+            }
+        }
         case COMMENT_LIKED : {
             return {
                 ...state,

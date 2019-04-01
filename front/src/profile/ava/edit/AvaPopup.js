@@ -4,6 +4,7 @@ import AvaPopupContent from './AvaPopupContent';
 import axios from 'axios';
 import store from '../../fetch/store';
 import { updateProfile } from '../../fetch/events';
+import {Modal} from '../../../Modal';
 
 export default class AvaPopup extends Component{
     
@@ -55,45 +56,41 @@ export default class AvaPopup extends Component{
     }
 
     render(){
-        return (    
-            <Popup 
-                lockScroll={true}
-                contentStyle={{backgroundColor: 'transparent', border:0,padding:0}} 
-                modal={true} 
+
+        const actions = [
+            {
+                title: `Close`,
+                onAction: this.closeModal.bind(this),
+                class: `btn-empty`
+            },
+            {
+                title: `Choose`,
+                onAction: () => this.fileInputRef.current.click(),
+            }
+        ];
+
+        if (this.state.src)
+        {
+            actions.push({
+                title: `Upload`,
+                onAction: this.upload.bind(this)
+            });
+        } // end if
+
+        return (  
+            <Modal
                 open={this.props.show}
-                closeOnDocumentClick={true}
-                closeOnEscape={true}
-                onClose={this.closeModal}
+                onClose={this.closeModal.bind(this)}
+                actions={actions}
+                title={`Upload Avatar`}
             >
-                <div className="popup">
-                    <div className="popup-header">
-                        <div className="title">
-                            <h2>Upload Avatar</h2>
-                        </div>
-                        <div className="close" onClick={this.closeModal}>
-                            <span>&times;</span>
-                        </div>
+                <div className="popup-content">
+                    <div style={{display:'none'}}>
+                        <input onChange={ e => { this.selectFile(e.target.files); }} ref={this.fileInputRef} type="file" />
                     </div>
-                    <div className="popup-content">
-                        <div style={{display:'none'}}>
-                            <input onChange={ e => { this.selectFile(e.target.files); }} ref={this.fileInputRef} type="file" />
-                        </div>
-                        <AvaPopupContent ava={this.state.src ? this.state.src : this.props.ava} />
-                    
-                    </div>
-                    <div className="popup-footer">
-                        <div>
-                            <button className="dd-btn btn-sm" onClick={() => this.fileInputRef.current.click()}>Choose</button>
-                            {
-                                this.state.src ? (
-                                    <button className="dd-btn btn-sm" onClick={this.upload}>Upload</button>
-                                ) : undefined
-                            }
-                            <button className="dd-btn btn-sm btn-gray" onClick={this.closeModal}>Cancel</button>
-                        </div>
-                    </div>
+                    <AvaPopupContent ava={this.state.src ? this.state.src : this.props.ava} />
                 </div>
-            </Popup>
+            </Modal>
         )
     }
 }

@@ -74,7 +74,6 @@ export default class Input extends Component{
                 <Popup
                     open={this.state.emoji}
                     closeOnDocumentClick={true}
-                    position="top right"
                     overlayStyle={{display:'none'}}
                     lockScroll={false}
                     closeOnEscape={true}

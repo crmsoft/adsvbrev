@@ -143,7 +143,7 @@ export default class ProfileForm extends Component{
                 </div>
                 
                 <div className="row">
-                    <Label text="Phonr Number" />
+                    <Label text="Phone Number" />
                     <div className="col">
                         <div>
                             <input 
