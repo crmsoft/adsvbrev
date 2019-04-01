@@ -33,6 +33,7 @@ Route::group([
     Route::get('/settings', 'ProfileController@index')->name('settings-view');
     Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
     Route::get('/event/{id}', 'ProfileController@index')->name('event-page');
+    Route::get('/g/{id}', 'ProfileController@index')->name('event-page');
     Route::get('/dudes', 'ProfileController@index')->name('dudes-page');
     Route::get('/feed', 'ProfileController@index')->name('feed-page');
 });
@@ -105,6 +106,22 @@ Route::group([
     Route::post('/event/join/{event}', 'EventController@join')->name('user-event-join');
     Route::post('/event/leave/{event}', 'EventController@leave')->name('user-event-leave');
     Route::get('/event/participants/{event}', 'EventController@listPartipicants')->name('user-event-list-p');
+
+});
+
+// Events Specific Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    'namespace' => 'Games',
+    'middleware' => ['auth']
+], function() {
+    Route::get('/games', 'GameController@list')->name('user-game-list');
+    Route::get('/game/list/{timestamp}', 'GameController@listDay')->name('user-game-list-day');
+    Route::get('/game/show/{game}', 'GameController@show')->name('user-game-show');
+    Route::post('/game/store', 'GameController@store')->name('user-game-create');
+    Route::post('/game/join/{game}', 'GameController@join')->name('user-game-join');
+    Route::post('/game/leave/{game}', 'GameController@leave')->name('user-game-leave');
+    Route::get('/game/participants/{game}', 'GameController@listPartipicants')->name('user-game-list-p');
 
 });
 

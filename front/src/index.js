@@ -20,6 +20,8 @@ import EventProfileStore from './event/redux/store';
 
 import FDudes from './find-dude';
 
+import GamePage from './games/index';
+
 import Feed from './feed';
 
 const App = () => {
@@ -46,6 +48,7 @@ const App = () => {
                     </Provider>
                     <Route path="/dudes" component={FDudes} />
                     <Route path="/feed" component={Feed} />
+                    <Route path="/g/:id" component={GamePage} />
                 </div>
                 <Chat />
             </Fragment>

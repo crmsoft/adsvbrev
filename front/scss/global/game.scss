@@ -1,0 +1,94 @@
+.game-profile{
+    @extend .event-profile;
+    border: 1px solid $mainColor;
+    ul.social-list{
+        margin: 0 0 10px;
+        padding: 0;
+        display: block;
+        li {
+            list-style: none;
+            display: inline-block;
+            a{
+                display: inline-block;
+                line-height: 0;
+                text-decoration: none;
+                padding: 14px;
+                background-color: $white;
+                border-radius: 50%;
+                margin-left: 5px;
+                color: inherit;
+                &:hover{
+                    color: inherit;
+                }
+            }
+
+            &:first-child{
+                color: #662D90;
+            }
+            &:nth-child(2){
+                color: #ff0000;
+            }
+            &:last-child{
+                color: #171a21
+            }
+        }
+    }
+
+    .profile-actions{
+        margin-bottom: 10px;
+    }
+
+    .wotes{
+        position: relative;
+        margin-left: 15px;
+        width: 150px;
+        .wotes-avg{
+            position: absolute;
+            left: 0;
+            top: -13px;
+            padding: 12px;
+            background-color: $mainColor;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .wotes-stars{
+            background-color: $lightGray;
+            margin-left: 44px;
+            height: 20px;
+            position: relative;
+            -webkit-clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%);
+            clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%);
+            .wote-mask{
+                z-index: 2;
+                position: absolute;
+                background-image: url("data:image/svg+xml;charset=utf8,<svg width='30px' height='30px' viewBox='0 0 30 30' fill='rgb(32, 34, 37)' xmlns='http://www.w3.org/2000/svg'><path d='M24.414,13.562 L19.571,17.234 L21.331,23.052 C21.81,24.636 21.1,25.155 19.739,24.208 L14.75,20.737 L9.761,24.208 C8.402,25.154 7.689,24.638 8.169,23.052 L9.929,17.234 L5.086,13.562 C3.767,12.562 4.036,11.724 5.693,11.691 L11.77,11.567 L13.766,5.826 C14.31,4.262 15.189,4.26 15.733,5.826 L17.729,11.567 L23.807,11.691 C25.461,11.724 25.735,12.561 24.414,13.562 L24.414,13.562 Z M-2,34 L34,34 L34,-2 L-2,-2 L-2,34 Z'></path></svg>");
+                background-size: 20% 100%;
+                top: 0;
+                right: 5px;
+                bottom: 0;
+                left: 5px;
+            }
+            .wote-bar{
+                z-index: 1;
+                position: absolute;
+                top: 1px;
+                left: 0;
+                bottom: 0;
+                background: $mainColor;
+                max-width: 95%;
+            }
+            .wote-filler{
+                width: 5px;
+                display: inline-block;
+                float: right;
+                background-color: $darkGray;
+                height: 20px;
+                &:first-child{
+                    float: left;
+                    position: relative;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+}

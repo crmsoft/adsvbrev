@@ -39,7 +39,7 @@ export default class Partipicatns extends Component {
                 class: `btn-empty`
             }
         ];
-        const {event} = this.props;
+        const {event, title} = this.props;
 
         return (
             <Fragment>
@@ -50,7 +50,7 @@ export default class Partipicatns extends Component {
                     >
                         <span className="icon-friends"></span>
                         <h3>
-                            Participants 
+                            {title ? title:`Participants`} 
                         </h3>
                         <span className="items-count"> {event.total_participiant ? event.total_participiant : ''}</span>
                     </a>
