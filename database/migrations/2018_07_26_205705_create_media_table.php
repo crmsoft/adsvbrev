@@ -15,17 +15,14 @@ class CreateMediaTable extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('path');
-            $table->unsignedInteger('relation_id')->nullable();
-            $table->enum('type', [
-                'message',
-                'post',
-                'comment',
-                'avatar',
-                'profile',
-                'gallery'
-            ])->default('message');
             $table->unsignedInteger('user_id');
+            
+            $table->morphs('mediable');
+            
+            $table->json('options');
+
             $table->softDeletes();
             $table->timestamps();
 

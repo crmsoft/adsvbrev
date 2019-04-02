@@ -40996,7 +40996,7 @@ exports.urlify = urlify;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DEVICE_SETTINGS = exports.COMMENT_LIKED = exports.APPEND_COMMENT = exports.POST_LIKED = exports.POST_ADDED = exports.PROFILE_REFRESH = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
+exports.DEVICE_SETTINGS = exports.COMMENT_LIKED = exports.APPEND_COMMENT = exports.POST_LIKED = exports.POST_ADDED = exports.PROFILE_REFRESH = exports.COVER_UPLOADED = exports.PROFILE_FETCH_ERROR = exports.PROFILE_FETCH_DONE = exports.PROFILE_FETCH_START = void 0;
 var PROFILE_FETCH_START = 'PROFILE_FETCH_START';
 exports.PROFILE_FETCH_START = PROFILE_FETCH_START;
 var PROFILE_FETCH_DONE = 'PROFILE_FETCH_DONE';
@@ -41015,6 +41015,8 @@ var COMMENT_LIKED = 'COMMENT_LIKED';
 exports.COMMENT_LIKED = COMMENT_LIKED;
 var DEVICE_SETTINGS = 'DEVICE_SETTINGS';
 exports.DEVICE_SETTINGS = DEVICE_SETTINGS;
+var COVER_UPLOADED = 'COVER_UPLOADED';
+exports.COVER_UPLOADED = COVER_UPLOADED;
 },{}],"../src/profile/fetch/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -41061,6 +41063,17 @@ var profileReducer = function profileReducer() {
   }
 
   switch (action.type) {
+    case _actions.COVER_UPLOADED:
+      {
+        return Object.assign({}, state, {
+          data: Object.assign({}, state.data, {
+            profile: Object.assign({}, state.data.profile, {
+              cover: action.data
+            })
+          })
+        });
+      }
+
     case _actions.COMMENT_LIKED:
       {
         return Object.assign({}, state, {
@@ -47967,7 +47980,7 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "search-more"
       }))), _react.default.createElement("img", {
-        src: "../img/friends-dec.png",
+        src: "../img/friends-dec-02.png",
         className: "dec"
       })));
     }
@@ -56609,6 +56622,12 @@ function (_Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement("img", {
+        style: {
+          display: "block",
+          width: "auto",
+          margin: "0 auto",
+          maxHeight: "250px"
+        },
         src: this.props.ava
       }));
     }
@@ -56712,6 +56731,8 @@ var _axios = _interopRequireDefault(require("axios"));
 var _store = _interopRequireDefault(require("../../fetch/store"));
 
 var _events = require("../../fetch/events");
+
+var _Modal = require("../../../Modal");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56818,28 +56839,31 @@ function (_Component) {
     value: function render() {
       var _this5 = this;
 
-      return _react.default.createElement(_reactjsPopup.default, {
-        lockScroll: true,
-        contentStyle: {
-          backgroundColor: 'transparent',
-          border: 0,
-          padding: 0
-        },
-        modal: true,
+      var actions = [{
+        title: "Close",
+        onAction: this.closeModal.bind(this),
+        class: "btn-empty"
+      }, {
+        title: "Choose",
+        onAction: function onAction() {
+          return _this5.fileInputRef.current.click();
+        }
+      }];
+
+      if (this.state.src) {
+        actions.push({
+          title: "Upload",
+          onAction: this.upload.bind(this)
+        });
+      } // end if
+
+
+      return _react.default.createElement(_Modal.Modal, {
         open: this.props.show,
-        closeOnDocumentClick: true,
-        closeOnEscape: true,
-        onClose: this.closeModal
+        onClose: this.closeModal.bind(this),
+        actions: actions,
+        title: "Upload Avatar"
       }, _react.default.createElement("div", {
-        className: "popup"
-      }, _react.default.createElement("div", {
-        className: "popup-header"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, _react.default.createElement("h2", null, "Upload Avatar")), _react.default.createElement("div", {
-        className: "close",
-        onClick: this.closeModal
-      }, _react.default.createElement("span", null, "\xD7"))), _react.default.createElement("div", {
         className: "popup-content"
       }, _react.default.createElement("div", {
         style: {
@@ -56853,20 +56877,7 @@ function (_Component) {
         type: "file"
       })), _react.default.createElement(_AvaPopupContent.default, {
         ava: this.state.src ? this.state.src : this.props.ava
-      })), _react.default.createElement("div", {
-        className: "popup-footer"
-      }, _react.default.createElement("div", null, _react.default.createElement("button", {
-        className: "dd-btn btn-sm",
-        onClick: function onClick() {
-          return _this5.fileInputRef.current.click();
-        }
-      }, "Choose"), this.state.src ? _react.default.createElement("button", {
-        className: "dd-btn btn-sm",
-        onClick: this.upload
-      }, "Upload") : undefined, _react.default.createElement("button", {
-        className: "dd-btn btn-sm btn-gray",
-        onClick: this.closeModal
-      }, "Cancel")))));
+      })));
     }
   }]);
 
@@ -56874,7 +56885,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = AvaPopup;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./AvaPopupContent":"../src/profile/ava/edit/AvaPopupContent.js","axios":"../../node_modules/axios/index.js","../../fetch/store":"../src/profile/fetch/store.js","../../fetch/events":"../src/profile/fetch/events.js"}],"../src/profile/ava/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./AvaPopupContent":"../src/profile/ava/edit/AvaPopupContent.js","axios":"../../node_modules/axios/index.js","../../fetch/store":"../src/profile/fetch/store.js","../../fetch/events":"../src/profile/fetch/events.js","../../../Modal":"../src/Modal/index.js"}],"../src/profile/ava/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -57603,7 +57614,6 @@ function (_Component) {
       }, _react.default.createElement(_reactjsPopup.default, {
         open: this.state.emoji,
         closeOnDocumentClick: true,
-        position: "top right",
         overlayStyle: {
           display: 'none'
         },
@@ -61174,7 +61184,7 @@ function (_Component) {
         className: "profile-schedule"
       }, _react.default.createElement("img", {
         className: "dec",
-        src: "../img/schedule-dec.png",
+        src: "../img/schedule-dec-02.png",
         alt: "schedule-dec"
       }), this.props.describe ? _react.default.createElement(_reactRouterDom.Redirect, {
         to: "schedule"
@@ -61283,7 +61293,206 @@ var logger = (0, _reduxLogger.createLogger)({
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
 var _default = store;
 exports.default = _default;
-},{"./reducer":"../src/profile/schedule/store/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js"}],"../src/profile/profile.js":[function(require,module,exports) {
+},{"./reducer":"../src/profile/schedule/store/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js"}],"../src/profile/ava/Poster.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Modal = require("../../Modal");
+
+var _store = _interopRequireDefault(require("../fetch/store"));
+
+var _actions = require("../fetch/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MessageNotUploadedYet = function MessageNotUploadedYet() {
+  return _react.default.createElement("div", {
+    className: "alert"
+  }, _react.default.createElement("p", {
+    className: "text-center"
+  }, "Upload cover to your profile !"));
+};
+
+var img_style = {
+  display: "block",
+  width: "auto",
+  margin: "0 auto",
+  maxHeight: "250px"
+};
+
+var Poster =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Poster, _Component);
+
+  function Poster(props) {
+    var _this;
+
+    _classCallCheck(this, Poster);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Poster).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      show: false
+    });
+
+    _this.fileRef = _react.default.createRef();
+    return _this;
+  }
+
+  _createClass(Poster, [{
+    key: "onClose",
+    value: function onClose() {
+      this.setState(function () {
+        return {
+          show: false
+        };
+      });
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.setState(function () {
+        return {
+          show: true
+        };
+      });
+    }
+  }, {
+    key: "onFile",
+    value: function onFile(e) {
+      var _this2 = this;
+
+      var files = e.target.files;
+
+      if (files && files.length) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          _this2.setState(function () {
+            return {
+              chosen: e.target.result,
+              file: files[0]
+            };
+          });
+        };
+
+        reader.readAsDataURL(files[0]);
+      } // end if
+
+    }
+  }, {
+    key: "submit",
+    value: function submit() {
+      var _this3 = this;
+
+      var frm = new FormData();
+      frm.append("ava", this.state.file);
+      frm.append("cover", true);
+
+      _axios.default.post("/profile/ava", frm).then(function (_ref) {
+        var data = _ref.data;
+
+        _store.default.dispatch({
+          type: _actions.COVER_UPLOADED,
+          data: data
+        });
+
+        _this3.onClose();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var _this$state = this.state,
+          show = _this$state.show,
+          chosen = _this$state.chosen;
+      var cover = this.props.src.profile.cover;
+      var actions = [{
+        title: "Close",
+        onAction: this.onClose.bind(this),
+        class: "btn-empty"
+      }, {
+        title: "Choose",
+        onAction: function onAction() {
+          return _this4.fileRef.current.click();
+        }
+      }];
+
+      if (chosen) {
+        actions.push({
+          title: "Upload",
+          onAction: this.submit.bind(this)
+        });
+      } // end if
+
+
+      return _react.default.createElement("div", {
+        className: "profile-upload-cover"
+      }, _react.default.createElement("input", {
+        onChange: this.onFile.bind(this),
+        type: "file",
+        style: {
+          display: "none"
+        },
+        ref: this.fileRef
+      }), _react.default.createElement(_Modal.Modal, {
+        title: "Upload Cover",
+        onClose: this.onClose.bind(this),
+        actions: actions,
+        open: show
+      }, !cover && !chosen ? _react.default.createElement(MessageNotUploadedYet, null) : _react.default.createElement("img", {
+        src: chosen ? chosen : cover,
+        style: img_style
+      })), _react.default.createElement("button", {
+        onClick: this.show.bind(this)
+      }, _react.default.createElement("span", {
+        className: "icon-select-picture"
+      }), _react.default.createElement("span", {
+        style: {
+          fontSize: "11px"
+        }
+      }, " Update cover photo")));
+    }
+  }]);
+
+  return Poster;
+}(_react.Component);
+
+exports.default = Poster;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../../Modal":"../src/Modal/index.js","../fetch/store":"../src/profile/fetch/store.js","../fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61316,6 +61525,8 @@ var _about = _interopRequireDefault(require("./about"));
 var _schedule = _interopRequireDefault(require("./schedule"));
 
 var _store = _interopRequireDefault(require("./schedule/store"));
+
+var _Poster = _interopRequireDefault(require("./ava/Poster"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61363,10 +61574,16 @@ function (_Component) {
           feed = _this$props$data.feed,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
-          totals = _this$props$data.totals;
+          totals = _this$props$data.totals,
+          profile = _this$props$data.profile;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
-        className: "user-profile"
-      }, _react.default.createElement("div", {
+        className: "user-profile",
+        style: profile.cover ? {
+          backgroundImage: "url(".concat(profile.cover, ")")
+        } : {}
+      }, _react.default.createElement(_Poster.default, {
+        src: this.props.data
+      }), _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
         info: this.props.data
@@ -61425,7 +61642,7 @@ var Profile = (0, _reactRedux.connect)(function (state) {
 })(ProfileComponent);
 var _default = Profile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./feed/index":"../src/profile/feed/index.js","./friends/index":"../src/profile/friends/index.js","./groups/index":"../src/profile/groups/index.js","./media-tabs/index":"../src/profile/media-tabs/index.js","./profile-main":"../src/profile/profile-main.js","../menu/index":"../src/menu/index.js","./fetch/events":"../src/profile/fetch/events.js","../post-add/index":"../src/post-add/index.js","./about":"../src/profile/about/index.js","./schedule":"../src/profile/schedule/index.js","./schedule/store":"../src/profile/schedule/store/index.js"}],"../src/profile/guest/GuestComponent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./feed/index":"../src/profile/feed/index.js","./friends/index":"../src/profile/friends/index.js","./groups/index":"../src/profile/groups/index.js","./media-tabs/index":"../src/profile/media-tabs/index.js","./profile-main":"../src/profile/profile-main.js","../menu/index":"../src/menu/index.js","./fetch/events":"../src/profile/fetch/events.js","../post-add/index":"../src/post-add/index.js","./about":"../src/profile/about/index.js","./schedule":"../src/profile/schedule/index.js","./schedule/store":"../src/profile/schedule/store/index.js","./ava/Poster":"../src/profile/ava/Poster.js"}],"../src/profile/guest/GuestComponent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -62241,7 +62458,7 @@ function (_Component) {
       })))), _react.default.createElement("div", {
         className: "row"
       }, _react.default.createElement(_Label.default, {
-        text: "Phonr Number"
+        text: "Phone Number"
       }), _react.default.createElement("div", {
         className: "col"
       }, _react.default.createElement("div", null, _react.default.createElement("input", {
@@ -64441,14 +64658,30 @@ function (_Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevState) {
       if (this.inputRef && prevState.open !== this.state.open) {
-        document.body.onfocus = this.handleInput.bind(this);
+        document.body.onfocus = this.handleFileCancel.bind(this);
         this.inputRef.click();
       }
     }
   }, {
+    key: "handleFileCancel",
+    value: function handleFileCancel(e) {
+      var _this2 = this;
+
+      setTimeout(function () {
+        !_this2.state.file && _this2.state.open && _this2.setState(function () {
+          return {
+            src: null
+          };
+        }, function () {
+          _this2.props.onFileChosen(null);
+        });
+      }, 150);
+      document.body.onfocus = null;
+    }
+  }, {
     key: "handleInput",
     value: function handleInput(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       var files = e.target.files;
 
@@ -64456,30 +64689,21 @@ function (_Component) {
         var file = files[0];
         var reader = new FileReader();
         reader.addEventListener('load', function () {
-          return _this2.setState({
+          return _this3.setState({
             src: reader.result,
             file: file
           });
         });
         reader.readAsDataURL(file);
         this.props.onFileChosen(file);
-      } else {
-        this.setState(function () {
-          return {
-            src: null
-          };
-        }, function () {
-          _this2.props.onFileChosen(null);
-        });
-      } // end if
-
+      }
 
       document.body.onfocus = null;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state = this.state,
           open = _this$state.open,
@@ -64491,7 +64715,7 @@ function (_Component) {
         type: "file",
         className: "hidden",
         ref: function ref(_ref) {
-          _this3.inputRef = _ref;
+          _this4.inputRef = _ref;
         },
         onChange: this.handleInput.bind(this)
       }), _react.default.createElement("div", {
@@ -64601,7 +64825,7 @@ function (_Component) {
     value: function sendMessage(e) {
       if (this.state.message.trim() && e.key === 'Enter') {
         e.stopPropagation();
-        this.props.onMessage(this.state.message.trim(), this.state.attachment);
+        this.props.onMessage(this.state.message.trim(), this.state.gallery ? this.state.attachment : null);
         this.setState({
           sended: true
         });
@@ -69138,8 +69362,6 @@ function (_Component) {
             messagesList: [].concat(_toConsumableArray(state.messagesList), _toConsumableArray(items))
           };
         }, function () {
-          console.log(_this2.containerRef);
-
           _this2.containerRef.current.parentNode.addEventListener('scroll', _this2.containerScrollListener.bind(_this2), true);
         });
       });
@@ -69225,7 +69447,6 @@ function (_Component) {
       var hash = this.props.chat.hash_id;
       var frm = new FormData();
       frm.append("message", message);
-      console.log(attachment);
 
       if (attachment) {
         frm.append("file", attachment);
@@ -69244,6 +69465,9 @@ function (_Component) {
             data: hash
           });
         });
+      }).catch(function (err) {
+        console.log(err);
+        alert("Failed to send message.");
       });
     }
   }, {
@@ -70848,9 +71072,9 @@ function (_Component) {
       }, "www.dudes.com"), _react.default.createElement("div", {
         className: "title"
       }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
-        className: "fa fa-minus",
+        className: "icon-remove",
         "aria-hidden": "true"
-      }), "Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+      }), " Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
         className: "long-content"
       }, data.description)));
     }
@@ -71511,7 +71735,9 @@ function (_Component) {
         onAction: this.closeModal.bind(this),
         class: "btn-empty"
       }];
-      var event = this.props.event;
+      var _this$props = this.props,
+          event = _this$props.event,
+          title = _this$props.title;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement("a", {
@@ -71519,7 +71745,7 @@ function (_Component) {
         href: "javascript:void(0)"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), _react.default.createElement("h3", null, "Participants"), _react.default.createElement("span", {
+      }), _react.default.createElement("h3", null, title ? title : "Participants"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", event.total_participiant ? event.total_participiant : '')), _react.default.createElement(_index.Modal, {
         open: this.state.open,
@@ -72019,7 +72245,377 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FDudes;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/feed/List.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/games/Profile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Ava = function Ava(_ref) {
+  var src = _ref.src;
+  return _react.default.createElement("div", {
+    className: "ava-wrapper"
+  }, _react.default.createElement("div", {
+    className: "ava",
+    id: "ava"
+  }, _react.default.createElement("div", {
+    className: "ava-holder"
+  }, _react.default.createElement("div", {
+    className: "ava-edit"
+  }, _react.default.createElement("span", null, "Edit Avatar")), _react.default.createElement("img", {
+    src: src
+  }))));
+};
+
+var Profile =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Profile, _Component);
+
+  function Profile() {
+    _classCallCheck(this, Profile);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Profile).apply(this, arguments));
+  }
+
+  _createClass(Profile, [{
+    key: "render",
+    value: function render() {
+      var editor = false;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "profile"
+      }), _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "wotes"
+      }, _react.default.createElement("span", {
+        className: "wotes-avg"
+      }, "3.0"), _react.default.createElement("div", {
+        className: "wotes-stars"
+      }, _react.default.createElement("span", {
+        className: "wote-filler"
+      }), _react.default.createElement("span", {
+        className: "wote-bar",
+        style: {
+          width: "71%"
+        }
+      }), _react.default.createElement("span", {
+        className: "wote-mask"
+      }), _react.default.createElement("span", {
+        className: "wote-filler"
+      })))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement(Ava, {
+        src: "img_path"
+      })), _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement("div", {
+        className: "content-bottom"
+      }, _react.default.createElement("h1", null, "data.name"))), _react.default.createElement("div", {
+        className: "col-auto flex-grow-1"
+      }, _react.default.createElement("div", {
+        className: "content-bottom flex-column-reverse"
+      }, _react.default.createElement("ul", {
+        className: "social-list"
+      }, _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/asdc"
+      }, _react.default.createElement("span", {
+        className: "icon-twitch"
+      }))), _react.default.createElement("li", null, _react.default.createElement("a", null, _react.default.createElement("span", {
+        className: "icon-youtube"
+      }))), _react.default.createElement("li", null, _react.default.createElement("a", null, _react.default.createElement("span", {
+        className: "icon-steam"
+      })))), _react.default.createElement("div", {
+        className: "profile-actions"
+      }, _react.default.createElement("button", {
+        className: "dd-btn btn-sm btn-full"
+      }, _react.default.createElement("span", {
+        className: "icon-plus"
+      }), "Join Game")))))));
+    }
+  }]);
+
+  return Profile;
+}(_react.Component);
+
+exports.default = Profile;
+},{"react":"../node_modules/react/index.js"}],"../src/games/About/TabContent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var OtherContent = function OtherContent(_ref) {
+  var state = _ref.state,
+      options = _ref.options;
+  return state ? _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Game Story"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, "Bir zamanda var eken bir zamanda yok eken ...")))) : null;
+};
+
+var TabContent =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(TabContent, _Component);
+
+  function TabContent() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, TabContent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(TabContent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      open: false
+    });
+
+    return _this;
+  }
+
+  _createClass(TabContent, [{
+    key: "toggleOpen",
+    value: function toggleOpen() {
+      this.setState(function (state) {
+        return {
+          open: !state.open
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var open = this.state.open;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "profile-about-content"
+      }, _react.default.createElement("div", {
+        className: "profile-about-row"
+      }, _react.default.createElement("div", {
+        className: "profile-about-label"
+      }, "Game Story"), _react.default.createElement("div", {
+        className: "profile-about-value"
+      }, "Bir zamanda var eken bir zamanda yok eken ..."))), _react.default.createElement(OtherContent, {
+        state: open,
+        options: {}
+      }), _react.default.createElement("div", {
+        className: "profile-about-footer"
+      }, _react.default.createElement("span", {
+        className: "profile-about-more",
+        onClick: this.toggleOpen.bind(this)
+      }, open ? "Show less" : "Show more")));
+    }
+  }]);
+
+  return TabContent;
+}(_react.Component);
+
+var _default = TabContent;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../src/games/About/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactTabs = require("react-tabs");
+
+var _TabContent = _interopRequireDefault(require("./TabContent"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var About = function About() {
+  return _react.default.createElement("div", {
+    className: "profile-about"
+  }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
+    className: "nav nav-tabs"
+  }, _react.default.createElement(_reactTabs.Tab, {
+    selectedClassName: "active"
+  }, _react.default.createElement("a", {
+    href: "javascript:void(0);"
+  }, _react.default.createElement("span", {
+    className: "icon-info"
+  }), " About Game"))), _react.default.createElement("div", {
+    className: "content"
+  }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_TabContent.default, null)))));
+};
+
+var _default = About;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./TabContent":"../src/games/About/TabContent.js"}],"../src/games/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _index = _interopRequireDefault(require("../menu/index"));
+
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _About = _interopRequireDefault(require("./About"));
+
+var _postAdd = _interopRequireDefault(require("../post-add"));
+
+var _feed = _interopRequireDefault(require("../profile/feed"));
+
+var _Participants = _interopRequireDefault(require("../event/Participants"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var GamePage =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GamePage, _Component);
+
+  function GamePage() {
+    _classCallCheck(this, GamePage);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GamePage).apply(this, arguments));
+  }
+
+  _createClass(GamePage, [{
+    key: "loadGamers",
+    value: function loadGamers() {}
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var poster = "http://35.205.191.229/front/user-default-bg-80.edf85c92.jpg";
+      var description = "";
+      return _react.default.createElement("div", null, _react.default.createElement("nav", {
+        className: "user-profile game-profile",
+        style: {
+          backgroundImage: "url(".concat(poster, ")")
+        }
+      }, _react.default.createElement("div", {
+        className: "triangle-right"
+      }), _react.default.createElement(_Profile.default, null)), _react.default.createElement("div", {
+        className: "d-flex"
+      }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
+        className: "user-middle"
+      }, _react.default.createElement(_About.default, {
+        about: description
+      }), _react.default.createElement("section", {
+        className: "user-add-post"
+      }, _react.default.createElement(_postAdd.default, {
+        type: "game",
+        id: this.props.id
+      })), _react.default.createElement(_feed.default, {
+        list: [],
+        user: 85,
+        type: "game"
+      })), _react.default.createElement("aside", {
+        className: "profile-aside"
+      }, _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement(_Participants.default, {
+        title: "Gamers",
+        event: this.props,
+        load: function load() {
+          _this.loadGamers(_this.props.id);
+        }
+      })))));
+    }
+  }]);
+
+  return GamePage;
+}(_react.Component);
+
+exports.default = GamePage;
+},{"react":"../node_modules/react/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js"}],"../src/feed/List.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72273,6 +72869,8 @@ var _store3 = _interopRequireDefault(require("./event/redux/store"));
 
 var _findDude = _interopRequireDefault(require("./find-dude"));
 
+var _index2 = _interopRequireDefault(require("./games/index"));
+
 var _feed = _interopRequireDefault(require("./feed"));
 
 var _socket = _interopRequireDefault(require("./socket"));
@@ -72321,11 +72919,14 @@ var App = function App() {
   }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/feed",
     component: _feed.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    path: "/g/:id",
+    component: _index2.default
   })), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./feed":"../src/feed/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./feed":"../src/feed/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -72352,7 +72953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33068" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
