@@ -8626,6 +8626,20 @@ nav.user-profile {
             top: 12px;
             left: 12px; }
 
+.profile-upload-cover button {
+  color: #F15A24;
+  cursor: pointer;
+  background-color: #293235;
+  outline: none;
+  border: 1px solid #1e2528;
+  opacity: 0.7; }
+  .profile-upload-cover button .text {
+    display: none; }
+  .profile-upload-cover button:hover {
+    opacity: 1; }
+    .profile-upload-cover button:hover .text {
+      display: inline; }
+
 .ava-wrapper {
   min-width: 225px;
   position: relative;
@@ -10177,7 +10191,7 @@ nav.user-profile {
       color: black;
       line-height: 1;
       font-size: 13px; }
-      .chat-message .message .message-content .message-media {
+      .chat-message .message .message-content .message-media img {
         object-fit: cover;
         max-width: 100%; }
       .chat-message .message .message-content .message-footer {

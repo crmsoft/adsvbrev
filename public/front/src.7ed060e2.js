@@ -61481,6 +61481,7 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "icon-select-picture"
       }), _react.default.createElement("span", {
+        className: "text",
         style: {
           fontSize: "11px"
         }
