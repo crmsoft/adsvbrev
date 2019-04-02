@@ -9595,6 +9595,7 @@ nav.user-profile {
   display: flex;
   z-index: 10; }
   .chat .chat-wrapper {
+    border-radius: 3px;
     margin: 0 5px;
     background-color: #202225;
     max-width: 250px;
@@ -9612,9 +9613,12 @@ nav.user-profile {
       position: relative; }
       .chat .chat-wrapper .header .dec {
         position: absolute;
-        right: 35px; }
+        right: 35px;
+        height: 25px;
+        top: 13px; }
       .chat .chat-wrapper .header .title {
-        flex: 1; }
+        flex: 1;
+        align-self: flex-end; }
         .chat .chat-wrapper .header .title::before {
           content: ' ';
           display: inline-block;
@@ -9628,11 +9632,15 @@ nav.user-profile {
         .chat .chat-wrapper .header .title.busy::before {
           background-color: yellow; }
       .chat .chat-wrapper .header .chat-actions {
-        display: flex; }
+        display: flex;
+        align-self: flex-start; }
         .chat .chat-wrapper .header .chat-actions .minimize {
           margin-right: 5px;
           border-bottom: 1px solid white;
           width: 10px; }
+        .chat .chat-wrapper .header .chat-actions .settings {
+          margin-top: 5px;
+          font-size: 14px; }
     .chat .chat-wrapper .chatable {
       overflow: auto;
       max-height: 280px; }
@@ -10169,6 +10177,9 @@ nav.user-profile {
       color: black;
       line-height: 1;
       font-size: 13px; }
+      .chat-message .message .message-content .message-media {
+        object-fit: cover;
+        max-width: 100%; }
       .chat-message .message .message-content .message-footer {
         align-self: flex-start;
         word-break: break-all;

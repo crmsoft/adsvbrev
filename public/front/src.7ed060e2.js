@@ -45557,7 +45557,7 @@ function (_Component) {
           _this.props.total && _this.props.showModal();
         }
       }, _react.default.createElement("span", {
-        className: "icon-friends aside-firends-icon"
+        className: "icon-friend aside-firends-icon"
       }), _react.default.createElement("h3", null, "friends"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", this.props.total));
@@ -72953,7 +72953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33068" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42807" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
