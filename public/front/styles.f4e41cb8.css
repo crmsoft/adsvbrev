@@ -8525,6 +8525,7 @@ nav.user-profile {
     background: -ms-linear-gradient(90deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#1A1A1A', endColorstr='#989898' ,GradientType=0)";
     background: linear-gradient(0deg, rgba(26, 26, 26, 0.7) 0%, rgba(51, 51, 51, 0.8) 50.81%, rgba(152, 152, 152, 0) 100%);
+    background: linear-gradient(rgba(0, 0, 0, 0) 71%, rgba(0, 0, 0, 0.53));
     border-radius: 0px 0px 6px 5px;
     -moz-border-radius: 0px 0px 6px 5px;
     -webkit-border-radius: 0px 0px 6px 5px;
@@ -9726,7 +9727,7 @@ nav.user-profile {
         font-size: 5px;
         color: #F15A24; }
       .chat .dialog-wrapper .dialog .message-container {
-        background-image: url("message_background-02.8747b41a.png");
+        background-image: url("messenger_background.96fff20e.png");
         flex: 1;
         max-height: 250px;
         min-height: 250px;

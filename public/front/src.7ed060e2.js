@@ -40760,6 +40760,7 @@ function (_Component) {
       return loaded ? _react.default.createElement("div", {
         className: "yt-video"
       }, _react.default.createElement("iframe", {
+        allowFullScreen: true,
         src: "https://www.youtube.com/embed/".concat(id, "?autoplay=1&mute=1&showinfo=0&playsinline=1").concat(extra),
         height: "360",
         frameBorder: "0",
@@ -40877,6 +40878,7 @@ function (_Component2) {
         className: "yt-video"
       }, _react.default.createElement("iframe", {
         src: iframeUrl,
+        allowFullScreen: true,
         height: "360",
         frameBorder: "0",
         className: "w-100"
@@ -65094,11 +65096,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var getStore = function getStore() {
   var data = {
     isChanged: true,
-    currentUser: null
+    currentUser: null,
+    time: 0
   };
-  return function (username) {
-    this.isChanged = this.currentUser !== username;
+  return function (username, t) {
+    this.isChanged = this.currentUser !== username || t - this.time > 600;
     this.currentUser = username;
+    this.time = t;
     return this.isChanged;
   }.bind(data);
 };
@@ -65138,7 +65142,7 @@ function (_Component) {
         return _react.default.createElement(_Message.default, {
           author: message.user.username === _this2.props.me,
           key: message.id,
-          showUser: _this2.state.localeStore(user.username),
+          showUser: _this2.state.localeStore(user.username, message.created_at),
           message: message
         });
       }));
