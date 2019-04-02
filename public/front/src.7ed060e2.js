@@ -61727,7 +61727,10 @@ function (_Component) {
           feed = _this$props$data.feed,
           profile = _this$props$data.profile;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
-        className: "user-profile"
+        className: "user-profile",
+        style: profile.cover ? {
+          backgroundImage: "url(".concat(profile.cover, ")")
+        } : {}
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
