@@ -141,10 +141,11 @@ export default class Poster extends Component{
                     }
                 </Modal>
                 <button
+                    className="btn-select-picture"
                     onClick={this.show.bind(this)}
                 >
                     <span className="icon-select-picture"></span>
-                    <span style={{fontSize: `11px`}}>
+                    <span className="text" style={{fontSize: `11px`}}>
                         {` Update cover photo`}
                     </span>
                 </button>

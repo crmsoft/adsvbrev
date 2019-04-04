@@ -29,10 +29,20 @@
         .message-content{
             color: black;
             line-height: 1;
-            align-self: flex-start;
-            word-break: break-all;
             font-size: 13px;
-            display: flex;
+            
+            .message-media{
+                img{
+                    object-fit: cover;
+                    max-width: 100%;
+                }
+            }
+
+            .message-footer{
+                align-self: flex-start;
+                word-break: break-all;
+                display: flex;
+            }
 
             .message-text
             {

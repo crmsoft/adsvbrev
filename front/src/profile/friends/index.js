@@ -67,7 +67,7 @@ export default class Friends extends Component{
                         }
 
                     </div>
-                    <img src="../img/friends-dec.png" className="dec" />
+                    <img src="../img/friends-dec-02.png" className="dec" />
                 </div>
             </div>
         )

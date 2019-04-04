@@ -79,7 +79,7 @@ class ProfileScheduleComponent extends Component{
         
         return (
             <div className="profile-schedule">
-                <img className="dec" src="../img/schedule-dec.png" alt="schedule-dec" />
+                <img className="dec" src="../img/schedule-dec-02.png" alt="schedule-dec" />
                 {
                     this.props.describe ? <Redirect to={`schedule`} /> : null   
                 }

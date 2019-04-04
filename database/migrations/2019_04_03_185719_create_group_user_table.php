@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamesTable extends Migration
+class CreateGroupUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class CreateGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('group_manager', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->unsignedInteger('user_id');
-
-            $table->string('name')->default('unknown');
-            $table->string('ava')->default('');
-            $table->string('poster')->default('');
             
-            $table->json('options')->nullable();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('group_id');
 
-            $table->softDeletes();
+            $table->smallInteger('hierarchy')->default(1);
+
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('group_manager');
     }
 }

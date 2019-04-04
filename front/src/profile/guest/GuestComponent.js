@@ -43,7 +43,7 @@ class Guest extends Component{
 
         return (
             <div>
-                <nav className="user-profile">
+                <nav className="user-profile" style={ profile.cover ? {backgroundImage:`url(${profile.cover})`} : {}}> 
                     
                     <div className="triangle-right"></div>
 

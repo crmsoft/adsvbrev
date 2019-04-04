@@ -16,14 +16,23 @@ class Group extends Model
 
     protected $hidden = [
         'pivot',
-        'deleted_at',
-        'updated_at',
         'id',
-        'owner'
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class, 'owner');
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value)
+    {
+        $value = \Hashids::decode($value);
+        return $this->where($this->getRouteKeyName(), empty($value) ? -1 : $value)->first();
+    }
+
+    public function managers(){
+        return $this->belongsToMany(User::class, 'group_manager', 'group_id', 'user_id');
     }
 
     public function profile(){

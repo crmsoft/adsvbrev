@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Entities\Group::class, function (Faker $faker) {
     return [
-        'owner' => \App\User::inRandomOrder()->first()->id,
+        'is_game' => rand(0,1),
         'name' => $faker->name
     ];
 });

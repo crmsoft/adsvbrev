@@ -114,6 +114,7 @@ class Youtube extends Component{
 		return loaded ? (
             <div className="yt-video">
                 <iframe 
+                        allowFullScreen
                         src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&showinfo=0&playsinline=1${extra}`} 
                         height="360"
                         frameBorder="0"
@@ -204,6 +205,7 @@ class Twitch extends Component{
 		return loaded ? (
             <div className="yt-video">
                 <iframe src={iframeUrl} 
+                        allowFullScreen
                         height="360"
                         frameBorder="0"
                         className="w-100" />

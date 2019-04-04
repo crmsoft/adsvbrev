@@ -27,7 +27,7 @@ export default class Event extends Component{
                     <div className="content">
                         www.dudes.com
                     </div>
-                    <div className="title">Description <br />  <small><span className="fa fa-minus" aria-hidden="true"></span>Leave Event</small>	</div> <span>:</span> 
+                    <div className="title">Description <br />  <small><span className="icon-remove" aria-hidden="true"></span> Leave Event</small>	</div> <span>:</span> 
                     <div className="long-content">
                         {data.description}
                     </div>

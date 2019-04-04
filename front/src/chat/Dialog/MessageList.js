@@ -8,12 +8,16 @@ const getStore = () => {
     
     let data = {
         isChanged: true,
-        currentUser: null
+        currentUser: null,
+        time: 0
     };
 
-    return function(username) {
-        this.isChanged = this.currentUser !== username;
+    return function(username, t) {        
+        this.isChanged = (this.currentUser !== username) || (
+            (t - this.time) > 600
+        );
         this.currentUser = username;
+        this.time = t;
         return this.isChanged;
     }.bind(data)
 }
@@ -43,7 +47,7 @@ export default class MessageList extends Component {
                         return <Message 
                                     author={message.user.username === this.props.me}
                                     key={message.id}
-                                    showUser={this.state.localeStore(user.username)}
+                                    showUser={this.state.localeStore(user.username, message.created_at)}
                                     message={message}
                                 />
                     })

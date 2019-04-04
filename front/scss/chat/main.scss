@@ -7,6 +7,7 @@
     z-index: 10;
 
     .chat-wrapper{
+        border-radius: 3px;
         margin: 0 5px;
         background-color: $darkGray;
         max-width: 250px;
@@ -25,9 +26,12 @@
             .dec{
                 position: absolute;
                 right: 35px;
+                height: 25px;
+                top: 13px;
             }
             .title{
                 flex: 1;
+                align-self: flex-end;
                 &::before{
                     @include status-buble(10px)
                 }
@@ -44,10 +48,15 @@
             }
             .chat-actions{
               display: flex;
+              align-self: flex-start;
               .minimize{
                 margin-right: 5px;
                 border-bottom: 1px solid white;
                 width: 10px;
+              }
+              .settings{
+                  margin-top: 5px;
+                  font-size: 14px;
               }
             }
         }
@@ -130,19 +139,26 @@
         .dialog{
             position: relative;
             max-width: 250px;
-            height: 320px;
             flex: 1;
             display: flex;
             flex-direction: column;
             background-color: $halfGray;
             margin-right: 3px;
+            .message-list-show-last{
+                @extend .icon-arrow-down;
+                font-family: icomoon;
+                font-size: 5px;
+                color: $mainColor;
+            }
             .message-container{
-                background-image: url('/public/../../img/message_background-01.png');
+                background-image: url('../img/messenger_background.png');
                 flex: 1;
                 max-height: 250px;
+                min-height: 250px;
                 overflow: auto;
                 padding: 5px;
             }
+            .messages-wrapper{}
             .input{
                 border-radius: 5px;
                 margin: 0 5px;
@@ -176,6 +192,11 @@
                         text-align: center;
                         vertical-align: middle;
                         cursor: pointer;
+                        &.icon-cross{
+                            font-size: 9px;
+                            padding-left: 5px;
+                            color: $mainColor;
+                        }
                     }
                 }
                 .emoji-container{
@@ -208,6 +229,26 @@
                 .dialog-actions{
                     font-size: 15px;
                     cursor: pointer;                    
+                }
+            }
+            .file-upload {
+                position: absolute;
+                background: rgba(32, 34, 37, 0.75);
+                top: 20px;
+                bottom: 50px;
+                right: 0;
+                left: 0;
+                overflow: hidden;
+                input{
+                    display: none;
+                }
+                .preview{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .container{
+                    padding-top: 15px;
                 }
             }
         }

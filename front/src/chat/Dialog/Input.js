@@ -44,7 +44,7 @@ export default class Input extends Component{
         if(this.state.message.trim() && e.key === 'Enter')
         {
             e.stopPropagation();
-            this.props.onMessage(this.state.message.trim(), this.state.attachment);
+            this.props.onMessage(this.state.message.trim(), this.state.gallery ? this.state.attachment : null);
             this.setState({sended: true});
         }
 

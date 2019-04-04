@@ -16,16 +16,16 @@ class CreateTableGroups extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('owner');
-            $table->string('name');
+            $table->string('name')->default('unknown');
+            $table->string('ava')->default('');
+            $table->string('poster')->default('');
+            
+            $table->json('options')->nullable();
+
+            $table->boolean('is_game')->default(false);
 
             $table->softDeletes();
-
             $table->timestamps();
-
-            $table->foreign('owner')
-                ->references('id')
-                ->on('users');
         });
     }
 
