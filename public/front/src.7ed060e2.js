@@ -61479,6 +61479,7 @@ function (_Component) {
         src: chosen ? chosen : cover,
         style: img_style
       })), _react.default.createElement("button", {
+        className: "btn-select-picture",
         onClick: this.show.bind(this)
       }, _react.default.createElement("span", {
         className: "icon-select-picture"
@@ -70712,7 +70713,9 @@ function (_Component) {
       var _this2 = this;
 
       this.setState(function () {
-        return _defineProperty({}, name, value);
+        return name === 'start' ? _defineProperty({
+          date: _luxon.DateTime.fromISO(value)
+        }, name, value) : _defineProperty({}, name, value);
       }, function () {
         _this2.state.form.delete(name);
 
@@ -70816,7 +70819,7 @@ function (_Component) {
         } : {},
         onClick: this.onCoverSelect.bind(this),
         className: "event-cover back-img " + (srcCover.length ? 'selected' : '')
-      }, _react.default.createElement("span", null, "Click to Uplaod")))))), _react.default.createElement("div", {
+      }, _react.default.createElement("span", null, "Click to Upload")))))), _react.default.createElement("div", {
         className: "row"
       }, _react.default.createElement("div", {
         className: "col-4"
@@ -70838,7 +70841,7 @@ function (_Component) {
       }, _react.default.createElement("input", {
         min: _luxon.DateTime.fromMillis(+new Date()).toISODate(),
         onChange: function onChange(e) {
-          return _this5.setValue.call(_this5, 'start', _luxon.DateTime.fromISO(e.target.value));
+          return _this5.setValue.call(_this5, 'start', e.target.value);
         },
         value: date.toISODate(),
         type: "date",
@@ -71688,23 +71691,23 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var Partipicatns =
+var Participants =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Partipicatns, _Component);
+  _inherits(Participants, _Component);
 
-  function Partipicatns() {
+  function Participants() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, Partipicatns);
+    _classCallCheck(this, Participants);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Partipicatns)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Participants)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       open: false
@@ -71713,7 +71716,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(Partipicatns, [{
+  _createClass(Participants, [{
     key: "closeModal",
     value: function closeModal() {
       this.setState(function () {
@@ -71797,10 +71800,10 @@ function (_Component) {
     }
   }]);
 
-  return Partipicatns;
+  return Participants;
 }(_react.Component);
 
-exports.default = Partipicatns;
+exports.default = Participants;
 },{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
 "use strict";
 
@@ -72575,7 +72578,12 @@ function (_Component) {
 
   _createClass(GamePage, [{
     key: "loadGamers",
-    value: function loadGamers() {}
+    value: function loadGamers(id) {
+      axios.post("/game/".concat(id, "/participants")).then(function (_ref) {
+        var data = _ref.data;
+        console.log(data);
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -72961,7 +72969,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42807" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35411" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -7735,7 +7735,12 @@ span.flatpickr-weekday {
         margin-bottom: 1rem; }
         .schedule .schedule-event .schedule-contents .schedule-content span {
           width: 10%;
-          color: #F15A24; }
+          float: left;
+          text-align: center; }
+          .schedule .schedule-event .schedule-contents .schedule-content span.icon-remove {
+            float: none;
+            width: auto;
+            color: #F15A24; }
         .schedule .schedule-event .schedule-contents .schedule-content .content {
           width: 70%;
           float: left;
@@ -8126,80 +8131,80 @@ span.flatpickr-weekday {
             .find-your-dudes .dudes-on-channels .my-games-bottom .my-games-search .input-group input ::placeholder {
               color: #989898; }
 
-.game-profile {
-  border: 1px solid #F15A24; }
-  .game-profile ul.social-list {
-    margin: 0 0 10px;
-    padding: 0;
-    display: block; }
-    .game-profile ul.social-list li {
-      list-style: none;
-      display: inline-block; }
-      .game-profile ul.social-list li a {
-        display: inline-block;
-        line-height: 0;
-        text-decoration: none;
-        padding: 14px;
-        background-color: #ffffff;
-        border-radius: 50%;
-        margin-left: 5px;
-        color: inherit; }
-        .game-profile ul.social-list li a:hover {
-          color: inherit; }
-      .game-profile ul.social-list li:first-child {
-        color: #662D90; }
-      .game-profile ul.social-list li:nth-child(2) {
-        color: #ff0000; }
-      .game-profile ul.social-list li:last-child {
-        color: #171a21; }
-  .game-profile .profile-actions {
-    margin-bottom: 10px; }
-  .game-profile .wotes {
-    position: relative;
-    margin-left: 15px;
-    width: 150px; }
-    .game-profile .wotes .wotes-avg {
-      position: absolute;
-      left: 0;
-      top: -13px;
-      padding: 12px;
-      background-color: #F15A24;
+.game-profile ul.social-list {
+  margin: 0 0 10px;
+  padding: 0;
+  display: block; }
+  .game-profile ul.social-list li {
+    list-style: none;
+    display: inline-block; }
+    .game-profile ul.social-list li a {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none;
+      padding: 14px;
+      background-color: #ffffff;
       border-radius: 50%;
-      z-index: 1; }
-    .game-profile .wotes .wotes-stars {
-      background-color: #484B52;
-      margin-left: 44px;
-      height: 20px;
-      position: relative;
-      -webkit-clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%);
-      clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%); }
-      .game-profile .wotes .wotes-stars .wote-mask {
-        z-index: 2;
-        position: absolute;
-        background-image: url("data:image/svg+xml;charset=utf8,<svg width='30px' height='30px' viewBox='0 0 30 30' fill='rgb(32, 34, 37)' xmlns='http://www.w3.org/2000/svg'><path d='M24.414,13.562 L19.571,17.234 L21.331,23.052 C21.81,24.636 21.1,25.155 19.739,24.208 L14.75,20.737 L9.761,24.208 C8.402,25.154 7.689,24.638 8.169,23.052 L9.929,17.234 L5.086,13.562 C3.767,12.562 4.036,11.724 5.693,11.691 L11.77,11.567 L13.766,5.826 C14.31,4.262 15.189,4.26 15.733,5.826 L17.729,11.567 L23.807,11.691 C25.461,11.724 25.735,12.561 24.414,13.562 L24.414,13.562 Z M-2,34 L34,34 L34,-2 L-2,-2 L-2,34 Z'></path></svg>");
-        background-size: 20% 100%;
-        top: 0;
-        right: 5px;
-        bottom: 0;
-        left: 5px; }
-      .game-profile .wotes .wotes-stars .wote-bar {
-        z-index: 1;
-        position: absolute;
-        top: 1px;
-        left: 0;
-        bottom: 0;
-        background: #F15A24;
-        max-width: 95%; }
-      .game-profile .wotes .wotes-stars .wote-filler {
-        width: 5px;
-        display: inline-block;
-        float: right;
-        background-color: #202225;
-        height: 20px; }
-        .game-profile .wotes .wotes-stars .wote-filler:first-child {
-          float: left;
-          position: relative;
-          z-index: 2; }
+      margin-left: 5px;
+      color: inherit; }
+      .game-profile ul.social-list li a:hover {
+        color: inherit; }
+    .game-profile ul.social-list li:first-child {
+      color: #662D90; }
+    .game-profile ul.social-list li:nth-child(2) {
+      color: #ff0000; }
+    .game-profile ul.social-list li:last-child {
+      color: #171a21; }
+
+.game-profile .profile-actions {
+  margin-bottom: 10px; }
+
+.game-profile .wotes {
+  position: relative;
+  margin-left: 15px;
+  width: 150px; }
+  .game-profile .wotes .wotes-avg {
+    position: absolute;
+    left: 0;
+    top: -13px;
+    padding: 12px;
+    background-color: #F15A24;
+    border-radius: 50%;
+    z-index: 1; }
+  .game-profile .wotes .wotes-stars {
+    background-color: #484B52;
+    margin-left: 44px;
+    height: 20px;
+    position: relative;
+    -webkit-clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 90% 0%, 100% 40%, 100% 100%, 0% 100%); }
+    .game-profile .wotes .wotes-stars .wote-mask {
+      z-index: 2;
+      position: absolute;
+      background-image: url("data:image/svg+xml;charset=utf8,<svg width='30px' height='30px' viewBox='0 0 30 30' fill='rgb(32, 34, 37)' xmlns='http://www.w3.org/2000/svg'><path d='M24.414,13.562 L19.571,17.234 L21.331,23.052 C21.81,24.636 21.1,25.155 19.739,24.208 L14.75,20.737 L9.761,24.208 C8.402,25.154 7.689,24.638 8.169,23.052 L9.929,17.234 L5.086,13.562 C3.767,12.562 4.036,11.724 5.693,11.691 L11.77,11.567 L13.766,5.826 C14.31,4.262 15.189,4.26 15.733,5.826 L17.729,11.567 L23.807,11.691 C25.461,11.724 25.735,12.561 24.414,13.562 L24.414,13.562 Z M-2,34 L34,34 L34,-2 L-2,-2 L-2,34 Z'></path></svg>");
+      background-size: 20% 100%;
+      top: 0;
+      right: 5px;
+      bottom: 0;
+      left: 5px; }
+    .game-profile .wotes .wotes-stars .wote-bar {
+      z-index: 1;
+      position: absolute;
+      top: 1px;
+      left: 0;
+      bottom: 0;
+      background: #F15A24;
+      max-width: 95%; }
+    .game-profile .wotes .wotes-stars .wote-filler {
+      width: 5px;
+      display: inline-block;
+      float: right;
+      background-color: #202225;
+      height: 20px; }
+      .game-profile .wotes .wotes-stars .wote-filler:first-child {
+        float: left;
+        position: relative;
+        z-index: 2; }
 
 .nav-tabs {
   margin: 0 -10px;
@@ -8502,15 +8507,17 @@ nav.user-profile {
   border-radius: 5px;
   height: 250px;
   position: relative;
-  margin: 25px 0; }
+  margin: 25px 0;
+  border: 1px solid #F15A24; }
   nav.user-profile .triangle-right {
     position: absolute;
-    right: -50px;
+    right: -25px;
     height: 50px;
-    width: 100px;
+    width: 49px;
+    top: -26px;
     background-color: #000;
+    border-bottom: 1px solid #F15A24;
     transform: rotateZ(45deg);
-    top: -8px;
     border-top-left-radius: 60px; }
   nav.user-profile .profile {
     padding: 0 25px;
@@ -8627,18 +8634,19 @@ nav.user-profile {
             top: 12px;
             left: 12px; }
 
-.profile-upload-cover button {
+.profile-upload-cover .btn-select-picture {
+  margin: 2px;
   color: #F15A24;
   cursor: pointer;
   background-color: #293235;
   outline: none;
   border: 1px solid #1e2528;
   opacity: 0.7; }
-  .profile-upload-cover button .text {
+  .profile-upload-cover .btn-select-picture .text {
     display: none; }
-  .profile-upload-cover button:hover {
+  .profile-upload-cover .btn-select-picture:hover {
     opacity: 1; }
-    .profile-upload-cover button:hover .text {
+    .profile-upload-cover .btn-select-picture:hover .text {
       display: inline; }
 
 .ava-wrapper {
@@ -9008,7 +9016,7 @@ nav.user-profile {
     .textarea .emoji.active {
       color: #F15A24; }
     .textarea .emoji:before {
-      content: "\914"; }
+      content: "\e914"; }
 
 .user-add-post {
   padding: 10px;
@@ -9139,7 +9147,6 @@ nav.user-profile {
       float: left;
       height: 75px;
       flex-basis: 75px;
-      border: 1px solid #F15A24;
       -webkit-border-radius: 100%;
       -moz-border-radius: 100%;
       border-radius: 100%; }
@@ -9368,8 +9375,7 @@ nav.user-profile {
         width: 45px;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
-        border-radius: 100%;
-        border: 1px solid #F15A24; }
+        border-radius: 100%; }
     .comments .comment .comment-body {
       width: 100%; }
       .comments .comment .comment-body img {
@@ -9442,9 +9448,6 @@ nav.user-profile {
     width: 45px;
     height: 45px;
     border-radius: 105px;
-    border-width: 1px;
-    border-color: #F15A24;
-    border-style: solid;
     overflow: hidden; }
     .add-comment .user img {
       max-width: 100%; }
