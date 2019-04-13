@@ -117,10 +117,10 @@ Route::group([
 ], function() {
     Route::get('/games', 'GameController@list')->name('user-game-list');
     Route::get('/game/list/{timestamp}', 'GameController@listDay')->name('user-game-list-day');
-    Route::get('/game/show/{game}', 'GameController@show')->name('user-game-show');
+    Route::post('/game/show/{game}', 'GameController@show')->name('user-game-show');
     Route::post('/game/store', 'GameController@store')->name('user-game-create');
-    Route::post('/game/join/{game}', 'GameController@join')->name('user-game-join');
-    Route::post('/game/leave/{game}', 'GameController@leave')->name('user-game-leave');
+    Route::post('/game/{game}/join', 'GameController@join')->name('user-game-join');
+    Route::post('/game/{game}/leave', 'GameController@leave')->name('user-game-leave');
     Route::get('/game/participants/{game}', 'GameController@listPartipicants')->name('user-game-list-p');
 
 });

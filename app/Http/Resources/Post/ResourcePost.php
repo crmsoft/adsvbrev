@@ -8,6 +8,7 @@ use App\Http\Resources\UserList\User;
 use App\Http\Resources\Media\MediaCollection;
 use App\Http\Resources\Comment\CommentCollection;
 use App\Http\Resources\Events\Event;
+use App\Http\Resources\Game\Game;
 
 class ResourcePost extends JsonResource
 {
@@ -25,6 +26,7 @@ class ResourcePost extends JsonResource
         {
             case 'App\User'  : $poster = new User($this->user); break;
             case 'App\Entities\Event' : $poster = new Event($this->event); break;
+            case 'App\Entities\Game' : $poster = new Game($this->game); break;
         } // end switch
 
         $repost = null;

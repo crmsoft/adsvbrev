@@ -38,4 +38,21 @@ class Group extends Model
     public function profile(){
         return $this->hasOne(GroupProfile::class);
     }
+
+    public function participants()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            UserGroup::class,
+            'group_id',
+            'id',
+            'id',
+            'user_id'
+        );
+    }
+
+    public function posts()
+    {
+        return $this->morphToMany(\App\Post::class, 'postable')->withTimestamps();
+    }
 }

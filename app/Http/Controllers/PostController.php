@@ -28,7 +28,7 @@ class PostController extends Controller
 
         $request->validate([
             'post' => 'required',
-            'type' => 'in:event,feed'
+            'type' => 'in:event,feed,game'
         ]);
 
         $user = auth()->user();
@@ -42,6 +42,23 @@ class PostController extends Controller
             if ($request->type == 'event')
             {
                 $event = \App\Entities\Event::find(\Hashids::decode($request->get('id'))[0]);
+
+                $is_owner = User::where('id', $user->id)->whereHas('event', 
+                    function ($query) use ($event) {
+                        $query->where('id', $event->id);
+                    }
+                )->count();
+
+                $post->postable()->associate( $is_owner == 1 ? $event : $user);
+
+                // save resource
+                $post->save();
+                // attach post to event
+                $event->posts()->attach($post);
+
+            } else if ($request->type == 'game')
+            {
+                $event = \App\Entities\Game::find(\Hashids::decode($request->get('id'))[0]);
 
                 $is_owner = User::where('id', $user->id)->whereHas('event', 
                     function ($query) use ($event) {
@@ -191,6 +208,29 @@ class PostController extends Controller
 
             return new PostCollection(
                 $event->posts()
+                    ->where('id', '<', $last_post_id)
+                    ->with(
+                        [
+                            'media', 
+                            'postable', 
+                            'loveReactant.reactions.reacter.reacterable',
+                            'loveReactant.reactions.type',
+                            'loveReactant.reactionCounters',
+                            'loveReactant.reactionTotal',
+                            'parent' => function($query) {
+                                $query->with(['media', 'postable']);
+                            }   
+                        ])
+                        ->orderBy('created_at', 'desc')->take(2)->get()
+            );
+        } else if ($request->type == 'game')
+        {
+            $game = \App\Entities\Game::where('id', \Hashids::decode($username))->first();
+
+            $last_post_id = \Hashids::decode( $request->last );
+
+            return new PostCollection(
+                $game->posts()
                     ->where('id', '<', $last_post_id)
                     ->with(
                         [

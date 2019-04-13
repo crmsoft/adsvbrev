@@ -21,7 +21,7 @@ export default class Profile extends Component {
     {
 
         const editor = false;
-        
+        const data = this.props.data;
         return (
             <Fragment>
                 <div className="profile"></div>
@@ -46,7 +46,7 @@ export default class Profile extends Component {
                         <div className="col-auto">
                             <div className="content-bottom">
                                 <h1>
-                                    {`data.name`}
+                                    {data.name}
                                 </h1>
                             </div>
                         </div>  
@@ -71,10 +71,20 @@ export default class Profile extends Component {
                                 </ul>
 
                                 <div className="profile-actions">
-                                    <button className="dd-btn btn-sm btn-full">
-                                        <span className="icon-plus"></span>
-                                        {`Join Game`}
-                                    </button>
+                                {
+                                    data.participant ? (
+                                        <button className="dd-btn btn-gray btn-sm">
+                                            <span className="icon-remove"></span>
+                                            {`Leave Game`}
+                                        </button>
+                                    ) : (
+                                        <button className="dd-btn btn-sm btn-full">
+                                            <span className="icon-plus"></span>
+                                            {`Join Game`}
+                                        </button>
+                                    )
+                                }
+                                    
                                 </div>
                             </div>
                         </div>

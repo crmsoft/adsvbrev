@@ -43,7 +43,9 @@ class EventController extends Controller
         $data['creator_id'] = $user->id;
 
         $event = new Event();
+
         $event->fill($data);
+        $event->start = Carbon::parse($request->start)->timestamp;
 
         $event->save();
 

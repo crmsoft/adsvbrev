@@ -24,9 +24,12 @@ export default class Form extends Component{
     }
 
     setValue(name, value)
-    {
+    {   
         this.setState(() => {
-            return {
+            return name === 'start' ? {
+                date: DateTime.fromISO(value),
+                [name] : value
+            } : {
                 [name] : value
             }
         }, () => {
@@ -123,7 +126,7 @@ export default class Form extends Component{
                                     onClick={this.onCoverSelect.bind(this)}
                                     className={"event-cover back-img " + (srcCover.length ? 'selected':'')}>
                                     <span>
-                                        Click to Uplaod
+                                        Click to Upload
                                     </span>
                                 </div>
                             </div>
@@ -156,7 +159,7 @@ export default class Form extends Component{
                     <div className="col-8">
                         <input 
                             min={DateTime.fromMillis(+ new Date).toISODate()}
-                            onChange={e => this.setValue.call(this,'start', DateTime.fromISO(e.target.value))}
+                            onChange={e => this.setValue.call(this,'start', e.target.value)}
                             value={date.toISODate()}
                             type='date' 
                             name='event-date' 

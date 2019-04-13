@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {Modal} from '../Modal/index';
 import User from '../profile/friends/partials/friend';
 
-export default class Partipicatns extends Component {
+export default class Participants extends Component {
 
     state = {
         open: false
@@ -40,6 +40,7 @@ export default class Partipicatns extends Component {
             }
         ];
         const {event, title} = this.props;
+
 
         return (
             <Fragment>

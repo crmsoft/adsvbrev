@@ -1,23 +1,35 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import Menu from '../menu/index';
 import Profile from './Profile';
 import About from './About';
 import CreatePostComponent from '../post-add';
 import FeedList from '../profile/feed';
-import Partipicatns from '../event/Participants';
+import Participants from '../event/Participants';
+import {
+    init
+} from './store/event';
 
-export default class GamePage extends Component{
+class GamePageComponent extends Component{
 
-    loadGamers()
+    componentDidMount()
     {
+        const page_id = this.props.match.params.id;
+        this.props.init(page_id);
+    }
 
+    loadGamers( id )
+    {
+        
     }
 
     render()
     {
         const poster = `http://35.205.191.229/front/user-default-bg-80.edf85c92.jpg`;
         const description = ``;
+        const {id} = this.props.match.params;
+        const data = this.props.data;
 
         return (
             <div>
@@ -27,7 +39,9 @@ export default class GamePage extends Component{
                     
                     <div className="triangle-right"></div>
 
-                    <Profile />
+                    <Profile 
+                        data={data}
+                    />
                     
                 </nav>
 
@@ -44,13 +58,13 @@ export default class GamePage extends Component{
                         <section className="user-add-post">
                             <CreatePostComponent 
                                 type={`game`}
-                                id={this.props.id}
+                                id={id}
                             />
                         </section>
 
                         <FeedList 
-                            list={[]}
-                            user={85}
+                            list={data.feed}
+                            user={id}
                             type={`game`}
                         />
 
@@ -60,9 +74,9 @@ export default class GamePage extends Component{
 
                         <section className="block">
 
-                            <Partipicatns 
+                            <Participants 
                                 title={`Gamers`}
-                                event={this.props}
+                                event={data}
                                 load={ () => {
                                     this.loadGamers(this.props.id)
                                 }}
@@ -77,3 +91,16 @@ export default class GamePage extends Component{
         )
     }
 }
+
+const GamePage = connect(
+    store => {
+        return store;
+    },
+    dispatch => {
+        return {
+            init: group => dispatch(init(group))
+        }
+    }
+)(GamePageComponent);
+
+export default GamePage;
