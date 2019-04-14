@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import TabCountent from './TabContent';
+import TabContent from './TabContent';
 
-const About = () => {
+const About = ({about}) => {
     return (
         <div className="profile-about">
             <Tabs>
@@ -18,7 +18,7 @@ const About = () => {
                 <div className="content">
                     <TabPanel> 
 
-                        <TabCountent  />
+                        <TabContent data={about} />
 
                     </TabPanel>
                 </div>

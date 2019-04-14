@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import MediaTabs from '../profile/media-tabs';
 import Menu from '../menu/index';
 import Profile from './Profile';
 import About from './About';
 import CreatePostComponent from '../post-add';
 import FeedList from '../profile/feed';
 import Participants from '../event/Participants';
+import {Buy} from './Buy';
 import {
-    init
+    init,
+    join,
+    leave
 } from './store/event';
 
 class GamePageComponent extends Component{
@@ -19,6 +23,11 @@ class GamePageComponent extends Component{
         this.props.init(page_id);
     }
 
+    componentDidUpdate()
+    {
+        document.title = `Game: ${this.props.data.name}`;
+    }
+
     loadGamers( id )
     {
         
@@ -26,10 +35,9 @@ class GamePageComponent extends Component{
 
     render()
     {
-        const poster = `http://35.205.191.229/front/user-default-bg-80.edf85c92.jpg`;
-        const description = ``;
         const {id} = this.props.match.params;
         const data = this.props.data;
+        const poster = data.poster;
 
         return (
             <div>
@@ -41,6 +49,8 @@ class GamePageComponent extends Component{
 
                     <Profile 
                         data={data}
+                        onJoin={e => this.props.join(id)}
+                        onLeave={e => this.props.leave(id)}
                     />
                     
                 </nav>
@@ -52,8 +62,17 @@ class GamePageComponent extends Component{
                     <section className="user-middle">
                         
                         <About 
-                            about={description}
+                            about={data.options}
                         /> 
+
+                        <section className="user-uploads w-100" id="media-container">
+                            
+                            <MediaTabs 
+                                media={data.media}
+                                streams={data.streams}
+                            />
+
+                        </section>
                     
                         <section className="user-add-post">
                             <CreatePostComponent 
@@ -84,6 +103,10 @@ class GamePageComponent extends Component{
 
                         </section>
 
+                        <Buy 
+                            data={data}
+                        />
+
                     </aside>
                 
                 </div>
@@ -98,7 +121,9 @@ const GamePage = connect(
     },
     dispatch => {
         return {
-            init: group => dispatch(init(group))
+            init: group => dispatch(init(group)),
+            join: group => dispatch(join(group)),
+            leave: group => dispatch(leave(group))
         }
     }
 )(GamePageComponent);

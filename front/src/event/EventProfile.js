@@ -13,7 +13,7 @@ import {
 import CreatePostComponent from '../post-add';
 import About from './About';
 import Profile from './Profile';
-import Partipicatns from './Participants';
+import Participants from './Participants';
 import headerStore from '../header/store';
 import FeedList from '../profile/feed';
 
@@ -49,7 +49,7 @@ class EeventProfileComponent extends Component{
                 user: headerStore.getState() 
             });
         } else {
-            headerStore.subscribe(() => {
+            unlisten = headerStore.subscribe(() => {
                 this.setState({
                     user: headerStore.getState() 
                 });
@@ -65,6 +65,11 @@ class EeventProfileComponent extends Component{
     leave()
     {
         this.props.leave(this.props.id);
+    }
+
+    componentWillUnmount()
+    {
+        unlisten();
     }
 
     render()
@@ -131,7 +136,7 @@ class EeventProfileComponent extends Component{
 
                         <section className="block" id="section-friends">
 
-                            <Partipicatns 
+                            <Participants 
                                 event={this.props}
                                 load={ () => {
                                     this.props.loadParticipants(this.props.id)

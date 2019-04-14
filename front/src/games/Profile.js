@@ -41,7 +41,7 @@ export default class Profile extends Component {
                     </div>
                     <div className="row">
                         <div className="col-auto">
-                            <Ava src={`img_path`} />
+                            <Ava src={`${data.ava}`} />
                         </div>
                         <div className="col-auto">
                             <div className="content-bottom">
@@ -73,12 +73,16 @@ export default class Profile extends Component {
                                 <div className="profile-actions">
                                 {
                                     data.participant ? (
-                                        <button className="dd-btn btn-gray btn-sm">
+                                        <button 
+                                            onClick={e => this.props.onLeave()}
+                                            className="dd-btn btn-gray btn-sm">
                                             <span className="icon-remove"></span>
                                             {`Leave Game`}
                                         </button>
                                     ) : (
-                                        <button className="dd-btn btn-sm btn-full">
+                                        <button 
+                                            onClick={e => this.props.onJoin()}
+                                            className="dd-btn btn-sm btn-full">
                                             <span className="icon-plus"></span>
                                             {`Join Game`}
                                         </button>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableGroups extends Migration
+class CreateGenresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,10 @@ class CreateTableGroups extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('genres', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('name')->default('unknown');
-            $table->string('slug')->unique();
-            $table->string('ava')->default('');
-            $table->string('poster')->default('');
-            
-            $table->json('options')->nullable();
-
-            $table->boolean('is_game')->default(false);
-
+            $table->string('name');
+            $table->json('options');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -37,6 +29,6 @@ class CreateTableGroups extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('genres');
     }
 }

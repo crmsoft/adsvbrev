@@ -1,4 +1,8 @@
-import {INIT} from './action';
+import {
+    INIT,
+    USER_JOINED,
+    USER_LEAVED
+} from './action';
 
 const initialState = {
     data: {
@@ -6,7 +10,9 @@ const initialState = {
         participants: [],
         random: [],
         feed: [],
-        participant: false
+        media: [],
+        participant: false,
+        options: {}
     }
 };
 
@@ -16,6 +22,22 @@ const reducer = (state, action) => {
         case INIT : {
             return {
                 ...action.data
+            }
+        }
+        case USER_JOINED : {
+            return {
+                data : {
+                    ...state.data,
+                    participant: true
+                }
+            }
+        }
+        case USER_LEAVED : {
+            return {
+                data : {
+                    ...state.data,
+                    participant: false
+                }
             }
         }
     } // end switch

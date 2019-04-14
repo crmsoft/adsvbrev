@@ -20,15 +20,23 @@ class Group extends Model
     ];
 
     /**
+     * the list of vars that should be mutated
+     * 
+     * @var array
+     */
+    protected $casts = [
+        'options' => 'array'
+    ];
+
+    /**
      * Retrieve the model for a bound value.
      *
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding($value)
+    public function getRouteKeyName()
     {
-        $value = \Hashids::decode($value);
-        return $this->where($this->getRouteKeyName(), empty($value) ? -1 : $value)->first();
+        return 'slug';
     }
 
     public function managers(){
@@ -41,12 +49,10 @@ class Group extends Model
 
     public function participants()
     {
-        return $this->hasManyThrough(
-            User::class, 
-            UserGroup::class,
+        return $this->belongsToMany(
+            User::class,
+            'user_groups',
             'group_id',
-            'id',
-            'id',
             'user_id'
         );
     }
@@ -54,5 +60,9 @@ class Group extends Model
     public function posts()
     {
         return $this->morphToMany(\App\Post::class, 'postable')->withTimestamps();
+    }
+
+    public function media(){
+        return $this->morphMany(\App\Media::class, 'mediable');
     }
 }

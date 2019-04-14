@@ -15,4 +15,18 @@ class GameController extends Controller
     {
         return new ResourceGame($game);
     } // end show
+
+    public function join(Game $game)
+    {
+        $user = auth()->user();
+
+        return $game->participants()->attach($user);
+    } // end join
+
+    public function leave(Game $game)
+    {
+        $user = auth()->user();
+
+        return $game->participants()->detach($user);
+    } // end join
 }

@@ -14,10 +14,6 @@ class Media extends Model
         'relation_id'
     ];
 
-    protected $appends = [
-        'full_path'
-    ];
-
     protected $visible = [
         'full_path'
     ];

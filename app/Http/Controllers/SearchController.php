@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Group;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Resources\UserListStatus\UserCollection;
+use App\Http\Resources\Group\GroupCollection;
+use App\Entities\Group;
+use App\User;
 
 class SearchController extends Controller
 {
@@ -37,9 +38,9 @@ class SearchController extends Controller
 
             } break;
             case 'gr' : {
-                $result = Group::where(function( $query ) use ($search){
+                $result = new GroupCollection(Group::where(function( $query ) use ($search){
                     $query->orWhere('name','like',"%$search%");
-                })->get();
+                })->get());
             }
         }
 

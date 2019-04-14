@@ -18,4 +18,14 @@ class Game extends Group
             $builder->where('is_game', true);
         });
     }
+
+    public function genres()
+    {
+        return $this->belongsToMany(\App\Entities\Genre::class, 'game_genre', 'group_id', 'genre_id');
+    }
+
+    public function developers()
+    {
+        return $this->belongsToMany(\App\Entities\GameDeveloper::class, 'game_developer');
+    }
 }

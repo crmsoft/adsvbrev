@@ -6,9 +6,21 @@ export default class GroupListComponent extends Component{
     render(){
         const group = this.props.data;
         return (
-            <Link to=''>
-                {group.name}
-            </Link>
+            <div className="search-item-user">
+                <Link to={`/g/${group.username}`} className="d-flex">
+                    <div className="user-ava">
+                        <img src={group.ava} />
+                    </div>
+                    <div className="user-info">
+                        <div className="user-name">
+                            {group.full_name}
+                        </div>
+                        <div className="user-username">
+                            {group.username}
+                        </div>
+                    </div>
+                </Link>
+            </div>
         )
     }
 }

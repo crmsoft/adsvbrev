@@ -58,20 +58,16 @@ class PostController extends Controller
 
             } else if ($request->type == 'game')
             {
-                $event = \App\Entities\Game::find(\Hashids::decode($request->get('id'))[0]);
+                $game = \App\Entities\Game::where('slug', $request->id)->first();
 
-                $is_owner = User::where('id', $user->id)->whereHas('event', 
-                    function ($query) use ($event) {
-                        $query->where('id', $event->id);
-                    }
-                )->count();
+                $is_owner = $game->managers()->where('user_id', $user->id)->count();
 
-                $post->postable()->associate( $is_owner == 1 ? $event : $user);
+                $post->postable()->associate( $is_owner == 1 ? $game : $user);
 
                 // save resource
                 $post->save();
                 // attach post to event
-                $event->posts()->attach($post);
+                $game->posts()->attach($post);
 
             } else if ($request->type == 'feed')
             {
@@ -225,7 +221,7 @@ class PostController extends Controller
             );
         } else if ($request->type == 'game')
         {
-            $game = \App\Entities\Game::where('id', \Hashids::decode($username))->first();
+            $game = \App\Entities\Game::where('slug', $username)->first();
 
             $last_post_id = \Hashids::decode( $request->last );
 

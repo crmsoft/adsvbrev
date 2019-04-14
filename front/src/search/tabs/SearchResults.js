@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 export default class SearchResult extends Component{
 
     render(){
+        console.log(this.props.items);
+        
         return (
             <div>
                 {
