@@ -81,10 +81,25 @@ class SteamParser extends Command
 
             $options['website'] = trim($data['website']);
             
-            $options['release'] = [
-                'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('d M, Y', $data['release_date']['date'])->timestamp,
-                'released' => !$data['release_date']['coming_soon']
-            ];
+            try{
+                $options['release'] = [
+                    'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('d M, Y', $data['release_date']['date'])->timestamp,
+                    'released' => !$data['release_date']['coming_soon']
+                ];
+            } catch(\Exception $e) {
+                try{
+                    $options['release'] = [
+                        'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('M d, Y', $data['release_date']['date'])->timestamp,
+                        'released' => !$data['release_date']['coming_soon']
+                    ];
+                }catch (\Exception $e)
+                {
+                    $options['release'] = [
+                        'timestamp' => $data['release_date']['date'],
+                        'released' => !$data['release_date']['coming_soon']
+                    ];
+                }
+            }
 
             $options['is_free'] = $data['is_free'];
             $options['resource'] = $app_id;
