@@ -48682,6 +48682,8 @@ exports.Games = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -48708,6 +48710,7 @@ var GameCard = function GameCard(_ref) {
   var game = _ref.game,
       active = _ref.active;
   var st = active ? {
+    display: 'block',
     position: 'relative',
     minHeight: '150px'
   } : {
@@ -48715,7 +48718,8 @@ var GameCard = function GameCard(_ref) {
     display: 'none',
     minHeight: '150px'
   };
-  return _react.default.createElement("div", {
+  return _react.default.createElement(_reactRouterDom.Link, {
+    to: "/g/".concat(game.username),
     style: st
   }, _react.default.createElement("img", {
     src: game.ava,
@@ -48768,7 +48772,7 @@ function (_Component) {
 
       setInterval(function () {
         var length = _this2.props.list.length;
-        var next = Math.floor(Math.random() * length) + 1;
+        var next = Math.floor(Math.random() * length);
 
         _this2.setState({
           index: next
@@ -48809,7 +48813,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.Games = Games;
-},{"react":"../node_modules/react/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
