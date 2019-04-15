@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\UserListStatus\User;
 use App\Http\Resources\Post\PostCollection;
+use App\Http\Resources\Group\GroupCollection;
 
 class ResourceProfile extends JsonResource
 {
@@ -45,12 +46,14 @@ class ResourceProfile extends JsonResource
             'groups' => $this->group(function($query){
                             $query->inRandomOrder();
                             $query->limit(3);
-                        })->get(),
+                        })->where('is_game', 0)->get(),
             'feed' => $feed,
             'profile' => new ProfileConfig($profile),
+            'games' => new GroupCollection( $this->group()->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),
             'totals' => [
                 'friends' => $this->friend->count(),
-                'groups' => $this->group->count()
+                'groups' => $this->group->count(),
+                'games' => $this->group()->where('is_game', 1)->count()
             ]
         ];
     }

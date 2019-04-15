@@ -210,8 +210,7 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
     } // end getMutualFriendsAttribute
 
     public function group(){
-        return $this->belongsToMany(Group::class, 'user_groups', 'user_id', 'group_id')
-            ->where('status', Group::STATUS_JOINED);
+        return $this->belongsToMany(Group::class, 'user_groups', 'user_id', 'group_id');
     }
 
     public function feed(){

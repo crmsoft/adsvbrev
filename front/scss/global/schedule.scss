@@ -335,7 +335,13 @@ $schedulebordercolor:#354247;
                 span
                 {
                     width:10%;
-                    color: $mainColor;
+                    float: left;
+                    text-align:center;
+                    &.icon-remove{
+                        float:none;
+                        width: auto;
+                        color: $mainColor;
+                    }
                 }
                 .content
                 {

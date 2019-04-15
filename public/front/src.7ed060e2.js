@@ -41041,6 +41041,7 @@ var initialState = {
   data: {
     friends: [],
     groups: [],
+    games: [],
     feed: [],
     profile: {
       ava: '',
@@ -41050,7 +41051,8 @@ var initialState = {
     },
     totals: {
       friends: 0,
-      groups: 0
+      groups: 0,
+      games: 0
     }
   },
   guest: true
@@ -48670,7 +48672,144 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Groups;
-},{"react":"../node_modules/react/index.js","./partials/header":"../src/profile/groups/partials/header.js","./partials/group":"../src/profile/groups/partials/group.js","./popup/index":"../src/profile/groups/popup/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./partials/header":"../src/profile/groups/partials/header.js","./partials/group":"../src/profile/groups/partials/group.js","./popup/index":"../src/profile/groups/popup/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/games/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Games = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GameCard = function GameCard(_ref) {
+  var game = _ref.game,
+      active = _ref.active;
+  var st = active ? {
+    position: 'relative',
+    minHeight: '150px'
+  } : {
+    position: 'relative',
+    display: 'none',
+    minHeight: '150px'
+  };
+  return _react.default.createElement("div", {
+    style: st
+  }, _react.default.createElement("img", {
+    src: game.ava,
+    style: {
+      height: '150px',
+      objectFit: 'cover'
+    }
+  }), _react.default.createElement("span", {
+    style: {
+      background: 'linear-gradient(rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.83))',
+      position: 'absolute',
+      textAlign: 'center',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      paddingBottom: '5px'
+    }
+  }, game.full_name));
+};
+
+var Games =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Games, _Component);
+
+  function Games() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Games);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Games)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      index: 0
+    });
+
+    return _this;
+  }
+
+  _createClass(Games, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setInterval(function () {
+        var length = _this2.props.list.length;
+        var next = Math.floor(Math.random() * length) + 1;
+
+        _this2.setState({
+          index: next
+        });
+      }, 2500);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          total = _this$props.total,
+          list = _this$props.list;
+      var index = this.state.index;
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-gamepad"
+      }), _react.default.createElement("h3", null, "Games"), _react.default.createElement("span", {
+        className: "items-count"
+      }, " ", total))), _react.default.createElement("div", {
+        className: "block-content"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col"
+      }, list.map(function (game, i) {
+        return _react.default.createElement(GameCard, {
+          active: index === i,
+          game: game
+        });
+      })))));
+    }
+  }]);
+
+  return Games;
+}(_react.Component);
+
+exports.Games = Games;
+},{"react":"../node_modules/react/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61701,15 +61840,17 @@ var _index2 = _interopRequireDefault(require("./friends/index"));
 
 var _index3 = _interopRequireDefault(require("./groups/index"));
 
-var _index4 = _interopRequireDefault(require("./media-tabs/index"));
+var _index4 = require("./games/index");
+
+var _index5 = _interopRequireDefault(require("./media-tabs/index"));
 
 var _profileMain = _interopRequireDefault(require("./profile-main"));
 
-var _index5 = _interopRequireDefault(require("../menu/index"));
+var _index6 = _interopRequireDefault(require("../menu/index"));
 
 var _events = require("./fetch/events");
 
-var _index6 = _interopRequireDefault(require("../post-add/index"));
+var _index7 = _interopRequireDefault(require("../post-add/index"));
 
 var _about = _interopRequireDefault(require("./about"));
 
@@ -61765,6 +61906,7 @@ function (_Component) {
           feed = _this$props$data.feed,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
+          games = _this$props$data.games,
           totals = _this$props$data.totals,
           profile = _this$props$data.profile;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
@@ -61780,16 +61922,16 @@ function (_Component) {
         info: this.props.data
       })), _react.default.createElement("div", {
         className: "d-flex"
-      }, _react.default.createElement(_index5.default, null), _react.default.createElement("section", {
+      }, _react.default.createElement(_index6.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
         user: this.props.data
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
-      }, _react.default.createElement(_index4.default, null)), _react.default.createElement("section", {
+      }, _react.default.createElement(_index5.default, null)), _react.default.createElement("section", {
         className: "user-add-post"
-      }, _react.default.createElement(_index6.default, {
+      }, _react.default.createElement(_index7.default, {
         type: "feed"
       })), _react.default.createElement(_index.default, {
         list: feed
@@ -61807,6 +61949,12 @@ function (_Component) {
         isGuest: false,
         list: groups,
         total: totals.groups
+      })), _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement(_index4.Games, {
+        isGuest: false,
+        list: games,
+        total: totals.games
       })), _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_reactRedux.Provider, {
@@ -61833,7 +61981,7 @@ var Profile = (0, _reactRedux.connect)(function (state) {
 })(ProfileComponent);
 var _default = Profile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./feed/index":"../src/profile/feed/index.js","./friends/index":"../src/profile/friends/index.js","./groups/index":"../src/profile/groups/index.js","./media-tabs/index":"../src/profile/media-tabs/index.js","./profile-main":"../src/profile/profile-main.js","../menu/index":"../src/menu/index.js","./fetch/events":"../src/profile/fetch/events.js","../post-add/index":"../src/post-add/index.js","./about":"../src/profile/about/index.js","./schedule":"../src/profile/schedule/index.js","./schedule/store":"../src/profile/schedule/store/index.js","./ava/Poster":"../src/profile/ava/Poster.js"}],"../src/profile/guest/GuestComponent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","./feed/index":"../src/profile/feed/index.js","./friends/index":"../src/profile/friends/index.js","./groups/index":"../src/profile/groups/index.js","./games/index":"../src/profile/games/index.js","./media-tabs/index":"../src/profile/media-tabs/index.js","./profile-main":"../src/profile/profile-main.js","../menu/index":"../src/menu/index.js","./fetch/events":"../src/profile/fetch/events.js","../post-add/index":"../src/post-add/index.js","./about":"../src/profile/about/index.js","./schedule":"../src/profile/schedule/index.js","./schedule/store":"../src/profile/schedule/store/index.js","./ava/Poster":"../src/profile/ava/Poster.js"}],"../src/profile/guest/GuestComponent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -4,6 +4,7 @@ import { connect, Provider  } from "react-redux";
 import FeedList from './feed/index';
 import Friends from './friends/index';
 import Groups from './groups/index';
+import {Games} from './games/index';
 import MediaTabs from './media-tabs/index';
 import UserProfle from './profile-main';
 import Menu from '../menu/index';
@@ -32,6 +33,7 @@ class ProfileComponent extends Component{
                 feed, 
                 friends, 
                 groups,
+                games,
                 totals,
                 profile
             } = this.props.data;
@@ -91,6 +93,16 @@ class ProfileComponent extends Component{
                                 isGuest={false}
                                 list={groups} 
                                 total={totals.groups} 
+                            />                    
+
+                        </section>
+
+                        <section className="block">
+
+                            <Games 
+                                isGuest={false}
+                                list={games} 
+                                total={totals.games} 
                             />                    
 
                         </section>

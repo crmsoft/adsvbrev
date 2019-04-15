@@ -15,11 +15,13 @@ const initialState = {
     data : {
         friends: [],
         groups:[],
+        games:[],
         feed:[],
         profile: { ava : '', user:{full_name:'Loading...'} },
         totals: {
             friends: 0,
-            groups: 0
+            groups: 0,
+            games: 0
         }
     },
     guest: true
