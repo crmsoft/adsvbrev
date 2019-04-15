@@ -53,6 +53,12 @@ class SteamParser extends Command
         foreach($apps['applist']['apps'] as $index => $info)
         {
             $app_id = $info['appid'];
+
+            if(\App\Entities\Game::where('options->resource', $app_id)->count() > 0)
+            {
+                continue;
+            } // end if
+
             $url = sprintf(self::$api, $app_id);
 
             $client = new \GuzzleHttp\Client();
@@ -63,11 +69,6 @@ class SteamParser extends Command
             // check if the resource is available
             if(!$data['success'] || ($data['data']['type'] != 'game'))
                 continue;
-
-            if(\App\Entities\Game::where('options->resource', $app_id)->count() > 0)
-            {
-                continue;
-            } // end if
 
             $data = $data['data'];
 
