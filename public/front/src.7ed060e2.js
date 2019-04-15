@@ -62009,6 +62009,8 @@ var _index4 = _interopRequireDefault(require("../groups/index"));
 
 var _feed = _interopRequireDefault(require("../feed"));
 
+var _index5 = require("../games/index");
+
 var _events = require("../fetch/events");
 
 var _about = _interopRequireDefault(require("../about"));
@@ -62066,6 +62068,7 @@ function (_Component) {
       var _this$props$data = this.props.data,
           friends = _this$props$data.friends,
           groups = _this$props$data.groups,
+          games = _this$props$data.games,
           totals = _this$props$data.totals,
           feed = _this$props$data.feed,
           profile = _this$props$data.profile;
@@ -62110,6 +62113,12 @@ function (_Component) {
         isGuest: true,
         list: groups,
         total: totals.groups
+      })), _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement(_index5.Games, {
+        isGuest: false,
+        list: games,
+        total: totals.games
       })))));
     }
   }]);
@@ -62128,7 +62137,7 @@ var GuestComponent = (0, _reactRedux.connect)(function (state) {
 })(Guest);
 var _default = GuestComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../feed":"../src/profile/feed/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../feed":"../src/profile/feed/index.js","../games/index":"../src/profile/games/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72789,7 +72798,7 @@ var system_req = function system_req(data) {
   for (var key in data) {
     nodes.push(_react.default.createElement("div", {
       key: key,
-      className: "row"
+      className: "row w-100"
     }, _react.default.createElement("div", {
       className: "col-4"
     }, key), _react.default.createElement("div", {
@@ -72798,7 +72807,6 @@ var system_req = function system_req(data) {
   } // end for
 
 
-  console.log(nodes);
   return nodes;
 };
 

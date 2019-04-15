@@ -64,6 +64,11 @@ class SteamParser extends Command
             if(!$data['success'] || ($data['data']['type'] != 'game'))
                 continue;
 
+            if(\App\Entities\Game::where('options->resource', $app_id)->count() > 0)
+            {
+                continue;
+            } // end if
+
             $data = $data['data'];
 
             // generic information about Game.
