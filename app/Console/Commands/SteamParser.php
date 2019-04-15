@@ -139,6 +139,10 @@ class SteamParser extends Command
             
             $game->name = $data['name'];
             $game->slug = str_slug($data['name']);
+            if (empty($game->slug))
+            {
+                $game->slug = str_random(8);
+            } // end if
             $game->is_game = 1;
             $game->options = $options;
             $game->save();

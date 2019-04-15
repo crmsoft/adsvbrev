@@ -48714,6 +48714,28 @@ function (_Component) {
   _createClass(ImageCotent, [{
     key: "render",
     value: function render() {
+      var media = this.props.media;
+
+      if (media) {
+        return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+          className: "user-content active"
+        }, _react.default.createElement("div", {
+          className: "row"
+        }, media.slice(0, 3).map(function (m, index) {
+          return _react.default.createElement("div", {
+            key: index,
+            className: "col-4"
+          }, _react.default.createElement("img", {
+            src: m.options.thumb,
+            alt: ""
+          }));
+        })), _react.default.createElement("a", {
+          href: "#",
+          className: "user-content-all"
+        }, "All (14)")));
+      } // end if
+
+
       return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "user-content active"
       }, _react.default.createElement("div", {
@@ -48818,7 +48840,147 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = VideoCotent;
-},{"react":"../node_modules/react/index.js"}],"../src/profile/media-tabs/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"../src/profile/media-tabs/StreamList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.StreamList = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _index = require("../../Modal/index");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var TwitchPlayer = function TwitchPlayer(_ref) {
+  var username = _ref.username,
+      onClose = _ref.onClose,
+      title = _ref.title;
+  return _react.default.createElement(_index.Modal, {
+    open: true,
+    onClose: onClose,
+    title: title
+  }, _react.default.createElement("iframe", {
+    allowFullScreen: true,
+    height: "360",
+    frameBorder: "0",
+    className: "w-100",
+    src: "https://player.twitch.tv/?channel=".concat(username, "&muted=true&autoplay=true")
+  }));
+};
+
+var StreamList =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(StreamList, _Component);
+
+  function StreamList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, StreamList);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(StreamList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      watching: null
+    });
+
+    return _this;
+  }
+
+  _createClass(StreamList, [{
+    key: "watch",
+    value: function watch(index) {
+      this.setState(function () {
+        return {
+          watching: index
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var streams = this.props.streams;
+      var watching = this.state.watching;
+
+      var Player = function Player() {
+        return _react.default.createElement("span", null);
+      };
+
+      if (watching !== null) {
+        Player = function Player() {
+          var stream = streams[watching];
+          return _react.default.createElement(TwitchPlayer, {
+            username: stream.username,
+            title: stream.title,
+            onClose: function onClose(e) {
+              return _this2.setState({
+                watching: null
+              });
+            }
+          });
+        };
+      }
+
+      return _react.default.createElement("div", {
+        className: "user-content active"
+      }, _react.default.createElement(Player, null), _react.default.createElement("div", {
+        className: "row"
+      }, streams.map(function (stream, index) {
+        return _react.default.createElement("div", {
+          onClick: function onClick(e) {
+            return _this2.watch.call(_this2, index);
+          },
+          key: index,
+          className: "col-4"
+        }, _react.default.createElement("div", null, _react.default.createElement("img", {
+          src: stream.thumb,
+          alt: ""
+        })), _react.default.createElement("div", null, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
+          className: "main-color"
+        }, "by ", stream.username))));
+      })), _react.default.createElement("a", {
+        href: "#",
+        className: "user-content-all"
+      }, "All (14)"));
+    }
+  }]);
+
+  return StreamList;
+}(_react.Component);
+
+exports.StreamList = StreamList;
+},{"react":"../node_modules/react/index.js","../../Modal/index":"../src/Modal/index.js"}],"../src/profile/media-tabs/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48833,6 +48995,8 @@ var _reactTabs = require("react-tabs");
 var _imageContent = _interopRequireDefault(require("./image-content"));
 
 var _videoCotent = _interopRequireDefault(require("./video-cotent"));
+
+var _StreamList = require("./StreamList");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48856,6 +49020,15 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+var streamTabStyle = {
+  background: "white",
+  borderRadius: "50%",
+  height: "13px",
+  width: "13px",
+  display: "inline-block",
+  marginTop: "3px"
+};
+
 var MediaTabs =
 /*#__PURE__*/
 function (_Component) {
@@ -48877,9 +49050,19 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$props = this.props,
+          streams = _this$props.streams,
+          media = _this$props.media;
       return _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
-      }, _react.default.createElement(_reactTabs.Tab, {
+      }, streams && streams.length ? _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-streams",
+        style: streamTabStyle
+      }), " Streams")) : null, _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
@@ -48893,7 +49076,11 @@ function (_Component) {
         className: "icon-play"
       }), " Videos"))), _react.default.createElement("div", {
         className: "content"
-      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, null)), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_videoCotent.default, null))));
+      }, streams && streams.length ? _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_StreamList.StreamList, {
+        streams: streams
+      })) : null, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, {
+        media: media
+      })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_videoCotent.default, null))));
     }
   }]);
 
@@ -48901,7 +49088,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = MediaTabs;
-},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./image-content":"../src/profile/media-tabs/image-content.js","./video-cotent":"../src/profile/media-tabs/video-cotent.js"}],"../node_modules/luxon/build/cjs-browser/luxon.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./image-content":"../src/profile/media-tabs/image-content.js","./video-cotent":"../src/profile/media-tabs/video-cotent.js","./StreamList":"../src/profile/media-tabs/StreamList.js"}],"../node_modules/luxon/build/cjs-browser/luxon.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -62947,6 +63134,7 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
+      console.log(this.props.items);
       return _react.default.createElement("div", null, this.props.items.map(function (item, index) {
         return _react.default.createElement("div", {
           key: index
@@ -63245,9 +63433,22 @@ function (_Component) {
     key: "render",
     value: function render() {
       var group = this.props.data;
-      return _react.default.createElement(_reactRouterDom.Link, {
-        to: ""
-      }, group.name);
+      return _react.default.createElement("div", {
+        className: "search-item-user"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/g/".concat(group.username),
+        className: "d-flex"
+      }, _react.default.createElement("div", {
+        className: "user-ava"
+      }, _react.default.createElement("img", {
+        src: group.ava
+      })), _react.default.createElement("div", {
+        className: "user-info"
+      }, _react.default.createElement("div", {
+        className: "user-name"
+      }, group.full_name), _react.default.createElement("div", {
+        className: "user-username"
+      }, group.username))));
     }
   }]);
 
@@ -71908,7 +72109,7 @@ function (_Component) {
           user: _store.default.getState()
         });
       } else {
-        _store.default.subscribe(function () {
+        unlisten = _store.default.subscribe(function () {
           _this2.setState({
             user: _store.default.getState()
           });
@@ -71925,6 +72126,11 @@ function (_Component) {
     key: "leave",
     value: function leave() {
       this.props.leave(this.props.id);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      unlisten();
     }
   }, {
     key: "render",
@@ -72086,7 +72292,7 @@ var _reducer = _interopRequireDefault(require("./reducer"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _logger = new _reduxLogger.createLogger({
-  collapsed: false
+  collapsed: true
 });
 
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
@@ -72316,7 +72522,10 @@ function (_Component) {
   _createClass(Profile, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var editor = false;
+      var data = this.props.data;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "profile"
       }), _react.default.createElement("div", {
@@ -72345,12 +72554,12 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "col-auto"
       }, _react.default.createElement(Ava, {
-        src: "img_path"
+        src: "".concat(data.ava)
       })), _react.default.createElement("div", {
         className: "col-auto"
       }, _react.default.createElement("div", {
         className: "content-bottom"
-      }, _react.default.createElement("h1", null, "data.name"))), _react.default.createElement("div", {
+      }, _react.default.createElement("h1", null, data.name))), _react.default.createElement("div", {
         className: "col-auto flex-grow-1"
       }, _react.default.createElement("div", {
         className: "content-bottom flex-column-reverse"
@@ -72366,7 +72575,17 @@ function (_Component) {
         className: "icon-steam"
       })))), _react.default.createElement("div", {
         className: "profile-actions"
-      }, _react.default.createElement("button", {
+      }, data.participant ? _react.default.createElement("button", {
+        onClick: function onClick(e) {
+          return _this.props.onLeave();
+        },
+        className: "dd-btn btn-gray btn-sm"
+      }, _react.default.createElement("span", {
+        className: "icon-remove"
+      }), "Leave Game") : _react.default.createElement("button", {
+        onClick: function onClick(e) {
+          return _this.props.onJoin();
+        },
         className: "dd-btn btn-sm btn-full"
       }, _react.default.createElement("span", {
         className: "icon-plus"
@@ -72387,6 +72606,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _luxon = require("luxon");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -72410,6 +72631,25 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var system_req = function system_req(data) {
+  var nodes = [];
+
+  for (var key in data) {
+    nodes.push(_react.default.createElement("div", {
+      key: key,
+      className: "row"
+    }, _react.default.createElement("div", {
+      className: "col-4"
+    }, key), _react.default.createElement("div", {
+      className: "col-8"
+    }, data[key])));
+  } // end for
+
+
+  console.log(nodes);
+  return nodes;
+};
+
 var OtherContent = function OtherContent(_ref) {
   var state = _ref.state,
       options = _ref.options;
@@ -72421,7 +72661,67 @@ var OtherContent = function OtherContent(_ref) {
     className: "profile-about-label"
   }, "Game Story"), _react.default.createElement("div", {
     className: "profile-about-value"
-  }, "Bir zamanda var eken bir zamanda yok eken ...")))) : null;
+  }, options.description.full ? options.description.full : options.description.about))), options.genres.length ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Genre"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, options.genres.map(function (item) {
+    return item.name;
+  }).join(', ')))) : null, options.languages.length ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Languages"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, options.languages.join(', ')))) : null, options.developers.length ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Developed by"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, options.developers.map(function (item) {
+    return item.name;
+  }).join(', ')))) : null, options.release.released ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Release"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, options.release.released ? _luxon.DateTime.fromMillis(options.release.timestamp * 1000).toLocaleString(_luxon.DateTime.DATE_SHORT) : "Coming soon"))) : null, !Array.isArray(options.system_requirements.windows) ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Windows"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, system_req(options.system_requirements.windows)))) : null, !Array.isArray(options.system_requirements.linux) ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Linux"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, system_req(options.system_requirements.linux)))) : null, !Array.isArray(options.system_requirements.mac) ? _react.default.createElement("div", {
+    className: "profile-about-content"
+  }, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Mac"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, system_req(options.system_requirements.mac)))) : null) : null;
 };
 
 var TabContent =
@@ -72462,7 +72762,14 @@ function (_Component) {
     key: "render",
     value: function render() {
       var open = this.state.open;
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+      var options = this.props.data;
+
+      if (!options.description) {
+        return null;
+      } // end if
+
+
+      return _react.default.createElement(_react.Fragment, null, open ? null : _react.default.createElement("div", {
         className: "profile-about-content"
       }, _react.default.createElement("div", {
         className: "profile-about-row"
@@ -72470,9 +72777,9 @@ function (_Component) {
         className: "profile-about-label"
       }, "Game Story"), _react.default.createElement("div", {
         className: "profile-about-value"
-      }, "Bir zamanda var eken bir zamanda yok eken ..."))), _react.default.createElement(OtherContent, {
+      }, options.description.about.substr(0, 200)))), _react.default.createElement(OtherContent, {
         state: open,
-        options: {}
+        options: options
       }), _react.default.createElement("div", {
         className: "profile-about-footer"
       }, _react.default.createElement("span", {
@@ -72487,7 +72794,7 @@ function (_Component) {
 
 var _default = TabContent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"../src/games/About/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/games/About/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72503,7 +72810,8 @@ var _TabContent = _interopRequireDefault(require("./TabContent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var About = function About() {
+var About = function About(_ref) {
+  var about = _ref.about;
   return _react.default.createElement("div", {
     className: "profile-about"
   }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
@@ -72516,12 +72824,136 @@ var About = function About() {
     className: "icon-info"
   }), " About Game"))), _react.default.createElement("div", {
     className: "content"
-  }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_TabContent.default, null)))));
+  }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_TabContent.default, {
+    data: about
+  })))));
 };
 
 var _default = About;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./TabContent":"../src/games/About/TabContent.js"}],"../src/games/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./TabContent":"../src/games/About/TabContent.js"}],"../src/games/Buy.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Buy = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Buy = function Buy(_ref) {
+  var data = _ref.data;
+  var options = data.options,
+      ava = data.ava,
+      name = data.name;
+
+  if (!options) {
+    return null;
+  }
+
+  return _react.default.createElement("section", {
+    className: "block"
+  }, _react.default.createElement("div", {
+    className: "header"
+  }, _react.default.createElement("a", {
+    href: "javascript:void(0)"
+  }, _react.default.createElement("span", {
+    className: "icon-basket"
+  }), _react.default.createElement("h3", null, "Buy the game"))), _react.default.createElement("div", {
+    className: "block-content"
+  }, _react.default.createElement("div", {
+    className: "row"
+  }, _react.default.createElement("div", {
+    className: "col-4"
+  }, _react.default.createElement("img", {
+    src: ava
+  })), _react.default.createElement("div", {
+    className: "col-8 p-0"
+  }, _react.default.createElement("small", null, name))), _react.default.createElement("div", {
+    className: "row"
+  }, _react.default.createElement("div", {
+    className: "col text-right"
+  }, _react.default.createElement("a", {
+    target: "blank",
+    href: "https://store.steampowered.com/app/".concat(options.resource),
+    className: "dd-btn btn-sm btn-full"
+  }, "Buy")))));
+};
+
+exports.Buy = Buy;
+},{"react":"../node_modules/react/index.js"}],"../src/games/store/action.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
+var LOADED = "LOADED";
+exports.LOADED = LOADED;
+var INIT = "FETCH_GROUP";
+exports.INIT = INIT;
+var USER_JOINED = "USER_JOINED";
+exports.USER_JOINED = USER_JOINED;
+var USER_LEAVED = "USER_LEAVED";
+exports.USER_LEAVED = USER_LEAVED;
+},{}],"../src/games/store/event.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.leave = exports.join = exports.init = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _action = require("./action");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var init = function init(group) {
+  return function (dispatch) {
+    _axios.default.post("/game/show/".concat(group)).then(function (_ref) {
+      var data = _ref.data;
+      dispatch({
+        type: _action.INIT,
+        data: data
+      });
+    });
+  };
+};
+
+exports.init = init;
+
+var join = function join(group) {
+  return function (dispatch) {
+    _axios.default.post("/game/".concat(group, "/join")).then(function (_ref2) {
+      var data = _ref2.data;
+      dispatch({
+        type: _action.USER_JOINED,
+        data: data
+      });
+    });
+  };
+};
+
+exports.join = join;
+
+var leave = function leave(group) {
+  return function (dispatch) {
+    _axios.default.post("/game/".concat(group, "/leave")).then(function (_ref3) {
+      var data = _ref3.data;
+      dispatch({
+        type: _action.USER_LEAVED,
+        data: data
+      });
+    });
+  };
+};
+
+exports.leave = leave;
+},{"axios":"../../node_modules/axios/index.js","./action":"../src/games/store/action.js"}],"../src/games/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72530,6 +72962,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _mediaTabs = _interopRequireDefault(require("../profile/media-tabs"));
 
 var _index = _interopRequireDefault(require("../menu/index"));
 
@@ -72542,6 +72978,10 @@ var _postAdd = _interopRequireDefault(require("../post-add"));
 var _feed = _interopRequireDefault(require("../profile/feed"));
 
 var _Participants = _interopRequireDefault(require("../event/Participants"));
+
+var _Buy = require("./Buy");
+
+var _event = require("./store/event");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72565,32 +73005,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var GamePage =
+var GamePageComponent =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(GamePage, _Component);
+  _inherits(GamePageComponent, _Component);
 
-  function GamePage() {
-    _classCallCheck(this, GamePage);
+  function GamePageComponent() {
+    _classCallCheck(this, GamePageComponent);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(GamePage).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(GamePageComponent).apply(this, arguments));
   }
 
-  _createClass(GamePage, [{
-    key: "loadGamers",
-    value: function loadGamers(id) {
-      axios.post("/game/".concat(id, "/participants")).then(function (_ref) {
-        var data = _ref.data;
-        console.log(data);
-      });
+  _createClass(GamePageComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var page_id = this.props.match.params.id;
+      this.props.init(page_id);
     }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      document.title = "Game: ".concat(this.props.data.name);
+    }
+  }, {
+    key: "loadGamers",
+    value: function loadGamers(id) {}
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
-      var poster = "http://35.205.191.229/front/user-default-bg-80.edf85c92.jpg";
-      var description = "";
+      var id = this.props.match.params.id;
+      var data = this.props.data;
+      var poster = data.poster;
       return _react.default.createElement("div", null, _react.default.createElement("nav", {
         className: "user-profile game-profile",
         style: {
@@ -72598,20 +73045,34 @@ function (_Component) {
         }
       }, _react.default.createElement("div", {
         className: "triangle-right"
-      }), _react.default.createElement(_Profile.default, null)), _react.default.createElement("div", {
+      }), _react.default.createElement(_Profile.default, {
+        data: data,
+        onJoin: function onJoin(e) {
+          return _this.props.join(id);
+        },
+        onLeave: function onLeave(e) {
+          return _this.props.leave(id);
+        }
+      })), _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_About.default, {
-        about: description
+        about: data.options
       }), _react.default.createElement("section", {
+        className: "user-uploads w-100",
+        id: "media-container"
+      }, _react.default.createElement(_mediaTabs.default, {
+        media: data.media,
+        streams: data.streams
+      })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_postAdd.default, {
         type: "game",
-        id: this.props.id
+        id: id
       })), _react.default.createElement(_feed.default, {
-        list: [],
-        user: 85,
+        list: data.feed,
+        user: id,
         type: "game"
       })), _react.default.createElement("aside", {
         className: "profile-aside"
@@ -72619,19 +73080,117 @@ function (_Component) {
         className: "block"
       }, _react.default.createElement(_Participants.default, {
         title: "Gamers",
-        event: this.props,
+        event: data,
         load: function load() {
           _this.loadGamers(_this.props.id);
         }
-      })))));
+      })), _react.default.createElement(_Buy.Buy, {
+        data: data
+      }))));
     }
   }]);
 
-  return GamePage;
+  return GamePageComponent;
 }(_react.Component);
 
-exports.default = GamePage;
-},{"react":"../node_modules/react/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js"}],"../src/feed/List.js":[function(require,module,exports) {
+var GamePage = (0, _reactRedux.connect)(function (store) {
+  return store;
+}, function (dispatch) {
+  return {
+    init: function init(group) {
+      return dispatch((0, _event.init)(group));
+    },
+    join: function join(group) {
+      return dispatch((0, _event.join)(group));
+    },
+    leave: function leave(group) {
+      return dispatch((0, _event.leave)(group));
+    }
+  };
+})(GamePageComponent);
+var _default = GamePage;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js","./Buy":"../src/games/Buy.js","./store/event":"../src/games/store/event.js"}],"../src/games/store/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _action = require("./action");
+
+var initialState = {
+  data: {
+    name: "",
+    participants: [],
+    random: [],
+    feed: [],
+    media: [],
+    participant: false,
+    options: {}
+  }
+};
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case _action.INIT:
+      {
+        return Object.assign({}, action.data);
+      }
+
+    case _action.USER_JOINED:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            participant: true
+          })
+        };
+      }
+
+    case _action.USER_LEAVED:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            participant: false
+          })
+        };
+      }
+  } // end switch
+
+
+  return initialState;
+};
+
+var _default = reducer; // https://images.cf-rabota.com.ua/spa/img/skeletons/vac-list-item.svg
+
+exports.default = _default;
+},{"./action":"../src/games/store/action.js"}],"../src/games/store/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxLogger = require("redux-logger");
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _logger = new _reduxLogger.createLogger({
+  collapsed: false
+});
+
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/games/store/reducer.js"}],"../src/feed/List.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72887,6 +73446,8 @@ var _findDude = _interopRequireDefault(require("./find-dude"));
 
 var _index2 = _interopRequireDefault(require("./games/index"));
 
+var _store4 = _interopRequireDefault(require("./games/store"));
+
 var _feed = _interopRequireDefault(require("./feed"));
 
 var _socket = _interopRequireDefault(require("./socket"));
@@ -72935,14 +73496,16 @@ var App = function App() {
   }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/feed",
     component: _feed.default
-  }), _react.default.createElement(_reactRouterDom.Route, {
+  }), _react.default.createElement(_reactRedux.Provider, {
+    store: _store4.default
+  }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/g/:id",
     component: _index2.default
-  })), _react.default.createElement(_chat.default, null)));
+  }))), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./feed":"../src/feed/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./feed":"../src/feed/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -72969,7 +73532,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35411" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37170" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
