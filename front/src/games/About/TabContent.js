@@ -13,7 +13,6 @@ const system_req = data => {
             </div>
         );
     } // end for
-console.log(nodes);
 
     return nodes;
 }
@@ -93,7 +92,7 @@ const OtherContent = ({state, options}) => {
             }
             {
                 !Array.isArray(options.system_requirements.windows) ? (
-                    <div className="profile-about-content">
+                    <div className="profile-about-content w-100">
                         <div className="profile-about-row">
                             <div className="profile-about-label">
                                 {`Windows`}
@@ -109,7 +108,7 @@ const OtherContent = ({state, options}) => {
             }
             {
                 !Array.isArray(options.system_requirements.linux) ? (
-                    <div className="profile-about-content">
+                    <div className="profile-about-content w-100">
                         <div className="profile-about-row">
                             <div className="profile-about-label">
                                 {`Linux`}
@@ -125,7 +124,7 @@ const OtherContent = ({state, options}) => {
             }
             {
                 !Array.isArray(options.system_requirements.mac) ? (
-                    <div className="profile-about-content">
+                    <div className="profile-about-content w-100">
                         <div className="profile-about-row">
                             <div className="profile-about-label">
                                 {`Mac`}

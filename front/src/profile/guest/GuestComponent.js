@@ -7,6 +7,7 @@ import UserProfle from '../profile-main';
 import Menu from '../../menu/index';
 import Groups from '../groups/index';
 import FeedList from '../feed';
+import {Games} from '../games/index';
 
 import {
     fetchGamerProfile
@@ -36,6 +37,7 @@ class Guest extends Component{
         const {
             friends,
             groups,
+            games,
             totals,
             feed,
             profile
@@ -91,6 +93,16 @@ class Guest extends Component{
                                 list={groups} 
                                 total={totals.groups} 
                             />                    
+
+                        </section>
+
+                        <section className="block">
+
+                            <Games 
+                                isGuest={false}
+                                list={games} 
+                                total={totals.games} 
+                            />                      
 
                         </section>
 
