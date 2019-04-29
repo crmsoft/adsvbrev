@@ -38,6 +38,11 @@ Route::group([
     Route::get('/feed', 'ProfileController@index')->name('feed-page');
 });
 
+// Application select my games 
+//=================================================================
+Route::name('my-games')->get('/my-games', 'SelectGamesController@index')->middleware('auth');
+Route::name('my-games.search')->post('/my-games/search', 'SelectGamesController@search')->middleware('auth');
+
 // Profile Specific Routes
 //---------------------------------------------------------------------------------
 Route::group([

@@ -52,7 +52,7 @@ class ResourceProfile extends JsonResource
             'games' => new GroupCollection( $this->group()->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),
             'totals' => [
                 'friends' => $this->friend->count(),
-                'groups' => $this->group->count(),
+                'groups' => $this->group()->where('is_game', 0)->count(),
                 'games' => $this->group()->where('is_game', 1)->count()
             ]
         ];

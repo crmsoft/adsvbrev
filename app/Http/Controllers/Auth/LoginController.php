@@ -50,8 +50,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-            return response()->json([
-                'message' => __('Authentication was successful, Redirecting you to your profile!')
-            ]);
+        return response()->json([
+            'message' => __('Authentication was successful, Redirecting you to your profile!')
+        ], $user->group()->where('is_game', 1)->count() > 1 ? 200 : 201);
     }
 }

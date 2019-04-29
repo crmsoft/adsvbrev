@@ -19,6 +19,17 @@ class Game extends Group
         });
     }
 
+    public function getPlatformsAttribute()
+    {
+        $arr = collect($this->options['system_requirements']);
+        
+        return $arr->filter(function($platform){
+            return !empty($platform);
+        })->map(function($platform, $key){
+            return ucfirst($key);
+        })->implode(', ');
+    }
+
     public function genres()
     {
         return $this->belongsToMany(\App\Entities\Genre::class, 'game_genre', 'group_id', 'genre_id');
@@ -27,5 +38,10 @@ class Game extends Group
     public function developers()
     {
         return $this->belongsToMany(\App\Entities\GameDeveloper::class, 'game_developer');
+    }
+
+    public function gamers()
+    {
+        return $this->belongsToMany(\App\User::class, 'user_groups', 'group_id', 'user_id');
     }
 }
