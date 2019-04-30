@@ -59,17 +59,17 @@ class SelectGamesController extends Controller
 
         if ($platform == 'mac')
         {
-            $games->whereRaw('json_length(options->"$.system_requirements.mac") > 1');
+            $games->whereRaw('json_length(options->"$.system_requirements.mac") > 0');
         } // end if
 
         if ($platform == 'windows')
         {
-            $games->whereRaw('json_length(options->"$.system_requirements.windows") > 1');
+            $games->whereRaw('json_length(options->"$.system_requirements.windows") > 0');
         } // end if
 
         if ($platform == 'linux')
         {
-            $games->whereRaw('json_length(options->"$.system_requirements.linux") > 1');
+            $games->whereRaw('json_length(options->"$.system_requirements.linux") > 0');
         } // end if
 
         if ($order == 'a')
