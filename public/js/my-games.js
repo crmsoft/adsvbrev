@@ -13,20 +13,30 @@
 
     let selected = my_games;
 
-    // Create an instance.
-    const controller = {
-        signal: {},
-        abort: function(){}
-    };
-    const signal = controller.signal
+    
+    let controller;
+    let signal;
+    function initController()
+    {
+        // Create an instance.
+        controller = 'AbortController' in window ? (new AbortController()) : {
+            signal: {},
+            abort: function(){}
+        };
+        signal = controller.signal
+    }
+
+    initController();
 
     function search() {
+console.log(signal, requesting);
 
-        if (requesting)
+        if (requesting || signal.aborted)
         {
             controller.abort();
             requesting = false;
-            search();
+            initController();
+            return search();
         } // end if
 
         requesting = true;
