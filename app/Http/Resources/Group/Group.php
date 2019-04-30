@@ -16,14 +16,15 @@ class Group extends JsonResource
     public function toArray($request)
     {
         $user = auth()->user();
+        $d_and_p = $this->developers ? ($this->developers->implode('name', ',') . ' for ' . $this->platforms) : NULL;
 
         return $this->is_game == 1 ? [
             'id' => \Hashids::encode($this->id),
             'username' => $this->slug,
             'full_name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),
-            'd_and_p' => $this->developers->implode('name', ',') . ' for ' . $this->platforms,
-            'gamers' => $this->gamers->count(),
+            'd_and_p' => $d_and_p,
+            'gamers' => $this->gamers ? $this->gamers->count():0,
             'playing' => $this->participants()->where('user_id', $user->id)->count()
         ] : [
             'id' => \Hashids::encode($this->id),

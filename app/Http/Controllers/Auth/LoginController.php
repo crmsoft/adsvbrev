@@ -52,6 +52,6 @@ class LoginController extends Controller
     {
         return response()->json([
             'message' => __('Authentication was successful, Redirecting you to your profile!')
-        ], $user->group()->where('is_game', 1)->count() > 1 ? 200 : 201);
+        ], $user->group()->where('is_game', 1)->count() >= 1 ? 200 : 201);
     }
 }

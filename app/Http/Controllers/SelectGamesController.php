@@ -31,6 +31,18 @@ class SelectGamesController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $selected = collect(json_decode($request->get('selected', '[]')));
+        $user = auth()->user();
+
+        $user->group()->sync($selected->map(function($id) {
+            return \Hashids::decode($id)[0];
+        })->toArray());
+
+        return redirect()->route('profile-view');
+    }
+
     public function search(Request $request)
     {
         $games = Game::with(['gamers', 'developers']);

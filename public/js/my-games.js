@@ -127,6 +127,10 @@
     doc.getElementById("sort-n").addEventListener("click", sort, false);
     doc.getElementById("sort-m").addEventListener("click", sort, false);
 
+    Array.prototype.slice.call(doc.querySelectorAll('input.orange-btn')).map(function(el){
+        el.onclick = toggle;
+    });
+
     function mark() {
 
         Array.prototype.slice.call(doc.querySelectorAll('input.orange-btn.active')).map(function(el){
@@ -140,6 +144,15 @@
                 el.classList.add('active');
             } // end if
         });
+
+        if (selected.length)
+        {
+            doc.getElementById("submit").removeAttribute("disabled");
+        } else {
+            doc.getElementById("submit").setAttribute("disabled", true);
+        }// end if
+
+        doc.getElementById("selected").value = JSON.stringify(selected);
     }
 
     mark();

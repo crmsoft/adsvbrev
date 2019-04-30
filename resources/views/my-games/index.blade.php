@@ -13,6 +13,16 @@
             </div>
         </div>
     </div>
+    
+    <form method="POST" action="{{ route('my-games.store') }}" style="position:absolute; right: 25px; bottom: 25px">
+        @csrf
+        <input type="hidden" id="selected" name="selected" />
+        <button id="submit" type="submit" class="dd-btn btn-sm" {{ empty($my_games) ? 'disabled':NULL }}>
+            {{ __('Submit') }}
+            &nbsp;&nbsp;&nbsp;
+            <span class="icon-ticke"></span>
+        </button>
+    </form>
 
     <img src="img/pubg.jpg" alt="">
 </div>

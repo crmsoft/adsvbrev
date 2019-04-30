@@ -42,6 +42,7 @@ Route::group([
 //=================================================================
 Route::name('my-games')->get('/my-games', 'SelectGamesController@index')->middleware('auth');
 Route::name('my-games.search')->post('/my-games/search', 'SelectGamesController@search')->middleware('auth');
+Route::name('my-games.store')->post('/my-games/store', 'SelectGamesController@store')->middleware('auth');
 
 // Profile Specific Routes
 //---------------------------------------------------------------------------------
