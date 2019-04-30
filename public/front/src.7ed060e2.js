@@ -72798,7 +72798,7 @@ var system_req = function system_req(data) {
   for (var key in data) {
     nodes.push(_react.default.createElement("div", {
       key: key,
-      className: "row w-100"
+      className: "row"
     }, _react.default.createElement("div", {
       className: "col-4"
     }, key), _react.default.createElement("div", {
@@ -72858,7 +72858,7 @@ var OtherContent = function OtherContent(_ref) {
   }, "Release"), _react.default.createElement("div", {
     className: "profile-about-value"
   }, options.release.released ? _luxon.DateTime.fromMillis(options.release.timestamp * 1000).toLocaleString(_luxon.DateTime.DATE_SHORT) : "Coming soon"))) : null, !Array.isArray(options.system_requirements.windows) ? _react.default.createElement("div", {
-    className: "profile-about-content"
+    className: "profile-about-content w-100"
   }, _react.default.createElement("div", {
     className: "profile-about-row"
   }, _react.default.createElement("div", {
@@ -72866,7 +72866,7 @@ var OtherContent = function OtherContent(_ref) {
   }, "Windows"), _react.default.createElement("div", {
     className: "profile-about-value"
   }, system_req(options.system_requirements.windows)))) : null, !Array.isArray(options.system_requirements.linux) ? _react.default.createElement("div", {
-    className: "profile-about-content"
+    className: "profile-about-content w-100"
   }, _react.default.createElement("div", {
     className: "profile-about-row"
   }, _react.default.createElement("div", {
@@ -72874,7 +72874,7 @@ var OtherContent = function OtherContent(_ref) {
   }, "Linux"), _react.default.createElement("div", {
     className: "profile-about-value"
   }, system_req(options.system_requirements.linux)))) : null, !Array.isArray(options.system_requirements.mac) ? _react.default.createElement("div", {
-    className: "profile-about-content"
+    className: "profile-about-content w-100"
   }, _react.default.createElement("div", {
     className: "profile-about-row"
   }, _react.default.createElement("div", {
@@ -73692,7 +73692,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37170" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39301" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

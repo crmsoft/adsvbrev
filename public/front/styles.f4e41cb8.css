@@ -8206,6 +8206,154 @@ span.flatpickr-weekday {
         position: relative;
         z-index: 2; }
 
+.select-games-banner {
+  text-align: center;
+  position: relative;
+  font-family: 'Roboto',sans-serif; }
+  .select-games-banner .banner-opacity {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    background: #000;
+    opacity: 0.5; }
+  .select-games-banner .banner-header {
+    position: absolute;
+    bottom: 24%;
+    width: 100%; }
+    .select-games-banner .banner-header .banner-titles {
+      position: relative;
+      display: inline-block;
+      margin: 0px auto; }
+      .select-games-banner .banner-header .banner-titles h3 {
+        font-weight: 900;
+        font-size: 40px; }
+      .select-games-banner .banner-header .banner-titles h4 {
+        font-weight: 400;
+        font-size: 32px; }
+      .select-games-banner .banner-header .banner-titles .banner-border {
+        height: 3px; }
+        .select-games-banner .banner-header .banner-titles .banner-border hr {
+          width: 60%;
+          background-color: #ff4800;
+          height: 3px; }
+  .select-games-banner img {
+    width: 100%; }
+
+.select-game-container {
+  padding: 0px 50px; }
+
+.search-games {
+  background-color: #14191C;
+  border-top: 1px solid #354247;
+  border-bottom: 1px solid #354247;
+  padding: 1rem 0; }
+  .search-games .games-selected select {
+    cursor: pointer;
+    background-color: #354247;
+    border: 0px !important;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    height: 50px;
+    line-height: 40px;
+    background-image: linear-gradient(45deg, transparent 50%, #ff4800 50%), linear-gradient(135deg, #ff4800 50%, transparent 50%), linear-gradient(to right, #354247, #354247);
+    background-position: calc(100% - 25px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), 100% 0;
+    background-size: 10px 15px, 10px 15px, 2.5em 2.5em;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none; }
+    .search-games .games-selected select::-ms-expand {
+      display: none; }
+  .search-games .games-search {
+    bottom: 0px; }
+    .search-games .games-search .input-group .input-group-prepend span {
+      background: #354247;
+      border: 0px;
+      cursor: pointer;
+      color: #ff4800;
+      cursor: pointer; }
+    .search-games .games-search .input-group input {
+      border-left: 1px solid #989898;
+      background: #354247;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      color: #ffffff;
+      height: 50px;
+      line-height: 50px;
+      font-weight: 900;
+      font-size: 16px; }
+      .search-games .games-search .input-group input::placeholder {
+        color: #ffffff; }
+
+.select-games-content .select-games-sort {
+  padding: 2rem 0px; }
+  .select-games-content .select-games-sort small {
+    color: #484B52;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0px 1rem;
+    cursor: pointer; }
+    .select-games-content .select-games-sort small:first-child {
+      padding-right: 3rem;
+      padding-left: 0; }
+
+.select-games-content .select-games-section .col-md-4 .select-game-box {
+  float: left;
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid #354247; }
+  .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-img {
+    float: left;
+    width: 50%;
+    position: relative; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-img img {
+      width: 100%;
+      object-fit: cover;
+      max-height: 130px; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-img .triangle-right {
+      border-bottom: none;
+      right: -16px;
+      height: 19px;
+      width: 40px;
+      top: -2px; }
+  .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside {
+    float: left;
+    width: 50%;
+    padding: 0px 0 0 0.5rem;
+    position: relative; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside h3 {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ff4800;
+      float: left;
+      width: 100%; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside p {
+      font-size: 12px;
+      float: left;
+      width: 100%;
+      margin-bottom: 0.5rem; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside small {
+      font-size: 12px;
+      float: left;
+      width: 100%; }
+    .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside input[type=submit] {
+      float: left;
+      height: 25px;
+      line-height: 25px;
+      font-size: 14px;
+      background: none;
+      color: #ff4800;
+      padding: 0px 0.5rem;
+      border: 1px solid #ff4800;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      margin-top: 1rem;
+      cursor: pointer; }
+      .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside input[type=submit]:hover, .select-games-content .select-games-section .col-md-4 .select-game-box .select-game-box-inside input[type=submit].active {
+        background-color: #ff4800;
+        color: #ffffff; }
+
 .nav-tabs {
   margin: 0 -10px;
   padding: 0 10px;
@@ -8500,6 +8648,17 @@ header {
     text-overflow: unset; }
 
 /** Profile */
+.triangle-right {
+  position: absolute;
+  right: -25px;
+  height: 50px;
+  width: 49px;
+  top: -26px;
+  background-color: #000;
+  border-bottom: 1px solid #F15A24;
+  transform: rotateZ(45deg);
+  border-top-left-radius: 60px; }
+
 nav.user-profile {
   background-image: url("user-default-bg-80.edf85c92.jpg");
   background-repeat: no-repeat;
@@ -8509,16 +8668,6 @@ nav.user-profile {
   position: relative;
   margin: 25px 0;
   border: 1px solid #F15A24; }
-  nav.user-profile .triangle-right {
-    position: absolute;
-    right: -25px;
-    height: 50px;
-    width: 49px;
-    top: -26px;
-    background-color: #000;
-    border-bottom: 1px solid #F15A24;
-    transform: rotateZ(45deg);
-    border-top-left-radius: 60px; }
   nav.user-profile .profile {
     padding: 0 25px;
     position: absolute;
