@@ -65417,7 +65417,29 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Message;
-},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","../../utils":"../src/utils.js"}],"../src/chat/Dialog/MessageList.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","../../utils":"../src/utils.js"}],"../src/chat/Dialog/DateDelimiter.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DateDelimiter = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _luxon = require("luxon");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DateDelimiter = function DateDelimiter(_ref) {
+  var date = _ref.date;
+  return _react.default.createElement("div", {
+    className: "message-date-start"
+  }, _react.default.createElement("span", null, date.toLocaleString(_luxon.DateTime.DATE_MED)));
+};
+
+exports.DateDelimiter = DateDelimiter;
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/chat/Dialog/MessageList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -65428,6 +65450,10 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _Message = _interopRequireDefault(require("./Message"));
+
+var _DateDelimiter = require("./DateDelimiter");
+
+var _luxon = require("luxon");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65460,13 +65486,19 @@ var getStore = function getStore() {
   var data = {
     isChanged: true,
     currentUser: null,
-    time: 0
+    time: _luxon.DateTime.fromISO('1990-01-01')
   };
   return function (username, t) {
-    this.isChanged = this.currentUser !== username || t - this.time > 600;
+    var next_time = _luxon.DateTime.fromMillis(t * 1000);
+
+    var diff = next_time.diff(this.time, ['seconds', 'days']).toObject();
+    this.isChanged = this.currentUser !== username || diff.seconds > 600;
     this.currentUser = username;
-    this.time = t;
-    return this.isChanged;
+    this.time = next_time;
+    return {
+      user: this.isChanged,
+      day: diff.days >= 1 ? next_time : false
+    };
   }.bind(data);
 };
 
@@ -65502,12 +65534,19 @@ function (_Component) {
 
       return _react.default.createElement(_react.Fragment, null, this.props.messages.map(function (message) {
         var user = message.user;
-        return _react.default.createElement(_Message.default, {
+
+        var diff = _this2.state.localeStore(user.username, message.created_at);
+
+        var UserMessage = _react.default.createElement(_Message.default, {
           author: message.user.username === _this2.props.me,
           key: message.id,
-          showUser: _this2.state.localeStore(user.username, message.created_at),
+          showUser: diff.user,
           message: message
         });
+
+        return diff.day ? [_react.default.createElement(_DateDelimiter.DateDelimiter, {
+          date: diff.day
+        }), UserMessage] : UserMessage;
       }));
     }
   }], [{
@@ -65523,7 +65562,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = MessageList;
-},{"react":"../node_modules/react/index.js","./Message":"../src/chat/Dialog/Message.js"}],"../src/chat/Dialog/DialogHead.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Message":"../src/chat/Dialog/Message.js","./DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/chat/Dialog/DialogHead.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73692,7 +73731,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39301" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44653" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

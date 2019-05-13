@@ -10316,6 +10316,16 @@ nav.user-profile {
 .emoji-mart-skin-tone-6 {
   background-color: #594539; }
 
+.message-date-start {
+  text-align: center;
+  font-size: 11px;
+  color: gray;
+  position: relative; }
+  .message-date-start span {
+    background-color: black;
+    padding: 3px;
+    border-radius: 5px; }
+
 .chat-message {
   display: flex;
   margin-bottom: 1px; }
