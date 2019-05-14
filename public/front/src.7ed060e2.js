@@ -65545,6 +65545,7 @@ function (_Component) {
         });
 
         return diff.day ? [_react.default.createElement(_DateDelimiter.DateDelimiter, {
+          key: diff.day,
           date: diff.day
         }), UserMessage] : UserMessage;
       }));
@@ -69807,22 +69808,17 @@ function (_Component) {
           var data = _ref.data;
           return _this3.setState(function (state) {
             var parent = _this3.containerRef.current.parentNode;
-            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.message'));
-
-            for (var l = childs.length, i = 0; i < l; i++) {
-              if ((0, _utils.inViewPort)(childs[i], parent)) {
-                break;
-              }
-            } // end for
-
-
+            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message'));
             return {
-              beforePull: childs[i],
+              beforePull: childs.length,
               pullingPrev: !data.more,
               messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
           }, function () {
-            _this3.state.beforePull && _this3.state.beforePull.scrollIntoView();
+            var parent = _this3.containerRef.current.parentNode;
+            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message')).reverse();
+            console.log(_this3.state.beforePull, childs[_this3.state.beforePull]);
+            childs[_this3.state.beforePull] && childs[_this3.state.beforePull].scrollIntoView();
           });
         });
       });

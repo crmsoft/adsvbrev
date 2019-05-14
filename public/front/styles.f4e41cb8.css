@@ -9885,6 +9885,8 @@ nav.user-profile {
         min-height: 250px;
         overflow: auto;
         padding: 5px; }
+      .chat .dialog-wrapper .dialog .messages-wrapper .message-date-start:first-child {
+        margin-top: 2px; }
       .chat .dialog-wrapper .dialog .input {
         border-radius: 5px;
         margin: 0 5px;
@@ -10320,7 +10322,8 @@ nav.user-profile {
   text-align: center;
   font-size: 11px;
   color: gray;
-  position: relative; }
+  position: relative;
+  margin: 10px 0 5px; }
   .message-date-start span {
     background-color: black;
     padding: 3px;

@@ -77,18 +77,10 @@ class DialogComponent extends Component{
 
                 const parent = this.containerRef.current.parentNode;
                 const childs = Array.prototype.slice.call(
-                                    parent.querySelectorAll('div.message')
+                                    parent.querySelectorAll('div.chat-message')
                                 );
-                for(var l = childs.length, i = 0; i<l; i++)
-                {
-                    if(inViewPort(childs[i], parent))
-                    {
-                        break;
-                    }
-                } // end for
-                
                 return {
-                    beforePull: childs[i],
+                    beforePull: childs.length,
                     pullingPrev: !data.more,
                     messagesList: [
                         ...data.data.reverse(),
@@ -96,7 +88,13 @@ class DialogComponent extends Component{
                     ]
                 }
             }, () => {
-                this.state.beforePull && this.state.beforePull.scrollIntoView();
+                const parent = this.containerRef.current.parentNode;
+                const childs = Array.prototype.slice.call(
+                                    parent.querySelectorAll('div.chat-message')
+                                ).reverse();
+                console.log(this.state.beforePull, childs[this.state.beforePull]);
+                
+                childs[this.state.beforePull] && childs[this.state.beforePull].scrollIntoView();
             }))
         });
     }
