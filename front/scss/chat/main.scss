@@ -158,7 +158,11 @@
                 overflow: auto;
                 padding: 5px;
             }
-            .messages-wrapper{}
+            .messages-wrapper{
+                .message-date-start:first-child{
+                    margin-top: 2px;
+                }
+            }
             .input{
                 border-radius: 5px;
                 margin: 0 5px;

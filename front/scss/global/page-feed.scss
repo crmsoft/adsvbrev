@@ -1,0 +1,15 @@
+.page-feed{
+    .menu,.profile-aside{
+        margin-top: 15px;
+    }
+    .game-group{
+        .name{
+            width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1;
+            margin-top: 5px;
+        }
+    }
+}

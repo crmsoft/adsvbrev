@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import Friends from '../friends/index';
 import MediaTabs from '../media-tabs/index';
@@ -73,40 +74,53 @@ class Guest extends Component{
 
                     </section>
 
-                    <aside className="profile-aside">
+                    <StickyContainer className="profile-aside">
+                        <Sticky
+                            topOffset={55}
+                        >
+                            { ({style}) => {
+                                style.position && (style.top = 15);
+                                return (
+                                    <div style={style}>
 
-                        <section className="block">
+                                        <section className="block">
 
-                            <Friends 
-                                isGuest={true}
-                                user={profile.user.username} 
-                                list={friends} 
-                                total={totals.friends} 
-                            />                    
+                                            <Friends 
+                                                isGuest={true}
+                                                user={profile.user.username} 
+                                                list={friends} 
+                                                total={totals.friends} 
+                                            />                    
 
-                        </section>
+                                        </section>
 
-                        <section className="block">
+                                        <section className="block">
 
-                            <Groups 
-                                isGuest={true}
-                                list={groups} 
-                                total={totals.groups} 
-                            />                    
+                                            <Groups 
+                                                isGuest={true}
+                                                list={groups} 
+                                                total={totals.groups} 
+                                            />                    
 
-                        </section>
+                                        </section>
 
-                        <section className="block">
+                                        <section className="block">
 
-                            <Games 
-                                isGuest={false}
-                                list={games} 
-                                total={totals.games} 
-                            />                      
+                                            <Games 
+                                                isGuest={false}
+                                                list={games} 
+                                                total={totals.games} 
+                                            />                      
 
-                        </section>
+                                        </section>
 
-                    </aside>
+                                    </div>
+                                )
+                            } }
+                            
+                        </Sticky>
+
+                    </StickyContainer>
 
                 </div>
             </div>

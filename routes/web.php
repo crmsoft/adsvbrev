@@ -127,6 +127,7 @@ Route::group([
     Route::post('/game/{game}/join', 'GameController@join')->name('user-game-join');
     Route::post('/game/{game}/leave', 'GameController@leave')->name('user-game-leave');
     Route::get('/game/participants/{game}', 'GameController@listParticipants')->name('user-game-list-p');
+    Route::get('/game/list/groups', 'GameController@gameGroups')->name('list-game-groups');
 
 });
 

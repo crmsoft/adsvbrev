@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect, Provider  } from "react-redux";
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import FeedList from './feed/index';
 import Friends from './friends/index';
@@ -75,50 +76,61 @@ class ProfileComponent extends Component{
 
                     </section>
 
-                    <aside className="profile-aside">
+                    <StickyContainer className="profile-aside">
+                        <Sticky
+                            topOffset={55}
+                        >
+                            { ({style}) => {
+                                style.position && (style.top = 15);
+                                return (
+                                    <div style={style}>
+                                        <section className="block friends">
 
-                        <section className="block friends">
+                                            <Friends 
+                                                isGuest={false}
+                                                list={friends} 
+                                                total={totals.friends} 
+                                            />                    
 
-                            <Friends 
-                                isGuest={false}
-                                list={friends} 
-                                total={totals.friends} 
-                            />                    
+                                        </section>
 
-                        </section>
+                                        <section className="block">
 
-                        <section className="block">
+                                            <Groups 
+                                                isGuest={false}
+                                                list={groups} 
+                                                total={totals.groups} 
+                                            />                    
 
-                            <Groups 
-                                isGuest={false}
-                                list={groups} 
-                                total={totals.groups} 
-                            />                    
+                                        </section>
 
-                        </section>
+                                        <section className="block">
 
-                        <section className="block">
+                                            <Games 
+                                                isGuest={false}
+                                                list={games} 
+                                                total={totals.games} 
+                                            />                    
 
-                            <Games 
-                                isGuest={false}
-                                list={games} 
-                                total={totals.games} 
-                            />                    
+                                        </section>
 
-                        </section>
+                                        <section className="block">
 
-                        <section className="block">
+                                            <Provider store={scheduleStore}>
+                                                <ProfileSchedule 
+                                                    isGuest={false}
+                                                    list={groups} 
+                                                    total={totals.groups} 
+                                                />                    
+                                            </Provider>
+                                        </section>   
+                                    </div>
+                                )
+                            } }
+                            
+                        </Sticky>
 
-                            <Provider store={scheduleStore}>
-                                <ProfileSchedule 
-                                    isGuest={false}
-                                    list={groups} 
-                                    total={totals.groups} 
-                                />                    
-                            </Provider>
-                        </section>
-
-                    </aside>
+                    </StickyContainer>
 
                 </div>
             </div>

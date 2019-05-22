@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Game\ResourceGame;
 
 use App\Entities\Game;
+use App\Http\Resources\Group\GroupCollection;
 
 class GameController extends Controller
 {
@@ -29,4 +30,14 @@ class GameController extends Controller
 
         return $game->participants()->detach($user);
     } // end join
+
+    /**
+     * Fee Page right block "Game Groups"
+     * 
+     * @return Response
+     */
+    public function gameGroups()
+    {
+        return new GroupCollection(Game::inRandomOrder(4)->take(4)->get());
+    }
 }

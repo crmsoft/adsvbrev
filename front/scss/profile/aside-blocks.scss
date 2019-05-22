@@ -34,6 +34,7 @@
         background-color: $sectionBg; 
         padding: 10px;
         overflow: hidden;
+        border: 1px solid #313131;
 
         +.block{
             margin-top: $sectionTop;

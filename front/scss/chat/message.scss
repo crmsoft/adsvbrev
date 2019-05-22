@@ -1,3 +1,17 @@
+
+.message-date-start{
+    text-align: center;
+    font-size: 11px;
+    color: gray;
+    position: relative;
+    margin: 10px 0 5px;
+    span{
+        background-color: black;
+        padding: 3px;
+        border-radius: 5px;
+    }
+}
+
 .chat-message{
     display: flex;
     margin-bottom: 1px;

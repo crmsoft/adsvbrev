@@ -18,6 +18,7 @@ class Game extends JsonResource
         return [
             'id' => \Hashids::encode($this->id),
             'username' => '',
+            'participant_count' => $this->participants->count(),
             'full_name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),
         ];
