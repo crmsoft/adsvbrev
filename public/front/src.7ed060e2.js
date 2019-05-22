@@ -59212,6 +59212,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactSticky = require("react-sticky");
+
 var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -59248,29 +59250,37 @@ function (_Component) {
   _createClass(Menu, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("nav", {
+      return _react.default.createElement(_reactSticky.StickyContainer, {
         className: "menu",
         style: this.props.style
-      }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-        exact: true,
-        activeClassName: "active",
-        to: "/",
-        isActive: function isActive(match, location) {
-          return match || location.pathname === '/schedule' || location.pathname === '/settings';
-        }
-      }, _react.default.createElement("span", {
-        className: "icon-profile icon-info"
-      }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-        activeClassName: "active",
-        to: "/feed"
-      }, _react.default.createElement("span", {
-        className: "icon-profile icon-schedule"
-      }), " ", " feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-        activeClassName: "active",
-        to: "/dudes"
-      }, _react.default.createElement("span", {
-        className: "icon-profile"
-      }), " ", " Find Dudes"))));
+      }, _react.default.createElement(_reactSticky.Sticky, {
+        topOffset: 55
+      }, function (_ref) {
+        var style = _ref.style;
+        style.position && (style.top = 15);
+        return _react.default.createElement("ul", {
+          style: style
+        }, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          exact: true,
+          activeClassName: "active",
+          to: "/",
+          isActive: function isActive(match, location) {
+            return match || location.pathname === '/schedule' || location.pathname === '/settings';
+          }
+        }, _react.default.createElement("span", {
+          className: "icon-profile icon-info"
+        }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          activeClassName: "active",
+          to: "/feed"
+        }, _react.default.createElement("span", {
+          className: "icon-profile icon-schedule"
+        }), " ", " feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          activeClassName: "active",
+          to: "/dudes"
+        }, _react.default.createElement("span", {
+          className: "icon-profile"
+        }), " ", " Find Dudes")));
+      }));
     }
   }]);
 
@@ -59278,7 +59288,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Menu;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -63401,20 +63411,21 @@ function (_Component) {
       })), _react.default.createElement(_reactSticky.StickyContainer, {
         className: "profile-aside"
       }, _react.default.createElement(_reactSticky.Sticky, {
-        topOffset: 55
+        disableHardwareAcceleration: true,
+        topOffset: 350
       }, function (_ref) {
-        var style = _ref.style;
-        style.position && (style.top = 15);
+        var style = _ref.style,
+            isSticky = _ref.isSticky;
         return _react.default.createElement("div", {
           style: style
         }, _react.default.createElement("section", {
-          className: "block friends"
+          className: isSticky ? "block friends d-none" : "block friends"
         }, _react.default.createElement(_index2.default, {
           isGuest: false,
           list: friends,
           total: totals.friends
         })), _react.default.createElement("section", {
-          className: "block"
+          className: isSticky ? "block friends d-none" : "block friends"
         }, _react.default.createElement(_index3.default, {
           isGuest: false,
           list: groups,
@@ -63570,6 +63581,7 @@ function (_Component) {
       }))), _react.default.createElement(_reactSticky.StickyContainer, {
         className: "profile-aside"
       }, _react.default.createElement(_reactSticky.Sticky, {
+        disableHardwareAcceleration: true,
         topOffset: 55
       }, function (_ref) {
         var style = _ref.style;
