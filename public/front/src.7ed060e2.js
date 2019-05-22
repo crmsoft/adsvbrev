@@ -63585,9 +63585,13 @@ function (_Component) {
         topOffset: 55
       }, function (_ref) {
         var style = _ref.style;
-        style.position && (style.top = 15);
+
+        var _style = style.position ? Object.assign({}, style, {
+          top: 15
+        }) : style;
+
         return _react.default.createElement("div", {
-          style: style
+          style: _style
         }, _react.default.createElement("section", {
           className: "block"
         }, _react.default.createElement(_index.default, {
