@@ -9319,6 +9319,9 @@ nav.user-profile {
     .post .post-header .post-main-info {
       flex: 1;
       padding-top: 5px; }
+      .post .post-header .post-main-info a {
+        text-decoration: none;
+        color: inherit; }
       .post .post-header .post-main-info .post-user {
         font-size: 19px;
         margin-bottom: 3px; }
