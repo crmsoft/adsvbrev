@@ -100,7 +100,7 @@ class NotificationResource extends JsonResource
             'message' => $message,
             'time' => $this->created_at->diffForHumans(null, true, true),
             'user' => new User($user),
-            'viewed' => $this->viewed,
+            'viewed' => (bool) $this->viewed,
             'type' => $type
         ];
     }
