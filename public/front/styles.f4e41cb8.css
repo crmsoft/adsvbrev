@@ -8646,8 +8646,14 @@ header {
           display: block; }
       .followers-popup .popup-content .followers-list li .actions, .followers-popup .popup-content .notification-list li .actions {
         padding-top: 11px !important; }
-  .followers-popup .popup-content .notification-list .notification-time {
-    color: #F15A24; }
+  .followers-popup .popup-content .notification-list .unread {
+    background-color: #432216; }
+  .followers-popup .popup-content .notification-list .notification-info {
+    padding: 12px 10px 0 15px; }
+    .followers-popup .popup-content .notification-list .notification-info > div {
+      line-height: 0.5; }
+    .followers-popup .popup-content .notification-list .notification-info .notification-time {
+      font-size: 11px; }
   .followers-popup .popup-content .notification-list .user {
     border-bottom: 1px solid #2F3136; }
   .followers-popup .popup-content .notification-list li .user-list-user {

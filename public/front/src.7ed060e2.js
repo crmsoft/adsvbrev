@@ -3345,7 +3345,7 @@ if ("development" === 'production') {
   module.exports = require('./cjs/scheduler-tracing.development.js');
 }
 },{"./cjs/scheduler-tracing.development.js":"../node_modules/scheduler/cjs/scheduler-tracing.development.js"}],"../node_modules/react-dom/cjs/react-dom.development.js":[function(require,module,exports) {
-/** @license React v16.8.2
+/** @license React v16.8.6
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -8909,16 +8909,29 @@ if ("development" !== "production") {
       return node && node.ownerDocument && containsNode(node.ownerDocument.documentElement, node);
     }
 
+    function isSameOriginFrame(iframe) {
+      try {
+        // Accessing the contentDocument of a HTMLIframeElement can cause the browser
+        // to throw, e.g. if it has a cross-origin src attribute.
+        // Safari will show an error in the console when the access results in "Blocked a frame with origin". e.g:
+        // iframe.contentDocument.defaultView;
+        // A safety way is to access one of the cross origin properties: Window or Location
+        // Which might result in "SecurityError" DOM Exception and it is compatible to Safari.
+        // https://html.spec.whatwg.org/multipage/browsers.html#integration-with-idl
+        return typeof iframe.contentWindow.location.href === 'string';
+      } catch (err) {
+        return false;
+      }
+    }
+
     function getActiveElementDeep() {
       var win = window;
       var element = getActiveElement();
 
       while (element instanceof win.HTMLIFrameElement) {
-        // Accessing the contentDocument of a HTMLIframeElement can cause the browser
-        // to throw, e.g. if it has a cross-origin src attribute
-        try {
-          win = element.contentDocument.defaultView;
-        } catch (e) {
+        if (isSameOriginFrame(element)) {
+          win = element.contentWindow;
+        } else {
           return element;
         }
 
@@ -11281,15 +11294,27 @@ if ("development" !== "production") {
           // Separate else branch instead of using `props.is || undefined` above because of a Firefox bug.
           // See discussion in https://github.com/facebook/react/pull/6896
           // and discussion in https://bugzilla.mozilla.org/show_bug.cgi?id=1276240
-          domElement = ownerDocument.createElement(type); // Normally attributes are assigned in `setInitialDOMProperties`, however the `multiple`
-          // attribute on `select`s needs to be added before `option`s are inserted. This prevents
-          // a bug where the `select` does not scroll to the correct option because singular
-          // `select` elements automatically pick the first item.
+          domElement = ownerDocument.createElement(type); // Normally attributes are assigned in `setInitialDOMProperties`, however the `multiple` and `size`
+          // attributes on `select`s needs to be added before `option`s are inserted.
+          // This prevents:
+          // - a bug where the `select` does not scroll to the correct option because singular
+          //  `select` elements automatically pick the first item #13222
+          // - a bug where the `select` set the first item as selected despite the `size` attribute #14239
           // See https://github.com/facebook/react/issues/13222
+          // and https://github.com/facebook/react/issues/14239
 
-          if (type === 'select' && props.multiple) {
+          if (type === 'select') {
             var node = domElement;
-            node.multiple = true;
+
+            if (props.multiple) {
+              node.multiple = true;
+            } else if (props.size) {
+              // Setting a size greater than 1 causes a select to behave like `multiple=true`, where
+              // it is possible that no option is selected.
+              //
+              // This is only necessary when a select in "single selection mode".
+              node.size = props.size;
+            }
           }
         }
       } else {
@@ -13770,6 +13795,7 @@ if ("development" !== "production") {
         this._debugSource = null;
         this._debugOwner = null;
         this._debugIsCurrentlyTiming = false;
+        this._debugHookTypes = null;
 
         if (!hasBadMapPolyfill && typeof Object.preventExtensions === 'function') {
           Object.preventExtensions(this);
@@ -13841,6 +13867,7 @@ if ("development" !== "production") {
           workInProgress._debugID = current._debugID;
           workInProgress._debugSource = current._debugSource;
           workInProgress._debugOwner = current._debugOwner;
+          workInProgress._debugHookTypes = current._debugHookTypes;
         }
         workInProgress.alternate = current;
         current.alternate = workInProgress;
@@ -14110,6 +14137,7 @@ if ("development" !== "production") {
       target._debugSource = source._debugSource;
       target._debugOwner = source._debugOwner;
       target._debugIsCurrentlyTiming = source._debugIsCurrentlyTiming;
+      target._debugHookTypes = source._debugHookTypes;
       return target;
     } // TODO: This should be lifted into the renderer.
     // The following attributes are only used by interaction tracing builds.
@@ -15060,14 +15088,34 @@ if ("development" !== "production") {
       var unmaskedContext = emptyContextObject;
       var context = null;
       var contextType = ctor.contextType;
+      {
+        if ('contextType' in ctor) {
+          var isValid = // Allow null for conditional declaration
+          contextType === null || contextType !== undefined && contextType.$$typeof === REACT_CONTEXT_TYPE && contextType._context === undefined; // Not a <Context.Consumer>
 
-      if (typeof contextType === 'object' && contextType !== null) {
-        {
-          if (contextType.$$typeof !== REACT_CONTEXT_TYPE && !didWarnAboutInvalidateContextType.has(ctor)) {
+          if (!isValid && !didWarnAboutInvalidateContextType.has(ctor)) {
             didWarnAboutInvalidateContextType.add(ctor);
-            warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext(). ' + 'Did you accidentally pass the Context.Provider instead?', getComponentName(ctor) || 'Component');
+            var addendum = '';
+
+            if (contextType === undefined) {
+              addendum = ' However, it is set to undefined. ' + 'This can be caused by a typo or by mixing up named and default imports. ' + 'This can also happen due to a circular dependency, so ' + 'try moving the createContext() call to a separate file.';
+            } else if (typeof contextType !== 'object') {
+              addendum = ' However, it is set to a ' + typeof contextType + '.';
+            } else if (contextType.$$typeof === REACT_PROVIDER_TYPE) {
+              addendum = ' Did you accidentally pass the Context.Provider instead?';
+            } else if (contextType._context !== undefined) {
+              // <Context.Consumer>
+              addendum = ' Did you accidentally pass the Context.Consumer instead?';
+            } else {
+              addendum = ' However, it is set to an object with keys {' + Object.keys(contextType).join(', ') + '}.';
+            }
+
+            warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext().%s', getComponentName(ctor) || 'Component', addendum);
           }
         }
+      }
+
+      if (typeof contextType === 'object' && contextType !== null) {
         context = readContext(contextType);
       } else {
         unmaskedContext = getUnmaskedContext(workInProgress, ctor, true);
@@ -16590,7 +16638,6 @@ if ("development" !== "production") {
     // work-in-progress hook list is a new list that will be added to the
     // work-in-progress fiber.
 
-    var firstCurrentHook = null;
     var currentHook = null;
     var nextCurrentHook = null;
     var firstWorkInProgressHook = null;
@@ -16614,44 +16661,72 @@ if ("development" !== "production") {
     var numberOfReRenders = 0;
     var RE_RENDER_LIMIT = 25; // In DEV, this is the name of the currently executing primitive hook
 
-    var currentHookNameInDev = null;
+    var currentHookNameInDev = null; // In DEV, this list ensures that hooks are called in the same order between renders.
+    // The list stores the order of hooks used during the initial render (mount).
+    // Subsequent renders (updates) reference this list.
 
-    function warnOnHookMismatchInDev() {
+    var hookTypesDev = null;
+    var hookTypesUpdateIndexDev = -1;
+
+    function mountHookTypesDev() {
+      {
+        var hookName = currentHookNameInDev;
+
+        if (hookTypesDev === null) {
+          hookTypesDev = [hookName];
+        } else {
+          hookTypesDev.push(hookName);
+        }
+      }
+    }
+
+    function updateHookTypesDev() {
+      {
+        var hookName = currentHookNameInDev;
+
+        if (hookTypesDev !== null) {
+          hookTypesUpdateIndexDev++;
+
+          if (hookTypesDev[hookTypesUpdateIndexDev] !== hookName) {
+            warnOnHookMismatchInDev(hookName);
+          }
+        }
+      }
+    }
+
+    function warnOnHookMismatchInDev(currentHookName) {
       {
         var componentName = getComponentName(currentlyRenderingFiber$1.type);
 
         if (!didWarnAboutMismatchedHooksForComponent.has(componentName)) {
           didWarnAboutMismatchedHooksForComponent.add(componentName);
-          var secondColumnStart = 22;
-          var table = '';
-          var prevHook = firstCurrentHook;
-          var nextHook = firstWorkInProgressHook;
-          var n = 1;
 
-          while (prevHook !== null && nextHook !== null) {
-            var oldHookName = prevHook._debugType;
-            var newHookName = nextHook._debugType;
-            var row = n + '. ' + oldHookName; // Extra space so second column lines up
-            // lol @ IE not supporting String#repeat
+          if (hookTypesDev !== null) {
+            var table = '';
+            var secondColumnStart = 30;
 
-            while (row.length < secondColumnStart) {
-              row += ' ';
+            for (var i = 0; i <= hookTypesUpdateIndexDev; i++) {
+              var oldHookName = hookTypesDev[i];
+              var newHookName = i === hookTypesUpdateIndexDev ? currentHookName : oldHookName;
+              var row = i + 1 + '. ' + oldHookName; // Extra space so second column lines up
+              // lol @ IE not supporting String#repeat
+
+              while (row.length < secondColumnStart) {
+                row += ' ';
+              }
+
+              row += newHookName + '\n';
+              table += row;
             }
 
-            row += newHookName + '\n';
-            table += row;
-            prevHook = prevHook.next;
-            nextHook = nextHook.next;
-            n++;
+            warning$1(false, 'React has detected a change in the order of Hooks called by %s. ' + 'This will lead to bugs and errors if not fixed. ' + 'For more information, read the Rules of Hooks: https://fb.me/rules-of-hooks\n\n' + '   Previous render            Next render\n' + '   ------------------------------------------------------\n' + '%s' + '   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n', componentName, table);
           }
-
-          warning$1(false, 'React has detected a change in the order of Hooks called by %s. ' + 'This will lead to bugs and errors if not fixed. ' + 'For more information, read the Rules of Hooks: https://fb.me/rules-of-hooks\n\n' + '   Previous render    Next render\n' + '   -------------------------------\n' + '%s' + '   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n', componentName, table);
         }
       }
     }
 
     function throwInvalidHookError() {
-      invariant(false, 'Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)');
+      invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.');
     }
 
     function areHookInputsEqual(nextDeps, prevDeps) {
@@ -16684,7 +16759,11 @@ if ("development" !== "production") {
     function renderWithHooks(current, workInProgress, Component, props, refOrContext, nextRenderExpirationTime) {
       renderExpirationTime = nextRenderExpirationTime;
       currentlyRenderingFiber$1 = workInProgress;
-      firstCurrentHook = nextCurrentHook = current !== null ? current.memoizedState : null; // The following should have already been reset
+      nextCurrentHook = current !== null ? current.memoizedState : null;
+      {
+        hookTypesDev = current !== null ? current._debugHookTypes : null;
+        hookTypesUpdateIndexDev = -1;
+      } // The following should have already been reset
       // currentHook = null;
       // workInProgressHook = null;
       // remainingExpirationTime = NoWork;
@@ -16693,9 +16772,26 @@ if ("development" !== "production") {
       // renderPhaseUpdates = null;
       // numberOfReRenders = 0;
       // sideEffectTag = 0;
+      // TODO Warn if no hooks are used at all during mount, then some are used during update.
+      // Currently we will identify the update render as a mount because nextCurrentHook === null.
+      // This is tricky because it's valid for certain types of components (e.g. React.lazy)
+      // Using nextCurrentHook to differentiate between mount/update only works if at least one stateful hook is used.
+      // Non-stateful hooks (e.g. context) don't get added to memoizedState,
+      // so nextCurrentHook would be null during updates and mounts.
 
       {
-        ReactCurrentDispatcher$1.current = nextCurrentHook === null ? HooksDispatcherOnMountInDEV : HooksDispatcherOnUpdateInDEV;
+        if (nextCurrentHook !== null) {
+          ReactCurrentDispatcher$1.current = HooksDispatcherOnUpdateInDEV;
+        } else if (hookTypesDev !== null) {
+          // This dispatcher handles an edge case where a component is updating,
+          // but no stateful hooks have been used.
+          // We want to match the production code behavior (which will use HooksDispatcherOnMount),
+          // but with the extra DEV validation to ensure hooks ordering hasn't changed.
+          // This dispatcher does that.
+          ReactCurrentDispatcher$1.current = HooksDispatcherOnMountWithHookTypesInDEV;
+        } else {
+          ReactCurrentDispatcher$1.current = HooksDispatcherOnMountInDEV;
+        }
       }
       var children = Component(props, refOrContext);
 
@@ -16704,23 +16800,24 @@ if ("development" !== "production") {
           didScheduleRenderPhaseUpdate = false;
           numberOfReRenders += 1; // Start over from the beginning of the list
 
-          firstCurrentHook = nextCurrentHook = current !== null ? current.memoizedState : null;
+          nextCurrentHook = current !== null ? current.memoizedState : null;
           nextWorkInProgressHook = firstWorkInProgressHook;
           currentHook = null;
           workInProgressHook = null;
           componentUpdateQueue = null;
+          {
+            // Also validate hook order for cascading updates.
+            hookTypesUpdateIndexDev = -1;
+          }
           ReactCurrentDispatcher$1.current = HooksDispatcherOnUpdateInDEV;
           children = Component(props, refOrContext);
         } while (didScheduleRenderPhaseUpdate);
 
         renderPhaseUpdates = null;
         numberOfReRenders = 0;
-      }
-
-      {
-        currentHookNameInDev = null;
       } // We can assume the previous dispatcher is always this one, since we set it
       // at the beginning of the render phase and there's no re-entrancy.
+
 
       ReactCurrentDispatcher$1.current = ContextOnlyDispatcher;
       var renderedWork = currentlyRenderingFiber$1;
@@ -16728,15 +16825,24 @@ if ("development" !== "production") {
       renderedWork.expirationTime = remainingExpirationTime;
       renderedWork.updateQueue = componentUpdateQueue;
       renderedWork.effectTag |= sideEffectTag;
+      {
+        renderedWork._debugHookTypes = hookTypesDev;
+      } // This check uses currentHook so that it works the same in DEV and prod bundles.
+      // hookTypesDev could catch more cases (e.g. context) but only in DEV bundles.
+
       var didRenderTooFewHooks = currentHook !== null && currentHook.next !== null;
       renderExpirationTime = NoWork;
       currentlyRenderingFiber$1 = null;
-      firstCurrentHook = null;
       currentHook = null;
       nextCurrentHook = null;
       firstWorkInProgressHook = null;
       workInProgressHook = null;
       nextWorkInProgressHook = null;
+      {
+        currentHookNameInDev = null;
+        hookTypesDev = null;
+        hookTypesUpdateIndexDev = -1;
+      }
       remainingExpirationTime = NoWork;
       componentUpdateQueue = null;
       sideEffectTag = 0; // These were reset above
@@ -16766,18 +16872,19 @@ if ("development" !== "production") {
 
       renderExpirationTime = NoWork;
       currentlyRenderingFiber$1 = null;
-      firstCurrentHook = null;
       currentHook = null;
       nextCurrentHook = null;
       firstWorkInProgressHook = null;
       workInProgressHook = null;
       nextWorkInProgressHook = null;
+      {
+        hookTypesDev = null;
+        hookTypesUpdateIndexDev = -1;
+        currentHookNameInDev = null;
+      }
       remainingExpirationTime = NoWork;
       componentUpdateQueue = null;
       sideEffectTag = 0;
-      {
-        currentHookNameInDev = null;
-      }
       didScheduleRenderPhaseUpdate = false;
       renderPhaseUpdates = null;
       numberOfReRenders = 0;
@@ -16791,9 +16898,6 @@ if ("development" !== "production") {
         baseUpdate: null,
         next: null
       };
-      {
-        hook._debugType = currentHookNameInDev;
-      }
 
       if (workInProgressHook === null) {
         // This is the first hook in the list
@@ -16839,13 +16943,6 @@ if ("development" !== "production") {
         }
 
         nextCurrentHook = currentHook.next;
-        {
-          newHook._debugType = currentHookNameInDev;
-
-          if (currentHookNameInDev !== currentHook._debugType) {
-            warnOnHookMismatchInDev();
-          }
-        }
       }
 
       return workInProgressHook;
@@ -16859,20 +16956,6 @@ if ("development" !== "production") {
 
     function basicStateReducer(state, action) {
       return typeof action === 'function' ? action(state) : action;
-    }
-
-    function mountContext(context, observedBits) {
-      {
-        mountWorkInProgressHook();
-      }
-      return readContext(context, observedBits);
-    }
-
-    function updateContext(context, observedBits) {
-      {
-        updateWorkInProgressHook();
-      }
-      return readContext(context, observedBits);
     }
 
     function mountReducer(reducer, initialArg, init) {
@@ -16889,8 +16972,8 @@ if ("development" !== "production") {
       var queue = hook.queue = {
         last: null,
         dispatch: null,
-        eagerReducer: reducer,
-        eagerState: initialState
+        lastRenderedReducer: reducer,
+        lastRenderedState: initialState
       };
       var dispatch = queue.dispatch = dispatchAction.bind(null, // Flow doesn't know this is non-null, but we do.
       currentlyRenderingFiber$1, queue);
@@ -16901,6 +16984,7 @@ if ("development" !== "production") {
       var hook = updateWorkInProgressHook();
       var queue = hook.queue;
       !(queue !== null) ? invariant(false, 'Should have a queue. This is likely a bug in React. Please file an issue.') : void 0;
+      queue.lastRenderedReducer = reducer;
 
       if (numberOfReRenders > 0) {
         // This is a re-render. Apply the new render phase updates to the previous
@@ -16939,6 +17023,7 @@ if ("development" !== "production") {
               hook.baseState = newState;
             }
 
+            queue.lastRenderedState = newState;
             return [newState, _dispatch];
           }
         }
@@ -17022,8 +17107,7 @@ if ("development" !== "production") {
         hook.memoizedState = _newState;
         hook.baseUpdate = newBaseUpdate;
         hook.baseState = newBaseState;
-        queue.eagerReducer = reducer;
-        queue.eagerState = _newState;
+        queue.lastRenderedState = _newState;
       }
 
       var dispatch = queue.dispatch;
@@ -17041,8 +17125,8 @@ if ("development" !== "production") {
       var queue = hook.queue = {
         last: null,
         dispatch: null,
-        eagerReducer: basicStateReducer,
-        eagerState: initialState
+        lastRenderedReducer: basicStateReducer,
+        lastRenderedState: initialState
       };
       var dispatch = queue.dispatch = dispatchAction.bind(null, // Flow doesn't know this is non-null, but we do.
       currentlyRenderingFiber$1, queue);
@@ -17336,9 +17420,9 @@ if ("development" !== "production") {
           // The queue is currently empty, which means we can eagerly compute the
           // next state before entering the render phase. If the new state is the
           // same as the current state, we may be able to bail out entirely.
-          var _eagerReducer = queue.eagerReducer;
+          var _lastRenderedReducer = queue.lastRenderedReducer;
 
-          if (_eagerReducer !== null) {
+          if (_lastRenderedReducer !== null) {
             var prevDispatcher = void 0;
             {
               prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -17346,15 +17430,15 @@ if ("development" !== "production") {
             }
 
             try {
-              var currentState = queue.eagerState;
+              var currentState = queue.lastRenderedState;
 
-              var _eagerState = _eagerReducer(currentState, action); // Stash the eagerly computed state, and the reducer used to compute
+              var _eagerState = _lastRenderedReducer(currentState, action); // Stash the eagerly computed state, and the reducer used to compute
               // it, on the update object. If the reducer hasn't changed by the
               // time we enter the render phase, then the eager state can be used
               // without calling the reducer again.
 
 
-              _update2.eagerReducer = _eagerReducer;
+              _update2.eagerReducer = _lastRenderedReducer;
               _update2.eagerState = _eagerState;
 
               if (is(_eagerState, currentState)) {
@@ -17396,6 +17480,7 @@ if ("development" !== "production") {
       useDebugValue: throwInvalidHookError
     };
     var HooksDispatcherOnMountInDEV = null;
+    var HooksDispatcherOnMountWithHookTypesInDEV = null;
     var HooksDispatcherOnUpdateInDEV = null;
     var InvalidNestedHooksDispatcherOnMountInDEV = null;
     var InvalidNestedHooksDispatcherOnUpdateInDEV = null;
@@ -17414,26 +17499,32 @@ if ("development" !== "production") {
         },
         useCallback: function (callback, deps) {
           currentHookNameInDev = 'useCallback';
+          mountHookTypesDev();
           return mountCallback(callback, deps);
         },
         useContext: function (context, observedBits) {
           currentHookNameInDev = 'useContext';
-          return mountContext(context, observedBits);
+          mountHookTypesDev();
+          return readContext(context, observedBits);
         },
         useEffect: function (create, deps) {
           currentHookNameInDev = 'useEffect';
+          mountHookTypesDev();
           return mountEffect(create, deps);
         },
         useImperativeHandle: function (ref, create, deps) {
           currentHookNameInDev = 'useImperativeHandle';
+          mountHookTypesDev();
           return mountImperativeHandle(ref, create, deps);
         },
         useLayoutEffect: function (create, deps) {
           currentHookNameInDev = 'useLayoutEffect';
+          mountHookTypesDev();
           return mountLayoutEffect(create, deps);
         },
         useMemo: function (create, deps) {
           currentHookNameInDev = 'useMemo';
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17445,6 +17536,7 @@ if ("development" !== "production") {
         },
         useReducer: function (reducer, initialArg, init) {
           currentHookNameInDev = 'useReducer';
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17456,10 +17548,12 @@ if ("development" !== "production") {
         },
         useRef: function (initialValue) {
           currentHookNameInDev = 'useRef';
+          mountHookTypesDev();
           return mountRef(initialValue);
         },
         useState: function (initialState) {
           currentHookNameInDev = 'useState';
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17471,6 +17565,83 @@ if ("development" !== "production") {
         },
         useDebugValue: function (value, formatterFn) {
           currentHookNameInDev = 'useDebugValue';
+          mountHookTypesDev();
+          return mountDebugValue(value, formatterFn);
+        }
+      };
+      HooksDispatcherOnMountWithHookTypesInDEV = {
+        readContext: function (context, observedBits) {
+          return readContext(context, observedBits);
+        },
+        useCallback: function (callback, deps) {
+          currentHookNameInDev = 'useCallback';
+          updateHookTypesDev();
+          return mountCallback(callback, deps);
+        },
+        useContext: function (context, observedBits) {
+          currentHookNameInDev = 'useContext';
+          updateHookTypesDev();
+          return readContext(context, observedBits);
+        },
+        useEffect: function (create, deps) {
+          currentHookNameInDev = 'useEffect';
+          updateHookTypesDev();
+          return mountEffect(create, deps);
+        },
+        useImperativeHandle: function (ref, create, deps) {
+          currentHookNameInDev = 'useImperativeHandle';
+          updateHookTypesDev();
+          return mountImperativeHandle(ref, create, deps);
+        },
+        useLayoutEffect: function (create, deps) {
+          currentHookNameInDev = 'useLayoutEffect';
+          updateHookTypesDev();
+          return mountLayoutEffect(create, deps);
+        },
+        useMemo: function (create, deps) {
+          currentHookNameInDev = 'useMemo';
+          updateHookTypesDev();
+          var prevDispatcher = ReactCurrentDispatcher$1.current;
+          ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
+
+          try {
+            return mountMemo(create, deps);
+          } finally {
+            ReactCurrentDispatcher$1.current = prevDispatcher;
+          }
+        },
+        useReducer: function (reducer, initialArg, init) {
+          currentHookNameInDev = 'useReducer';
+          updateHookTypesDev();
+          var prevDispatcher = ReactCurrentDispatcher$1.current;
+          ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
+
+          try {
+            return mountReducer(reducer, initialArg, init);
+          } finally {
+            ReactCurrentDispatcher$1.current = prevDispatcher;
+          }
+        },
+        useRef: function (initialValue) {
+          currentHookNameInDev = 'useRef';
+          updateHookTypesDev();
+          return mountRef(initialValue);
+        },
+        useState: function (initialState) {
+          currentHookNameInDev = 'useState';
+          updateHookTypesDev();
+          var prevDispatcher = ReactCurrentDispatcher$1.current;
+          ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
+
+          try {
+            return mountState(initialState);
+          } finally {
+            ReactCurrentDispatcher$1.current = prevDispatcher;
+          }
+        },
+        useDebugValue: function (value, formatterFn) {
+          currentHookNameInDev = 'useDebugValue';
+          updateHookTypesDev();
           return mountDebugValue(value, formatterFn);
         }
       };
@@ -17480,26 +17651,32 @@ if ("development" !== "production") {
         },
         useCallback: function (callback, deps) {
           currentHookNameInDev = 'useCallback';
+          updateHookTypesDev();
           return updateCallback(callback, deps);
         },
         useContext: function (context, observedBits) {
           currentHookNameInDev = 'useContext';
-          return updateContext(context, observedBits);
+          updateHookTypesDev();
+          return readContext(context, observedBits);
         },
         useEffect: function (create, deps) {
           currentHookNameInDev = 'useEffect';
+          updateHookTypesDev();
           return updateEffect(create, deps);
         },
         useImperativeHandle: function (ref, create, deps) {
           currentHookNameInDev = 'useImperativeHandle';
+          updateHookTypesDev();
           return updateImperativeHandle(ref, create, deps);
         },
         useLayoutEffect: function (create, deps) {
           currentHookNameInDev = 'useLayoutEffect';
+          updateHookTypesDev();
           return updateLayoutEffect(create, deps);
         },
         useMemo: function (create, deps) {
           currentHookNameInDev = 'useMemo';
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17511,6 +17688,7 @@ if ("development" !== "production") {
         },
         useReducer: function (reducer, initialArg, init) {
           currentHookNameInDev = 'useReducer';
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17522,10 +17700,12 @@ if ("development" !== "production") {
         },
         useRef: function (initialValue) {
           currentHookNameInDev = 'useRef';
+          updateHookTypesDev();
           return updateRef(initialValue);
         },
         useState: function (initialState) {
           currentHookNameInDev = 'useState';
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17537,6 +17717,7 @@ if ("development" !== "production") {
         },
         useDebugValue: function (value, formatterFn) {
           currentHookNameInDev = 'useDebugValue';
+          updateHookTypesDev();
           return updateDebugValue(value, formatterFn);
         }
       };
@@ -17548,31 +17729,37 @@ if ("development" !== "production") {
         useCallback: function (callback, deps) {
           currentHookNameInDev = 'useCallback';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountCallback(callback, deps);
         },
         useContext: function (context, observedBits) {
           currentHookNameInDev = 'useContext';
           warnInvalidHookAccess();
-          return mountContext(context, observedBits);
+          mountHookTypesDev();
+          return readContext(context, observedBits);
         },
         useEffect: function (create, deps) {
           currentHookNameInDev = 'useEffect';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountEffect(create, deps);
         },
         useImperativeHandle: function (ref, create, deps) {
           currentHookNameInDev = 'useImperativeHandle';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountImperativeHandle(ref, create, deps);
         },
         useLayoutEffect: function (create, deps) {
           currentHookNameInDev = 'useLayoutEffect';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountLayoutEffect(create, deps);
         },
         useMemo: function (create, deps) {
           currentHookNameInDev = 'useMemo';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17585,6 +17772,7 @@ if ("development" !== "production") {
         useReducer: function (reducer, initialArg, init) {
           currentHookNameInDev = 'useReducer';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17597,11 +17785,13 @@ if ("development" !== "production") {
         useRef: function (initialValue) {
           currentHookNameInDev = 'useRef';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountRef(initialValue);
         },
         useState: function (initialState) {
           currentHookNameInDev = 'useState';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
 
@@ -17614,6 +17804,7 @@ if ("development" !== "production") {
         useDebugValue: function (value, formatterFn) {
           currentHookNameInDev = 'useDebugValue';
           warnInvalidHookAccess();
+          mountHookTypesDev();
           return mountDebugValue(value, formatterFn);
         }
       };
@@ -17625,31 +17816,37 @@ if ("development" !== "production") {
         useCallback: function (callback, deps) {
           currentHookNameInDev = 'useCallback';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateCallback(callback, deps);
         },
         useContext: function (context, observedBits) {
           currentHookNameInDev = 'useContext';
           warnInvalidHookAccess();
-          return updateContext(context, observedBits);
+          updateHookTypesDev();
+          return readContext(context, observedBits);
         },
         useEffect: function (create, deps) {
           currentHookNameInDev = 'useEffect';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateEffect(create, deps);
         },
         useImperativeHandle: function (ref, create, deps) {
           currentHookNameInDev = 'useImperativeHandle';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateImperativeHandle(ref, create, deps);
         },
         useLayoutEffect: function (create, deps) {
           currentHookNameInDev = 'useLayoutEffect';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateLayoutEffect(create, deps);
         },
         useMemo: function (create, deps) {
           currentHookNameInDev = 'useMemo';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17662,6 +17859,7 @@ if ("development" !== "production") {
         useReducer: function (reducer, initialArg, init) {
           currentHookNameInDev = 'useReducer';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17674,11 +17872,13 @@ if ("development" !== "production") {
         useRef: function (initialValue) {
           currentHookNameInDev = 'useRef';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateRef(initialValue);
         },
         useState: function (initialState) {
           currentHookNameInDev = 'useState';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           var prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
 
@@ -17691,6 +17891,7 @@ if ("development" !== "production") {
         useDebugValue: function (value, formatterFn) {
           currentHookNameInDev = 'useDebugValue';
           warnInvalidHookAccess();
+          updateHookTypesDev();
           return updateDebugValue(value, formatterFn);
         }
       };
@@ -21206,12 +21407,12 @@ if ("development" !== "production") {
                 if (_destroy === null) {
                   addendum = ' You returned null. If your effect does not require clean ' + 'up, return undefined (or nothing).';
                 } else if (typeof _destroy.then === 'function') {
-                  addendum = '\n\nIt looks like you wrote useEffect(async () => ...) or returned a Promise. ' + 'Instead, you may write an async function separately ' + 'and then call it from inside the effect:\n\n' + 'async function fetchComment(commentId) {\n' + '  // You can await here\n' + '}\n\n' + 'useEffect(() => {\n' + '  fetchComment(commentId);\n' + '}, [commentId]);\n\n' + 'In the future, React will provide a more idiomatic solution for data fetching ' + "that doesn't involve writing effects manually.";
+                  addendum = '\n\nIt looks like you wrote useEffect(async () => ...) or returned a Promise. ' + 'Instead, write the async function inside your effect ' + 'and call it immediately:\n\n' + 'useEffect(() => {\n' + '  async function fetchData() {\n' + '    // You can await here\n' + '    const response = await MyAPI.getData(someId);\n' + '    // ...\n' + '  }\n' + '  fetchData();\n' + '}, [someId]); // Or [] if effect doesn\'t need props or state\n\n' + 'Learn more about data fetching with Hooks: https://fb.me/react-hooks-data-fetching';
                 } else {
                   addendum = ' You returned: ' + _destroy;
                 }
 
-                warningWithoutStack$1(false, 'An Effect function must not return anything besides a function, ' + 'which is used for clean-up.%s%s', addendum, getStackByFiberInDevAndProd(finishedWork));
+                warningWithoutStack$1(false, 'An effect function must not return anything besides a function, ' + 'which is used for clean-up.%s%s', addendum, getStackByFiberInDevAndProd(finishedWork));
               }
             }
           }
@@ -24943,7 +25144,7 @@ if ("development" !== "production") {
     } // TODO: this is special because it gets imported during build.
 
 
-    var ReactVersion = '16.8.2'; // TODO: This type is shared between the reconciler and ReactDOM, but will
+    var ReactVersion = '16.8.6'; // TODO: This type is shared between the reconciler and ReactDOM, but will
     // eventually be lifted out to the renderer.
 
     var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
@@ -72262,8 +72463,16 @@ function (_Component) {
           className: "user",
           key: index
         }, _react.default.createElement("div", {
-          className: "row"
+          className: not.viewed ? 'row' : 'row unread'
         }, _react.default.createElement("div", {
+          className: "col-auto align-self-center p-0"
+        }, _react.default.createElement("div", {
+          className: "notification-info text-center"
+        }, _react.default.createElement("div", {
+          className: "main-color icon-".concat(not.type)
+        }), _react.default.createElement("span", {
+          className: "notification-time"
+        }, not.time))), _react.default.createElement("div", {
           className: "col p-0"
         }, _react.default.createElement(_reactRouterDom.Link, {
           to: "/gg/".concat(user.username),
@@ -72282,9 +72491,7 @@ function (_Component) {
           className: "user-list-user-name"
         }, user.full_name), _react.default.createElement("span", {
           className: "user-list-username"
-        }, not.message, " ", _react.default.createElement("span", {
-          className: "notification-time"
-        }, not.time)))))));
+        }, not.message))))));
       })))));
     }
   }]);
@@ -75388,7 +75595,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46509" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33163" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

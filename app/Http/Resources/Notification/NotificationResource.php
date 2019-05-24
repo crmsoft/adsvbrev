@@ -38,6 +38,7 @@ class NotificationResource extends JsonResource
     {
         $message = 'Not known...';
         $user = $this->user;
+        $type = 'unknown';
 
         if ($this->skip)
         {
@@ -47,6 +48,7 @@ class NotificationResource extends JsonResource
         switch ($this->notifiable_type)
         {
             case 'App\Entities\Comment' : {
+                $type = 'comment';
                 if ($this->notifiable->commentable_type == 'App\Post') 
                 {
                     $user = $this->notifiable->creator;
@@ -70,19 +72,21 @@ class NotificationResource extends JsonResource
                         return $reaction->id == $target;
                     })->first();
 
-                    $type = $reaction->type->name;
+                    $reaction_type = $reaction->type->name;
                     $user = $reaction->reacter->reacterable;
 
-                    if ($type == 'like')
+                    if ($reaction_type == 'like')
                     {
+                        $type = 'liked';
                         if ($subject->type == 'App\Entities\Comment')
                         {
                             $message = 'likes your comment';
                         } else if ($subject->type == 'App\Post') {
                             $message = 'likes your post';
                         } // end if
-                    } else if ($type == 'share')
+                    } else if ($reaction_type == 'share')
                     {
+                        $type = 'shared';
                         if ($subject->type == 'App\Post') {
                             $message = 'shared your post';
                         } // end if   
@@ -94,8 +98,10 @@ class NotificationResource extends JsonResource
         return [
             'id' => $this->id,
             'message' => $message,
-            'time' => $this->created_at->diffForHumans(),
-            'user' => new User($user)
+            'time' => $this->created_at->diffForHumans(null, true, true),
+            'user' => new User($user),
+            'viewed' => $this->viewed,
+            'type' => $type
         ];
     }
 }

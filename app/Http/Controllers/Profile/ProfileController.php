@@ -71,16 +71,18 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        UserNotification::with('notifiable')->where('user_id', $user->id)->update([
-            'viewed' => 1
-        ]);
-
-        return new NotificationCollection(
+        $response = new NotificationCollection(
             UserNotification::with([
                 'notifiable'
             ])->where('user_id', $user->id)
                 ->orderBy('id', 'desc')->take(10)->get()
         );
+
+        UserNotification::with('notifiable')->where('user_id', $user->id)->update([
+            'viewed' => 1
+        ]);
+
+        return $response;
     }
 
     /**

@@ -38,6 +38,6 @@ class GameController extends Controller
      */
     public function gameGroups()
     {
-        return new GroupCollection(Game::inRandomOrder(4)->take(4)->get());
+        return new GroupCollection(Game::inRandomOrder()->take(4)->get());
     }
 }
