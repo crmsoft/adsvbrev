@@ -63784,7 +63784,9 @@ function (_Component) {
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
-      }, _react.default.createElement(_index2.default, null)), _react.default.createElement("section", {
+      }, _react.default.createElement(_index2.default, {
+        media: this.props.data.media
+      })), _react.default.createElement("section", {
         className: "posts"
       }, _react.default.createElement(_feed.default, {
         list: feed,

@@ -30,7 +30,7 @@ class ResourceProfile extends JsonResource
 
         $feed = new PostCollection($this->feed()->with(
             [
-                'media', 
+                'media',
                 'postable', 
                 'loveReactant.reactions.reacter.reacterable',
                 'loveReactant.reactions.type',
@@ -51,7 +51,7 @@ class ResourceProfile extends JsonResource
             'feed' => $feed,
             'profile' => new ProfileConfig($profile),
             'games' => new GroupCollection( $this->group()->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),
-            'media' => new MediaCollection($this->media),
+            'media' => new MediaCollection($this->media()->orderBy('id', 'desc')->take(3)->get()),
             'totals' => [
                 'friends' => $this->friend->count(),
                 'groups' => $this->group()->where('is_game', 0)->count(),

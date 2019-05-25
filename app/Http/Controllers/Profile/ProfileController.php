@@ -239,14 +239,14 @@ class ProfileController extends Controller
             $options['devices'] = [];
         } // end if
 
-        $avialable_devies = collect(config('profile.devices'));
+        $available_devices = collect(config('profile.devices'));
 
         foreach($request->get('device', []) as $device_key)
         {
-            if ($avialable_devies->where('key', $device_key)->count())
+            if ($available_devices->where('key', $device_key)->count())
             {
                 $options['devices'][] = array_merge(
-                    $avialable_devies->where('key', $device_key)->first(),
+                    $available_devices->where('key', $device_key)->first(),
                     [
                         'selected' => true,
                         'description' => $device_key === 'pc' ? $request->get('pc_description', '') : NULL
