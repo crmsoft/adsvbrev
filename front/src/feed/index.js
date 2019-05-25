@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 
 import Menu from '../menu';
@@ -40,10 +40,13 @@ export default class Feed extends Component{
                         {
                             ({style}) => {
                                 
-                                style.position && (style.top = 15);
+                                var _style = style.position ? {
+                                    ...style,
+                                    top: 15
+                                } : style;
                                 
                                 return (
-                                    <div style={style}>
+                                    <div style={_style}>
                                         <section className="block">
                                             <GameGroups
                                                 style={style} 

@@ -8,6 +8,7 @@ use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\UserListStatus\User;
 use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\Group\GroupCollection;
+use App\Http\Resources\Media\MediaCollection;
 
 class ResourceProfile extends JsonResource
 {
@@ -50,6 +51,7 @@ class ResourceProfile extends JsonResource
             'feed' => $feed,
             'profile' => new ProfileConfig($profile),
             'games' => new GroupCollection( $this->group()->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),
+            'media' => new MediaCollection($this->media),
             'totals' => [
                 'friends' => $this->friend->count(),
                 'groups' => $this->group()->where('is_game', 0)->count(),

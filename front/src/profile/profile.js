@@ -7,7 +7,7 @@ import Friends from './friends/index';
 import Groups from './groups/index';
 import {Games} from './games/index';
 import MediaTabs from './media-tabs/index';
-import UserProfle from './profile-main';
+import UserProfile from './profile-main';
 import Menu from '../menu/index';
 import {
     fetchProfile
@@ -48,7 +48,7 @@ class ProfileComponent extends Component{
                     
                     <div className="triangle-right"></div>
 
-                    <UserProfle info={this.props.data}/>
+                    <UserProfile info={this.props.data}/>
 
                 </nav>
 
@@ -62,7 +62,9 @@ class ProfileComponent extends Component{
 
                         <section className="user-uploads w-100" id="media-container">
                             
-                            <MediaTabs />
+                            <MediaTabs 
+                                media={this.props.data.media}
+                            />
 
                         </section>
 
@@ -78,13 +80,13 @@ class ProfileComponent extends Component{
 
                     <StickyContainer className="profile-aside">
                         <Sticky
-                            topOffset={55}
+                            disableHardwareAcceleration
+                            topOffset={350}
                         >
-                            { ({style}) => {
-                                style.position && (style.top = 15);
+                            { ({style, isSticky}) => {
                                 return (
                                     <div style={style}>
-                                        <section className="block friends">
+                                        <section className={isSticky ? "block friends d-none" : "block friends"}>
 
                                             <Friends 
                                                 isGuest={false}
@@ -94,7 +96,7 @@ class ProfileComponent extends Component{
 
                                         </section>
 
-                                        <section className="block">
+                                        <section className={isSticky ? "block friends d-none" : "block friends"}>
 
                                             <Groups 
                                                 isGuest={false}

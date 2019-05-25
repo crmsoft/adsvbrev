@@ -13,7 +13,7 @@ export default class ImageCotent extends Component {
             return (
                 <Fragment>
                     <div className="user-content active">
-                        <div className="row">
+                        <div className="row user-media">
                             {
                                 media.slice(0,3).map((m, index) => {
                                     return (
@@ -21,7 +21,7 @@ export default class ImageCotent extends Component {
                                             key={index}
                                             className="col-4"
                                         >
-                                            <img src={m.options.thumb} alt="" />
+                                            <img src={m.options.thumb ? m.options.thumb : m.full_path} alt="" />
                                         </div>
                                     )
                                 })

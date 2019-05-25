@@ -76,12 +76,16 @@ class Guest extends Component{
 
                     <StickyContainer className="profile-aside">
                         <Sticky
+                            disableHardwareAcceleration
                             topOffset={55}
                         >
                             { ({style}) => {
-                                style.position && (style.top = 15);
+                                var _style = style.position ? {
+                                    ...style,
+                                    top: 15
+                                } : style;
                                 return (
-                                    <div style={style}>
+                                    <div style={_style}>
 
                                         <section className="block">
 

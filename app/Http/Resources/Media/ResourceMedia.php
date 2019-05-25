@@ -25,7 +25,7 @@ class ResourceMedia extends JsonResource
 
         return [
             'full_path' => $full_path,
-            'options' => $this->options
+            'options' => $this->options ?? []
         ];
     }
 }

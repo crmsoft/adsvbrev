@@ -44680,6 +44680,7 @@ var initialState = {
     groups: [],
     games: [],
     feed: [],
+    media: [],
     profile: {
       ava: '',
       user: {
@@ -50525,13 +50526,13 @@ function (_Component) {
         return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
           className: "user-content active"
         }, _react.default.createElement("div", {
-          className: "row"
+          className: "row user-media"
         }, media.slice(0, 3).map(function (m, index) {
           return _react.default.createElement("div", {
             key: index,
             className: "col-4"
           }, _react.default.createElement("img", {
-            src: m.options.thumb,
+            src: m.options.thumb ? m.options.thumb : m.full_path,
             alt: ""
           }));
         })), _react.default.createElement("a", {
@@ -63611,7 +63612,9 @@ function (_Component) {
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
         id: "media-container"
-      }, _react.default.createElement(_index5.default, null)), _react.default.createElement("section", {
+      }, _react.default.createElement(_index5.default, {
+        media: this.props.data.media
+      })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_index7.default, {
         type: "feed"
@@ -75599,7 +75602,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33163" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41319" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

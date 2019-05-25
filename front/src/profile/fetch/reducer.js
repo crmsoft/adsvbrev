@@ -17,6 +17,7 @@ const initialState = {
         groups:[],
         games:[],
         feed:[],
+        media:[],
         profile: { ava : '', user:{full_name:'Loading...'} },
         totals: {
             friends: 0,

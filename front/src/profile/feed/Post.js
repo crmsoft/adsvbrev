@@ -1,10 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {placeEmoji, urlify} from '../../utils';
-import Comments from '../../comment/Comments';
-import AddComment from '../../comment/AddComment';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import handleViewport from 'react-in-viewport';
+import {Link} from 'react-router-dom';
+
+import {placeEmoji, urlify} from '../../utils';
+import Comments from '../../comment/Comments';
+import AddComment from '../../comment/AddComment';
 
 const PostContnet = ({
 	more,
@@ -189,7 +191,9 @@ class Post extends Component{
 						<img src={post.poster.ava} alt={post.poster.full_name} />
 					</div>
 					<div className="post-main-info">
-						<h3 className="post-user">{post.poster.full_name}</h3>
+						<Link to={post.poster.username ? `/gg/${post.poster.username}` : `/event/${post.poster.id}`}>
+							<h3 className="post-user">{post.poster.full_name}</h3>
+						</Link>
 						<h4 className="post-username">{post.poster.username}</h4>
 						<span className="post-time">{post.created_at}</span>
 					</div>

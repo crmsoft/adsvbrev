@@ -84,7 +84,13 @@ export default class Notification extends Component{
                                     const user = not.user;
                                     return (
                                         <li className="user" key={index}>
-                                            <div className="row">
+                                            <div className={not.viewed ? 'row' : 'row unread'}>
+                                                <div className="col-auto align-self-center p-0">
+                                                    <div className="notification-info text-center">
+                                                        <div className={`main-color icon-${not.type}`}></div>
+                                                        <span className="notification-time">{not.time}</span>
+                                                    </div>  
+                                                </div>
                                                 <div className="col p-0">
                                                     <Link to={`/gg/${user.username}`} className="user-list-item d-inline-flex">
                                                         <div className="ava-wrapper">
@@ -96,7 +102,7 @@ export default class Notification extends Component{
                                                         <div className="user-list-user">
                                                             <span className="user-list-user-name">{user.full_name}</span>
                                                             <span className="user-list-username">
-                                                                {not.message} <span className="notification-time">{not.time}</span>
+                                                                {not.message}
                                                             </span>
                                                         </div>
                                                     </Link>
