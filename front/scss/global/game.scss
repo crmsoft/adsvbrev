@@ -91,3 +91,104 @@
         }
     }
 }
+
+.reviews{
+    
+    .positive,.negative{
+        cursor: pointer;
+        font-size: 35px;
+    }
+
+    .positive{
+        color:green;
+    }
+
+    .negative{
+        color: red;
+    }
+
+    hr{
+        background-color: $lightGray;
+        margin: 10px -15px;
+    }
+
+    .game-review{
+        background-color: $gameReview;
+    }
+
+    .game-review-header{
+        width: 100%;
+        background-color: $postDelimiter;
+        line-height: 1;
+
+        td:first-child{
+            text-align: center;
+            background-color: $mainGray;
+        }
+        td:last-child{
+            text-align: center;
+        }
+
+        &.vote-positive{
+            .negative{
+                display: none;
+            }
+        }
+        &.vote-negative{
+            .positive{
+                display: none;
+            }
+        }
+
+        .icon-comment{
+            font-size: 12px;
+        }
+
+        .positive,.negative{
+            font-size: 14px;
+        }
+    }
+
+    .game-review-content{
+        p{
+            padding: 5px;
+            font-size: 11px;
+        }
+    }
+}
+
+.review-feed{
+    margin-top: -15px;
+
+    hr{
+        background-color: $mainColor;
+        height: 3px;
+    }
+
+    .filter{
+
+        a{
+            color: $white;
+            display: block;
+            padding: 10px;
+            line-height: 1;
+            font-size: 12px;
+            &.active{
+                background-color: rgba(241,90,36,0.1);
+            }
+        }
+
+        text-align: center;
+        width: 100%;
+        background-color: $postBack;
+
+        td{
+            border-right: 1px solid $mainColor;
+        }
+
+        td:last-child{
+            border-right: none;
+        }
+    }
+
+}

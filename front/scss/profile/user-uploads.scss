@@ -18,6 +18,14 @@
             font-size: 10px;
         }
 
+        .user-media{
+            img{
+                object-fit: cover;
+                width: 205px;
+                height: 115px;
+            }
+        }
+
         .row{
             margin: 0;
             width: 100%;

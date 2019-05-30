@@ -14,6 +14,8 @@ import {
     join,
     leave
 } from './store/event';
+import Vote from './Reviews/Vote';
+import ReviewFeed from './Reviews/ReviewFeed';
 
 class GamePageComponent extends Component{
 
@@ -61,6 +63,8 @@ class GamePageComponent extends Component{
 
                     <section className="user-middle">
                         
+                        <ReviewFeed />
+
                         <About 
                             about={data.options}
                         /> 
@@ -90,6 +94,12 @@ class GamePageComponent extends Component{
                     </section>
 
                     <aside className="profile-aside">
+
+                        <section className="block">
+
+                            <Vote />             
+
+                        </section>
 
                         <section className="block">
 

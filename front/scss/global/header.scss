@@ -141,8 +141,17 @@ header{
 
         .notification-list{
             @extend .followers-list;
-            .notification-time{
-                color: $mainColor;
+            .unread{
+                background-color: #432216;
+            }
+            .notification-info{
+                padding: 12px 10px 0 15px;
+                >div{
+                    line-height: 0.5;
+                }
+                .notification-time{
+                    font-size: 11px;
+                }
             }
             .user{
                 border-bottom: 1px solid $halfGray;

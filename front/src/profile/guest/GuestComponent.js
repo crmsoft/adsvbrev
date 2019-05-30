@@ -64,7 +64,9 @@ class Guest extends Component{
 
                         <section className="user-uploads w-100" id="media-container">
                             
-                            <MediaTabs />
+                            <MediaTabs 
+                                media={this.props.data.media}
+                            />
 
                         </section>
 
