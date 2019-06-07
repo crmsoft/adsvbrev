@@ -1,7 +1,9 @@
 import {
     INIT,
     USER_JOINED,
-    USER_LEAVED
+    USER_LEAVED,
+    REVIEWS_HIDDEN,
+    REVIEWS_SHOWN
 } from './action';
 
 const initialState = {
@@ -12,16 +14,38 @@ const initialState = {
         feed: [],
         media: [],
         participant: false,
-        options: {}
+        options: {},
+        votes:{},
+        reviews:[],
+        reviews_open: false
     }
 };
 
-const reducer = (state, action) => {
+const reducer = (state = initialState, action) => {
     switch(action.type)
     {
+        case REVIEWS_HIDDEN: {
+            return {
+                data: {
+                    ...state.data,
+                    reviews_open: false
+                }   
+            }
+        }
+        case REVIEWS_SHOWN: {
+            return {
+                data: {
+                    ...state.data,
+                    reviews_open: true
+                }
+            }
+        }
         case INIT : {
             return {
-                ...action.data
+                data: {
+                    ...state.data,
+                    ...action.data.data
+                }
             }
         }
         case USER_JOINED : {

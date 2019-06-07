@@ -8205,6 +8205,94 @@ span.flatpickr-weekday {
         position: relative;
         z-index: 2; }
 
+.reviews .positive, .reviews .negative {
+  cursor: pointer;
+  font-size: 35px; }
+
+.reviews .positive {
+  color: green; }
+
+.reviews .negative {
+  color: red; }
+
+.reviews hr {
+  background-color: #484B52;
+  margin: 10px -15px; }
+
+.reviews .game-review {
+  background-color: #1e2528; }
+
+.reviews .game-review-header {
+  width: 100%;
+  background-color: #293235;
+  line-height: 1; }
+  .reviews .game-review-header td:first-child {
+    text-align: center;
+    background-color: #CBCBCB; }
+  .reviews .game-review-header td:last-child {
+    text-align: center; }
+  .reviews .game-review-header.vote-positive .negative {
+    display: none; }
+  .reviews .game-review-header.vote-negative .positive {
+    display: none; }
+  .reviews .game-review-header .icon-comment {
+    font-size: 12px; }
+  .reviews .game-review-header .positive, .reviews .game-review-header .negative {
+    font-size: 14px; }
+
+.reviews .game-review-content p {
+  padding: 5px;
+  font-size: 11px; }
+
+.review-feed {
+  margin-top: -15px; }
+  .review-feed hr {
+    background-color: #F15A24;
+    height: 3px; }
+  .review-feed .filter {
+    border: 1px solid #313131;
+    text-align: center;
+    width: 100%;
+    background-color: #14191C; }
+    .review-feed .filter a {
+      color: #ffffff;
+      display: block;
+      padding: 10px;
+      line-height: 1;
+      font-size: 12px; }
+      .review-feed .filter a.active {
+        background-color: rgba(241, 90, 36, 0.1); }
+    .review-feed .filter td {
+      border-right: 1px solid #F15A24; }
+    .review-feed .filter td:last-child {
+      border-right: none; }
+  .review-feed .comments {
+    padding-top: 15px;
+    background-color: transparent; }
+    .review-feed .comments .comment {
+      background-color: #14191C;
+      border-radius: 3px; }
+      .review-feed .comments .comment .review-type {
+        background-color: #293235;
+        padding: 3px;
+        border-radius: 1px; }
+        .review-feed .comments .comment .review-type.negative .icon-finger-up {
+          display: none; }
+        .review-feed .comments .comment .review-type.negative .type-recommend {
+          display: none; }
+        .review-feed .comments .comment .review-type.positive .icon-finger-down {
+          display: none; }
+        .review-feed .comments .comment .review-type.positive .type-not-recommend {
+          display: none; }
+        .review-feed .comments .comment .review-type .icon-finger-up {
+          color: #31EF26; }
+        .review-feed .comments .comment .review-type .icon-finger-down {
+          color: #c1272d; }
+        .review-feed .comments .comment .review-type .icon-comment {
+          color: #CBCBCB; }
+        .review-feed .comments .comment .review-type .d-inline-block {
+          padding: 0 5px; }
+
 .select-games-banner {
   text-align: center;
   position: relative;

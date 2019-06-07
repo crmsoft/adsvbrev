@@ -44,4 +44,9 @@ class Game extends Group
     {
         return $this->belongsToMany(\App\User::class, 'user_groups', 'group_id', 'user_id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(GameReview::class, 'group_id');
+    }
 }

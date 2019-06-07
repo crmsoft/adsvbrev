@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Game\ResourceGame;
 
 use App\Entities\Game;
+use App\Entities\GameReview;
 use App\Http\Resources\Group\GroupCollection;
+use App\Http\Resources\Game\Review as GameReviewResource;
 
 class GameController extends Controller
 {
@@ -39,5 +41,90 @@ class GameController extends Controller
     public function gameGroups()
     {
         return new GroupCollection(Game::inRandomOrder()->take(4)->get());
+    }
+
+    public function storeVote(Request $request, Game $game)
+    {
+        $request->validate([
+            'type' => ['required', 'in:positive,negative']
+        ]);
+        
+        $vote = $request->type == 'positive' ? 'vote-up':'vote-down';
+
+        $reactionType = \ReactionType::fromName($vote);
+
+        $user = auth()->user();
+        
+        if ( !$user->isRegisteredAsLoveReacter() )
+        {
+            $user->registerAsLoveReacter();
+        } // end if
+        
+        if (!$game->isRegisteredAsLoveReactant())
+        {
+            $game->registerAsLoveReactant();
+        } // end if
+        
+        $reacter = $user->getLoveReacter();
+
+        if (!$reacter->isReactedTo( $game->getLoveReactant() )  ){
+            $reacter->reactTo($game->getLoveReactant(), $reactionType);
+            return;
+        } // end if
+          
+        return response()->json([
+            'message' => __('You already did your vote.')
+        ]);
+    }
+
+    public function storeReview(Request $request, Game $game)
+    {
+        $request->validate([
+            'review' => ['required', /*'min:15'*/ ]
+        ]);
+
+        $user = auth()->user();
+
+        $reactionUp = \ReactionType::fromName('vote-up');
+        $reactionDown = \ReactionType::fromName('vote-down');
+
+        $reacter = $user->getLoveReacter();
+        $reactant = $game->getLoveReactant();
+
+        $can_add_review = $reacter->isReactedToWithType($reactant, $reactionUp) | $reacter->isReactedToWithType($reactant, $reactionDown);
+
+        if ($can_add_review)
+        {
+            $gameReview = new GameReview;
+            $gameReview->review = $request->review;
+            $gameReview->vote = $reacter->isReactedToWithType($reactant, $reactionUp) ? 'vote-up':'vote-down';
+            $gameReview->game()->associate($game);
+            $gameReview->user()->associate($user);
+            $gameReview->save();
+
+            return new GameReviewResource($gameReview);
+        } // end if
+    }
+
+    public function toggleReviewLike(GameReview $gameReview)
+    {
+        $reactionType = \ReactionType::fromName('like');
+        $user = auth()->user();
+        
+        if ( !$user->isRegisteredAsLoveReacter() )
+        {
+            $user->registerAsLoveReacter();
+        } // end if
+        
+        if (!$gameReview->isRegisteredAsLoveReactant())
+        {
+            $gameReview->registerAsLoveReactant();
+        } // end if
+        
+        $reacter = $user->getLoveReacter();
+
+        return $reacter->isReactedTo( $gameReview->getLoveReactant() ) ?
+                    $reacter->unreactTo($gameReview->getLoveReactant(), $reactionType) :
+                    $reacter->reactTo($gameReview->getLoveReactant(), $reactionType);
     }
 }

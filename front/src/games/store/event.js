@@ -3,8 +3,28 @@ import axios from 'axios';
 import {
     INIT,
     USER_JOINED,
-    USER_LEAVED
+    USER_LEAVED,
+    REVIEWS_HIDDEN,
+    REVIEWS_SHOWN
 } from './action';
+
+export const show_reviews = () => {
+    return dispatch => {
+        dispatch({
+            type: REVIEWS_SHOWN,
+            data: null
+        });
+    }
+}
+
+export const hide_reviews = () => {
+    return dispatch => {
+        dispatch({
+            type: REVIEWS_HIDDEN,
+            data: null
+        });
+    }
+}
 
 export const init = (group) => {
     return dispatch => {

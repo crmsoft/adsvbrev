@@ -36,7 +36,27 @@ class ResourceGame extends JsonResource
                 'genres' => $this->genres->map(function($item){ return ['name' => $item->name]; }),
                 'developers' => $this->developers->map(function($item){ return ['name' => $item->name]; }),
             ]),
-            'streams' => new StreamCollection($this->get_game_streams($this->name))
+            'streams' => new StreamCollection($this->get_game_streams($this->name)),
+            'votes' => $this->getVotes($this, $user),
+            'reviews' => new ReviewCollection($this->reviews->shuffle())
+        ];
+    }
+
+    public function getVotes($game,$user)
+    {
+        $reactionUp = \ReactionType::fromName('vote-up');
+        $reactionDown = \ReactionType::fromName('vote-down');
+
+        $reacter = $user->getLoveReacter();
+        $reactant = $game->getLoveReactant();
+
+        $positive = $reactant->getReactionCounterOfType( $reactionUp )->getCount();
+        $negative = $reactant->getReactionCounterOfType( $reactionDown )->getCount();
+
+        return [
+            'can_add_review' => $reacter->isReactedToWithType($reactant, $reactionUp) | $reacter->isReactedToWithType($reactant, $reactionDown),
+            'positive' => $positive,
+            'negative' => $negative
         ];
     }
 

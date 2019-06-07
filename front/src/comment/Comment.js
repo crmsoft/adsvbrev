@@ -59,7 +59,7 @@ export default class Comment extends Component{
                         <Link to={`/gg/${user.username}`} >
                             <strong>{user.full_name}</strong>
                         </Link>
-                        {placeEmoji(comment.contnet)}
+                        {placeEmoji(comment.content)}
                     </p>
                     <div>
                         {

@@ -2,14 +2,18 @@
 
 namespace App\Entities;
 
-use App\GroupProfile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \App\User;
 
-class Group extends Model
+use Cog\Laravel\Love\Reactable\Models\Traits\Reactable;
+use Cog\Contracts\Love\Reactable\Models\Reactable as ReactableContract;
+
+use \App\User;
+use App\GroupProfile;
+
+class Group extends Model implements ReactableContract
 {
-    use SoftDeletes;
+    use SoftDeletes, Reactable;
 
     const STATUS_SUBSCRIBE = 'subscribe';
     const STATUS_JOINED = 'joined';

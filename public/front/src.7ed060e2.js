@@ -45018,7 +45018,7 @@ function (_Component) {
         className: "comment-body"
       }, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/gg/".concat(user.username)
-      }, _react.default.createElement("strong", null, user.full_name)), (0, _utils.placeEmoji)(comment.contnet)), _react.default.createElement("div", null, comment.media.map(function (media) {
+      }, _react.default.createElement("strong", null, user.full_name)), (0, _utils.placeEmoji)(comment.content)), _react.default.createElement("div", null, comment.media.map(function (media) {
         return _react.default.createElement("img", {
           key: media.full_path,
           src: media.full_path
@@ -59647,7 +59647,7 @@ function (_Component) {
         onFocus: this.props.onFocus,
         onChange: this.onChange.bind(this),
         value: this.props.value,
-        placeholder: "What is your toughts ?"
+        placeholder: this.props.placeholder
       }));
     }
   }], [{
@@ -74797,7 +74797,7 @@ exports.Buy = Buy;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
+exports.REVIEWS_HIDDEN = exports.REVIEWS_SHOWN = exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
 var LOADED = "LOADED";
 exports.LOADED = LOADED;
 var INIT = "FETCH_GROUP";
@@ -74806,19 +74806,45 @@ var USER_JOINED = "USER_JOINED";
 exports.USER_JOINED = USER_JOINED;
 var USER_LEAVED = "USER_LEAVED";
 exports.USER_LEAVED = USER_LEAVED;
+var REVIEWS_SHOWN = 'REVIEWS_SHOWN';
+exports.REVIEWS_SHOWN = REVIEWS_SHOWN;
+var REVIEWS_HIDDEN = 'REVIEWS_HIDDEN';
+exports.REVIEWS_HIDDEN = REVIEWS_HIDDEN;
 },{}],"../src/games/store/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.leave = exports.join = exports.init = void 0;
+exports.leave = exports.join = exports.init = exports.hide_reviews = exports.show_reviews = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
 var _action = require("./action");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var show_reviews = function show_reviews() {
+  return function (dispatch) {
+    dispatch({
+      type: _action.REVIEWS_SHOWN,
+      data: null
+    });
+  };
+};
+
+exports.show_reviews = show_reviews;
+
+var hide_reviews = function hide_reviews() {
+  return function (dispatch) {
+    dispatch({
+      type: _action.REVIEWS_HIDDEN,
+      data: null
+    });
+  };
+};
+
+exports.hide_reviews = hide_reviews;
 
 var init = function init(group) {
   return function (dispatch) {
@@ -74861,7 +74887,679 @@ var leave = function leave(group) {
 };
 
 exports.leave = leave;
-},{"axios":"../../node_modules/axios/index.js","./action":"../src/games/store/action.js"}],"../src/games/index.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js","./action":"../src/games/store/action.js"}],"../src/games/Reviews/Review.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Review = function Review(_ref) {
+  var review = _ref.review;
+  return _react.default.createElement("div", {
+    className: "game-review"
+  }, _react.default.createElement("table", {
+    className: "game-review-header vote-positive"
+  }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, _react.default.createElement("span", {
+    className: "icon-finger-up positive"
+  }), _react.default.createElement("span", {
+    className: "icon-finger-down negative"
+  })), _react.default.createElement("td", {
+    className: "pl-2"
+  }, review.user.username), _react.default.createElement("td", null, _react.default.createElement("span", {
+    className: "icon-comment"
+  }))))), _react.default.createElement("div", {
+    className: "game-review-content"
+  }, _react.default.createElement("p", null, review.text)));
+};
+
+var _default = Review;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../src/games/Reviews/Vote.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Review = _interopRequireDefault(require("./Review"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Vote =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Vote, _Component);
+
+  function Vote() {
+    _classCallCheck(this, Vote);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Vote).apply(this, arguments));
+  }
+
+  _createClass(Vote, [{
+    key: "onPositive",
+    value: function onPositive() {
+      var id = this.props.id;
+
+      _axios.default.post("/game/vote/store/".concat(id), {
+        type: 'positive'
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        if (data.message) {
+          alert(data.message);
+        } // end if
+
+      });
+    }
+  }, {
+    key: "onNegative",
+    value: function onNegative() {
+      var id = this.props.id;
+
+      _axios.default.post("/game/vote/store/".concat(id), {
+        type: 'negative'
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.message) {
+          alert(data.message);
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var _this$props = this.props,
+          reviews = _this$props.reviews,
+          vote = _this$props.vote;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0)"
+      }, _react.default.createElement("div", {
+        className: "d-inline"
+      }, "?"), _react.default.createElement("h3", {
+        className: "d-inline"
+      }, "Do you recommend this game"))), _react.default.createElement("div", {
+        className: "block-content reviews"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("span", {
+        onClick: this.onPositive.bind(this),
+        className: "icon-finger-up positive"
+      }), _react.default.createElement("span", null, " ", vote.positive)), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("span", {
+        onClick: this.onNegative.bind(this),
+        className: "icon-finger-down negative"
+      }), _react.default.createElement("span", null, " ", vote.negative))), _react.default.createElement("hr", null), _react.default.createElement("div", {
+        className: "review-list"
+      }, reviews.map(function (review) {
+        return _react.default.createElement(_Review.default, {
+          key: review.id,
+          review: review
+        });
+      }), reviews.length ? _react.default.createElement("div", {
+        className: "text-right"
+      }, _react.default.createElement("a", {
+        onClick: function onClick() {
+          return _this.props.showReviews();
+        },
+        href: "javascript:void(0)"
+      }, _react.default.createElement("small", {
+        className: "main-color"
+      }, "View All"))) : null)));
+    }
+  }]);
+
+  return Vote;
+}(_react.Component);
+
+exports.default = Vote;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","./Review":"../src/games/Reviews/Review.js"}],"../src/games/Reviews/AddReview.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Input = _interopRequireDefault(require("../../post-add/Input"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var AddReview =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AddReview, _Component);
+
+  function AddReview() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, AddReview);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(AddReview)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      active: false,
+      saved: false,
+      post: '',
+      can_submit: false
+    });
+
+    return _this;
+  }
+
+  _createClass(AddReview, [{
+    key: "onSubmit",
+    value: function onSubmit() {
+      var post = this.state.post;
+      var game = this.props.game;
+
+      _axios.default.post("/game/review/store/".concat(game), {
+        review: post,
+        type: 'positive'
+      }).then(function (_ref) {
+        var data = _ref.data;
+        console.log(data);
+      });
+    }
+  }, {
+    key: "onFocus",
+    value: function onFocus() {
+      if (this.props.available) {
+        this.setState(function () {
+          return {
+            active: true
+          };
+        });
+      } else {
+        document.activeElement.blur();
+        alert('To leave a comment you need vote the game first !');
+      } // end if
+
+    }
+  }, {
+    key: "onText",
+    value: function onText(text) {
+      this.setState(function () {
+        return {
+          post: text
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          active = _this$state.active,
+          can_submit = _this$state.can_submit;
+      return _react.default.createElement("div", {
+        className: "user-add-post"
+      }, _react.default.createElement("div", {
+        className: active ? "wrapper active" : "wrapper"
+      }, _react.default.createElement(_Input.default, {
+        emoji: this.state.saved,
+        placeholder: "Leave your opinion about this game...",
+        onFocus: this.onFocus.bind(this),
+        onType: this.onText.bind(this),
+        value: this.state.post
+      }), _react.default.createElement("div", {
+        className: "footer"
+      }, _react.default.createElement("div", {
+        className: "actions justify-content-sm-end"
+      }, _react.default.createElement("button", {
+        className: "btn btn-sm btn-full",
+        disabled: can_submit,
+        onClick: this.onSubmit.bind(this)
+      }, "Post")))));
+    }
+  }]);
+
+  return AddReview;
+}(_react.Component);
+
+exports.default = AddReview;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../../post-add/Input":"../src/post-add/Input.js"}],"../src/games/Reviews/Filter.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.FILTER_NEGATIVE = exports.FILTER_POSITIVE = exports.FILTER_LAST = exports.FILTER_BEST = exports.FILTER_ALL = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FILTER_ALL = 'FILTER_ALL';
+exports.FILTER_ALL = FILTER_ALL;
+var FILTER_BEST = 'FILTER_BEST';
+exports.FILTER_BEST = FILTER_BEST;
+var FILTER_LAST = 'FILTER_LAST';
+exports.FILTER_LAST = FILTER_LAST;
+var FILTER_POSITIVE = 'FILTER_POSITIVE';
+exports.FILTER_POSITIVE = FILTER_POSITIVE;
+var FILTER_NEGATIVE = 'FILTER_NEGATIVE';
+exports.FILTER_NEGATIVE = FILTER_NEGATIVE;
+
+var Filter = function Filter(_ref) {
+  var onFilter = _ref.onFilter,
+      active = _ref.active;
+  return _react.default.createElement("table", {
+    className: "filter"
+  }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, _react.default.createElement("a", {
+    className: active === FILTER_ALL ? 'active' : '',
+    onClick: function onClick() {
+      return onFilter(FILTER_ALL);
+    },
+    href: "javascript:void(0)"
+  }, "All Comments")), _react.default.createElement("td", null, _react.default.createElement("a", {
+    className: active === FILTER_POSITIVE ? 'active' : '',
+    onClick: function onClick() {
+      return onFilter(FILTER_POSITIVE);
+    },
+    href: "javascript:void(0)"
+  }, "Positive")), _react.default.createElement("td", null, _react.default.createElement("a", {
+    className: active === FILTER_NEGATIVE ? 'active' : '',
+    onClick: function onClick() {
+      return onFilter(FILTER_NEGATIVE);
+    },
+    href: "javascript:void(0)"
+  }, "Negative")), _react.default.createElement("td", null, _react.default.createElement("a", {
+    className: active === FILTER_BEST ? 'active' : '',
+    onClick: function onClick() {
+      return onFilter(FILTER_BEST);
+    },
+    href: "javascript:void(0)"
+  }, "Best")), _react.default.createElement("td", null, _react.default.createElement("a", {
+    className: active === FILTER_LAST ? 'active' : '',
+    onClick: function onClick() {
+      return onFilter(FILTER_LAST);
+    },
+    href: "javascript:void(0)"
+  }, "Last Comments")))));
+};
+
+Filter.filterReviews = function (type, arr) {
+  if (type === FILTER_ALL) {
+    return arr;
+  } // end if
+
+
+  if (type === FILTER_NEGATIVE) {
+    return arr.filter(function (r) {
+      return r.type === 'negative';
+    });
+  } // end if
+
+
+  if (type === FILTER_POSITIVE) {
+    return arr.filter(function (r) {
+      return r.type === 'positive';
+    });
+  } // end if
+
+
+  if (type === FILTER_BEST) {
+    return arr.sort(function (a, b) {
+      return a.like_count > b.like_count ? 1 : b.like_count > a.like_count ? -1 : 0;
+    });
+  } // end if
+
+
+  if (type === FILTER_LAST) {
+    return arr.sort(function (a, b) {
+      return a.timestamp > b.timestamp ? 1 : b.timestamp > a.timestamp ? -1 : 0;
+    });
+  } // end if
+
+
+  return [];
+};
+
+var _default = Filter;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../src/games/Reviews/Comment.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ReviewList = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ReviewList = function ReviewList(_ref) {
+  var list = _ref.list,
+      updateLike = _ref.updateLike;
+  return _react.default.createElement("div", {
+    className: "comments"
+  }, list.map(function (review) {
+    return _react.default.createElement(Comment, {
+      key: review.id,
+      review: review,
+      updateLike: updateLike
+    });
+  }));
+};
+
+exports.ReviewList = ReviewList;
+
+var Comment =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Comment, _Component);
+
+  function Comment() {
+    _classCallCheck(this, Comment);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Comment).apply(this, arguments));
+  }
+
+  _createClass(Comment, [{
+    key: "toggleLike",
+    value: function toggleLike(id) {
+      var _this = this;
+
+      _axios.default.post("/game/review/toggle/like/".concat(id)).then(function (response) {
+        return _this.props.updateLike(id);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var review = this.props.review;
+      var user = review.user;
+      return _react.default.createElement("div", {
+        className: "comment"
+      }, _react.default.createElement("div", {
+        className: "comment-user"
+      }, _react.default.createElement("div", {
+        className: "comment-user-ava"
+      }, _react.default.createElement("img", {
+        src: user.ava,
+        alt: user.full_name
+      }))), _react.default.createElement("div", {
+        className: "comment-body"
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "d-inline-block"
+      }, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/gg/".concat(user.username)
+      }, _react.default.createElement("strong", null, user.full_name)), _react.default.createElement("div", {
+        className: "comment-time"
+      }, review.created_at))), _react.default.createElement("div", {
+        className: "float-right"
+      }, _react.default.createElement("div", {
+        className: "review-type ".concat(review.type)
+      }, _react.default.createElement("div", {
+        className: "d-inline-block"
+      }, _react.default.createElement("span", {
+        className: "icon-finger-up"
+      }), _react.default.createElement("span", {
+        className: "icon-finger-down"
+      })), _react.default.createElement("div", {
+        className: "d-inline-block"
+      }, _react.default.createElement("span", {
+        className: "type-recommend"
+      }, "Recommend"), _react.default.createElement("span", {
+        className: "type-not-recommend"
+      }, "Do not Recommend")), _react.default.createElement("div", {
+        className: "d-inline-block"
+      }, _react.default.createElement("span", {
+        className: "icon-comment"
+      }))))), _react.default.createElement("div", {
+        style: {
+          marginLeft: '-65px'
+        }
+      }, _react.default.createElement("div", null, review.text), _react.default.createElement("div", {
+        className: "w-100 "
+      }, _react.default.createElement("div", {
+        className: "comment-actions"
+      }, _react.default.createElement("span", {
+        className: review.likes ? 'active' : '',
+        onClick: this.toggleLike.bind(this, review.id)
+      }, _react.default.createElement("span", {
+        className: "icon-liked"
+      }), _react.default.createElement("span", {
+        className: "icon-heart"
+      })), _react.default.createElement("span", null, review.like_count | 0))))));
+    }
+  }]);
+
+  return Comment;
+}(_react.Component);
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js"}],"../src/games/Reviews/ReviewFeed.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _AddReview = _interopRequireDefault(require("./AddReview"));
+
+var _Filter = _interopRequireWildcard(require("./Filter"));
+
+var _Comment = require("./Comment");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var ReviewFeed =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ReviewFeed, _Component);
+
+  function ReviewFeed() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ReviewFeed);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ReviewFeed)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      show: _Filter.FILTER_BEST,
+      list: []
+    });
+
+    return _this;
+  }
+
+  _createClass(ReviewFeed, [{
+    key: "setFilter",
+    value: function setFilter(type) {
+      this.setState(function () {
+        return {
+          show: type
+        };
+      });
+    }
+  }, {
+    key: "updateLike",
+    value: function updateLike(id) {
+      var list = this.state.list;
+
+      for (var index = 0; index < list.length; index++) {
+        if (list[index].id === id) {
+          if (list[index].likes) {
+            list[index].like_count--;
+          } else {
+            list[index].like_count++;
+          }
+
+          list[index].likes = !list[index].likes;
+        }
+      }
+
+      this.setState(function () {
+        return {
+          list: list
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var can_add_review = this.props.vote.can_add_review;
+      var _this$state = this.state,
+          show = _this$state.show,
+          list = _this$state.list;
+      return _react.default.createElement("div", {
+        className: "review-feed"
+      }, _react.default.createElement(_AddReview.default, {
+        available: can_add_review,
+        game: this.props.id
+      }), _react.default.createElement("hr", null), _react.default.createElement(_Filter.default, {
+        active: show,
+        onFilter: this.setFilter.bind(this)
+      }), _react.default.createElement(_Comment.ReviewList, {
+        className: "d-none",
+        list: _Filter.default.filterReviews(show, list),
+        updateLike: this.updateLike.bind(this)
+      }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (!state.list.length) {
+        return {
+          list: props.reviews
+        };
+      }
+
+      return null;
+    }
+  }]);
+
+  return ReviewFeed;
+}(_react.Component);
+
+exports.default = ReviewFeed;
+},{"react":"../node_modules/react/index.js","./AddReview":"../src/games/Reviews/AddReview.js","./Filter":"../src/games/Reviews/Filter.js","./Comment":"../src/games/Reviews/Comment.js"}],"../src/games/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -74890,6 +75588,10 @@ var _Participants = _interopRequireDefault(require("../event/Participants"));
 var _Buy = require("./Buy");
 
 var _event = require("./store/event");
+
+var _Vote = _interopRequireDefault(require("./Reviews/Vote"));
+
+var _ReviewFeed = _interopRequireDefault(require("./Reviews/ReviewFeed"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -74965,7 +75667,11 @@ function (_Component) {
         className: "d-flex"
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
-      }, _react.default.createElement(_About.default, {
+      }, data.reviews_open ? _react.default.createElement(_ReviewFeed.default, {
+        reviews: data.reviews,
+        vote: data.votes,
+        id: id
+      }) : _react.default.createElement(_react.Fragment, null, _react.default.createElement(_About.default, {
         about: data.options
       }), _react.default.createElement("section", {
         className: "user-uploads w-100",
@@ -74982,9 +75688,18 @@ function (_Component) {
         list: data.feed,
         user: id,
         type: "game"
-      })), _react.default.createElement("aside", {
+      }))), _react.default.createElement("aside", {
         className: "profile-aside"
       }, _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement(_Vote.default, {
+        showReviews: function showReviews() {
+          return _this.props.show_reviews();
+        },
+        reviews: data.reviews.slice(0, 2),
+        vote: data.votes,
+        id: id
+      })), _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_Participants.default, {
         title: "Gamers",
@@ -75013,12 +75728,18 @@ var GamePage = (0, _reactRedux.connect)(function (store) {
     },
     leave: function leave(group) {
       return dispatch((0, _event.leave)(group));
+    },
+    show_reviews: function show_reviews() {
+      return dispatch((0, _event.show_reviews)());
+    },
+    hide_reviews: function hide_reviews() {
+      return dispatch((0, _event.hide_reviews)());
     }
   };
 })(GamePageComponent);
 var _default = GamePage;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js","./Buy":"../src/games/Buy.js","./store/event":"../src/games/store/event.js"}],"../src/games/store/reducer.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js","./Buy":"../src/games/Buy.js","./store/event":"../src/games/store/event.js","./Reviews/Vote":"../src/games/Reviews/Vote.js","./Reviews/ReviewFeed":"../src/games/Reviews/ReviewFeed.js"}],"../src/games/store/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75036,15 +75757,41 @@ var initialState = {
     feed: [],
     media: [],
     participant: false,
-    options: {}
+    options: {},
+    votes: {},
+    reviews: [],
+    reviews_open: false
   }
 };
 
-var reducer = function reducer(state, action) {
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
   switch (action.type) {
+    case _action.REVIEWS_HIDDEN:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            reviews_open: false
+          })
+        };
+      }
+
+    case _action.REVIEWS_SHOWN:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            reviews_open: true
+          })
+        };
+      }
+
     case _action.INIT:
       {
-        return Object.assign({}, action.data);
+        return {
+          data: Object.assign({}, state.data, action.data.data)
+        };
       }
 
     case _action.USER_JOINED:
@@ -75604,7 +76351,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41319" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45317" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

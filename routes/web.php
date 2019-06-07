@@ -129,6 +129,10 @@ Route::group([
     Route::get('/game/participants/{game}', 'GameController@listParticipants')->name('user-game-list-p');
     Route::get('/game/list/groups', 'GameController@gameGroups')->name('list-game-groups');
 
+    Route::post('/game/vote/store/{game}', 'GameController@storeVote')->name('store-game-vote');
+    Route::post('/game/review/store/{game}', 'GameController@storeReview')->name('store-game-review');
+    Route::post('/game/review/toggle/like/{game_review}', 'GameController@toggleReviewLike')->name('toggle-review-like');
+
 });
 
 // Search page specific routes

@@ -95,7 +95,7 @@ export default class Input extends Component{
                     onFocus={this.props.onFocus}
                     onChange={this.onChange.bind(this)}
                     value={this.props.value}
-                    placeholder={`What is your toughts ?`}
+                    placeholder={this.props.placeholder}
                 />
             </div>
         );

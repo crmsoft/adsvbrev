@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 
 import MediaTabs from '../profile/media-tabs';
@@ -12,7 +12,9 @@ import {Buy} from './Buy';
 import {
     init,
     join,
-    leave
+    leave,
+    hide_reviews,
+    show_reviews
 } from './store/event';
 import Vote from './Reviews/Vote';
 import ReviewFeed from './Reviews/ReviewFeed';
@@ -63,33 +65,45 @@ class GamePageComponent extends Component{
 
                     <section className="user-middle">
                         
-                        <ReviewFeed />
+                        {
+                            data.reviews_open ? (
+                                <ReviewFeed 
+                                    reviews={data.reviews}
+                                    vote={data.votes}
+                                    id={id}
+                                />        
+                            ) : (
+                                <Fragment>
 
-                        <About 
-                            about={data.options}
-                        /> 
+                                    <About 
+                                        about={data.options}
+                                    /> 
 
-                        <section className="user-uploads w-100" id="media-container">
-                            
-                            <MediaTabs 
-                                media={data.media}
-                                streams={data.streams}
-                            />
+                                    <section className="user-uploads w-100" id="media-container">
+                                        
+                                        <MediaTabs 
+                                            media={data.media}
+                                            streams={data.streams}
+                                        />
 
-                        </section>
-                    
-                        <section className="user-add-post">
-                            <CreatePostComponent 
-                                type={`game`}
-                                id={id}
-                            />
-                        </section>
+                                    </section>
+                                
+                                    <section className="user-add-post">
+                                        <CreatePostComponent 
+                                            type={`game`}
+                                            id={id}
+                                        />
+                                    </section>
 
-                        <FeedList 
-                            list={data.feed}
-                            user={id}
-                            type={`game`}
-                        />
+                                    <FeedList 
+                                        list={data.feed}
+                                        user={id}
+                                        type={`game`}
+                                    />
+
+                                </Fragment>
+                            )
+                        }
 
                     </section>
 
@@ -97,7 +111,12 @@ class GamePageComponent extends Component{
 
                         <section className="block">
 
-                            <Vote />             
+                            <Vote 
+                                showReviews={() => this.props.show_reviews()}
+                                reviews={data.reviews.slice(0,2)}
+                                vote={data.votes}
+                                id={id}
+                            />             
 
                         </section>
 
@@ -133,7 +152,9 @@ const GamePage = connect(
         return {
             init: group => dispatch(init(group)),
             join: group => dispatch(join(group)),
-            leave: group => dispatch(leave(group))
+            leave: group => dispatch(leave(group)),
+            show_reviews: () => dispatch(show_reviews()),
+            hide_reviews: () => dispatch(hide_reviews())
         }
     }
 )(GamePageComponent);

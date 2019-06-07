@@ -25,6 +25,8 @@ class CreateTableGroups extends Migration
 
             $table->boolean('is_game')->default(false);
 
+            $table->unsignedInteger('love_reactant_id')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

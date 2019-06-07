@@ -46,7 +46,7 @@ class ReacterListener
             $n->user()->associate(
                 $target->creator
             );
-        } // end if
+        } else {return;} // end if
 
         $n->save();
     }

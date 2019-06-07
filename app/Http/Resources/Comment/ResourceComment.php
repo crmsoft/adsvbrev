@@ -32,7 +32,7 @@ class ResourceComment extends JsonResource
             'id' => $this->hash,
             'user' => new User($this->creator),
             'created_at' => $this->created_at->diffForHumans(null, true, true),
-            'contnet' => $this->body,
+            'content' => $this->body,
             'parent' => $this->parent_hash,
             'subs' => $this->parent_hash ? [] : new CommentCollection($this->children()->take(4)->orderBy('id', 'desc')->get()),
             'like_count' => $reactant->getReactionCounterOfType( $reactionType )->getCount(),

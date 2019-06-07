@@ -166,6 +166,8 @@
     }
 
     .filter{
+        
+        border: 1px solid #313131;
 
         a{
             color: $white;
@@ -191,4 +193,47 @@
         }
     }
 
+    .comments{
+        padding-top: 15px;
+        background-color: transparent;
+        .comment{
+            background-color: $postBack;
+            border-radius: 3px;
+            .review-type{
+                background-color: $postDelimiter;
+                padding: 3px;
+                border-radius: 1px;
+                &.negative{
+                    .icon-finger-up{
+                        display: none;
+                    }
+                    .type-recommend{
+                        display: none;
+                    }
+                }
+                &.positive{
+                    .icon-finger-down{
+                        display: none;
+                    }
+                    .type-not-recommend{
+                        display: none;
+                    }
+                }
+
+                .icon-finger-up{
+                    color: $green;
+                }
+
+                .icon-finger-down{
+                    color: $red
+                }
+                .icon-comment{
+                    color: $mainGray;
+                }
+                .d-inline-block{
+                    padding: 0 5px;
+                }
+            }
+        }
+    }
 }
