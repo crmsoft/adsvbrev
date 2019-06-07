@@ -104,7 +104,7 @@ class ProfileController extends Controller
             'timezone' => 'string',
             'new_password' => 'required_with:password|string|min:6',
             'password' => 'string|min:6',
-            'username' => 'unique:users',
+            'username' => 'unique:users|alpha_dash',
             'phone' => 'string',
             'gender' => 'in:male,female'
         ]);
