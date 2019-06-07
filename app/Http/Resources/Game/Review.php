@@ -28,7 +28,7 @@ class Review extends JsonResource
             'id' => \Hashids::encode($this->id),
             'text' => $this->review,
             'user' => new User($this->user),
-            'type' => $this->type == 'vote-up' ? 'positive' : 'negative',
+            'type' => $this->vote == 'vote-up' ? 'positive' : 'negative',
             'likes' => $isLikes,
             'like_count' => $reactant->getReactionCounterOfType( $reactionType )->getCount(),
             'created_at' => $this->created_at->diffForHumans(null, true, true),
