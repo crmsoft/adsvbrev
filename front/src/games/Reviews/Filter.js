@@ -76,7 +76,7 @@ Filter.filterReviews = (type, arr) => {
 
     if (type === FILTER_BEST)
     {
-        return arr.sort((a,b) => (a.like_count > b.like_count) ? 1 : ((b.like_count > a.like_count) ? -1 : 0));
+        return arr.sort((a,b) => (a.like_count > b.like_count) ? -1 : ((b.like_count > a.like_count) ? 1 : 0));
     } // end if
 
     if (type === FILTER_LAST)

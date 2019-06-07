@@ -2,12 +2,20 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
+import {
+    placeEmoji
+} from '../../utils';
+
 export const ReviewList = ({list, updateLike}) => {
-    return (
+    return list.length ? (
         <div className="comments">
             {
                 list.map(review => <Comment key={review.id} review={review} updateLike={updateLike} />)
             }
+        </div>
+    ) : (
+        <div className="alert alert-link">
+            No reviews.
         </div>
     )
 }
@@ -25,6 +33,7 @@ class Comment extends Component {
         const {review} = this.props;
         const {user} = review;
 
+
         return (
             <div className="comment">
                 <div className="comment-user">
@@ -39,9 +48,9 @@ class Comment extends Component {
                                 <Link to={`/gg/${user.username}`} >
                                     <strong>{user.full_name}</strong>
                                 </Link>
-                                <div className="comment-time">
+                                <span className="comment-time d-block">
                                     {review.created_at}
-                                </div>
+                                </span>
                             </p>
                         </div>
                         <div className="float-right">
@@ -68,7 +77,7 @@ class Comment extends Component {
                     <div style={{marginLeft: '-65px'}}>
 
                         <div>
-                            {review.text}
+                            {placeEmoji(review.text)}
                         </div>
                         <div className="w-100 ">
                             <div className="comment-actions">

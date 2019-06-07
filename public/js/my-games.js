@@ -29,7 +29,6 @@
     initController();
 
     function search() {
-console.log(signal, requesting);
 
         if (requesting || signal.aborted)
         {

@@ -14,7 +14,8 @@ import {
     join,
     leave,
     hide_reviews,
-    show_reviews
+    show_reviews,
+    push_review
 } from './store/event';
 import Vote from './Reviews/Vote';
 import ReviewFeed from './Reviews/ReviewFeed';
@@ -68,6 +69,7 @@ class GamePageComponent extends Component{
                         {
                             data.reviews_open ? (
                                 <ReviewFeed 
+                                    pushReview={({data}) => this.props.push_review(data)}
                                     reviews={data.reviews}
                                     vote={data.votes}
                                     id={id}
@@ -112,7 +114,7 @@ class GamePageComponent extends Component{
                         <section className="block">
 
                             <Vote 
-                                showReviews={() => this.props.show_reviews()}
+                                showReviews={can_add_review => this.props.show_reviews(can_add_review)}
                                 reviews={data.reviews.slice(0,2)}
                                 vote={data.votes}
                                 id={id}
@@ -153,8 +155,9 @@ const GamePage = connect(
             init: group => dispatch(init(group)),
             join: group => dispatch(join(group)),
             leave: group => dispatch(leave(group)),
-            show_reviews: () => dispatch(show_reviews()),
-            hide_reviews: () => dispatch(hide_reviews())
+            show_reviews: can_add_review => dispatch(show_reviews(can_add_review)),
+            hide_reviews: () => dispatch(hide_reviews()),
+            push_review: review => dispatch(push_review(review))
         }
     }
 )(GamePageComponent);

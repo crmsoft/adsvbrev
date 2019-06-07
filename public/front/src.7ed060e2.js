@@ -74797,7 +74797,7 @@ exports.Buy = Buy;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.REVIEWS_HIDDEN = exports.REVIEWS_SHOWN = exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
+exports.REVIEW_PUSH = exports.REVIEWS_HIDDEN = exports.REVIEWS_SHOWN = exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
 var LOADED = "LOADED";
 exports.LOADED = LOADED;
 var INIT = "FETCH_GROUP";
@@ -74810,13 +74810,15 @@ var REVIEWS_SHOWN = 'REVIEWS_SHOWN';
 exports.REVIEWS_SHOWN = REVIEWS_SHOWN;
 var REVIEWS_HIDDEN = 'REVIEWS_HIDDEN';
 exports.REVIEWS_HIDDEN = REVIEWS_HIDDEN;
+var REVIEW_PUSH = 'REVIEW_PUSH';
+exports.REVIEW_PUSH = REVIEW_PUSH;
 },{}],"../src/games/store/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.leave = exports.join = exports.init = exports.hide_reviews = exports.show_reviews = void 0;
+exports.leave = exports.join = exports.init = exports.hide_reviews = exports.show_reviews = exports.push_review = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -74824,11 +74826,22 @@ var _action = require("./action");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var show_reviews = function show_reviews() {
+var push_review = function push_review(review) {
+  return function (dispatch) {
+    dispatch({
+      type: _action.REVIEW_PUSH,
+      data: review
+    });
+  };
+};
+
+exports.push_review = push_review;
+
+var show_reviews = function show_reviews(can_add_review) {
   return function (dispatch) {
     dispatch({
       type: _action.REVIEWS_SHOWN,
-      data: null
+      data: can_add_review
     });
   };
 };
@@ -74897,6 +74910,8 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _utils = require("../../utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Review = function Review(_ref) {
@@ -74915,12 +74930,12 @@ var Review = function Review(_ref) {
     className: "icon-comment"
   }))))), _react.default.createElement("div", {
     className: "game-review-content"
-  }, _react.default.createElement("p", null, review.text)));
+  }, _react.default.createElement("p", null, (0, _utils.placeEmoji)(review.text))));
 };
 
 var _default = Review;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"../src/games/Reviews/Vote.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js"}],"../src/games/Reviews/Vote.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -74970,38 +74985,37 @@ function (_Component) {
   _createClass(Vote, [{
     key: "onPositive",
     value: function onPositive() {
+      var _this = this;
+
       var id = this.props.id;
 
       _axios.default.post("/game/vote/store/".concat(id), {
         type: 'positive'
       }).then(function (_ref) {
         var data = _ref.data;
-
-        if (data.message) {
-          alert(data.message);
-        } // end if
-
+        data.message && alert(data.message);
+        data.passes && _this.props.showReviews(true);
       });
     }
   }, {
     key: "onNegative",
     value: function onNegative() {
+      var _this2 = this;
+
       var id = this.props.id;
 
       _axios.default.post("/game/vote/store/".concat(id), {
         type: 'negative'
       }).then(function (_ref2) {
         var data = _ref2.data;
-
-        if (data.message) {
-          alert(data.message);
-        }
+        data.message && alert(data.message);
+        data.passes && _this2.props.showReviews(true);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           reviews = _this$props.reviews,
@@ -75039,7 +75053,7 @@ function (_Component) {
         className: "text-right"
       }, _react.default.createElement("a", {
         onClick: function onClick() {
-          return _this.props.showReviews();
+          return _this3.props.showReviews();
         },
         href: "javascript:void(0)"
       }, _react.default.createElement("small", {
@@ -75121,6 +75135,8 @@ function (_Component) {
   _createClass(AddReview, [{
     key: "onSubmit",
     value: function onSubmit() {
+      var _this2 = this;
+
       var post = this.state.post;
       var game = this.props.game;
 
@@ -75129,7 +75145,15 @@ function (_Component) {
         type: 'positive'
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
+
+        _this2.setState(function () {
+          return {
+            active: false,
+            post: ''
+          };
+        }, function () {
+          _this2.props.pushReview(data);
+        });
       });
     }
   }, {
@@ -75271,7 +75295,7 @@ Filter.filterReviews = function (type, arr) {
 
   if (type === FILTER_BEST) {
     return arr.sort(function (a, b) {
-      return a.like_count > b.like_count ? 1 : b.like_count > a.like_count ? -1 : 0;
+      return a.like_count > b.like_count ? -1 : b.like_count > a.like_count ? 1 : 0;
     });
   } // end if
 
@@ -75302,6 +75326,8 @@ var _reactRouterDom = require("react-router-dom");
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _utils = require("../../utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -75327,7 +75353,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var ReviewList = function ReviewList(_ref) {
   var list = _ref.list,
       updateLike = _ref.updateLike;
-  return _react.default.createElement("div", {
+  return list.length ? _react.default.createElement("div", {
     className: "comments"
   }, list.map(function (review) {
     return _react.default.createElement(Comment, {
@@ -75335,7 +75361,9 @@ var ReviewList = function ReviewList(_ref) {
       review: review,
       updateLike: updateLike
     });
-  }));
+  })) : _react.default.createElement("div", {
+    className: "alert alert-link"
+  }, "No reviews.");
 };
 
 exports.ReviewList = ReviewList;
@@ -75380,8 +75408,8 @@ function (_Component) {
         className: "d-inline-block"
       }, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/gg/".concat(user.username)
-      }, _react.default.createElement("strong", null, user.full_name)), _react.default.createElement("div", {
-        className: "comment-time"
+      }, _react.default.createElement("strong", null, user.full_name)), _react.default.createElement("span", {
+        className: "comment-time d-block"
       }, review.created_at))), _react.default.createElement("div", {
         className: "float-right"
       }, _react.default.createElement("div", {
@@ -75406,7 +75434,7 @@ function (_Component) {
         style: {
           marginLeft: '-65px'
         }
-      }, _react.default.createElement("div", null, review.text), _react.default.createElement("div", {
+      }, _react.default.createElement("div", null, (0, _utils.placeEmoji)(review.text)), _react.default.createElement("div", {
         className: "w-100 "
       }, _react.default.createElement("div", {
         className: "comment-actions"
@@ -75423,7 +75451,7 @@ function (_Component) {
 
   return Comment;
 }(_react.Component);
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js"}],"../src/games/Reviews/ReviewFeed.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","../../utils":"../src/utils.js"}],"../src/games/Reviews/ReviewFeed.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75531,6 +75559,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "review-feed"
       }, _react.default.createElement(_AddReview.default, {
+        pushReview: this.props.pushReview,
         available: can_add_review,
         game: this.props.id
       }), _react.default.createElement("hr", null), _react.default.createElement(_Filter.default, {
@@ -75545,7 +75574,7 @@ function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
-      if (!state.list.length) {
+      if (state.list.length !== props.reviews.length) {
         return {
           list: props.reviews
         };
@@ -75668,6 +75697,10 @@ function (_Component) {
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, data.reviews_open ? _react.default.createElement(_ReviewFeed.default, {
+        pushReview: function pushReview(_ref) {
+          var data = _ref.data;
+          return _this.props.push_review(data);
+        },
         reviews: data.reviews,
         vote: data.votes,
         id: id
@@ -75693,8 +75726,8 @@ function (_Component) {
       }, _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_Vote.default, {
-        showReviews: function showReviews() {
-          return _this.props.show_reviews();
+        showReviews: function showReviews(can_add_review) {
+          return _this.props.show_reviews(can_add_review);
         },
         reviews: data.reviews.slice(0, 2),
         vote: data.votes,
@@ -75729,11 +75762,14 @@ var GamePage = (0, _reactRedux.connect)(function (store) {
     leave: function leave(group) {
       return dispatch((0, _event.leave)(group));
     },
-    show_reviews: function show_reviews() {
-      return dispatch((0, _event.show_reviews)());
+    show_reviews: function show_reviews(can_add_review) {
+      return dispatch((0, _event.show_reviews)(can_add_review));
     },
     hide_reviews: function hide_reviews() {
       return dispatch((0, _event.hide_reviews)());
+    },
+    push_review: function push_review(review) {
+      return dispatch((0, _event.push_review)(review));
     }
   };
 })(GamePageComponent);
@@ -75748,6 +75784,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _action = require("./action");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 var initialState = {
   data: {
@@ -75780,9 +75824,25 @@ var reducer = function reducer() {
 
     case _action.REVIEWS_SHOWN:
       {
-        return {
+        return action.data ? {
+          data: Object.assign({}, state.data, {
+            votes: Object.assign({}, state.data.votes, {
+              can_add_review: true
+            }),
+            reviews_open: true
+          })
+        } : {
           data: Object.assign({}, state.data, {
             reviews_open: true
+          })
+        };
+      }
+
+    case _action.REVIEW_PUSH:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            reviews: [action.data].concat(_toConsumableArray(state.data.reviews))
           })
         };
       }
@@ -76351,7 +76411,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45317" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45314" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

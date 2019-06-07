@@ -5,14 +5,24 @@ import {
     USER_JOINED,
     USER_LEAVED,
     REVIEWS_HIDDEN,
-    REVIEWS_SHOWN
+    REVIEWS_SHOWN,
+    REVIEW_PUSH
 } from './action';
 
-export const show_reviews = () => {
+export const push_review = (review) => {
+    return dispatch => {
+        dispatch({
+            type: REVIEW_PUSH,
+            data: review
+        });
+    }
+}
+
+export const show_reviews = (can_add_review) => {
     return dispatch => {
         dispatch({
             type: REVIEWS_SHOWN,
-            data: null
+            data: can_add_review
         });
     }
 }

@@ -5,3 +5,4 @@ export const USER_LEAVED = `USER_LEAVED`;
 
 export const REVIEWS_SHOWN = 'REVIEWS_SHOWN';
 export const REVIEWS_HIDDEN = 'REVIEWS_HIDDEN';
+export const REVIEW_PUSH = 'REVIEW_PUSH';

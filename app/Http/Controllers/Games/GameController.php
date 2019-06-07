@@ -54,6 +54,14 @@ class GameController extends Controller
         $reactionType = \ReactionType::fromName($vote);
 
         $user = auth()->user();
+
+        if($user->group()->where('is_game', 1)->where('id', $game->id)->count() == 0)
+        {
+            return response()->json([
+                'message' => __('Only players of this game can vote.'),
+                'passes' => false
+            ]);
+        }
         
         if ( !$user->isRegisteredAsLoveReacter() )
         {
@@ -69,11 +77,14 @@ class GameController extends Controller
 
         if (!$reacter->isReactedTo( $game->getLoveReactant() )  ){
             $reacter->reactTo($game->getLoveReactant(), $reactionType);
-            return;
+            return response()->json([
+                'passes' => true
+            ]);
         } // end if
           
         return response()->json([
-            'message' => __('You already did your vote.')
+            'message' => __('You already did your vote.'),
+            'passes' => true
         ]);
     }
 

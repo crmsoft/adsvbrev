@@ -12,10 +12,8 @@ export default class Vote extends Component{
             type: 'positive'
         })
         .then(({data}) => {
-            if (data.message)
-            {
-                alert(data.message);
-            } // end if
+            data.message && alert(data.message);            
+            data.passes && this.props.showReviews(true);
         })
     }
 
@@ -26,10 +24,8 @@ export default class Vote extends Component{
             type: 'negative'
         })
         .then(({data}) => {
-            if (data.message)
-            {
-                alert(data.message);
-            }
+            data.message && alert(data.message);            
+            data.passes && this.props.showReviews(true);
         })
     }
 

@@ -1,5 +1,9 @@
 import React from 'react';
 
+import {
+    placeEmoji
+} from '../../utils';
+
 const Review = ({review}) => {
     return (
         <div className="game-review">
@@ -22,7 +26,7 @@ const Review = ({review}) => {
 
             <div className="game-review-content">
                 <p>
-                    {review.text}
+                    {placeEmoji(review.text)}
                 </p>
             </div>
 

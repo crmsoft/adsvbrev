@@ -3,7 +3,8 @@ import {
     USER_JOINED,
     USER_LEAVED,
     REVIEWS_HIDDEN,
-    REVIEWS_SHOWN
+    REVIEWS_SHOWN,
+    REVIEW_PUSH
 } from './action';
 
 const initialState = {
@@ -33,10 +34,30 @@ const reducer = (state = initialState, action) => {
             }
         }
         case REVIEWS_SHOWN: {
-            return {
+            return action.data ? {
+                data: {
+                    ...state.data,
+                    votes: {
+                        ...state.data.votes,
+                        can_add_review: true
+                    },
+                    reviews_open: true
+                }
+            } : {
                 data: {
                     ...state.data,
                     reviews_open: true
+                }
+            }
+        }
+        case REVIEW_PUSH: {
+            return {
+                data: {
+                    ...state.data,
+                    reviews: [
+                        action.data,
+                        ...state.data.reviews
+                    ]
                 }
             }
         }

@@ -22,7 +22,14 @@ export default class AddReview extends Component{
             review: post,
             type: 'positive'
         }).then(({data}) => {
-            console.log(data);
+            this.setState(() => {
+                return {
+                    active: false,
+                    post: ''
+                }
+            }, () => {
+                this.props.pushReview(data);
+            })
         })
     }
 

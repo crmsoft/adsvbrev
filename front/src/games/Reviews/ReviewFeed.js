@@ -13,7 +13,7 @@ export default class ReviewFeed extends Component {
 
     static getDerivedStateFromProps(props, state)
     {
-        if (!state.list.length)
+        if (state.list.length !== props.reviews.length)
         {
             return {
                 list: props.reviews
@@ -65,6 +65,7 @@ export default class ReviewFeed extends Component {
         return (
             <div className="review-feed">
                 <AddReview 
+                    pushReview={this.props.pushReview}
                     available={can_add_review}
                     game={this.props.id}
                 />
