@@ -24,6 +24,7 @@ class ResourceGame extends JsonResource
         $user = auth()->user();
 
         return [
+            'id' => $this->slug,
             'name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),
             'poster' => url(\Storage::url($this->poster)),

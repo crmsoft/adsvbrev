@@ -74470,8 +74470,11 @@ function (_Component) {
         className: "col-auto"
       }, _react.default.createElement("div", {
         className: "content-bottom"
-      }, _react.default.createElement("h1", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/g/".concat(data.id)
+      }, _react.default.createElement("h1", null, _react.default.createElement("a", {
+        onClick: function onClick() {
+          return _this.props.init();
+        },
+        href: "javascript:void(0)"
       }, data.name)))), _react.default.createElement("div", {
         className: "col-auto flex-grow-1"
       }, _react.default.createElement("div", {
@@ -75689,6 +75692,9 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_Profile.default, {
+        init: function init() {
+          return _this.props.init(data.id);
+        },
         data: data,
         onJoin: function onJoin(e) {
           return _this.props.join(id);
@@ -75854,7 +75860,9 @@ var reducer = function reducer() {
     case _action.INIT:
       {
         return {
-          data: Object.assign({}, state.data, action.data.data)
+          data: Object.assign({}, state.data, action.data.data, {
+            reviews_open: false
+          })
         };
       }
 
