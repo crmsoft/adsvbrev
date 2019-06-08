@@ -74381,6 +74381,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -74468,7 +74470,9 @@ function (_Component) {
         className: "col-auto"
       }, _react.default.createElement("div", {
         className: "content-bottom"
-      }, _react.default.createElement("h1", null, data.name))), _react.default.createElement("div", {
+      }, _react.default.createElement("h1", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/g/".concat(data.id)
+      }, data.name)))), _react.default.createElement("div", {
         className: "col-auto flex-grow-1"
       }, _react.default.createElement("div", {
         className: "content-bottom flex-column-reverse"
@@ -74506,7 +74510,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Profile;
-},{"react":"../node_modules/react/index.js"}],"../src/games/About/TabContent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/games/About/TabContent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

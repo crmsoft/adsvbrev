@@ -8155,6 +8155,10 @@ span.flatpickr-weekday {
     .game-profile ul.social-list li:last-child {
       color: #171a21; }
 
+.game-profile .content-bottom a {
+  text-decoration: none;
+  color: inherit; }
+
 .game-profile .profile-actions {
   margin-bottom: 10px; }
 
