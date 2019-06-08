@@ -74919,7 +74919,7 @@ var Review = function Review(_ref) {
   return _react.default.createElement("div", {
     className: "game-review"
   }, _react.default.createElement("table", {
-    className: "game-review-header vote-positive"
+    className: "game-review-header vote-".concat(review.type)
   }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, _react.default.createElement("span", {
     className: "icon-finger-up positive"
   }), _react.default.createElement("span", {

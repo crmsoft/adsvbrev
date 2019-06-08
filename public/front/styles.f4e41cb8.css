@@ -8228,9 +8228,11 @@ span.flatpickr-weekday {
   line-height: 1; }
   .reviews .game-review-header td:first-child {
     text-align: center;
-    background-color: #CBCBCB; }
+    background-color: #CBCBCB;
+    width: 25px; }
   .reviews .game-review-header td:last-child {
-    text-align: center; }
+    text-align: center;
+    width: 25px; }
   .reviews .game-review-header.vote-positive .negative {
     display: none; }
   .reviews .game-review-header.vote-negative .positive {
