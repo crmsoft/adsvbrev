@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Loading} from '../general/Loading';
+
 export const Footer = ({
     actions
 }) => {
@@ -7,6 +9,9 @@ export const Footer = ({
         <div
             className={`dd-modal-footer`}
         >
+            <span className="processing-indicator">
+                <Loading />
+            </span>
             {
                 actions.map((act, index) => {
                     return (

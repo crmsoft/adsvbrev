@@ -5,13 +5,13 @@ import {
     addToFriends,
     unsubscribe,
     acceptToFriends
-} from '../../friedship/event';
+} from '../../friendship/event';
 import {
     FRIENDSHIP_NONE,
     FRIENDSHIP_SUBSCRIBED,
     FRIENDSHIP_FOLLOWING,
     FRIENDSHIP_FRIENDS
-} from '../../friedship/actions';
+} from '../../friendship/actions';
 import {guest} from '../fetch/store';
 
 let guestUnsubscribe = () => {};

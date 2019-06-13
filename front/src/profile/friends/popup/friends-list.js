@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import { intialFetch, moreFetch } from '../actions';
 import FriendListItem from './friend-list-item';
-import { unfriend } from '../../../friedship/event';
+import { unfriend } from '../../../friendship/event';
 
 class FriendsListComponent extends Component {
 

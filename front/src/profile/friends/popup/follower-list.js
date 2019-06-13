@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FollowerListItem from './follower-list-item';
 import { connect, Provider } from 'react-redux';
 import {intialFetch} from '../actions';
-import { acceptToFriends } from '../../../friedship/event';
+import { acceptToFriends } from '../../../friendship/event';
 
 class FollowerListComponent extends Component{
 

@@ -16,6 +16,14 @@ class GroupCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        
+        if (isset($this->additional['type']) && $this->additional['type'] == 'manager')
+        {
+            return $this->collection->map(function($group) {
+                return new ManagerGroup($group);
+            });
+        } // end if
+
         return parent::toArray($request);
     }
 }

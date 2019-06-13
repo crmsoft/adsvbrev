@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import ProfileForm from './content/profile';
 import SecurityForm from './content/security';
+import GroupTabContent from  './content/groups';
 
 export default class SettingsContnet extends Component {
 
@@ -44,7 +45,9 @@ export default class SettingsContnet extends Component {
         const {data} = this.props.data;
         
         return (
-            <Tabs>
+            <Tabs
+            defaultIndex={2}
+            >
                 <TabList className="nav nav-tabs">
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
@@ -56,6 +59,12 @@ export default class SettingsContnet extends Component {
                         <a href="javascript:void(0);">
                             <span className="icon-art"></span>
                             {" Security"}
+                        </a>
+                    </Tab>
+                    <Tab selectedClassName="active">
+                        <a href="javascript:void(0);">
+                            <span className="icon-art"></span>
+                            {" Your Groups"}
                         </a>
                     </Tab>
                 </TabList>
@@ -73,6 +82,9 @@ export default class SettingsContnet extends Component {
                         
                         <SecurityForm errors={this.state.errors} save={this.saveChanges} />
 
+                    </TabPanel>
+                    <TabPanel forceRender={false}>
+                        <GroupTabContent />
                     </TabPanel>
                 </div>
             </Tabs>

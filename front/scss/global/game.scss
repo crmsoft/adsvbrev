@@ -33,6 +33,13 @@
         }
     }
 
+    .content-bottom{
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+
     .profile-actions{
         margin-bottom: 10px;
     }
@@ -124,9 +131,11 @@
         td:first-child{
             text-align: center;
             background-color: $mainGray;
+            width: 25px;
         }
         td:last-child{
             text-align: center;
+            width: 25px;
         }
 
         &.vote-positive{

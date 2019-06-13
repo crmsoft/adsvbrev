@@ -9,6 +9,7 @@ use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\Media\MediaCollection;
 use App\Http\Resources\TwitchStreams\StreamCollection;
+use App\Entities\Game as EntityGame;
 
 class ResourceGame extends JsonResource
 {
@@ -39,14 +40,15 @@ class ResourceGame extends JsonResource
             ]),
             'streams' => new StreamCollection($this->get_game_streams($this->name)),
             'votes' => $this->getVotes($this, $user),
-            'reviews' => new ReviewCollection($this->reviews->shuffle())
+            'reviews' => new ReviewCollection($this->reviews->shuffle()),
+            'avg_rate' => $this->getRate($this)
         ];
     }
 
     public function getVotes($game,$user)
     {
-        $reactionUp = \ReactionType::fromName('vote-up');
-        $reactionDown = \ReactionType::fromName('vote-down');
+        $reactionUp = \ReactionType::fromName(EntityGame::VOTE_UP);
+        $reactionDown = \ReactionType::fromName(EntityGame::VOTE_DOWN);
 
         $reacter = $user->getLoveReacter();
         $reactant = $game->getLoveReactant();
@@ -59,6 +61,22 @@ class ResourceGame extends JsonResource
             'positive' => $positive,
             'negative' => $negative
         ];
+    }
+
+    private final function getRate($game)
+    {
+        $reactionUp = \ReactionType::fromName(EntityGame::VOTE_UP);
+        $reactionDown = \ReactionType::fromName(EntityGame::VOTE_DOWN);
+
+        $reactant = $game->getLoveReactant();
+
+        $weight_positive = $reactant->getReactionCounterOfType( $reactionUp )->getWeight();
+        $weight_negative = $reactant->getReactionCounterOfType( $reactionDown )->getWeight();
+
+        if ($weight_positive == 0 && $weight_negative == 0)
+            return 0;
+
+        return $weight_positive / ($weight_positive + $weight_negative) * 5 * 20;
     }
 
     private function get_game_streams($name)

@@ -29,6 +29,16 @@
         max-width: 650px;
         margin: 0 auto;
 
+        .form-create-group{
+            @extend .schedule;
+            margin: 0;
+            border: none;
+            .row{
+                border-top:none;
+                margin-top: 0 !important;
+            }
+        }
+
         .row{
             border-top: 1px solid $delimiterColor;
             padding: 15px 0;

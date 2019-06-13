@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import {Link} from 'react-router-dom';
 
 const Ava = ({src}) => {
     return (
@@ -29,11 +30,11 @@ export default class Profile extends Component {
                     <div className="row">
                         <div className="wotes">
                             <span className="wotes-avg">
-                                3.0
+                                {(data.avg_rate / 20).toFixed(1)}
                             </span>
                             <div className="wotes-stars">
                                 <span className="wote-filler"></span>
-                                <span className="wote-bar" style={{width: `71%`}}></span>
+                                <span className="wote-bar" style={{width: `${data.avg_rate}%`}}></span>
                                 <span className="wote-mask"></span>
                                 <span className="wote-filler"></span>
                             </div>
@@ -46,7 +47,12 @@ export default class Profile extends Component {
                         <div className="col-auto">
                             <div className="content-bottom">
                                 <h1>
-                                    {data.name}
+                                    <a
+                                        onClick={() => this.props.init()}
+                                        href="javascript:void(0)"
+                                    >
+                                        {data.name}
+                                    </a>
                                 </h1>
                             </div>
                         </div>  

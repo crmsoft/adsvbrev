@@ -18,6 +18,11 @@ body{
     align-items: flex-end;
 }
 
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 @import './switch';
 
 @import './schedule';

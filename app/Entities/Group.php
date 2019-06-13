@@ -43,8 +43,26 @@ class Group extends Model implements ReactableContract
         return 'slug';
     }
 
+    public function getRoleAttribute()
+    {
+        $user = auth()->user();
+        $role = '';
+
+        if ($manager = $this->managers->where('id', $user->id)->first()){
+            if($manager->pivot->hierarchy == 1)
+            {
+                $role = 'administrator';
+            } else {
+                $role = 'moderator';
+            }
+        }
+
+        return $role;
+    }
+
     public function managers(){
-        return $this->belongsToMany(User::class, 'group_manager', 'group_id', 'user_id');
+        return $this->belongsToMany(User::class, 'group_manager', 'group_id', 'user_id')
+        ->withPivot('hierarchy');
     }
 
     public function profile(){
@@ -58,7 +76,7 @@ class Group extends Model implements ReactableContract
             'user_groups',
             'group_id',
             'user_id'
-        );
+        )->withPivot('status');
     }
 
     public function posts()

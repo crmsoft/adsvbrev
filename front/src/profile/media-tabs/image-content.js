@@ -27,7 +27,11 @@ export default class ImageCotent extends Component {
                                 })
                             }
                         </div>
-                        <a href="#" className="user-content-all">All (14)</a>
+                        {
+                            media.length < 4 ? null : (
+                                <a href="#" className="user-content-all">All ({media.length})</a>                                
+                            )
+                        }
                     </div>
                 </Fragment>
             )

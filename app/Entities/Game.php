@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Game extends Group
 {
+    const VOTE_UP = 'vote-up';
+    const VOTE_DOWN = 'vote-down';
+
     protected $table = 'groups';
 
     public static function boot()

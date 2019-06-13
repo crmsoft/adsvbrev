@@ -67,6 +67,13 @@ Route::group([
     Route::get('/feed/index', 'FeedController@index')->name('feed-list');
     Route::post('/feed/more', 'FeedController@more')->name('feed-load-more');
 
+    Route::get('/groups', 'GroupController@index')->name('group-list');
+    Route::post('/groups/store', 'GroupController@store')->name('store-group');
+    Route::post('/groups/{group}/update', 'GroupController@update')->name('update-group');
+    Route::post('/groups/{group}/destroy', 'GroupController@destroy')->name('destroy-group');
+    
+    Route::get('/groups/{group}', 'GroupManagerController@index')->name('get-group-info');
+
 });
 
 // Post Specific Routes
@@ -141,6 +148,8 @@ Route::group([
     'middleware' => [ 'auth' ]
 ], function(){
     Route::post('/search', 'SearchController@search')->name('settings-view');
+    Route::get('/filter/games/{query?}', 'SearchController@filterGame')->name('filter-game');
+    Route::get('/filter/users/{query?}', 'SearchController@filterUser')->name('filter-game');
 });
 
 // Search page specific routes
@@ -169,8 +178,8 @@ Route::group([
     Route::post('/chat/{conversation}/pull', 'MessageController@pull')->name('pull-latest-messages');
     Route::post('/chat/{conversation}/pull/prev', 'MessageController@pullPrev')->name('pull-latest-messages');
 
-    Route::post('/messenger/sound', 'MessengerController@sound')->name('set-meesenger-sound');
-    Route::post('/messenger/status', 'MessengerController@status')->name('set-meesenger-status');
+    Route::post('/messenger/sound', 'MessengerController@sound')->name('set-messenger-sound');
+    Route::post('/messenger/status', 'MessengerController@status')->name('set-messenger-status');
 });
 
 

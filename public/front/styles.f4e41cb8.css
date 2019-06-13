@@ -448,23 +448,23 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
-.container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+.container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 576px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+    .container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 540px; } }
   @media (min-width: 768px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+    .container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 720px; } }
   @media (min-width: 992px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+    .container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 960px; } }
   @media (min-width: 1200px) {
-    .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+    .container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
       max-width: 1140px; } }
 
 .container-fluid {
@@ -2805,7 +2805,7 @@ input[type="button"].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem; }
-  .navbar > .container, .schedule .navbar > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar > li, .followers-popup .popup-content .notification-list .navbar > li,
+  .navbar > .container, .schedule .navbar > .schedule-create-form, .user-settings .content .form-create-group .navbar > .schedule-create-form, .search-results .content .form-create-group .navbar > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar > li, .followers-popup .popup-content .notification-list .navbar > li,
   .navbar > .container-fluid {
     display: flex;
     flex-wrap: wrap;
@@ -2868,7 +2868,7 @@ input[type="button"].btn-block {
   background-size: 100% 100%; }
 
 @media (max-width: 575.98px) {
-  .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
+  .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-sm > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
   .navbar-expand-sm > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2884,7 +2884,7 @@ input[type="button"].btn-block {
       .navbar-expand-sm .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
+    .navbar-expand-sm > .container, .schedule .navbar-expand-sm > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-sm > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-sm > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-sm > li, .followers-popup .popup-content .notification-list .navbar-expand-sm > li,
     .navbar-expand-sm > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-sm .navbar-collapse {
@@ -2894,7 +2894,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 767.98px) {
-  .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
+  .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-md > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
   .navbar-expand-md > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2910,7 +2910,7 @@ input[type="button"].btn-block {
       .navbar-expand-md .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
+    .navbar-expand-md > .container, .schedule .navbar-expand-md > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-md > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-md > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-md > li, .followers-popup .popup-content .notification-list .navbar-expand-md > li,
     .navbar-expand-md > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-md .navbar-collapse {
@@ -2920,7 +2920,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 991.98px) {
-  .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
+  .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-lg > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
   .navbar-expand-lg > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2936,7 +2936,7 @@ input[type="button"].btn-block {
       .navbar-expand-lg .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
+    .navbar-expand-lg > .container, .schedule .navbar-expand-lg > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-lg > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-lg > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-lg > li, .followers-popup .popup-content .notification-list .navbar-expand-lg > li,
     .navbar-expand-lg > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-lg .navbar-collapse {
@@ -2946,7 +2946,7 @@ input[type="button"].btn-block {
       display: none; } }
 
 @media (max-width: 1199.98px) {
-  .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
+  .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-xl > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
   .navbar-expand-xl > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
@@ -2962,7 +2962,7 @@ input[type="button"].btn-block {
       .navbar-expand-xl .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }
-    .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
+    .navbar-expand-xl > .container, .schedule .navbar-expand-xl > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand-xl > .schedule-create-form, .search-results .content .form-create-group .navbar-expand-xl > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand-xl > li, .followers-popup .popup-content .notification-list .navbar-expand-xl > li,
     .navbar-expand-xl > .container-fluid {
       flex-wrap: nowrap; }
     .navbar-expand-xl .navbar-collapse {
@@ -2974,7 +2974,7 @@ input[type="button"].btn-block {
 .navbar-expand {
   flex-flow: row nowrap;
   justify-content: flex-start; }
-  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
+  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand > .schedule-create-form, .search-results .content .form-create-group .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
   .navbar-expand > .container-fluid {
     padding-right: 0;
     padding-left: 0; }
@@ -2985,7 +2985,7 @@ input[type="button"].btn-block {
     .navbar-expand .navbar-nav .nav-link {
       padding-right: 0.5rem;
       padding-left: 0.5rem; }
-  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
+  .navbar-expand > .container, .schedule .navbar-expand > .schedule-create-form, .user-settings .content .form-create-group .navbar-expand > .schedule-create-form, .search-results .content .form-create-group .navbar-expand > .schedule-create-form, .followers-popup .popup-content .followers-list .navbar-expand > li, .followers-popup .popup-content .notification-list .navbar-expand > li,
   .navbar-expand > .container-fluid {
     flex-wrap: nowrap; }
   .navbar-expand .navbar-collapse {
@@ -4437,7 +4437,7 @@ button.bg-dark:focus {
   clear: both;
   content: ""; }
 
-.d-none, .schedule .schedule-create-form .back-img.selected span {
+.d-none, .schedule .schedule-create-form .back-img.selected span, .user-settings .content .form-create-group .schedule-create-form .back-img.selected span, .search-results .content .form-create-group .schedule-create-form .back-img.selected span {
   display: none !important; }
 
 .d-inline {
@@ -6290,7 +6290,7 @@ a.text-dark:hover, a.text-dark:focus {
     size: a3; }
   body {
     min-width: 992px !important; }
-  .container, .schedule .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
+  .container, .schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form, .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .notification-list li {
     min-width: 992px !important; }
   .navbar {
     display: none; }
@@ -6728,6 +6728,10 @@ body {
   display: flex;
   height: 100%;
   align-items: flex-end; }
+
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit; }
 
 .switch {
   position: relative;
@@ -7523,7 +7527,7 @@ span.flatpickr-weekday {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0); } }
 
-.schedule {
+.schedule, .user-settings .content .form-create-group, .search-results .content .form-create-group {
   padding: 1rem 3rem;
   float: left;
   width: 100%;
@@ -7533,22 +7537,22 @@ span.flatpickr-weekday {
   background: #14191c;
   border-radius: 6px;
   margin: 20px 0px; }
-  .schedule .schedule-canlendar {
+  .schedule .schedule-canlendar, .user-settings .content .form-create-group .schedule-canlendar, .search-results .content .form-create-group .schedule-canlendar {
     float: left;
     width: 100%; }
-  .schedule .schedule-header {
+  .schedule .schedule-header, .user-settings .content .form-create-group .schedule-header, .search-results .content .form-create-group .schedule-header {
     margin: 2rem 0;
     float: left;
     width: 100%; }
-    .schedule .schedule-header .schedula-title {
+    .schedule .schedule-header .schedula-title, .user-settings .content .form-create-group .schedule-header .schedula-title, .search-results .content .form-create-group .schedule-header .schedula-title {
       float: left;
       width: 50%; }
-      .schedule .schedule-header .schedula-title small {
+      .schedule .schedule-header .schedula-title small, .user-settings .content .form-create-group .schedule-header .schedula-title small, .search-results .content .form-create-group .schedule-header .schedula-title small {
         font-size: 26px; }
-    .schedule .schedule-header .schedule-change {
+    .schedule .schedule-header .schedule-change, .user-settings .content .form-create-group .schedule-header .schedule-change, .search-results .content .form-create-group .schedule-header .schedule-change {
       float: right;
       width: 50%; }
-      .schedule .schedule-header .schedule-change span {
+      .schedule .schedule-header .schedule-change span, .user-settings .content .form-create-group .schedule-header .schedule-change span, .search-results .content .form-create-group .schedule-header .schedule-change span {
         cursor: pointer;
         float: right;
         -webkit-border-radius: 100%;
@@ -7558,13 +7562,13 @@ span.flatpickr-weekday {
         width: 30px;
         line-height: 30px;
         text-align: center; }
-        .schedule .schedule-header .schedule-change span:hover {
+        .schedule .schedule-header .schedule-change span:hover, .user-settings .content .form-create-group .schedule-header .schedule-change span:hover, .search-results .content .form-create-group .schedule-header .schedule-change span:hover {
           background-color: #f15a2452; }
-  .schedule .flatpickr-input, .schedule .flatpickr-months {
+  .schedule .flatpickr-input, .user-settings .content .form-create-group .flatpickr-input, .search-results .content .form-create-group .flatpickr-input, .schedule .flatpickr-months, .user-settings .content .form-create-group .flatpickr-months, .search-results .content .form-create-group .flatpickr-months {
     display: none;
     visibility: hidden;
     opacity: 0; }
-  .schedule .has-event {
+  .schedule .has-event, .user-settings .content .form-create-group .has-event, .search-results .content .form-create-group .has-event {
     display: flex;
     flex-flow: row wrap;
     text-align: center;
@@ -7576,63 +7580,63 @@ span.flatpickr-weekday {
     /* two parallels */
     /* two parallels */
     /* single event full width */ }
-    .schedule .has-event .aside {
+    .schedule .has-event .aside, .user-settings .content .form-create-group .has-event .aside, .search-results .content .form-create-group .has-event .aside {
       flex: 1 0 1; }
-    .schedule .has-event .event-day {
+    .schedule .has-event .event-day, .user-settings .content .form-create-group .has-event .event-day, .search-results .content .form-create-group .has-event .event-day {
       position: absolute;
       z-index: 3; }
-    .schedule .has-event .event-dd-mark {
+    .schedule .has-event .event-dd-mark, .user-settings .content .form-create-group .has-event .event-dd-mark, .search-results .content .form-create-group .has-event .event-dd-mark {
       display: inline-block;
       background-color: #6DB100;
       z-index: 1;
       order: 1;
       width: 50%; }
-    .schedule .has-event .event-group-mark {
+    .schedule .has-event .event-group-mark, .user-settings .content .form-create-group .has-event .event-group-mark, .search-results .content .form-create-group .has-event .event-group-mark {
       display: inline-block;
       background-color: #F05A24;
       z-index: 1;
       order: 2;
       width: 50%; }
-    .schedule .has-event .user-event-mark {
+    .schedule .has-event .user-event-mark, .user-settings .content .form-create-group .has-event .user-event-mark, .search-results .content .form-create-group .has-event .user-event-mark {
       flex: 1 100%;
       order: 4;
       display: inline-block;
       background-color: #662D91;
       z-index: 1; }
-    .schedule .has-event .event-dd-mark + .user-event-mark {
+    .schedule .has-event .event-dd-mark + .user-event-mark, .user-settings .content .form-create-group .has-event .event-dd-mark + .user-event-mark, .search-results .content .form-create-group .has-event .event-dd-mark + .user-event-mark {
       flex: 1 0 0; }
-    .schedule .has-event .event-group-mark + .user-event-mark {
+    .schedule .has-event .event-group-mark + .user-event-mark, .user-settings .content .form-create-group .has-event .event-group-mark + .user-event-mark, .search-results .content .form-create-group .has-event .event-group-mark + .user-event-mark {
       flex: 1 0 50%; }
-    .schedule .has-event > *:only-child {
+    .schedule .has-event > *:only-child, .user-settings .content .form-create-group .has-event > *:only-child, .search-results .content .form-create-group .has-event > *:only-child {
       width: 100%; }
-  .schedule .flatpickr-input {
+  .schedule .flatpickr-input, .user-settings .content .form-create-group .flatpickr-input, .search-results .content .form-create-group .flatpickr-input {
     display: none;
     visibility: hidden;
     opacity: 0; }
-  .schedule .flatpickr-calendar.animate.inline {
+  .schedule .flatpickr-calendar.animate.inline, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline, .search-results .content .form-create-group .flatpickr-calendar.animate.inline {
     width: 100%; }
-    .schedule .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month {
+    .schedule .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month {
       background: #14191c; }
-    .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer {
+    .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer {
       border: 0px;
       background: none; }
-      .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer {
+      .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer {
         width: 100%; }
-        .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays {
+        .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays {
           background: #14191c; }
-          .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday {
+          .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday {
             color: #BAB7BE;
             background: #14191c;
             font-size: 14px;
             text-transform: uppercase;
             font-weight: 400;
             border-right: 1px solid #BAB7BE; }
-            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday:last-child {
+            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday:last-child, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday:last-child, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday:last-child {
               border: 0px !important; }
-        .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days {
+        .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days {
           width: 100%;
           border: 0px; }
-          .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer {
+          .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer {
             width: 100%;
             max-width: none;
             background: #14191c;
@@ -7640,7 +7644,7 @@ span.flatpickr-weekday {
             border: 0px;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px; }
-            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day {
+            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day {
               width: 14.285%;
               max-width: none;
               color: #BAB7BE;
@@ -7653,115 +7657,115 @@ span.flatpickr-weekday {
               min-height: 60px;
               line-height: 78px;
               font-size: 16px; }
-              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:hover {
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:hover, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:hover, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:hover {
                 background-color: transparent !important; }
-              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day.selected {
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day.selected, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day.selected, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day.selected {
                 background-color: transparent; }
-              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks {
+              .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks {
                 position: absolute;
                 right: 5px;
                 bottom: 5px; }
-                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark {
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark {
                   width: 4px;
                   height: 4px;
                   border-radius: 50%;
                   display: block;
                   padding: 0; }
-                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes {
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes {
                   background-color: #F15A24; }
-                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group {
+                .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group {
                   background-color: gray; }
-            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1) {
+            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1), .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1), .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1) {
               border-left: 0px !important; }
-            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay {
+            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay {
               border-bottom: 3px solid #bab7be69;
               border-left: 1px solid #bab7be69; }
-            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay {
+            .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay {
               border-bottom: 3px solid #bab7be69;
               border-left: 1px solid #bab7be69; }
-  .schedule .schedule-event {
+  .schedule .schedule-event, .user-settings .content .form-create-group .schedule-event, .search-results .content .form-create-group .schedule-event {
     margin: 2rem 0px;
     font-family: "Roboto Regular"; }
-    .schedule .schedule-event .create-event {
+    .schedule .schedule-event .create-event, .user-settings .content .form-create-group .schedule-event .create-event, .search-results .content .form-create-group .schedule-event .create-event {
       border-bottom: 1px solid #bab7be69;
       float: left;
       width: 100%;
       padding: 1rem 0; }
-      .schedule .schedule-event .create-event .schedule-group {
+      .schedule .schedule-event .create-event .schedule-group, .user-settings .content .form-create-group .schedule-event .create-event .schedule-group, .search-results .content .form-create-group .schedule-event .create-event .schedule-group {
         font-family: "Roboto Thin";
         height: 30px;
         padding: 10px 10px;
         font-size: 10px;
         line-height: 10px;
         float: left; }
-        .schedule .schedule-event .create-event .schedule-group span {
+        .schedule .schedule-event .create-event .schedule-group span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-group span, .search-results .content .form-create-group .schedule-event .create-event .schedule-group span {
           float: left;
           width: 20px;
           height: 10px;
           margin-right: 5px;
           background: #F05A24; }
-      .schedule .schedule-event .create-event .schedule-dudes {
+      .schedule .schedule-event .create-event .schedule-dudes, .user-settings .content .form-create-group .schedule-event .create-event .schedule-dudes, .search-results .content .form-create-group .schedule-event .create-event .schedule-dudes {
         height: 30px;
         padding: 10px 10px;
         font-size: 10px;
         line-height: 10px;
         float: left; }
-        .schedule .schedule-event .create-event .schedule-dudes span {
+        .schedule .schedule-event .create-event .schedule-dudes span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-dudes span, .search-results .content .form-create-group .schedule-event .create-event .schedule-dudes span {
           float: left;
           width: 20px;
           height: 10px;
           margin-right: 5px;
           background: #6DB100; }
-      .schedule .schedule-event .create-event .schedule-me {
+      .schedule .schedule-event .create-event .schedule-me, .user-settings .content .form-create-group .schedule-event .create-event .schedule-me, .search-results .content .form-create-group .schedule-event .create-event .schedule-me {
         height: 30px;
         padding: 10px 10px;
         font-size: 10px;
         line-height: 10px;
         float: left; }
-        .schedule .schedule-event .create-event .schedule-me span {
+        .schedule .schedule-event .create-event .schedule-me span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-me span, .search-results .content .form-create-group .schedule-event .create-event .schedule-me span {
           float: left;
           width: 20px;
           height: 10px;
           margin-right: 5px;
           background: #662D91; }
-      .schedule .schedule-event .create-event .dd-btn {
+      .schedule .schedule-event .create-event .dd-btn, .user-settings .content .form-create-group .schedule-event .create-event .dd-btn, .search-results .content .form-create-group .schedule-event .create-event .dd-btn {
         float: right; }
-    .schedule .schedule-event .schedule-contents {
+    .schedule .schedule-event .schedule-contents, .user-settings .content .form-create-group .schedule-event .schedule-contents, .search-results .content .form-create-group .schedule-event .schedule-contents {
       padding: 1rem 0;
       float: left; }
-      .schedule .schedule-event .schedule-contents .schedule-content {
+      .schedule .schedule-event .schedule-contents .schedule-content, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content {
         float: left;
         margin-bottom: 1rem; }
-        .schedule .schedule-event .schedule-contents .schedule-content span {
+        .schedule .schedule-event .schedule-contents .schedule-content span, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content span, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content span {
           width: 10%;
           float: left;
           text-align: center; }
-          .schedule .schedule-event .schedule-contents .schedule-content span.icon-remove {
+          .schedule .schedule-event .schedule-contents .schedule-content span.icon-remove, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove {
             float: none;
             width: auto;
             color: #F15A24; }
-        .schedule .schedule-event .schedule-contents .schedule-content .content {
+        .schedule .schedule-event .schedule-contents .schedule-content .content, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content .content, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content .content {
           width: 70%;
           float: left;
           text-decoration: underline; }
-          .schedule .schedule-event .schedule-contents .schedule-content .content a {
+          .schedule .schedule-event .schedule-contents .schedule-content .content a, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content .content a, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content .content a {
             color: inherit; }
-        .schedule .schedule-event .schedule-contents .schedule-content .long-content {
+        .schedule .schedule-event .schedule-contents .schedule-content .long-content, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content .long-content, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content .long-content {
           width: 70%;
           float: left;
           font-family: "Roboto thin"; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withgroup h3 {
+        .schedule .schedule-event .schedule-contents .schedule-content.withgroup h3, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup h3, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup h3 {
           color: #f05a2480;
           font-size: 18px; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line {
+        .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line {
           border-left: 4px solid #F05A24;
           text-decoration: underline;
           float: left;
           padding: 0 1rem; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title {
+          .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title {
             width: 20%;
             float: left; }
-            .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 {
+            .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 {
               cursor: pointer;
               height: 20px;
               line-height: 20px;
@@ -7771,23 +7775,23 @@ span.flatpickr-weekday {
               padding: 0px 0.5rem;
               border: 1px solid #F05A24;
               float: left; }
-              .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 img {
+              .schedule .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 img, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 img, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withgroup .schedule-content-line .title h3 img {
                 height: 13px;
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withdudes h3 {
+        .schedule .schedule-event .schedule-contents .schedule-content.withdudes h3, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes h3, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes h3 {
           color: #6db10070;
           font-size: 18px; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line {
+        .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line {
           border-left: 4px solid #6DB100;
           text-decoration: underline;
           float: left;
           padding: 0 1rem; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title {
+          .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title {
             width: 20%;
             float: left; }
-            .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small {
+            .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small {
               cursor: pointer;
               height: 20px;
               line-height: 20px;
@@ -7797,23 +7801,23 @@ span.flatpickr-weekday {
               padding: 0px 0.5rem;
               border: 1px solid #F05A24;
               float: left; }
-              .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small img {
+              .schedule .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small img, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small img, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withdudes .schedule-content-line .title small img {
                 height: 13px;
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withme h3 {
+        .schedule .schedule-event .schedule-contents .schedule-content.withme h3, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme h3, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme h3 {
           color: #662d9170;
           font-size: 18px; }
-        .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line {
+        .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line {
           border-left: 4px solid #662D91;
           text-decoration: underline;
           float: left;
           padding: 0 1rem; }
-          .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title {
+          .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title {
             width: 20%;
             float: left; }
-            .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small {
+            .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small {
               cursor: pointer;
               height: 20px;
               line-height: 20px;
@@ -7823,22 +7827,22 @@ span.flatpickr-weekday {
               padding: 0px 0.5rem;
               border: 1px solid #F05A24;
               float: left; }
-              .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small img {
+              .schedule .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small img, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small img, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content.withme .schedule-content-line .title small img {
                 height: 13px;
                 margin-top: 3px;
                 margin-right: 5px;
                 float: left; }
 
-.schedule .schedule-create-form {
+.schedule .schedule-create-form, .user-settings .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .schedule-create-form {
   margin: 20px 0; }
-  .schedule .schedule-create-form .row + .row {
+  .schedule .schedule-create-form .row + .row, .user-settings .content .form-create-group .schedule-create-form .row + .row, .search-results .content .form-create-group .schedule-create-form .row + .row {
     margin-top: 25px; }
-  .schedule .schedule-create-form .col-4 {
+  .schedule .schedule-create-form .col-4, .user-settings .content .form-create-group .schedule-create-form .col-4, .search-results .content .form-create-group .schedule-create-form .col-4 {
     display: flex;
     align-items: center; }
-  .schedule .schedule-create-form label {
+  .schedule .schedule-create-form label, .user-settings .content .form-create-group .schedule-create-form label, .search-results .content .form-create-group .schedule-create-form label {
     margin: 0; }
-  .schedule .schedule-create-form .event-ava {
+  .schedule .schedule-create-form .event-ava, .user-settings .content .form-create-group .schedule-create-form .event-ava, .search-results .content .form-create-group .schedule-create-form .event-ava {
     background-color: #484B52;
     height: 75px;
     width: 75px;
@@ -7848,14 +7852,14 @@ span.flatpickr-weekday {
     border-style: solid;
     text-align: center;
     cursor: pointer; }
-  .schedule .schedule-create-form .event-cover {
+  .schedule .schedule-create-form .event-cover, .user-settings .content .form-create-group .schedule-create-form .event-cover, .search-results .content .form-create-group .schedule-create-form .event-cover {
     background-color: #484B52;
     height: 75px;
     border-color: #F15A24;
     border-width: 1px;
     border-style: solid;
     cursor: pointer; }
-    .schedule .schedule-create-form .event-cover:before {
+    .schedule .schedule-create-form .event-cover:before, .user-settings .content .form-create-group .schedule-create-form .event-cover:before, .search-results .content .form-create-group .schedule-create-form .event-cover:before {
       content: '';
       position: absolute;
       width: 1100%;
@@ -7866,14 +7870,14 @@ span.flatpickr-weekday {
       transform-origin: 54% 0;
       transform: rotate(45deg);
       z-index: -1; }
-  .schedule .schedule-create-form .back-img {
+  .schedule .schedule-create-form .back-img, .user-settings .content .form-create-group .schedule-create-form .back-img, .search-results .content .form-create-group .schedule-create-form .back-img {
     text-align: center;
     background-size: cover;
     background-position: center center;
     display: flex;
     align-items: center;
     justify-content: center; }
-    .schedule .schedule-create-form .back-img span {
+    .schedule .schedule-create-form .back-img span, .user-settings .content .form-create-group .schedule-create-form .back-img span, .search-results .content .form-create-group .schedule-create-form .back-img span {
       display: inline-block; }
 
 .dd-modal {
@@ -7907,6 +7911,11 @@ span.flatpickr-weekday {
       clear: both;
       content: ' ';
       display: inline-block; }
+    .dd-modal .dd-modal-footer .processing-indicator {
+      float: left;
+      display: none; }
+  .dd-modal.processing .dd-modal-footer .processing-indicator {
+    display: inline-block; }
 
 .event-profile, .game-profile {
   display: flex;
@@ -8542,7 +8551,8 @@ span.flatpickr-weekday {
     padding: 10px 0 0 10px;
     max-height: 70vh;
     overflow: hidden;
-    overflow-y: auto; }
+    overflow-y: auto;
+    width: 100vw; }
     .popup .popup-content .content {
       max-height: 45vh;
       overflow-y: auto; }
@@ -9806,6 +9816,12 @@ nav.user-profile {
     padding-bottom: 0;
     max-width: 650px;
     margin: 0 auto; }
+    .user-settings .content .form-create-group, .search-results .content .form-create-group {
+      margin: 0;
+      border: none; }
+      .user-settings .content .form-create-group .row, .search-results .content .form-create-group .row {
+        border-top: none;
+        margin-top: 0 !important; }
     .user-settings .content .row, .search-results .content .row {
       border-top: 1px solid #CBCBCB;
       padding: 15px 0; }
@@ -10076,7 +10092,7 @@ nav.user-profile {
           width: 100%;
           height: 100%;
           object-fit: cover; }
-        .chat .dialog-wrapper .dialog .file-upload .container, .chat .dialog-wrapper .dialog .file-upload .schedule .schedule-create-form, .schedule .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .followers-list .chat .dialog-wrapper .dialog .file-upload li, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .notification-list li, .followers-popup .popup-content .notification-list .chat .dialog-wrapper .dialog .file-upload li {
+        .chat .dialog-wrapper .dialog .file-upload .container, .chat .dialog-wrapper .dialog .file-upload .schedule .schedule-create-form, .schedule .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .user-settings .content .form-create-group .schedule-create-form, .user-settings .content .form-create-group .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .search-results .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .followers-list .chat .dialog-wrapper .dialog .file-upload li, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .notification-list li, .followers-popup .popup-content .notification-list .chat .dialog-wrapper .dialog .file-upload li {
           padding-top: 15px; }
 
 .emoji-mart,

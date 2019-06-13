@@ -53,6 +53,7 @@ class GamePageComponent extends Component{
                     <div className="triangle-right"></div>
 
                     <Profile 
+                        init={() => this.props.init(data.id)}
                         data={data}
                         onJoin={e => this.props.join(id)}
                         onLeave={e => this.props.leave(id)}

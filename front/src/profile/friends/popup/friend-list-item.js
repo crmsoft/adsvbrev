@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {
     unfriend
-} from '../../../friedship/event';
+} from '../../../friendship/event';
 
 class FriendListItemComponent extends Component{
     render(){

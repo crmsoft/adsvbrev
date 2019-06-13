@@ -7,7 +7,7 @@ import {
 const Review = ({review}) => {
     return (
         <div className="game-review">
-            <table className="game-review-header vote-positive">
+            <table className={`game-review-header vote-${review.type}`}>
                 <tbody>
                     <tr>
                         <td>

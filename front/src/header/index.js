@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { load_profile, reduce_followers, n_viewed, increment_notification } from './events';
 import {connect} from 'react-redux';
 import axios from 'axios';
+
+import { load_profile, reduce_followers, n_viewed, increment_notification } from './events';
 import Followers from './Followers';
 import Notification from './Notification';
-import { acceptToFriends, declineFriendship } from '../friedship/event';
+import { acceptToFriends, declineFriendship } from '../friendship/event';
 
 class HeaderComponent extends Component{
 
@@ -116,7 +117,7 @@ class HeaderComponent extends Component{
                                             onClick={e => { axios.post('/logout').catch(r => window.location.reload()) }}
                                             className="dropdown-item" 
                                             href="javascript:void(0)"
-                                        >Logout</a>                      
+                                        >Logout</a>             
                                     </div>
 
                                 </li>

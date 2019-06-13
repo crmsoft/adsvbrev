@@ -20,6 +20,7 @@ class Group extends JsonResource
 
         return $this->is_game == 1 ? [
             'id' => \Hashids::encode($this->id),
+            'value' => \Hashids::encode($this->id),
             'username' => $this->slug,
             'full_name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),

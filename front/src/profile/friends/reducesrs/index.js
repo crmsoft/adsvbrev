@@ -9,7 +9,7 @@ import {
 import {
     FRIENDSHIP_SUBSCRIBED,
     FRIENDSHIP_FRIENDS
-} from '../../../friedship/actions';
+} from '../../../friendship/actions';
 
 const initialState = {
     items: [],

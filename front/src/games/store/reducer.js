@@ -9,16 +9,17 @@ import {
 
 const initialState = {
     data: {
-        name: ``,
         participants: [],
-        random: [],
-        feed: [],
-        media: [],
+        reviews_open: false,
         participant: false,
+        avg_rate: 0,
         options: {},
-        votes:{},
         reviews:[],
-        reviews_open: false
+        random: [],
+        media: [],
+        votes: {},
+        feed: [],
+        name: ``
     }
 };
 
@@ -65,7 +66,8 @@ const reducer = (state = initialState, action) => {
             return {
                 data: {
                     ...state.data,
-                    ...action.data.data
+                    ...action.data.data,
+                    reviews_open: false
                 }
             }
         }

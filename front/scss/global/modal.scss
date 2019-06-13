@@ -36,5 +36,17 @@
             content: ' ';
             display: inline-block;
         }
+        .processing-indicator{
+            float: left;
+            display: none;
+        }
+    }
+
+    &.processing{
+        .dd-modal-footer{
+            .processing-indicator{
+                display: inline-block;
+            }
+        }
     }
 }
