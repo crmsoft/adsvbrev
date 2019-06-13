@@ -44682,7 +44682,7 @@ var initialState = {
     feed: [],
     media: [],
     profile: {
-      ava: '',
+      main_photo: '',
       user: {
         full_name: 'Loading...'
       }
@@ -44788,10 +44788,12 @@ var profileReducer = function profileReducer() {
 
     case _actions.PROFILE_REFRESH:
       {
-        var a = Object.assign({}, state);
-        a.info.profile.main_photo = action.data;
-        return Object.assign({}, a, {
-          poof: Math.random()
+        return Object.assign({}, state, {
+          data: Object.assign({}, state.data, {
+            profile: Object.assign({}, state.data.profile, {
+              main_photo: action.data
+            })
+          })
         });
       }
 
@@ -49396,7 +49398,9 @@ var Loading = function Loading(_ref) {
   return _react.default.createElement("img", {
     className: "d-inline-block",
     src: "/img/loading.svg",
-    width: width ? width : '33'
+    style: {
+      width: width ? width : '33px'
+    }
   });
 };
 
@@ -50501,6 +50505,7 @@ function (_Component) {
         className: "col"
       }, list.map(function (game, i) {
         return _react.default.createElement(GameCard, {
+          key: game.username,
           active: index === i,
           game: game
         });
@@ -58753,8 +58758,6 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
-
 var _AvaPopupContent = _interopRequireDefault(require("./AvaPopupContent"));
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -58801,7 +58804,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AvaPopup).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {});
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      processing: false
+    });
 
     _this.closeModal = _this.closeModal.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.selectFile = _this.selectFile.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -58832,17 +58837,18 @@ function (_Component) {
       // create payload
       var formData = new FormData();
       formData.append('ava', this.fileInputRef.current.files[0]);
-      /**
-       * onUploadProgress: ProgressEvent => {
-          this.setState({
-              loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-          })
-        },
-       */
+      this.setState(function () {
+        return {
+          processing: true
+        };
+      });
 
       _axios.default.post('/profile/ava', formData).then(function (response) {
         _this3.setState({
-          src: "/".concat(response.data)
+          src: "".concat(response.data),
+          processing: false
+        }, function () {
+          return _this3.closeModal();
         });
 
         _store.default.dispatch((0, _events.updateProfile)(response.data));
@@ -58880,8 +58886,11 @@ function (_Component) {
           return _this5.fileInputRef.current.click();
         }
       }];
+      var _this$state = this.state,
+          src = _this$state.src,
+          processing = _this$state.processing;
 
-      if (this.state.src) {
+      if (src) {
         actions.push({
           title: "Upload",
           onAction: this.upload.bind(this)
@@ -58893,6 +58902,7 @@ function (_Component) {
         open: this.props.show,
         onClose: this.closeModal.bind(this),
         actions: actions,
+        processing: processing,
         title: "Upload Avatar"
       }, _react.default.createElement("div", {
         className: "popup-content"
@@ -58916,7 +58926,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = AvaPopup;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./AvaPopupContent":"../src/profile/ava/edit/AvaPopupContent.js","axios":"../../node_modules/axios/index.js","../../fetch/store":"../src/profile/fetch/store.js","../../fetch/events":"../src/profile/fetch/events.js","../../../Modal":"../src/Modal/index.js"}],"../src/profile/ava/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./AvaPopupContent":"../src/profile/ava/edit/AvaPopupContent.js","axios":"../../node_modules/axios/index.js","../../fetch/store":"../src/profile/fetch/store.js","../../fetch/events":"../src/profile/fetch/events.js","../../../Modal":"../src/Modal/index.js"}],"../src/profile/ava/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -63408,7 +63418,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Poster).call(this, props));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      show: false
+      show: false,
+      processing: false
     });
 
     _this.fileRef = _react.default.createRef();
@@ -63464,9 +63475,20 @@ function (_Component) {
       var frm = new FormData();
       frm.append("ava", this.state.file);
       frm.append("cover", true);
+      this.setState(function () {
+        return {
+          processing: true
+        };
+      });
 
       _axios.default.post("/profile/ava", frm).then(function (_ref) {
         var data = _ref.data;
+
+        _this3.setState(function () {
+          return {
+            processing: false
+          };
+        });
 
         _store.default.dispatch({
           type: _actions.COVER_UPLOADED,
@@ -63483,7 +63505,8 @@ function (_Component) {
 
       var _this$state = this.state,
           show = _this$state.show,
-          chosen = _this$state.chosen;
+          chosen = _this$state.chosen,
+          processing = _this$state.processing;
       var cover = this.props.src.profile.cover;
       var actions = [{
         title: "Close",
@@ -63514,6 +63537,7 @@ function (_Component) {
         },
         ref: this.fileRef
       }), _react.default.createElement(_Modal.Modal, {
+        processing: processing,
         title: "Upload Cover",
         onClose: this.onClose.bind(this),
         actions: actions,
@@ -74697,9 +74721,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       var data = this.props.data.data;
-      return _react.default.createElement(_reactTabs.Tabs, {
-        defaultIndex: 2
-      }, _react.default.createElement(_reactTabs.TabList, {
+      return _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
       }, _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
@@ -86378,7 +86400,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41494" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43849" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
