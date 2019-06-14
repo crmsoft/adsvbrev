@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {DateTime} from 'luxon';
+
 import { placeEmoji } from '../../utils';
+import ImageZoom from '../../general/ImageZoom';
 
 const MessageUserInfo = ({data}) => {
     const {user, created_at} = data;
@@ -48,7 +50,8 @@ export default class Message extends Component{
                         <div className="message-media">
                             {
                                 message.media.map((image, index) => {
-                                    return <img key={index} src={image.full_path} style={{height: image.options ? image.options['chat']['height']:`auto`}} />
+                                    return <ImageZoom key={index} src={image.full_path} thumb={image.thumb}  />
+                                    //<img key={index} src={image.full_path} style={{height: image.options ? image.options['chat']['height']:`auto`}} />
                                 })
                             }
                         </div>

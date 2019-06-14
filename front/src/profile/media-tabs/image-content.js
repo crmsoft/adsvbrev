@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+import ImageZoom from '../../general/ImageZoom';
 
 export default class ImageCotent extends Component {
 
@@ -21,7 +22,10 @@ export default class ImageCotent extends Component {
                                             key={index}
                                             className="col-4"
                                         >
-                                            <img src={m.options.thumb ? m.options.thumb : m.full_path} alt="" />
+                                            <ImageZoom 
+                                                thumb={m.options.thumb ? m.options.thumb : (m.thumb ? m.thumb:m.full_path)}
+                                                src={m.full_path}
+                                            />
                                         </div>
                                     )
                                 })

@@ -7887,6 +7887,8 @@ span.flatpickr-weekday {
   border-radius: 3px;
   overflow: hidden;
   max-height: 100vh; }
+  .dd-modal.fit-width {
+    width: auto !important; }
   .dd-modal .dd-modal-header {
     background-color: #F15A24;
     padding: 10px;
@@ -8969,10 +8971,10 @@ nav.user-profile {
       text-decoration: none;
       bottom: 0;
       font-size: 10px; }
-    .user-uploads .user-content .user-media img {
+    .user-uploads .user-content .user-media .thumb {
       object-fit: cover;
-      width: 205px;
-      height: 115px; }
+      height: 115px;
+      width: 100%; }
     .user-uploads .user-content .row {
       margin: 0;
       width: 100%; }
@@ -8983,8 +8985,6 @@ nav.user-profile {
         cursor: pointer; }
         .user-uploads .user-content .row .col-4:hover {
           border: 3px solid #F15A24; }
-      .user-uploads .user-content .row img {
-        width: 100%; }
     .user-uploads .user-content.active {
       display: flex; }
 

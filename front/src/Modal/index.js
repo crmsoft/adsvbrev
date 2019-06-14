@@ -12,12 +12,13 @@ export const Modal = (props) => {
         onClose,
         title,
         actions,
-        processing
+        processing,
+        cls = ''
     } = props;
 
     return (
         <Popup
-            className={processing ? `dd-modal processing` : `dd-modal`}
+            className={processing ? `${cls} dd-modal processing` : `${cls} dd-modal`}
             onClose={onClose}
             open={open}
             modal={true}

@@ -14,9 +14,12 @@ class ResourceMedia extends JsonResource
      */
     public function toArray($request)
     {
+        $thumb = null;
+
         if ($this->mediable_type == 'App\Message')
         {
-            $full_path = asset( '/storage/user-media/' . $this->user->dir . '/chat_' . $this->path);
+            $full_path = asset( '/storage/user-media/' . $this->user->dir . '/original_' . $this->path);
+            $thumb = asset( '/storage/user-media/' . $this->user->dir . '/chat_' . $this->path);
         } else if ($this->mediable_type == 'App\Entities\Game') {
             $full_path = $this->path;
         } else {
@@ -25,7 +28,8 @@ class ResourceMedia extends JsonResource
 
         return [
             'full_path' => $full_path,
-            'options' => $this->options ?? []
+            'options' => $this->options ?? [],
+            'thumb' => $thumb
         ];
     }
 }
