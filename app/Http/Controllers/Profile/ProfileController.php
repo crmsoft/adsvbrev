@@ -51,7 +51,7 @@ class ProfileController extends Controller
     public function listGroups(){
         $user = auth()->user();
 
-        return new GroupCollection($user->group()->with('profile')->get());
+        return new GroupCollection($user->group()->where('is_game', 0)->with('profile')->get());
     }
 
     function listFriends(String $username = null){
