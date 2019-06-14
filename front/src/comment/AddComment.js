@@ -61,7 +61,7 @@ export default class AddComment extends Component {
     }
 
     /**
-     * controlle textarea value
+     * control textarea value
      * 
      * @param {Event} e Textarea
      */
@@ -229,6 +229,7 @@ export default class AddComment extends Component {
                 comment = `${username}, ${comment}`;
             } // end if
         } // end if
+
 
         return (
             <div className="add-comment">

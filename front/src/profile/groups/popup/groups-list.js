@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { intialFetch, moreFetch } from '../redux/actions';
+import { initialFetch, moreFetch } from '../redux/actions';
 import GroupListItem from './group-list-item';
 
 
@@ -11,13 +11,11 @@ class GroupListComponent extends Component {
     }
 
     render(){
+        const {items} = this.props;
+
         return (
-            <div onClick={ () => { this.props.more();  } }>
-                {
-                    this.props.items.map( item => {
-                        return <GroupListItem key={item.name} user={item} />
-                    })
-                }
+            <div style={{maxHeight: '70vh', overflowY: 'auto'}}>
+                {items.map( item => <GroupListItem key={item.username} group={item} />)}
             </div>
         )
     }
@@ -31,7 +29,7 @@ const GroupList = connect(
     },
     dispatch => {
         return {
-            init: user => { dispatch(intialFetch( user )); },
+            init: user => { dispatch(initialFetch( user )); },
             more: () => { dispatch(moreFetch()); }
         }
     }

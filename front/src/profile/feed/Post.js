@@ -8,7 +8,7 @@ import {placeEmoji, urlify} from '../../utils';
 import Comments from '../../comment/Comments';
 import AddComment from '../../comment/AddComment';
 
-const PostContnet = ({
+const PostContent = ({
 	more,
 	content,
 	repost,
@@ -229,7 +229,7 @@ class Post extends Component{
 				</div>
 
 				<div className="post-content">
-					<PostContnet 
+					<PostContent 
 						more={more}
 						content={content}
 						repost={post.repost}

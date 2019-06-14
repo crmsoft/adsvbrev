@@ -1,21 +1,35 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
-const GroupListItem = (props) => {
+import store from '../redux/store';
+import {LEAVE_GROUP} from '../redux/actions';
+
+const leave = id => {
+
+    axios.post(`/group/${id}/leave`);
+
+    store.dispatch({
+        type: LEAVE_GROUP,
+        data: id
+    })
+}
+
+const GroupListItem = ({group}) => {
     return (
-        <div className="user-list-item">
-            <Link to={`/gg/${props.user.username}`} className="d-flex">
+        <div className="user-list-item p-3">
+            <Link to={`/gr/${group.username}`} className="d-flex">
                 <div className="user-list-ava">
-                    <img src={`/${props.user.profile.list_photo}`}/>
+                    <img src={`${group.ava}`}/>
                 </div>
                 <div className="user-list-user">
-                    <span style={{fontWeight:'bold'}}>{props.user.full_name}</span>
-                    <span style={{fontSize:'14px'}}>{props.user.username}</span>
+                    <span style={{fontWeight:'bold'}}>{group.full_name}</span>
                 </div>
             </Link>
             <div>
-                <button>Write a message</button>
-                <button> ?</button>
+                <button 
+                    onClick={e => leave(group.username)}
+                    className="dd-btn btn-sm btn-gray">Leave</button>
             </div>
         </div>
     )

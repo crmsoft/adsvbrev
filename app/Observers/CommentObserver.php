@@ -18,6 +18,11 @@ class CommentObserver
      */
     public function created(Comment $comment)
     {
+        if ($comment->commentable->postable_type == 'App\Entities\Group')
+        {
+            return;
+        } // end if
+
         $n = new UserNotification;
         $n->notifiable()->associate($comment);
         $n->user()->associate(

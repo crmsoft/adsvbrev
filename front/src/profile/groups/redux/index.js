@@ -23,7 +23,7 @@ const fetchedInitial = ({data}) => {
     return {type: INITIAL_FETCH_DONE, data:data}
 }
 
-const intialFetch = user => {
+const initialFetch = user => {
     const url = user ? `/friend/list/${user}` : `/friend/list`;
     return dispatch => {
         
@@ -52,7 +52,7 @@ export {
     FETCH_ERROR,
     FETCH_MORE,
     FETCHING,
-    intialFetch,
+    initialFetch,
     moreFetch,
     fetchedInitial,
     fetchDone,

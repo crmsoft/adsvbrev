@@ -19,6 +19,7 @@ use App\Http\Resources\Notification\NotificationCollection;
 use App\Http\Resources\UserList\User as ResourceUser;
 use App\Http\Resources\Profile\ResourceProfile;
 use App\Http\Resources\UserList\UserCollection;
+use App\Http\Resources\Group\GroupCollection;
 
 class ProfileController extends Controller
 {
@@ -50,7 +51,7 @@ class ProfileController extends Controller
     public function listGroups(){
         $user = auth()->user();
 
-        return response($user->group()->with('profile')->get());
+        return new GroupCollection($user->group()->with('profile')->get());
     }
 
     function listFriends(String $username = null){

@@ -46270,7 +46270,7 @@ function (_Component) {
 
     }
     /**
-     * controlle textarea value
+     * control textarea value
      * 
      * @param {Event} e Textarea
      */
@@ -46575,7 +46575,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var PostContnet = function PostContnet(_ref) {
+var PostContent = function PostContent(_ref) {
   var more = _ref.more,
       content = _ref.content,
       repost = _ref.repost,
@@ -46807,7 +46807,7 @@ function (_Component) {
         className: "icon-more"
       }))), _react.default.createElement("div", {
         className: "post-content"
-      }, _react.default.createElement(PostContnet, {
+      }, _react.default.createElement(PostContent, {
         more: more,
         content: content,
         repost: post.repost,
@@ -49705,59 +49705,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Header =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Header, _Component);
-
-  function Header() {
-    _classCallCheck(this, Header);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      return _react.default.createElement("a", {
-        href: "javascript:void(0);",
-        onClick: function onClick() {
-          _this.props.total && _this.props.showModal();
-        }
-      }, _react.default.createElement("span", {
-        className: "icon-group"
-      }), _react.default.createElement("h3", null, "Groups"), _react.default.createElement("span", {
-        className: "items-count"
-      }, " ", this.props.total));
+var Header = function Header(_ref) {
+  var showModal = _ref.showModal,
+      total = _ref.total;
+  return _react.default.createElement("a", {
+    href: "javascript:void(0);",
+    onClick: function onClick() {
+      return total && showModal();
     }
-  }]);
-
-  return Header;
-}(_react.Component);
+  }, _react.default.createElement("span", {
+    className: "icon-group"
+  }), _react.default.createElement("h3", null, "Groups"), _react.default.createElement("span", {
+    className: "items-count"
+  }, " ", total));
+};
 
 var _default = Header;
 exports.default = _default;
@@ -49794,7 +49759,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchStart = exports.fetchErr = exports.fetchDone = exports.fetchedInitial = exports.moreFetch = exports.intialFetch = exports.FETCHING = exports.FETCH_MORE = exports.FETCH_ERROR = exports.FETCH_DONE = exports.INITIAL_FETCH_DONE = void 0;
+exports.fetchStart = exports.fetchErr = exports.fetchDone = exports.fetchedInitial = exports.moreFetch = exports.initialFetch = exports.LEAVE_GROUP = exports.FETCHING = exports.FETCH_MORE = exports.FETCH_ERROR = exports.FETCH_DONE = exports.INITIAL_FETCH_DONE = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -49810,7 +49775,9 @@ var FETCHING = 'FETCHING';
 exports.FETCHING = FETCHING;
 var FETCH_DONE = 'FETCH_DONE';
 exports.FETCH_DONE = FETCH_DONE;
-var domain = "http://"; // EVENTS
+var LEAVE_GROUP = 'LEAVE_GROUP'; // EVENTS
+
+exports.LEAVE_GROUP = LEAVE_GROUP;
 
 var fetchErr = function fetchErr(err) {
   return {
@@ -49851,12 +49818,13 @@ var fetchedInitial = function fetchedInitial(_ref2) {
 
 exports.fetchedInitial = fetchedInitial;
 
-var intialFetch = function intialFetch(user) {
-  var url = user ? "".concat(domain, "/group/list/").concat(user) : "".concat(domain, "/group/list");
+var initialFetch = function initialFetch(user) {
+  var url = user ? "/group/list/".concat(user) : "/group/list";
   return function (dispatch) {
     dispatch(fetchStart());
 
-    _axios.default.get(url).then(function (data) {
+    _axios.default.get(url).then(function (_ref3) {
+      var data = _ref3.data;
       return dispatch(fetchedInitial(data));
     }).catch(function (err) {
       return dispatch(fetchErr(err));
@@ -49864,7 +49832,7 @@ var intialFetch = function intialFetch(user) {
   };
 };
 
-exports.intialFetch = intialFetch;
+exports.initialFetch = initialFetch;
 
 var moreFetch = function moreFetch() {
   return function (dispatch) {
@@ -49879,135 +49847,7 @@ var moreFetch = function moreFetch() {
 };
 
 exports.moreFetch = moreFetch;
-},{"axios":"../../node_modules/axios/index.js"}],"../src/profile/groups/popup/group-list-item.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var GroupListItem = function GroupListItem(props) {
-  return _react.default.createElement("div", {
-    className: "user-list-item"
-  }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/gg/".concat(props.user.username),
-    className: "d-flex"
-  }, _react.default.createElement("div", {
-    className: "user-list-ava"
-  }, _react.default.createElement("img", {
-    src: "/".concat(props.user.profile.list_photo)
-  })), _react.default.createElement("div", {
-    className: "user-list-user"
-  }, _react.default.createElement("span", {
-    style: {
-      fontWeight: 'bold'
-    }
-  }, props.user.full_name), _react.default.createElement("span", {
-    style: {
-      fontSize: '14px'
-    }
-  }, props.user.username))), _react.default.createElement("div", null, _react.default.createElement("button", null, "Write a message"), _react.default.createElement("button", null, " ?")));
-};
-
-var _default = GroupListItem;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/groups/popup/groups-list.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRedux = require("react-redux");
-
-var _actions = require("../redux/actions");
-
-var _groupListItem = _interopRequireDefault(require("./group-list-item"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var GroupListComponent =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(GroupListComponent, _Component);
-
-  function GroupListComponent() {
-    _classCallCheck(this, GroupListComponent);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(GroupListComponent).apply(this, arguments));
-  }
-
-  _createClass(GroupListComponent, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.init(this.props.user);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      return _react.default.createElement("div", {
-        onClick: function onClick() {
-          _this.props.more();
-        }
-      }, this.props.items.map(function (item) {
-        return _react.default.createElement(_groupListItem.default, {
-          key: item.name,
-          user: item
-        });
-      }));
-    }
-  }]);
-
-  return GroupListComponent;
-}(_react.Component);
-
-var GroupList = (0, _reactRedux.connect)(function (state) {
-  return Object.assign({}, state);
-}, function (dispatch) {
-  return {
-    init: function init(user) {
-      dispatch((0, _actions.intialFetch)(user));
-    },
-    more: function more() {
-      dispatch((0, _actions.moreFetch)());
-    }
-  };
-})(GroupListComponent);
-var _default = GroupList;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../redux/actions":"../src/profile/groups/redux/actions.js","./group-list-item":"../src/profile/groups/popup/group-list-item.js"}],"../src/profile/groups/redux/reducer.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js"}],"../src/profile/groups/redux/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50034,6 +49874,15 @@ var fetchReducer = function fetchReducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _actions.LEAVE_GROUP:
+      {
+        return Object.assign({}, state, {
+          items: state.items.filter(function (group) {
+            return group.username !== action.data;
+          })
+        });
+      }
+
     case _actions.FETCHING:
       {
         return Object.assign({}, state, {
@@ -50093,7 +49942,152 @@ var logger = (0, _reduxLogger.createLogger)();
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
 var _default = store;
 exports.default = _default;
-},{"./reducer":"../src/profile/groups/redux/reducer.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/profile/groups/popup/popup-content.js":[function(require,module,exports) {
+},{"./reducer":"../src/profile/groups/redux/reducer.js","redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js"}],"../src/profile/groups/popup/group-list-item.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../redux/store"));
+
+var _actions = require("../redux/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var leave = function leave(id) {
+  _axios.default.post("/group/".concat(id, "/leave"));
+
+  _store.default.dispatch({
+    type: _actions.LEAVE_GROUP,
+    data: id
+  });
+};
+
+var GroupListItem = function GroupListItem(_ref) {
+  var group = _ref.group;
+  return _react.default.createElement("div", {
+    className: "user-list-item p-3"
+  }, _react.default.createElement(_reactRouterDom.Link, {
+    to: "/gr/".concat(group.username),
+    className: "d-flex"
+  }, _react.default.createElement("div", {
+    className: "user-list-ava"
+  }, _react.default.createElement("img", {
+    src: "".concat(group.ava)
+  })), _react.default.createElement("div", {
+    className: "user-list-user"
+  }, _react.default.createElement("span", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, group.full_name))), _react.default.createElement("div", null, _react.default.createElement("button", {
+    onClick: function onClick(e) {
+      return leave(group.username);
+    },
+    className: "dd-btn btn-sm btn-gray"
+  }, "Leave")));
+};
+
+var _default = GroupListItem;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js","../redux/store":"../src/profile/groups/redux/store.js","../redux/actions":"../src/profile/groups/redux/actions.js"}],"../src/profile/groups/popup/groups-list.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _actions = require("../redux/actions");
+
+var _groupListItem = _interopRequireDefault(require("./group-list-item"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var GroupListComponent =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GroupListComponent, _Component);
+
+  function GroupListComponent() {
+    _classCallCheck(this, GroupListComponent);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GroupListComponent).apply(this, arguments));
+  }
+
+  _createClass(GroupListComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.init(this.props.user);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var items = this.props.items;
+      return _react.default.createElement("div", {
+        style: {
+          maxHeight: '70vh',
+          overflowY: 'auto'
+        }
+      }, items.map(function (item) {
+        return _react.default.createElement(_groupListItem.default, {
+          key: item.username,
+          group: item
+        });
+      }));
+    }
+  }]);
+
+  return GroupListComponent;
+}(_react.Component);
+
+var GroupList = (0, _reactRedux.connect)(function (state) {
+  return Object.assign({}, state);
+}, function (dispatch) {
+  return {
+    init: function init(user) {
+      dispatch((0, _actions.initialFetch)(user));
+    },
+    more: function more() {
+      dispatch((0, _actions.moreFetch)());
+    }
+  };
+})(GroupListComponent);
+var _default = GroupList;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../redux/actions":"../src/profile/groups/redux/actions.js","./group-list-item":"../src/profile/groups/popup/group-list-item.js"}],"../src/profile/groups/popup/popup-content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50165,94 +50159,36 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
-var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+var _Modal = require("../../../Modal");
 
 var _popupContent = _interopRequireDefault(require("./popup-content"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-var GroupList =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(GroupList, _Component);
-
-  function GroupList(props) {
-    var _this;
-
-    _classCallCheck(this, GroupList);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GroupList).call(this, props));
-    _this.closeModal = _this.closeModal.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
-  }
-
-  _createClass(GroupList, [{
-    key: "closeModal",
-    value: function closeModal() {
-      this.props.closeModal();
+var GroupList = function GroupList(_ref) {
+  var show = _ref.show,
+      closeModal = _ref.closeModal;
+  var actions = [{
+    title: 'Ok',
+    onAction: function onAction() {
+      return closeModal();
     }
-  }, {
-    key: "render",
-    value: function render() {
-      return _react.default.createElement(_reactjsPopup.default, {
-        lockScroll: false,
-        contentStyle: {
-          backgroundColor: 'transparent',
-          border: 0,
-          padding: 0
-        },
-        modal: true,
-        open: this.props.show,
-        closeOnDocumentClick: true,
-        closeOnEscape: true,
-        onClose: this.closeModal
-      }, _react.default.createElement("div", {
-        className: "popup"
-      }, _react.default.createElement("div", {
-        className: "popup-header"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, _react.default.createElement("h2", null, "Friend List")), _react.default.createElement("div", {
-        className: "close",
-        onClick: this.closeModal
-      }, _react.default.createElement("span", null, "\xD7"))), _react.default.createElement("div", {
-        className: "popup-content"
-      }, _react.default.createElement(_popupContent.default, {
-        user: this.props.user
-      })), _react.default.createElement("div", {
-        className: "popup-footer"
-      }, _react.default.createElement("div", null, _react.default.createElement("button", null, "Close"), _react.default.createElement("button", null, "Ok")))));
-    }
-  }]);
-
-  return GroupList;
-}(_react.Component);
+  }];
+  return _react.default.createElement(_Modal.Modal, {
+    title: 'Groups you intend to',
+    onClose: function onClose() {
+      return closeModal();
+    },
+    open: show,
+    actions: actions
+  }, _react.default.createElement(_popupContent.default, null));
+};
 
 var _default = GroupList;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","./popup-content":"../src/profile/groups/popup/popup-content.js"}],"../src/profile/groups/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../../Modal":"../src/Modal/index.js","./popup-content":"../src/profile/groups/popup/popup-content.js"}],"../src/profile/groups/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50345,25 +50281,31 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$props = this.props,
+          list = _this$props.list,
+          isGuest = _this$props.isGuest,
+          user = _this$props.user,
+          total = _this$props.total;
+      var show = this.state.show;
       return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement(_header.default, {
         showModal: this.showModal,
-        total: this.props.total
+        total: total
       }), _react.default.createElement(_index.default, {
-        user: this.props.user,
+        user: user,
         closeModal: this.closeModal,
-        show: this.state.show
+        show: show
       })), _react.default.createElement("div", {
         className: "block-content"
       }, _react.default.createElement("div", {
         className: "friends"
-      }, this.props.list.map(function (item, index) {
+      }, list.map(function (item, index) {
         return _react.default.createElement(_group.default, {
           key: index,
           group: item
         });
-      }), this.props.isGuest ? null : _react.default.createElement(_reactRouterDom.Link, {
+      }), isGuest ? null : _react.default.createElement(_reactRouterDom.Link, {
         to: "/search?i=gr",
         className: "friend"
       }, _react.default.createElement("span", {
@@ -86879,7 +86821,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37322" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40744" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

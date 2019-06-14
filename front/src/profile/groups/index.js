@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header  from './partials/header';
 import Group from './partials/group';
-import GroupListContent from './popup/index';
+import GroupList from './popup/index';
 import {Link} from 'react-router-dom';
 
 
@@ -32,16 +32,20 @@ export default class Groups extends Component{
      * @param Header
      * show modal with friend list and followers list !
      */
-    showModal(){
+    showModal(){        
         this.setState({show:true});
     }
 
     render(){
+
+        const {list, isGuest, user, total} = this.props;
+        const {show} = this.state;
+
         return (
             <div>
                 <div className="header">
-                    <Header showModal={this.showModal} total={this.props.total} />
-                    <GroupListContent user={this.props.user} closeModal={this.closeModal} show={this.state.show} />
+                    <Header showModal={this.showModal} total={total} />
+                    <GroupList user={user} closeModal={this.closeModal} show={show} />
                 </div>
 
                 <div className="block-content">
@@ -49,13 +53,13 @@ export default class Groups extends Component{
                     <div className="friends">
 
                         {
-                            this.props.list.map( (item, index) => {
+                            list.map( (item, index) => {
                                return <Group key={index} group={item} />
                             })
                         }
 
                         {
-                            this.props.isGuest ? null : (
+                            isGuest ? null : (
                                 <Link to="/search?i=gr" className="friend">
                                     <span className="search-more"></span>
                                 </Link>

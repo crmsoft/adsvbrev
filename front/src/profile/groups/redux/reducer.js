@@ -3,7 +3,8 @@ import {
     FETCH_DONE,
     FETCH_ERROR,
     FETCH_MORE,
-    FETCHING
+    FETCHING,
+    LEAVE_GROUP
 } from './actions';
 
 const initialState = {
@@ -12,6 +13,12 @@ const initialState = {
 
 const fetchReducer = (state = initialState, action) => {
     switch(action.type){
+        case LEAVE_GROUP: {
+            return {
+                ...state,
+                items: state.items.filter(group => group.username !== action.data)
+            }
+        }
 
         case FETCHING: {
             return {

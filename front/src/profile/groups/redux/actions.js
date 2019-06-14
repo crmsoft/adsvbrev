@@ -5,7 +5,7 @@ const FETCH_MORE = 'FETCH_MORE';
 const FETCH_ERROR = 'FETCH_ERROR';
 const FETCHING = 'FETCHING';
 const FETCH_DONE = 'FETCH_DONE';
-const domain = `http://`;
+const LEAVE_GROUP = 'LEAVE_GROUP';
 
 // EVENTS
 const fetchErr = err => {
@@ -24,14 +24,14 @@ const fetchedInitial = ({data}) => {
     return {type: INITIAL_FETCH_DONE, data:data}
 }
 
-const intialFetch = user => {
-    const url = user ? `${domain}/group/list/${user}` : `${domain}/group/list`;
+const initialFetch = user => {
+    const url = user ? `/group/list/${user}` : `/group/list`;
     return dispatch => {
         
         dispatch(fetchStart());
 
         axios.get(url)
-        .then(data => dispatch(fetchedInitial(data)))
+        .then(({data}) => dispatch(fetchedInitial(data)))
         .catch(err => dispatch(fetchErr(err)))        
     };
 }
@@ -53,7 +53,8 @@ export {
     FETCH_ERROR,
     FETCH_MORE,
     FETCHING,
-    intialFetch,
+    LEAVE_GROUP,
+    initialFetch,
     moreFetch,
     fetchedInitial,
     fetchDone,
