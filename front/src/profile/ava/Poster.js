@@ -28,7 +28,8 @@ const img_style = {
 export default class Poster extends Component{
 
     state = {
-        show: false
+        show: false,
+        processing: false
     }
 
     constructor(props)
@@ -81,8 +82,11 @@ export default class Poster extends Component{
         frm.append(`ava`, this.state.file);
         frm.append(`cover`, true);
 
+        this.setState(() => ({processing:true}))
+
         axios.post(`/profile/ava`, frm)
         .then(({data}) => {
+            this.setState(() => ({processing:false}))
             store.dispatch({
                 type: COVER_UPLOADED,
                 data: data
@@ -95,7 +99,8 @@ export default class Poster extends Component{
     {
         const {
             show,
-            chosen
+            chosen,
+            processing
         } = this.state;
 
         const {cover} = this.props.src.profile;
@@ -129,6 +134,7 @@ export default class Poster extends Component{
                     ref={this.fileRef} 
                 />
                 <Modal
+                    processing={processing}
                     title={`Upload Cover`}
                     onClose={this.onClose.bind(this)}
                     actions={actions}

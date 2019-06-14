@@ -103,7 +103,7 @@ export default class FeedList extends Component{
     {
         this.setState(state => {
             return {
-                lsit: state.list.map(post => {
+                list: state.list.map(post => {
                     if (post.id === post_id)
                     {
                         post.likes = !post.likes;
@@ -124,7 +124,7 @@ export default class FeedList extends Component{
     {
         this.setState(state => {
             return {
-                lsit: state.list.map(post => {
+                list: state.list.map(post => {
                     if (post.id === post_id)
                     {
                         post.shares = !post.shares;

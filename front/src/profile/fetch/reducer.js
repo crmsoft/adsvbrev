@@ -18,7 +18,7 @@ const initialState = {
         games:[],
         feed:[],
         media:[],
-        profile: { ava : '', user:{full_name:'Loading...'} },
+        profile: { main_photo : '', user:{full_name:'Loading...'} },
         totals: {
             friends: 0,
             groups: 0,
@@ -124,12 +124,16 @@ const profileReducer = (state = initialState, action) => {
             }
         }
         case PROFILE_REFRESH : {
-            const a = Object.assign({}, state);
-            a.info.profile.main_photo = action.data;
             return {
-                ...a,
-                poof: Math.random()  
-            };
+                ...state,
+                data: {
+                    ...state.data,
+                    profile: {
+                        ...state.data.profile,
+                        main_photo: action.data
+                    }
+                }
+            }
         }
         case PROFILE_FETCH_DONE: {
             return {

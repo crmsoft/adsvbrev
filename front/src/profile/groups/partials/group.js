@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Group = ( props ) => {
+const Group = ( {group} ) => {
     return (
-        <Link to={`/gg/${props.group.name}`} className="friend">
-            <img src={`/`} alt="body" />
-            <h2>{props.group.name}</h2>
+        <Link to={`/gr/${group.username}`} className="friend">
+            <img src={group.ava} alt="body" />
+            <h2>{group.full_name}</h2>
         </Link>
     )
 }

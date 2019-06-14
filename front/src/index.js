@@ -21,7 +21,10 @@ import EventProfileStore from './event/redux/store';
 import FDudes from './find-dude';
 
 import GamePage from './games/index';
-import groupStore from './games/store';
+import gameStore from './games/store';
+
+import GroupPage from './groups/index';
+import groupStore from './groups/store';
 
 import Feed from './feed';
 
@@ -49,8 +52,11 @@ const App = () => {
                     </Provider>
                     <Route path="/dudes" component={FDudes} />
                     <Route path="/feed" component={Feed} />
-                    <Provider store={groupStore}>
+                    <Provider store={gameStore}>
                         <Route path="/g/:id" component={GamePage} />
+                    </Provider>
+                    <Provider store={groupStore}>
+                        <Route path="/gr/:id" component={GroupPage} />
                     </Provider>
                 </div>
                 <Chat />

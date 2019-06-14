@@ -49,7 +49,7 @@ export class Games extends Component {
                     <div className="row">
                         <div className="col">
                             {
-                                list.map((game, i) => <GameCard active={index === i} game={game} />)
+                                list.map((game, i) => <GameCard key={game.username} active={index === i} game={game} />)
                             }
                         </div>
                     </div>

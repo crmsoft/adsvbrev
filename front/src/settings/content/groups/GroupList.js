@@ -27,7 +27,7 @@ const Group = ({data, onEdit}) => (
             </div>
             <div className="col-auto p-0">
                 
-                <Link to={`/g/${data.username}`} className="link-unstyled main-color">
+                <Link to={`/gr/${data.username}`} className="link-unstyled main-color">
                     {data.full_name}
                 </Link> 
 

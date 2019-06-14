@@ -54,6 +54,10 @@ class Post extends Model implements ReactableContract
         return $this->belongsTo(\App\Entities\Game::class, 'postable_id');
     }
 
+    public function group(){
+        return $this->belongsTo(\App\Entities\Group::class, 'postable_id');
+    }
+
     public function media(){
         return $this->morphMany(Media::class, 'mediable');
     }

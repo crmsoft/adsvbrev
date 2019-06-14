@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Popup from 'reactjs-popup';
 import AvaPopupContent from './AvaPopupContent';
 import axios from 'axios';
 import store from '../../fetch/store';
@@ -8,7 +7,7 @@ import {Modal} from '../../../Modal';
 
 export default class AvaPopup extends Component{
     
-    state = {}
+    state = {processing:false}
 
     constructor(props){
         super(props);
@@ -29,17 +28,11 @@ export default class AvaPopup extends Component{
         // create payload
         const formData = new FormData();
         formData.append('ava', this.fileInputRef.current.files[0]);
-        /**
-         * onUploadProgress: ProgressEvent => {
-            this.setState({
-                loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-            })
-          },
-         */
+        this.setState(() => ({processing:true}))
 
         axios.post('/profile/ava', formData)
         .then(response => {
-            this.setState({src:`/${response.data}`});
+            this.setState({src:`${response.data}`,processing:false}, () => this.closeModal());
             store.dispatch(updateProfile(response.data));
         })
         .catch(err => console.log(err))
@@ -69,7 +62,9 @@ export default class AvaPopup extends Component{
             }
         ];
 
-        if (this.state.src)
+        const {src, processing} = this.state;
+
+        if (src)
         {
             actions.push({
                 title: `Upload`,
@@ -82,6 +77,7 @@ export default class AvaPopup extends Component{
                 open={this.props.show}
                 onClose={this.closeModal.bind(this)}
                 actions={actions}
+                processing={processing}
                 title={`Upload Avatar`}
             >
                 <div className="popup-content">

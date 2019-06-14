@@ -32,7 +32,8 @@ class ResourceGame extends JsonResource
             'random' => $participants,
             'participants' => $participants,
             'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get()),
-            'participant' => $this->participants()->where('user_id', $user->id)->count(),
+            'total_participant' => $this->participants->count(),
+            'participant' => $this->participants->where('id', $user->id)->count(),
             'media' => new MediaCollection($this->media),
             'options' => array_merge($this->options, [
                 'genres' => $this->genres->map(function($item){ return ['name' => $item->name]; }),

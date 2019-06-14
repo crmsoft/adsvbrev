@@ -45,9 +45,7 @@ export default class SettingsContnet extends Component {
         const {data} = this.props.data;
         
         return (
-            <Tabs
-            defaultIndex={2}
-            >
+            <Tabs>
                 <TabList className="nav nav-tabs">
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">

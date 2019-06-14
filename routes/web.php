@@ -33,7 +33,8 @@ Route::group([
     Route::get('/settings', 'ProfileController@index')->name('settings-view');
     Route::get('/schedule', 'ProfileController@index')->name('schedule-view');
     Route::get('/event/{id}', 'ProfileController@index')->name('event-page');
-    Route::get('/g/{id}', 'ProfileController@index')->name('event-page');
+    Route::get('/g/{id}', 'ProfileController@index')->name('game-page');
+    Route::get('/gr/{id}', 'ProfileController@index')->name('group-page');
     Route::get('/dudes', 'ProfileController@index')->name('dudes-page');
     Route::get('/feed', 'ProfileController@index')->name('feed-page');
 });
@@ -122,7 +123,7 @@ Route::group([
 
 });
 
-// Events Specific Routes
+// Game Page Routes
 //---------------------------------------------------------------------------------
 Route::group([
     'namespace' => 'Games',
@@ -130,7 +131,6 @@ Route::group([
 ], function() {
     Route::get('/games', 'GameController@list')->name('user-game-list');
     Route::post('/game/show/{game}', 'GameController@show')->name('user-game-show');
-    Route::post('/game/store', 'GameController@store')->name('user-game-create');
     Route::post('/game/{game}/join', 'GameController@join')->name('user-game-join');
     Route::post('/game/{game}/leave', 'GameController@leave')->name('user-game-leave');
     Route::get('/game/participants/{game}', 'GameController@listParticipants')->name('user-game-list-p');
@@ -140,6 +140,18 @@ Route::group([
     Route::post('/game/review/store/{game}', 'GameController@storeReview')->name('store-game-review');
     Route::post('/game/review/toggle/like/{game_review}', 'GameController@toggleReviewLike')->name('toggle-review-like');
 
+});
+
+// Group Page Routes
+//---------------------------------------------------------------------------------
+Route::group([
+    'middleware' => ['auth']
+], function() {
+    Route::post('/group/show/{group}', 'GroupController@show')->name('user-group-show');
+    Route::post('/group/{group}/join', 'GroupController@join')->name('user-group-join');
+    Route::post('/group/{group}/leave', 'GroupController@leave')->name('user-group-leave');
+    Route::get('/group/participants/{group}', 'GroupController@listParticipants')->name('user-group-list-p');
+    Route::get('/group/list/groups', 'GroupController@groupGroups')->name('list-group-groups');
 });
 
 // Search page specific routes

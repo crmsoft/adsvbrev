@@ -44,10 +44,10 @@ class ResourceProfile extends JsonResource
 
         return [
             'friends' => new UserCollection($this->friend()->take( $guest ? 6 : 5)->inRandomOrder()->get()),
-            'groups' => $this->group(function($query){
+            'groups' => new GroupCollection($this->group(function($query){
                             $query->inRandomOrder();
                             $query->limit(3);
-                        })->where('is_game', 0)->get(),
+                        })->where('is_game', 0)->get()),
             'feed' => $feed,
             'profile' => new ProfileConfig($profile),
             'games' => new GroupCollection( $this->group()->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),

@@ -28,7 +28,7 @@ class PostController extends Controller
 
         $request->validate([
             'post' => 'required',
-            'type' => 'in:event,feed,game'
+            'type' => 'in:event,feed,game,group'
         ]);
 
         $user = auth()->user();
@@ -68,6 +68,19 @@ class PostController extends Controller
                 $post->save();
                 // attach post to event
                 $game->posts()->attach($post);
+
+            }  else if ($request->type == 'group')
+            {
+                $group = \App\Entities\Group::where( 'slug', $request->id )->first();
+
+                $is_owner = $group->managers()->where('user_id', $user->id)->count();
+
+                $post->postable()->associate( $is_owner == 1 ? $group : $user);
+
+                // save resource
+                $post->save();
+                // attach post to event
+                $group->posts()->attach($post);
 
             } else if ($request->type == 'feed')
             {
@@ -227,6 +240,29 @@ class PostController extends Controller
 
             return new PostCollection(
                 $game->posts()
+                    ->where('id', '<', $last_post_id)
+                    ->with(
+                        [
+                            'media', 
+                            'postable', 
+                            'loveReactant.reactions.reacter.reacterable',
+                            'loveReactant.reactions.type',
+                            'loveReactant.reactionCounters',
+                            'loveReactant.reactionTotal',
+                            'parent' => function($query) {
+                                $query->with(['media', 'postable']);
+                            }   
+                        ])
+                        ->orderBy('created_at', 'desc')->take(2)->get()
+            );
+        } else if ($request->type == 'group')
+        {
+            $group = \App\Entities\Group::where('slug', $username)->first();
+
+            $last_post_id = \Hashids::decode( $request->last );
+
+            return new PostCollection(
+                $group->posts()
                     ->where('id', '<', $last_post_id)
                     ->with(
                         [
