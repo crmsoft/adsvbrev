@@ -123,7 +123,7 @@ class ResourceGame extends JsonResource
 
                 return $result;
             }, []));
-        } catch (GuzzleException $e) {
+        } catch (Exception $e) {
             // Handle error appropriately for your application
             \Log::debug($e);
         }

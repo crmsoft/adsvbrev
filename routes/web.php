@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/add/steam/game/{id}', function(int $id){
+    \Artisan::call('steam:pull', ['id' => $id]);
+});
 
 /** validate email address of newly registered user */
 Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')

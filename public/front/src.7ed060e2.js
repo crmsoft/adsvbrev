@@ -50525,27 +50525,26 @@ function (_Component) {
   _createClass(ImageZoom, [{
     key: "close",
     value: function close() {
-      this.setState(function () {
-        return {
-          shown: false
-        };
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState(function (state) {
+          return {
+            shown: false
+          };
+        });
+      }, 50);
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      this.setState({
+        shown: true
       });
     }
   }, {
     key: "onLoad",
     value: function onLoad(e) {
-      var img = e.target;
-
-      var _getViewport = getViewport(),
-          vHeight = _getViewport.vHeight,
-          vWidth = _getViewport.vWidth;
-
-      var width = img.naturalWidth;
-      var height = img.naturalHeight;
-
-      if (height > vHeight) {} // end if
-
-
       this.setState(function () {
         return {
           loaded: true
@@ -50555,7 +50554,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           thumb = _this$props.thumb,
@@ -50564,13 +50563,7 @@ function (_Component) {
           shown = _this$state.shown,
           loaded = _this$state.loaded;
       return _react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return _this2.setState(function () {
-            return {
-              shown: true
-            };
-          });
-        },
+        onClick: this.open.bind(this),
         style: {
           cursor: 'pointer'
         }
@@ -50582,7 +50575,9 @@ function (_Component) {
         cls: "fit-width",
         title: "",
         open: shown,
-        onClose: this.close.bind(this),
+        onClose: function onClose() {
+          return _this3.close.call(_this3);
+        },
         actions: [{
           title: 'Close',
           onAction: this.close.bind(this)
@@ -50600,28 +50595,7 @@ function (_Component) {
   return ImageZoom;
 }(_react.Component);
 
-function getViewport() {
-  var viewPortWidth;
-  var viewPortHeight; // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
-
-  if (typeof window.innerWidth != 'undefined') {
-    viewPortWidth = window.innerWidth, viewPortHeight = window.innerHeight;
-  } // IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
-  else if (typeof document.documentElement != 'undefined' && typeof document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) {
-      viewPortWidth = document.documentElement.clientWidth, viewPortHeight = document.documentElement.clientHeight;
-    } // older versions of IE
-    else {
-        viewPortWidth = document.getElementsByTagName('body')[0].clientWidth, viewPortHeight = document.getElementsByTagName('body')[0].clientHeight;
-      }
-
-  return {
-    vWidth: viewPortWidth,
-    vHeight: viewPortHeight
-  };
-}
-
-var _default = ImageZoom;
-exports.default = _default;
+exports.default = ImageZoom;
 },{"react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
 "use strict";
 
@@ -50670,7 +50644,10 @@ function (_Component) {
   _createClass(ImageCotent, [{
     key: "render",
     value: function render() {
-      var media = this.props.media;
+      var _this$props = this.props,
+          media = _this$props.media,
+          totalImage = _this$props.totalImage;
+      console.log(totalImage);
 
       if (media) {
         return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
@@ -50688,7 +50665,10 @@ function (_Component) {
         })), media.length < 4 ? null : _react.default.createElement("a", {
           href: "#",
           className: "user-content-all"
-        }, "All (", media.length, ")")));
+        }, "All (", media.length, ")"), totalImage < 4 || !totalImage ? null : _react.default.createElement("a", {
+          href: "#",
+          className: "user-content-all"
+        }, "All (", totalImage, ")")));
       } // end if
 
 
@@ -51008,7 +50988,8 @@ function (_Component) {
     value: function render() {
       var _this$props = this.props,
           streams = _this$props.streams,
-          media = _this$props.media;
+          media = _this$props.media,
+          totalImage = _this$props.totalImage;
       return _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
       }, streams && streams.length ? _react.default.createElement(_reactTabs.Tab, {
@@ -51035,7 +51016,8 @@ function (_Component) {
       }, streams && streams.length ? _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_StreamList.StreamList, {
         streams: streams
       })) : null, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, {
-        media: media
+        media: media,
+        totalImage: totalImage
       })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_videoCotent.default, null))));
     }
   }]);
@@ -63782,7 +63764,8 @@ function (_Component) {
         className: "user-uploads w-100",
         id: "media-container"
       }, _react.default.createElement(_index5.default, {
-        media: this.props.data.media
+        media: this.props.data.media,
+        totalImage: totals.media
       })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_index7.default, {
@@ -63954,7 +63937,8 @@ function (_Component) {
         className: "user-uploads w-100",
         id: "media-container"
       }, _react.default.createElement(_index2.default, {
-        media: this.props.data.media
+        media: this.props.data.media,
+        totalImage: totals.media
       })), _react.default.createElement("section", {
         className: "posts"
       }, _react.default.createElement(_feed.default, {
@@ -86989,7 +86973,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42529" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43111" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

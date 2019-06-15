@@ -7,7 +7,8 @@ export default class ImageCotent extends Component {
 
     render(){
         
-        const {media} = this.props;
+        const {media, totalImage} = this.props;
+console.log(totalImage);
 
         if (media)
         {
@@ -32,8 +33,14 @@ export default class ImageCotent extends Component {
                             }
                         </div>
                         {
-                            media.length < 4 ? null : (
+                            (media.length < 4) ? null : (
                                 <a href="#" className="user-content-all">All ({media.length})</a>                                
+                            )
+                        }
+
+                        {
+                            (totalImage < 4 || !totalImage) ? null : (
+                                <a href="#" className="user-content-all">All ({totalImage})</a>                                
                             )
                         }
                     </div>

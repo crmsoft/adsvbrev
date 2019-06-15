@@ -55,7 +55,8 @@ class ResourceProfile extends JsonResource
             'totals' => [
                 'friends' => $this->friend->count(),
                 'groups' => $this->group()->where('is_game', 0)->count(),
-                'games' => $this->group()->where('is_game', 1)->count()
+                'games' => $this->group()->where('is_game', 1)->count(),
+                'media' => $this->media()->count()
             ]
         ];
     }

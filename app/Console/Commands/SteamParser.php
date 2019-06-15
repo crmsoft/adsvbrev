@@ -20,7 +20,7 @@ class SteamParser extends Command
      *
      * @var string
      */
-    protected $signature = 'steam:pull';
+    protected $signature = 'steam:pull {id?}';
 
     /**
      * The console command description.
@@ -46,6 +46,13 @@ class SteamParser extends Command
      */
     public function handle()
     {
+        if($this->argument('id') != null)
+        {
+            return $this->pullId(
+                $this->argument('id')
+            );
+        } // end if
+
         $counter = 0;
         $apps = json_decode(
                     file_get_contents(storage_path('../public/steam.json')), true);
@@ -59,136 +66,143 @@ class SteamParser extends Command
                 continue;
             } // end if
 
-            $url = sprintf(self::$api, $app_id);
-
-            $client = new \GuzzleHttp\Client();
-            $response = $client->get($url);
-
-            $data = json_decode($response->getBody(), true)[$app_id];
-
-            // check if the resource is available
-            if(!$data['success'] || ($data['data']['type'] != 'game'))
-                continue;
-
-            $data = $data['data'];
-
-            // generic information about Game.
-            $options = [];
-            
-            $options['system_requirements'] = [
-                'windows' => $this->parse_specs($data['pc_requirements']['minimum'] ?? ''),
-                'mac' => $this->parse_specs($data['mac_requirements']['minimum'] ?? ''),
-                'linux' => $this->parse_specs($data['linux_requirements']['minimum'] ?? '')
-            ];
-            
-            $options['description'] = $this->parse_desc($data);
-
-            $options['languages'] = $this->parse_langs($data['supported_languages'] ?? '');
-
-            $options['website'] = trim($data['website']);
-            
-            try{
-                $options['release'] = [
-                    'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('d M, Y', $data['release_date']['date'])->timestamp,
-                    'released' => !$data['release_date']['coming_soon']
-                ];
-            } catch(\Exception $e) {
-                try{
-                    $options['release'] = [
-                        'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('M d, Y', $data['release_date']['date'])->timestamp,
-                        'released' => !$data['release_date']['coming_soon']
-                    ];
-                }catch (\Exception $e)
-                {
-                    $options['release'] = [
-                        'timestamp' => $data['release_date']['date'],
-                        'released' => !$data['release_date']['coming_soon']
-                    ];
-                }
-            }
-
-            $options['is_free'] = $data['is_free'];
-            $options['resource'] = $app_id;
-                
-            // sync genres
-            $genres = [];
-            if (isset($data['genres']))
-            {
-                foreach($data['genres'] as $genre)
-                {
-                    $genre['name'] = $genre['description'];
-                    unset($genre['description']);
-                    $genre = \App\Entities\Genre::firstOrNew($genre);
-                    $genre->save();
-                    $genres[] = $genre->id;
-                } // end foreach
-            } // end if
-
-            // sync devs
-            $devs = [];
-            if (isset($data['developers']))
-            {
-                foreach($data['developers'] as $dev_name)
-                {
-                    $dev = \App\Entities\GameDeveloper::firstOrNew([
-                        'name' => $dev_name
-                    ]);
-                    $dev->name = $dev_name;
-                    $dev->options = $data['publishers'];
-                    $dev->save();
-                    $devs[] = $dev->id;
-                } // end foreach
-            } // end if
-
-            // store the game
-            $game = new \App\Entities\Game();                
-            
-            $game->name = $data['name'];
-            $game->slug = str_slug($data['name']);
-            if (empty($game->slug))
-            {
-                $game->slug = str_random(8);
-            } // end if
-            $game->is_game = 1;
-            $game->options = $options;
-            $game->save();
-
-            if (!empty($data['header_image']))
-                $game->poster = $this->store_images($data['header_image'], $game);
-            elseif (!empty($data['screenshots'][1]['path_thumbnail'])) 
-                $game->poster = $this->store_images($data['screenshots'][0]['path_thumbnail'], $game);
-
-            if (!empty($data['screenshots'][0]['path_thumbnail']))
-                $game->ava = $this->store_images($data['screenshots'][0]['path_thumbnail'], $game, false);
-
-            $game->genres()->sync($genres);
-            $game->developers()->sync($devs);
-            
-
-            $game->save();
-
-            if (isset($data['screenshots']))
-            {
-                // ss
-                foreach($data['screenshots'] as $ss)
-                {
-                    $media = new Media;
-                    $media->path = $ss['path_full'];
-                    $media->options = [
-                        'thumb' => $ss['path_thumbnail']
-                    ];
-                    $media->mediable()->associate($game);
-                    $user = new \App\User();
-                    $user->id = 1;
-                    $media->user()->associate($user);
-                    $media->save();
-                } // end foreach
-            } // end if
+            $this->pullId($app_id);
 
             if(++$counter == 100)
                 break;
 
         } // end foreach
+    }
+
+    private function pullId($app_id)
+    {
+        $url = sprintf(self::$api, $app_id);
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($url);
+
+        $data = json_decode($response->getBody(), true)[$app_id];
+
+        // check if the resource is available
+        if(!$data['success'] || ($data['data']['type'] != 'game'))
+            return false;
+
+        $data = $data['data'];
+
+        // generic information about Game.
+        $options = [];
+        
+        $options['system_requirements'] = [
+            'windows' => $this->parse_specs($data['pc_requirements']['minimum'] ?? ''),
+            'mac' => $this->parse_specs($data['mac_requirements']['minimum'] ?? ''),
+            'linux' => $this->parse_specs($data['linux_requirements']['minimum'] ?? '')
+        ];
+        
+        $options['description'] = $this->parse_desc($data);
+
+        $options['languages'] = $this->parse_langs($data['supported_languages'] ?? '');
+
+        $options['website'] = trim($data['website']);
+        
+        try{
+            $options['release'] = [
+                'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('d M, Y', $data['release_date']['date'])->timestamp,
+                'released' => !$data['release_date']['coming_soon']
+            ];
+        } catch(\Exception $e) {
+            try{
+                $options['release'] = [
+                    'timestamp' => empty($data['release_date']['date']) ? null : \Carbon\Carbon::createFromFormat('M d, Y', $data['release_date']['date'])->timestamp,
+                    'released' => !$data['release_date']['coming_soon']
+                ];
+            }catch (\Exception $e)
+            {
+                $options['release'] = [
+                    'timestamp' => $data['release_date']['date'],
+                    'released' => !$data['release_date']['coming_soon']
+                ];
+            }
+        }
+
+        $options['is_free'] = $data['is_free'];
+        $options['resource'] = $app_id;
+            
+        // sync genres
+        $genres = [];
+        if (isset($data['genres']))
+        {
+            foreach($data['genres'] as $genre)
+            {
+                $genre['name'] = $genre['description'];
+                unset($genre['description']);
+                $genre = \App\Entities\Genre::firstOrNew($genre);
+                $genre->save();
+                $genres[] = $genre->id;
+            } // end foreach
+        } // end if
+
+        // sync devs
+        $devs = [];
+        if (isset($data['developers']))
+        {
+            foreach($data['developers'] as $dev_name)
+            {
+                $dev = \App\Entities\GameDeveloper::firstOrNew([
+                    'name' => $dev_name
+                ]);
+                $dev->name = $dev_name;
+                $dev->options = $data['publishers'];
+                $dev->save();
+                $devs[] = $dev->id;
+            } // end foreach
+        } // end if
+
+        // store the game
+        $game = new \App\Entities\Game();                
+        
+        $game->name = $data['name'];
+        $game->slug = str_slug($data['name']);
+        if (empty($game->slug))
+        {
+            $game->slug = str_random(8);
+        } // end if
+        $game->is_game = 1;
+        $game->options = $options;
+        $game->save();
+
+        if (!empty($data['header_image']))
+            $game->poster = $this->store_images($data['header_image'], $game);
+        elseif (!empty($data['screenshots'][1]['path_thumbnail'])) 
+            $game->poster = $this->store_images($data['screenshots'][0]['path_thumbnail'], $game);
+
+        if (!empty($data['screenshots'][0]['path_thumbnail']))
+            $game->ava = $this->store_images($data['screenshots'][0]['path_thumbnail'], $game, false);
+
+        $game->genres()->sync($genres);
+        $game->developers()->sync($devs);
+        
+
+        $game->save();
+
+        if (isset($data['screenshots']))
+        {
+            // ss
+            foreach($data['screenshots'] as $ss)
+            {
+                $media = new Media;
+                $media->path = $ss['path_full'];
+                $media->options = [
+                    'thumb' => $ss['path_thumbnail']
+                ];
+                $media->mediable()->associate($game);
+                $user = new \App\User();
+                $user->id = 1;
+                $media->user()->associate($user);
+                $media->save();
+            } // end foreach
+        } // end if
+
+        return true;
     }
 
     private function store_images(string $url, \App\Entities\Game $game, bool $poster = true)
