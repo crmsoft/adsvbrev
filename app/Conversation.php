@@ -63,7 +63,7 @@ class Conversation extends Model
 
         if ($last)
         {
-            return mb_strimwidth('<b>'.mb_strimwidth($last->user->full_name, 0, 15, '...') . ':</b> ' . $last->message, 0, 35, '...');
+            return mb_strimwidth('<b>'.mb_strimwidth($last->user->first_name, 0, 15, '...') . ':</b> ' . $last->message, 0, 35, '...');
         } // end if
 
         return '...';
