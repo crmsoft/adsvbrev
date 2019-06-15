@@ -50647,7 +50647,6 @@ function (_Component) {
       var _this$props = this.props,
           media = _this$props.media,
           totalImage = _this$props.totalImage;
-      console.log(totalImage);
 
       if (media) {
         return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
@@ -75972,7 +75971,11 @@ function (_Component) {
         return user.first_name;
       }).join(', ')), data.unread === 0 ? null : _react.default.createElement("span", {
         className: "unread"
-      }, data.unread)))));
+      }, data.unread), _react.default.createElement("small", {
+        dangerouslySetInnerHTML: {
+          __html: data.last
+        }
+      })))));
     }
   }]);
 

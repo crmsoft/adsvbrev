@@ -22,10 +22,6 @@ class Conversation extends Model
         'deleted_at',
         'id'
     ];
-    
-    protected $appends = [
-        'unread'
-    ];
 
     public function getRouteKeyName()
     {
@@ -54,6 +50,23 @@ class Conversation extends Model
         $count = $count[0]->unread;
 
         return $count < 100 ? $count : '99+';
+    }
+
+    /**
+     * Last message in conversation
+     * 
+     * @return string
+     */
+    public function getLastMessageAttribute()
+    {
+        $last = $this->messages()->orderBy('id', 'desc')->with('user')->first();
+
+        if ($last)
+        {
+            return mb_strimwidth('<b>'.mb_strimwidth($last->user->full_name, 0, 15, '...') . ':</b> ' . $last->message, 0, 35, '...');
+        } // end if
+
+        return '...';
     }
 
     public function markReaded()

@@ -19,7 +19,8 @@ class ResourceChat extends JsonResource
         return [
             'hash_id' => $this->hash_id,
             'unread' => (int) $this->unread,
-            'members' => new UserCollection($this->members)
+            'members' => new UserCollection($this->members),
+            'last' => $this->last_message
         ];
     }
 }
