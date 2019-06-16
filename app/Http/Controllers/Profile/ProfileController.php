@@ -20,6 +20,7 @@ use App\Http\Resources\UserList\User as ResourceUser;
 use App\Http\Resources\Profile\ResourceProfile;
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Group\GroupCollection;
+use App\Http\Resources\Media\MediaCollection;
 
 class ProfileController extends Controller
 {
@@ -30,6 +31,15 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
+    }
+
+    public function listMedia(User $user)
+    {
+        $user = $user->id ? $user : auth()->user();
+
+        return new MediaCollection(
+            $user->media
+        );
     }
 
     /**

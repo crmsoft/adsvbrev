@@ -63,6 +63,7 @@ Route::group([
     Route::get('/followers/list/{username?}', 'ProfileController@listFollowers')->name('list-fo-friends');
     Route::get('/group/list/{group?}', 'ProfileController@listGroups')->name('list-fo-groups');
     Route::get('/notification/list', 'ProfileController@notifications')->name('list-fo-friends');
+    Route::get('/media/list/{user?}', 'ProfileController@listMedia')->name('list-user-media');
 
     Route::post('/settings','ProfileController@update')->name('edit-profile');
 
@@ -138,6 +139,7 @@ Route::group([
     Route::post('/game/{game}/leave', 'GameController@leave')->name('user-game-leave');
     Route::get('/game/participants/{game}', 'GameController@listParticipants')->name('user-game-list-p');
     Route::get('/game/list/groups', 'GameController@gameGroups')->name('list-game-groups');
+    Route::get('/game/media/{game}', 'GameController@gameMedia')->name('list-game-groups');
 
     Route::post('/game/vote/store/{game}', 'GameController@storeVote')->name('store-game-vote');
     Route::post('/game/review/store/{game}', 'GameController@storeReview')->name('store-game-review');

@@ -1,14 +1,115 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState, useEffect } from 'react';
+import axios from 'axios';
+import handleViewport from 'react-in-viewport';
 
 import ImageZoom from '../../general/ImageZoom';
+import {Modal} from '../../Modal';
 
-export default class ImageCotent extends Component {
+const ImageListItem = ({
+    info,
+    inViewport,
+    innerRef
+}) => {
+    return (
+        <div ref={innerRef} className="col-4" style={{height: '9vw', overflow: 'hidden'}}>
+            {inViewport ? <ImageZoom 
+                thumb={info.thumb ? info.thumb : info.full_path}
+                src={info.full_path}
+            /> : null}
+        </div>
+    )
+}
 
+const ViewportImageItem = handleViewport(ImageListItem);
+
+const ImageList = ({
+    onLoad,
+    user
+}) => {
+        
+    const [list, setList] = useState(() => {
+
+        var url = `/media/list/${user.username}`;
+
+        if (user.type === 'game')
+        {
+            url = `/game/media/${user.username}`;
+        } // end if
+
+        axios.get(url)
+        .then(({data}) => {            
+            setList(data.data);
+        });
+
+        return [];
+    });
+
+    useEffect(() => {
+        onLoad(
+            list.length
+        );
+    }, [list])
+    
+    return (
+        <div className="row">
+            {
+                list.map((img, index) => <ViewportImageItem key={index} info={img} />)
+            }
+        </div>
+    )
+}
+
+const Gallery = ({
+    open,
+    onClose,
+    user
+}) => {
+    const [fetched, setFetched] = useState(false);
+
+    return (
+        <Modal
+            processing={!fetched}
+            open={open}
+            onClose={onClose}
+            title='Media'
+            actions={[
+                {
+                    onAction: onClose,
+                    title: 'Close'
+                }
+            ]}
+        >
+            <div className="container pt-3 pb-3" style={{maxHeight: '75vh', overflowY: 'auto'}}>
+                <ImageList 
+                    user={user}
+                    onLoad={setFetched}
+                />
+            </div>
+        </Modal>
+    )
+}
+
+export default class ImageContent extends Component {
+    
+    state = {
+        gallery: false
+    }
+
+    showGallery()
+    {
+        this.setState(() => ({gallery:true}))
+    }
+
+    hideGallery()
+    {
+        this.setState(() => ({gallery:false}))
+    }
 
     render(){
         
-        const {media, totalImage} = this.props;
-console.log(totalImage);
+        const {media, totalImage, user} = this.props;
+        const {gallery} = this.state;
+        const {showGallery, hideGallery} = this;        
 
         if (media)
         {
@@ -31,16 +132,21 @@ console.log(totalImage);
                                     )
                                 })
                             }
+                            <Gallery 
+                                user={user}
+                                open={gallery} 
+                                onClose={hideGallery.bind(this)}
+                            />
                         </div>
                         {
                             (media.length < 4) ? null : (
-                                <a href="#" className="user-content-all">All ({media.length})</a>                                
+                                <a onClick={showGallery.bind(this)} href="javascript:void(0)" className="user-content-all">All ({media.length})</a>                                
                             )
                         }
 
                         {
                             (totalImage < 4 || !totalImage) ? null : (
-                                <a href="#" className="user-content-all">All ({totalImage})</a>                                
+                                <a onClick={showGallery.bind(this)} href="javascript:void(0)" className="user-content-all">All ({totalImage})</a>                                
                             )
                         }
                     </div>
@@ -48,25 +154,6 @@ console.log(totalImage);
             )
         } // end if
 
-        return (
-                
-            <div>
-                <div className="user-content active">
-                    <div className="row">
-                        <div className="col-4">
-                            <img src="../img/sample-100.jpg" alt="" />
-                        </div>
-                        <div className="col-4">
-                            <img src="../img/sample-100.jpg" alt="" /> 
-                        </div>
-                        <div className="col-4">
-                            <img src="../img/sample-100.jpg" alt="" />
-                        </div>
-                    </div>
-                    <a href="#" className="user-content-all">All (14)</a>
-                </div>
-                
-            </div>
-        )
+        return null;
     }
 }

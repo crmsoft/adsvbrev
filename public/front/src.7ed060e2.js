@@ -50472,7 +50472,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _Modal = require("../Modal");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -50596,7 +50600,11 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = ImageZoom;
-},{"react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
+ImageZoom.propTypes = {
+  thumb: _propTypes.default.string,
+  src: _propTypes.default.string
+};
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","../Modal":"../src/Modal/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50606,7 +50614,13 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _reactInViewport = _interopRequireDefault(require("react-in-viewport"));
+
 var _ImageZoom = _interopRequireDefault(require("../../general/ImageZoom"));
+
+var _Modal = require("../../Modal");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50622,31 +50636,163 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var ImageCotent =
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var ImageListItem = function ImageListItem(_ref) {
+  var info = _ref.info,
+      inViewport = _ref.inViewport,
+      innerRef = _ref.innerRef;
+  return _react.default.createElement("div", {
+    ref: innerRef,
+    className: "col-4",
+    style: {
+      height: '9vw',
+      overflow: 'hidden'
+    }
+  }, inViewport ? _react.default.createElement(_ImageZoom.default, {
+    thumb: info.thumb ? info.thumb : info.full_path,
+    src: info.full_path
+  }) : null);
+};
+
+var ViewportImageItem = (0, _reactInViewport.default)(ImageListItem);
+
+var ImageList = function ImageList(_ref2) {
+  var onLoad = _ref2.onLoad,
+      user = _ref2.user;
+
+  var _useState = (0, _react.useState)(function () {
+    var url = "/media/list/".concat(user.username);
+
+    if (user.type === 'game') {
+      url = "/game/media/".concat(user.username);
+    } // end if
+
+
+    _axios.default.get(url).then(function (_ref3) {
+      var data = _ref3.data;
+      setList(data.data);
+    });
+
+    return [];
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      list = _useState2[0],
+      setList = _useState2[1];
+
+  (0, _react.useEffect)(function () {
+    onLoad(list.length);
+  }, [list]);
+  return _react.default.createElement("div", {
+    className: "row"
+  }, list.map(function (img, index) {
+    return _react.default.createElement(ViewportImageItem, {
+      key: index,
+      info: img
+    });
+  }));
+};
+
+var Gallery = function Gallery(_ref4) {
+  var open = _ref4.open,
+      onClose = _ref4.onClose,
+      user = _ref4.user;
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      fetched = _useState4[0],
+      setFetched = _useState4[1];
+
+  return _react.default.createElement(_Modal.Modal, {
+    processing: !fetched,
+    open: open,
+    onClose: onClose,
+    title: "Media",
+    actions: [{
+      onAction: onClose,
+      title: 'Close'
+    }]
+  }, _react.default.createElement("div", {
+    className: "container pt-3 pb-3",
+    style: {
+      maxHeight: '75vh',
+      overflowY: 'auto'
+    }
+  }, _react.default.createElement(ImageList, {
+    user: user,
+    onLoad: setFetched
+  })));
+};
+
+var ImageContent =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(ImageCotent, _Component);
+  _inherits(ImageContent, _Component);
 
-  function ImageCotent() {
-    _classCallCheck(this, ImageCotent);
+  function ImageContent() {
+    var _getPrototypeOf2;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ImageCotent).apply(this, arguments));
+    var _this;
+
+    _classCallCheck(this, ImageContent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ImageContent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      gallery: false
+    });
+
+    return _this;
   }
 
-  _createClass(ImageCotent, [{
+  _createClass(ImageContent, [{
+    key: "showGallery",
+    value: function showGallery() {
+      this.setState(function () {
+        return {
+          gallery: true
+        };
+      });
+    }
+  }, {
+    key: "hideGallery",
+    value: function hideGallery() {
+      this.setState(function () {
+        return {
+          gallery: false
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
           media = _this$props.media,
-          totalImage = _this$props.totalImage;
+          totalImage = _this$props.totalImage,
+          user = _this$props.user;
+      var gallery = this.state.gallery;
+      var showGallery = this.showGallery,
+          hideGallery = this.hideGallery;
 
       if (media) {
         return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
@@ -50661,47 +50807,31 @@ function (_Component) {
             thumb: m.options.thumb ? m.options.thumb : m.thumb ? m.thumb : m.full_path,
             src: m.full_path
           }));
+        }), _react.default.createElement(Gallery, {
+          user: user,
+          open: gallery,
+          onClose: hideGallery.bind(this)
         })), media.length < 4 ? null : _react.default.createElement("a", {
-          href: "#",
+          onClick: showGallery.bind(this),
+          href: "javascript:void(0)",
           className: "user-content-all"
         }, "All (", media.length, ")"), totalImage < 4 || !totalImage ? null : _react.default.createElement("a", {
-          href: "#",
+          onClick: showGallery.bind(this),
+          href: "javascript:void(0)",
           className: "user-content-all"
         }, "All (", totalImage, ")")));
       } // end if
 
 
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
-        className: "user-content active"
-      }, _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("img", {
-        src: "../img/sample-100.jpg",
-        alt: ""
-      })), _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("img", {
-        src: "../img/sample-100.jpg",
-        alt: ""
-      })), _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("img", {
-        src: "../img/sample-100.jpg",
-        alt: ""
-      }))), _react.default.createElement("a", {
-        href: "#",
-        className: "user-content-all"
-      }, "All (14)")));
+      return null;
     }
   }]);
 
-  return ImageCotent;
+  return ImageContent;
 }(_react.Component);
 
-exports.default = ImageCotent;
-},{"react":"../node_modules/react/index.js","../../general/ImageZoom":"../src/general/ImageZoom.js"}],"../src/profile/media-tabs/video-cotent.js":[function(require,module,exports) {
+exports.default = ImageContent;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js","../../general/ImageZoom":"../src/general/ImageZoom.js","../../Modal":"../src/Modal/index.js"}],"../src/profile/media-tabs/video-cotent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50809,15 +50939,37 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var TwitchPlayer = function TwitchPlayer(_ref) {
   var username = _ref.username,
       onClose = _ref.onClose,
       title = _ref.title;
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loaded = _useState2[0],
+      setLoaded = _useState2[1];
+
   return _react.default.createElement(_index.Modal, {
+    processing: !loaded,
     open: true,
     onClose: onClose,
-    title: title
+    title: title,
+    actions: [{
+      title: 'Close',
+      onAction: onClose
+    }]
   }, _react.default.createElement("iframe", {
+    onLoad: function onLoad(e) {
+      return setLoaded(true);
+    },
     allowFullScreen: true,
     height: "360",
     frameBorder: "0",
@@ -50988,7 +51140,8 @@ function (_Component) {
       var _this$props = this.props,
           streams = _this$props.streams,
           media = _this$props.media,
-          totalImage = _this$props.totalImage;
+          totalImage = _this$props.totalImage,
+          user = _this$props.user;
       return _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
       }, streams && streams.length ? _react.default.createElement(_reactTabs.Tab, {
@@ -51016,7 +51169,8 @@ function (_Component) {
         streams: streams
       })) : null, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, {
         media: media,
-        totalImage: totalImage
+        totalImage: totalImage,
+        user: user
       })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_videoCotent.default, null))));
     }
   }]);
@@ -63764,7 +63918,8 @@ function (_Component) {
         id: "media-container"
       }, _react.default.createElement(_index5.default, {
         media: this.props.data.media,
-        totalImage: totals.media
+        totalImage: totals.media,
+        user: profile.user
       })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_index7.default, {
@@ -63937,7 +64092,8 @@ function (_Component) {
         id: "media-container"
       }, _react.default.createElement(_index2.default, {
         media: this.props.data.media,
-        totalImage: totals.media
+        totalImage: totals.media,
+        user: profile.user
       })), _react.default.createElement("section", {
         className: "posts"
       }, _react.default.createElement(_feed.default, {
@@ -85795,7 +85951,11 @@ function (_Component) {
         id: "media-container"
       }, _react.default.createElement(_mediaTabs.default, {
         media: data.media,
-        streams: data.streams
+        streams: data.streams,
+        user: {
+          username: id,
+          type: 'game'
+        }
       })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_postAdd.default, {
@@ -86976,7 +87136,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43111" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37928" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -1,13 +1,23 @@
-import React, {Component} from 'react';
+import React, {Component, useCallback, useState} from 'react';
 import {Modal} from '../../Modal/index';
 
 const TwitchPlayer = ({username, onClose, title}) => {
+    const [loaded, setLoaded] = useState(false);
+    
     return <Modal
+        processing={!loaded}
         open={true}
         onClose={onClose}
         title={title}
+        actions={[
+            {
+                title: 'Close',
+                onAction: onClose
+            }
+        ]}
     >
         <iframe 
+            onLoad={e => setLoaded(true)}
             allowFullScreen
             height="360"
             frameBorder="0"

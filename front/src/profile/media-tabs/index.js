@@ -28,7 +28,7 @@ export default class MediaTabs extends Component {
 
     render(){
 
-        const {streams, media, totalImage} = this.props;
+        const {streams, media, totalImage, user} = this.props;
 
         return (
             <Tabs>
@@ -69,6 +69,7 @@ export default class MediaTabs extends Component {
                         <ImageContent 
                             media={media}
                             totalImage={totalImage}
+                            user={user}
                         />
                         
                     </TabPanel>

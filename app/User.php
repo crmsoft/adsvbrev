@@ -95,6 +95,17 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
         return JWTAuth::fromUser($this);
     }
 
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
     public function getHasStatusAttribute(){
 
         $user = auth()->user();

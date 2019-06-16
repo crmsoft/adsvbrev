@@ -11,6 +11,7 @@ use App\Entities\Game;
 use App\Entities\GameReview;
 use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Game\Review as GameReviewResource;
+use App\Http\Resources\Media\MediaCollection;
 
 class GameController extends Controller
 {
@@ -137,5 +138,12 @@ class GameController extends Controller
         return $reacter->isReactedTo( $gameReview->getLoveReactant() ) ?
                     $reacter->unreactTo($gameReview->getLoveReactant(), $reactionType) :
                     $reacter->reactTo($gameReview->getLoveReactant(), $reactionType);
+    }
+
+    public function gameMedia(Game $game)
+    {
+        return new MediaCollection(
+            $game->media
+        );
     }
 }

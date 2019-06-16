@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Game;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Facades\Cache;
 
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Post\PostCollection;
@@ -39,7 +39,11 @@ class ResourceGame extends JsonResource
                 'genres' => $this->genres->map(function($item){ return ['name' => $item->name]; }),
                 'developers' => $this->developers->map(function($item){ return ['name' => $item->name]; }),
             ]),
-            'streams' => new StreamCollection($this->get_game_streams($this->name)),
+            'streams' => new StreamCollection(
+                Cache::remember("game_streams_{$this->slug}", 60 * 15, function (){
+                    return $this->get_game_streams($this->name);
+                })
+            ),
             'votes' => $this->getVotes($this, $user),
             'reviews' => new ReviewCollection($this->reviews->shuffle()),
             'avg_rate' => $this->getRate($this)

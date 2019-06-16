@@ -87,6 +87,7 @@ class GamePageComponent extends Component{
                                         <MediaTabs 
                                             media={data.media}
                                             streams={data.streams}
+                                            user={{username:id, type: 'game'}}
                                         />
 
                                     </section>

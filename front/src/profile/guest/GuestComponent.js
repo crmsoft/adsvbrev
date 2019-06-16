@@ -67,6 +67,7 @@ class Guest extends Component{
                             <MediaTabs 
                                 media={this.props.data.media}
                                 totalImage={totals.media}
+                                user={profile.user}
                             />
 
                         </section>

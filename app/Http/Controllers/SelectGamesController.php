@@ -36,7 +36,7 @@ class SelectGamesController extends Controller
         $selected = collect(json_decode($request->get('selected', '[]')));
         $user = auth()->user();
 
-        $user->group()->sync($selected->map(function($id) {
+        $user->group()->where('is_game', 1)->sync($selected->map(function($id) {
             return \Hashids::decode($id)[0];
         })->toArray());
 

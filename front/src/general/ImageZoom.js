@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {Modal} from '../Modal';
 
@@ -51,4 +52,9 @@ export default class ImageZoom extends Component {
             </div>
         )
     }
+}
+
+ImageZoom.propTypes = {
+    thumb: PropTypes.string,
+    src: PropTypes.string
 }
