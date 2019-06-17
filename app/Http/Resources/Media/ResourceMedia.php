@@ -22,6 +22,9 @@ class ResourceMedia extends JsonResource
             $thumb = asset( '/storage/user-media/' . $this->user->dir . '/chat_' . $this->path);
         } else if ($this->mediable_type == 'App\Entities\Game') {
             $full_path = $this->path;
+        }  else if ($this->mediable_type == 'App\Entities\Comment') {
+            $full_path = asset( '/storage/user-media/' . $this->user->dir . '/original_' . $this->path);
+            $thumb = asset( '/storage/user-media/' . $this->user->dir . '/520_' . $this->path);
         } else {
             $full_path = $this->full_path;
         }// end if

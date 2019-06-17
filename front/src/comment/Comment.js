@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+
 import store from '../profile/fetch/store';
 import {
     COMMENT_LIKED
 } from '../profile/fetch/actions';
-import axios from 'axios';
 import {
     placeEmoji
 } from '../utils';
-import {
-    Link
-} from 'react-router-dom';
 import Popup from 'reactjs-popup';
-
+import ImageZoom from '../general/ImageZoom';
 
 export default class Comment extends Component{
 
@@ -63,8 +62,8 @@ export default class Comment extends Component{
                     </p>
                     <div>
                         {
-                            comment.media.map(media => {
-                                return <img key={media.full_path} src={media.full_path} />
+                            comment.media.map(({full_path, thumb}, index) => {
+                                return <ImageZoom key={index} thumb={thumb} src={full_path} />
                             })
                         }
                     </div>

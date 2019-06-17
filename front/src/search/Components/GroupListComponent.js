@@ -7,7 +7,7 @@ export default class GroupListComponent extends Component{
         const group = this.props.data;
         return (
             <div className="search-item-user">
-                <Link to={`/g/${group.username}`} className="d-flex">
+                <Link to={group.gamers !== undefined ? `/g/${group.username}`:`/gr/${group.username}`} className="d-flex">
                     <div className="user-ava">
                         <img src={group.ava} />
                     </div>

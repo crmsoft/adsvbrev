@@ -15,7 +15,7 @@ export default function ({
                 <div className="col text-right">
                     <button className="btn dd-btn btn-sm" disabled={knocked} onClick={e => setKnock(true)}>
                         <span className="icon-plus"></span>
-                        { knocked ? 'knock knock' : 'knock on the door' }
+                        { knocked ? 'knock knock' : 'Knock on the door' }
                     </button>
                 </div>
             </div>

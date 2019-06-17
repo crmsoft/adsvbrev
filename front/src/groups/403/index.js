@@ -42,6 +42,15 @@ export default function({
                         about={data.description}
                     /> 
 
+                    <div style={{
+                        backgroundImage: 'url(/img/guarded.png)', 
+                        height: '200px',
+                        backgroundSize: '119%',
+                        zIndex: 2,
+                        marginTop: '-40px',
+                        marginLeft: '-20px'
+                    }}></div>
+
                     <Dudes 
                         data={data} 
                         knocked={knock} 

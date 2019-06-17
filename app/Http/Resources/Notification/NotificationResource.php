@@ -8,6 +8,10 @@ use App\Http\Resources\UserList\User;
 
 class NotificationResource extends JsonResource
 {
+    /**
+     * Reaction being removed
+     * @var bool
+     */
     public $skip = false;
 
     public function __construct(...$parameters)

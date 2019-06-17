@@ -28,6 +28,7 @@ class ReacterListener
      */
     public function handle(ReactionHasBeenAdded $event)
     {
+        $user = auth()->user();
         $reaction = $event->getReaction();
         $reactant = $reaction->getReactant();
         $target = $reactant->reactable;
@@ -35,13 +36,13 @@ class ReacterListener
         $n = new UserNotification;
         $n->notifiable()->associate($reactant);
         $n->target_id = $reaction->id;
-        
-        if ($reactant->type == 'App\\Post')
+
+        if ($reactant->type == 'App\\Post' && $target->user->id != $user->id)
         {
             $n->user()->associate(
                 $target->user
             );
-        } else if ($reactant->type == 'App\Entities\Comment')
+        } else if ($reactant->type == 'App\Entities\Comment' && $target->creator->id != $user->id)
         {
             $n->user()->associate(
                 $target->creator

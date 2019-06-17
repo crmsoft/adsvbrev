@@ -14,8 +14,13 @@ const pushNewComment = (comments, newComment) => {
 
        if(found.length)
        {
-           let index = comments.indexOf(found.pop());
-           comments[index].subs.push(newComment);
+           if(found[0].parent)
+           {
+                comments.push(newComment);
+           } else {
+                let index = comments.indexOf(found.pop());
+                comments[index].subs.push(newComment);
+           } // end if
        }
 
     } else {
