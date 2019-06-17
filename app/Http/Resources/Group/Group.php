@@ -31,7 +31,7 @@ class Group extends JsonResource
             'id' => \Hashids::encode($this->id),
             'username' => $this->slug,
             'full_name' => $this->name,
-            'ava' => url(\Storage::url($this->ava)),
+            'ava' => url(\Storage::url($this->ava))
         ];
     }
 }

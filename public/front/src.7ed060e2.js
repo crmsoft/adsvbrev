@@ -75528,7 +75528,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "search-item-user"
       }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/g/".concat(group.username),
+        to: group.gamers !== undefined ? "/g/".concat(group.username) : "/gr/".concat(group.username),
         className: "d-flex"
       }, _react.default.createElement("div", {
         className: "user-ava"
@@ -86352,7 +86352,7 @@ function _default(_ref) {
     }
   }, _react.default.createElement("span", {
     className: "icon-plus"
-  }), knocked ? 'knock knock' : 'knock on the door'))));
+  }), knocked ? 'knock knock' : 'Knock on the door'))));
 }
 },{"react":"../node_modules/react/index.js"}],"../src/groups/403/index.js":[function(require,module,exports) {
 "use strict";
@@ -86413,6 +86413,15 @@ function _default(_ref) {
     className: "user-middle"
   }, _react.default.createElement(_About.default, {
     about: data.description
+  }), _react.default.createElement("div", {
+    style: {
+      backgroundImage: 'url(/img/guarded.png)',
+      height: '200px',
+      backgroundSize: '119%',
+      zIndex: 2,
+      marginTop: '-40px',
+      marginLeft: '-20px'
+    }
   }), _react.default.createElement(_Dudes.default, {
     data: data,
     knocked: knock,
@@ -87409,7 +87418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38720" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45531" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
