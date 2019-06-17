@@ -45277,8 +45277,13 @@ var pushNewComment = function pushNewComment(comments, newComment) {
     });
 
     if (found.length) {
-      var index = comments.indexOf(found.pop());
-      comments[index].subs.push(newComment);
+      if (found[0].parent) {
+        comments.push(newComment);
+      } else {
+        var index = comments.indexOf(found.pop());
+        comments[index].subs.push(newComment);
+      } // end if
+
     }
   } else {
     comments.push(newComment);

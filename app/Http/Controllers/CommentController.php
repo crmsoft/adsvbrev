@@ -28,11 +28,6 @@ class CommentController extends Controller
 
         $parentComment = $comment->id ? $comment : null;
 
-        if ($comment && $comment->parent_id)
-        {
-            $parentComment = Comment::find( $comment->parent_id );
-        } // end if
-
         $comment = $post->comment([
             'body' => $request->comment
         ], $user, $parentComment);
