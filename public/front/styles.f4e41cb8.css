@@ -6720,6 +6720,17 @@ body {
 .main-color {
   color: #F15A24 !important; }
 
+.light-gray {
+  color: #484B52; }
+
+.block-color {
+  color: #202225; }
+
+.dd-block {
+  background-color: #202225;
+  border-radius: 3px;
+  padding: 15px; }
+
 .react-tabs__tab {
   z-index: 0;
   font-weight: 900; }

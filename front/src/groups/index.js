@@ -1,6 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 
+import RelatedGames from './RelatedGames';
+import ForbiddenPage from './403';
 import MediaTabs from '../profile/media-tabs';
 import Menu from '../menu/index';
 import Profile from './Profile';
@@ -35,8 +37,13 @@ class GroupPageComponent extends Component{
     render()
     {
         const {id} = this.props.match.params;
-        const data = this.props.data;
+        const {data,forbidden} = this.props;
         const poster = data.poster;
+
+        if (forbidden)
+        {
+            return <ForbiddenPage data={data}/>;
+        } // end if
 
         return (
             <div>
@@ -106,6 +113,10 @@ class GroupPageComponent extends Component{
                             />              
 
                         </section>
+
+                        <RelatedGames 
+                            list={data.related}
+                        />
 
                     </aside>
                 

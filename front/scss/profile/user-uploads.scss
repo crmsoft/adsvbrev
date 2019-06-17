@@ -19,10 +19,10 @@
         }
 
         .user-media{
-            img{
+            .thumb{
                 object-fit: cover;
-                width: 205px;
                 height: 115px;
+                width: 100%;
             }
         }
 
@@ -38,10 +38,6 @@
                 &:hover{
                     border: 3px solid $mainColor;
                 }
-            }
-
-            img{
-                width: 100%;
             }
         }
 

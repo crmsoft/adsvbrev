@@ -19,10 +19,6 @@ class EditGroup extends JsonResource
 
         $role = $this->role;
 
-        $related = new GroupCollection(
-            \App\Entities\Game::find($this->options['related'])
-        );
-
         $moderators = $this->managers->filter(function ($m) use ($user) { 
             return $user->id != $m->id && $m->pivot->hierarchy > 1;
         });
@@ -34,8 +30,8 @@ class EditGroup extends JsonResource
             'role' => $role,
             'cover' => url(\Storage::url($this->poster)),
             'banned' => new UserCollection($this->participants()->where('status', 'banned')->get()),
-            'related' => $related,
-            'is_private' => $this->options['is_private'] ?? false,
+            'related' => new GroupCollection($this->related_groups),
+            'is_private' => $this->is_private,
             'moderators' => $role == 'administrator' ? new UserCollection($moderators) : false,
             'description' => $this->options['description'] ?? ''
         ];

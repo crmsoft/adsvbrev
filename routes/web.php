@@ -152,7 +152,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth']
 ], function() {
-    Route::post('/group/show/{group}', 'GroupController@show')->name('user-group-show');
+    Route::get('/group/show/{group}', 'GroupController@show')->name('user-group-show');
     Route::post('/group/{group}/join', 'GroupController@join')->name('user-group-join');
     Route::post('/group/{group}/leave', 'GroupController@leave')->name('user-group-leave');
     Route::get('/group/participants/{group}', 'GroupController@listParticipants')->name('user-group-list-p');

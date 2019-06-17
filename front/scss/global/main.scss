@@ -7,6 +7,20 @@ body{
     color: $mainColor !important;
 }
 
+.light-gray{
+    color: $lightGray
+}
+
+.block-color{
+    color: $darkGray;   
+}
+
+.dd-block{
+    background-color: $darkGray;   
+    border-radius: 3px;
+    padding: 15px;
+}
+
 .react-tabs__tab{
     z-index: 0;
     font-weight: 900;

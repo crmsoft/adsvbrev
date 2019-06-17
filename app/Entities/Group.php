@@ -60,6 +60,18 @@ class Group extends Model implements ReactableContract
         return $role;
     }
 
+    public function getIsPrivateAttribute()
+    {
+        return !!($this->options['is_private'] ?? false);
+    }
+
+    public function getRelatedGroupsAttribute()
+    {
+        return self::find(
+            $this->options['related']
+        );
+    }
+
     public function managers(){
         return $this->belongsToMany(User::class, 'group_manager', 'group_id', 'user_id')
         ->withPivot('hierarchy');

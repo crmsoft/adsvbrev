@@ -1,20 +1,28 @@
 import axios from 'axios';
 
 import {
-    INIT,
+    INIT,FORBIDDEN,
     USER_JOINED,
     USER_LEAVED
 } from './action';
 
 export const init = (group) => {
     return dispatch => {
-        axios.post(`/group/show/${group}`)
+        axios.get(`/group/show/${group}`)
         .then(({data}) => {
             dispatch({
                 type: INIT,
                 data: data
             });
-        });
+        })
+        .catch(({response}) => {            
+            if(response.status == 403){
+                dispatch({
+                    type: FORBIDDEN,
+                    data: response
+                });
+            } // end if
+        })
     }
 }
 

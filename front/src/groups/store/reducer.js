@@ -2,9 +2,7 @@ import {
     INIT,
     USER_JOINED,
     USER_LEAVED,
-    REVIEWS_HIDDEN,
-    REVIEWS_SHOWN,
-    REVIEW_PUSH
+    FORBIDDEN,
 } from './action';
 
 const initialState = {
@@ -16,6 +14,7 @@ const initialState = {
         random: [],
         media: [],
         feed: [],
+        related: [],
         name: ``
     }
 };
@@ -23,12 +22,20 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type)
     {
-        case INIT : {
+        case FORBIDDEN : {            
+            return {
+                forbidden: true,
+                data: {
+                    ...state.data,
+                    ...action.data.data,
+                }
+            }
+        }
+        case INIT : {            
             return {
                 data: {
                     ...state.data,
                     ...action.data.data,
-                    reviews_open: false
                 }
             }
         }
