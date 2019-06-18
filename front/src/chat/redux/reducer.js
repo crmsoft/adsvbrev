@@ -8,6 +8,7 @@ import {
     CHAT_CLOSED,
     INC_CHAT_UNREAD,
     CHAT_READED,
+    CHAT_PUSH,
     MESSAGE_NOTIFIED,
     STATUS_BUSY,
     STATUS_ONLINE,
@@ -28,6 +29,18 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
+        case CHAT_PUSH : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    chat: [
+                        action.data,
+                        ...state.messenger.chat
+                    ]
+                }
+            }
+        }
         case SOUND_OFF : {
             return {
                 ...state,

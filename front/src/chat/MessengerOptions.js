@@ -107,7 +107,13 @@ export default class MessengerOptions extends Component{
                         Online
                     </div>
                 </div>
-
+                <div className="text-right pt-3">
+                    <button 
+                        onClick={this.props.onCreateGroup}
+                        className="dd-btn btn-sm btn-gray">
+                        Create group
+                    </button>
+                </div>
             </div>
         )
     }

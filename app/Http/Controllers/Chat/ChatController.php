@@ -140,5 +140,41 @@ class ChatController extends Controller{
         return response('Conversation is not found', 404);
     }
 
+    public function create(Request $request)
+    {
+        $request->validate([
+            'users' => ['required', 'array']
+        ]);
+
+        $user = auth()->user();
+
+        $conversation = Conversation::create(['user_id' => $user->id]);
+        $conversation->hash_id = base64_encode(bcrypt($conversation->id));
+        $conversation->save();
+        
+        // join users to conversation
+        UserConversation::create([
+            'user_id' => $user->id,
+            'conversation_id' => $conversation->id
+        ]);
+
+        foreach($request->get('users') as $username){
+            $friend = $user->friend()->where('username', $username)->first();
+
+            if (!$friend)
+            {
+                continue;
+            } // end if
+
+            // join users to conversation
+            UserConversation::create([
+                'user_id' => $friend->id,
+                'conversation_id' => $conversation->id
+            ]);
+        } // end foreach
+
+
+        return new ResourceChat($conversation);
+    }
 
 } // end ConversationController

@@ -191,6 +191,7 @@ Route::group([
     Route::get('/chats', 'ChatController@chats')->name('chat-list');
     Route::post('/chats/{username}/start', 'ChatController@start')->name('create-chat');
     Route::post('/chat/{conversation}/message', 'ChatController@store')->name('store-message');
+    Route::post('/chat/create', 'ChatController@create')->name('create-chat');
 
     Route::post('/chat/{conversation}/pull', 'MessageController@pull')->name('pull-latest-messages');
     Route::post('/chat/{conversation}/pull/prev', 'MessageController@pullPrev')->name('pull-latest-messages');

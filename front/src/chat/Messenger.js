@@ -6,6 +6,7 @@ import {load_chats} from './redux/events';
 import Popup from 'reactjs-popup';
 import MessengerOptions from './MessengerOptions';
 import axios from 'axios';
+import CreateGroup from './CreateGroup';
 
 const ChatList = ({chats, startConversation, user}) => {
     return (
@@ -43,7 +44,8 @@ const UserList = ({friends, createChat}) => {
 class UsersComponent extends Component {
 
     state = {
-        minimized: localStorage.getItem('minimized') === 'true'
+        minimized: localStorage.getItem('minimized') === 'true',
+        createGroupOpen:false
     }
 
     componentDidMount(){
@@ -89,7 +91,8 @@ class UsersComponent extends Component {
         } = this.props.messenger;
 
         const {
-            minimized
+            minimized,
+            createGroupOpen
         } = this.state;
 
         // no messenger when no friends;
@@ -100,6 +103,11 @@ class UsersComponent extends Component {
         
         return (
             <div className={minimized ? "chat-wrapper minimized" : "chat-wrapper"}>
+                <CreateGroup 
+                    list={friend}
+                    open={createGroupOpen}
+                    onClose={e => this.setState(state => ({createGroupOpen:false}))}
+                />
                 <div className="header">
                     <span
                         onClick={this.minimizeMessenger.bind(this)} 
@@ -121,7 +129,11 @@ class UsersComponent extends Component {
                             modal={false}
                             trigger={<span className="settings icon-cog"></span>}
                         >
-                            <MessengerOptions status={m_status} sound={m_sound} />
+                            <MessengerOptions 
+                                onCreateGroup={e => this.setState(state => ({createGroupOpen:true}))}
+                                status={m_status} 
+                                sound={m_sound}
+                            />
                         </Popup>
                     </div>
                     <img className="dec" src="../img/message-dec.png" />

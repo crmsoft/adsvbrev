@@ -6575,7 +6575,7 @@ option:checked {
 .form-input-container {
   display: block;
   position: relative;
-  padding-left: 35px;
+  padding-left: 25px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
@@ -6716,6 +6716,10 @@ button:focus {
 body {
   background-color: #000;
   color: #fff; }
+
+.list-scroll {
+  max-height: 75vh;
+  overflow-y: auto; }
 
 .main-color {
   color: #F15A24 !important; }
@@ -10009,6 +10013,14 @@ nav.user-profile {
       display: none; }
     .chat .chat-wrapper.minimized .unread-chat-counter {
       display: inline-block; }
+    .chat .chat-wrapper .create-group-list .form-input-container {
+      margin-top: 15px; }
+    .chat .chat-wrapper .create-group-list li {
+      cursor: pointer; }
+      .chat .chat-wrapper .create-group-list li:hover {
+        background-color: rgba(102, 51, 153, 0.08); }
+      .chat .chat-wrapper .create-group-list li .checkbox-container {
+        padding-right: 0; }
   .chat .dialog-wrapper {
     display: flex; }
     .chat .dialog-wrapper .dialog {

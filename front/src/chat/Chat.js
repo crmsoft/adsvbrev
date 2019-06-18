@@ -17,8 +17,17 @@ const UsersAva = ({list}) => {
     )
 }
 
-export default class Chat extends Component{
+const membersTitle = (list) => {
+    const us = list.map(user => { return user.first_name; }).join(', ');
     
+    return {
+        full: us,
+        short: us.length > 30 ? us.substr(0, 30)+'...':us
+    }
+}
+
+export default class Chat extends Component{
+
     render(){
         
         const {data, onClick, user} = this.props;
@@ -35,6 +44,8 @@ export default class Chat extends Component{
             members = data.members.filter(m => m.username !== user)
         }
 
+        const title = membersTitle(data.members);
+
         return (
             <div onClick={ e => onClick(data)  } className="user-chat">
                 <div className="user-list-item">
@@ -43,8 +54,8 @@ export default class Chat extends Component{
                             { <UsersAva list={members} /> }
                         </div>
                         <div className="user-list-user">
-                            <span>
-                                { data.members.map(user => { return user.first_name; }).join(', ') }
+                            <span title={title.full}>
+                                { title.short }
                             </span>
                             {
                                 data.unread === 0 ? null : <span className="unread">{data.unread}</span>
