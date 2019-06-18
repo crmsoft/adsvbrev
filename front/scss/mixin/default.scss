@@ -11,10 +11,11 @@
 }
 
 @mixin section-default {
+    border: 1px solid $strokeColor;
     border-radius: $sectionBorderRadius;
     padding: $sectionPadding;
     margin-bottom: $sectionTop;
-    background-color: $sectionBg;
+    background-color: $postBack;
 }
 
 @mixin section-delimiter {

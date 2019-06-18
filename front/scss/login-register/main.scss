@@ -52,7 +52,7 @@
             position: absolute;
             left: 0;
             right: 0;
-            border-bottom: 1px solid #F05A24;
+            border-bottom: 1px solid $mainColor;
             bottom: 0;
             margin-left: -10px;
             margin-right: -10px;
@@ -92,7 +92,7 @@
 
             button{
                 width: 100%;
-                background-color: #F05A24;
+                background-color: $mainColor;
                 border: 0;
                 padding: 10px 10px;
                 border-radius: 10px;

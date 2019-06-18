@@ -25,7 +25,7 @@
   -moz-border-radius: 5px;
   border-radius: 5px;
   background-color: $postBack;
-
+  border: 1px solid $strokeColor;
   +.post{
     margin-top: 15px;
   }

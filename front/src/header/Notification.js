@@ -83,11 +83,11 @@ export default class Notification extends Component{
                                 list.map((not, index) => {
                                     const user = not.user;
                                     return (
-                                        <li className="user" key={index}>
+                                        <li className={`user ${not.type}`} key={index}>
                                             <div className={not.viewed ? 'row' : 'row unread'}>
                                                 <div className="col-auto align-self-center p-0">
                                                     <div className="notification-info text-center">
-                                                        <div className={`main-color icon-${not.type}`}></div>
+                                                        <div className={`icon-${not.type}`}></div>
                                                         <span className="notification-time">{not.time}</span>
                                                     </div>  
                                                 </div>

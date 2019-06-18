@@ -14,7 +14,6 @@ $findyourdudesbordercolor:#354247;
 
 $searchcolor:#989898;
 
-$orangecolor:#F05A24;
 $dudetitletop:60px;
 $greycolor:#D1D1D1;
 $mygamesactivecolor:#3D4444;
@@ -43,7 +42,7 @@ $minheight:50%;
     }
     h3
     {
-        color:$orangecolor;
+        color:$mainColor;
         font-size: 24px;
     }
 }
@@ -154,7 +153,7 @@ $minheight:50%;
                     h3
                     {
                         font-size:14px;
-                        color:$orangecolor;
+                        color:$mainColor;
                         margin-bottom:3px;
                     }
                     .my-games-desc

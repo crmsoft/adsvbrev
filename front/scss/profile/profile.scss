@@ -51,7 +51,7 @@ nav.user-profile{
         }
         
         .user{
-            color: #F05A24;
+            color: $mainColor;
             .user-level{
                 width: 180px;
                 height: 23px;
@@ -63,7 +63,7 @@ nav.user-profile{
                     font-size: 11px;
                     color: #fff;
                     text-align: right;
-                    background: #F05A24;
+                    background: $mainColor;
                 }
             }
             .user-level-value{
@@ -82,7 +82,7 @@ nav.user-profile{
             align-self: flex-end;
             .text{
                 >span:first-child{
-                    color: #F05A24;
+                    color: $mainColor;
                     margin: 0 5px;
                 }
             }
@@ -94,7 +94,7 @@ nav.user-profile{
         align-self: flex-end;
         .icon-location{
             padding-top: 5px;
-            color: #F05A24;
+            color: $mainColor;
             margin: 0 5px;
         }
         .text{
@@ -209,7 +209,7 @@ nav.user-profile{
         width: 200px;
         border-radius: 100px;
         overflow: hidden;
-        border-color: #F05A24;
+        border-color: $mainColor;
         border-width: 2px;
         border-style: solid;
         position: absolute;
@@ -239,7 +239,7 @@ nav.user-profile{
         border-radius: 14px;
         background-color: #ffffff;
         position: absolute;
-        color: #F05A24;
+        color: $mainColor;
         right: 5px;
         top: -15px;
         text-decoration: none;

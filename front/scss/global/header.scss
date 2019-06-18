@@ -1,5 +1,5 @@
 header{
-    background-color: $sectionBg;
+    background-color: #0c0f11;
     padding: 0 50px;
     color: #fff;
     ul li{
@@ -30,7 +30,7 @@ header{
                 padding: 4px 5px;
                 line-height: 0.75;
                 border-radius: 12px;
-                background-color: #f05a24;
+                background-color: $mainColor;
             }
             .header-ava{
                 img{
@@ -65,20 +65,24 @@ header{
             height: 15px;
             position: absolute;
             left: 12px;
+            color: #989898;
         }
         input{
             min-width: 50%;
-            background-color: #36393F;
+            background-color: #1e2528;
             border: 0;
             border-radius: 0.6rem;
             padding-left: 40px;
             &:focus{
                 border: 0;
                 outline: 0;
-                background-color: #36393F;
+                background-color: #293235;
                 box-shadow: none;
                 color: #fff;
             }
+        }
+        .icon-search + input::focus{
+            color: #CCCCCC;
         }
     }
 }
@@ -88,6 +92,7 @@ header{
         background-color: $lightGray !important;
         border: 1px solid $lightGray !important;
         padding: 0 !important;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 1px !important;
         >div{
             background-color: $lightGray !important;
         }
@@ -98,9 +103,10 @@ header{
         width: 395px !important;
         .followers-header{
             padding: 3px 10px;
+            background-color: #3d4444;
         }
         .followers-list{
-            background-color: $darekerGray;
+            background-color: $postBack;
             margin: 0;
             padding: 0;
             max-height: 320px;
@@ -155,6 +161,16 @@ header{
             }
             .user{
                 border-bottom: 1px solid $halfGray;
+                &.comment{
+                    .icon-comment{
+                        color: #03a5ff;
+                    }
+                }
+                &.liked{
+                    .icon-liked{
+                        color: $mainColor;
+                    }
+                }
             }
             li .user-list-user{
                 width: auto;

@@ -2,7 +2,7 @@
     
     margin: 0 -10px;
     padding: 0 10px;
-    border-bottom: 3px solid $sectionInnerColor;
+    border-bottom: 3px solid $postDelimiter;
     li{
         +li{
             margin-left: 1px;
@@ -21,7 +21,7 @@
             &::before{
                 margin-right: 6px;
                 font-size: 12px;
-                @include right-edge-cut(0, #2F3136);
+                @include right-edge-cut(0, $gameReview);
             }
             span{
                 text-transform: uppercase;
@@ -31,7 +31,7 @@
             a{
                 color: $white;
                 &:before{
-                    background-color:  $sectionInnerColor;
+                    background-color:  $postDelimiter;
                 }
             }
         }

@@ -52,7 +52,7 @@ class HeaderComponent extends Component{
 
                 <nav className="navbar navbar-light navbar-expand-md bg-faded justify-content-center">
                     <a href="/" className="navbar-brand d-flex w-50 mr-auto">
-                        <img src="/img/logo/logo-h.png" alt="Logo" />
+                        <img src="/img/logo/logo_v2.png" alt="Logo" />
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                         <span className="navbar-toggler-icon"></span>
