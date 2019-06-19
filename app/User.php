@@ -20,6 +20,7 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
     const STATUS_SUBSCRIBE = 'subscribe';
     const STATUS_FRIEND = 'friend';
     const STATUS_DECLINED = 'declined';
+    const CHATS_EXCEPT_STATUS = ['hidden'];
 
     /**
      * The attributes that are mass assignable.
@@ -142,7 +143,7 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
             'id',
             'id',
             'conversation_id'
-        )->orderBy('updated_at', 'desc');
+        )->whereNotIn('status', self::CHATS_EXCEPT_STATUS)->orderBy('updated_at', 'desc');
     }
 
     public function media()

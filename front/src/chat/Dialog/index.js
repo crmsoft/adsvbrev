@@ -202,12 +202,13 @@ class DialogComponent extends Component{
     }
 
     render(){   
-            
+        const {chat} = this.props;
         return (
             <div className="dialog">
                 <Header members={this.props.chat.members} 
                         closeChat={this.closeChat.bind(this)}
                         me={this.props.messenger.username}
+                        chat={chat}
                 />
                 <ScrollToBottom 
                     animating={false}

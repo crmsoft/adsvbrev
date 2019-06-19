@@ -72,7 +72,19 @@ class ChatController extends Controller{
 
          } // end if
 
-         return new ResourceChat(Conversation::find($conversations[0]->conversation_id));
+         $conversation_id = $conversations[0]->conversation_id;
+
+        UserConversation::where([
+            'user_id' => $chat_to->id,
+            'conversation_id' => $conversation_id
+        ])->update(['status' => '']);
+
+        UserConversation::where([
+            'user_id' => $user->id,
+            'conversation_id' => $conversation_id
+        ])->update(['status' => '']);
+
+         return new ResourceChat(Conversation::find($conversation_id));
     } // end start
 
     public function store(Conversation $conversation, Request $request)
@@ -134,47 +146,34 @@ class ChatController extends Controller{
             $messageRead->user()->associate($user);
             $messageRead->save();
 
+            $conversation->members->map(function($user) use ($conversation) {
+                UserConversation::where([
+                    'user_id' => $user->id,
+                    'conversation_id' => $conversation->id
+                ])->update(['status' => '']);
+            });
+
             return new ResourceMessage($message);
         } // end if
 
         return response('Conversation is not found', 404);
     }
 
-    public function create(Request $request)
+    public function destroy(Conversation $conversation)
     {
-        $request->validate([
-            'users' => ['required', 'array']
-        ]);
-
         $user = auth()->user();
 
-        $conversation = Conversation::create(['user_id' => $user->id]);
-        $conversation->hash_id = base64_encode(bcrypt($conversation->id));
-        $conversation->save();
-        
-        // join users to conversation
-        UserConversation::create([
-            'user_id' => $user->id,
-            'conversation_id' => $conversation->id
-        ]);
-
-        foreach($request->get('users') as $username){
-            $friend = $user->friend()->where('username', $username)->first();
-
-            if (!$friend)
-            {
-                continue;
-            } // end if
-
-            // join users to conversation
-            UserConversation::create([
-                'user_id' => $friend->id,
+        if($conversation->members()->where('users.id', $user->id)->count())
+        {
+            UserConversation::where([
+                'user_id' => $user->id,
                 'conversation_id' => $conversation->id
-            ]);
-        } // end foreach
+             ])->update(['status' => 'hidden']);
 
+             return response('ok');
+        } // end if
 
-        return new ResourceChat($conversation);
+        return response('Not found', 404);   
     }
 
 } // end ConversationController

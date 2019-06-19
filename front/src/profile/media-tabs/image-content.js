@@ -38,7 +38,7 @@ const ImageList = ({
 
         axios.get(url)
         .then(({data}) => {            
-            setList(data.data);
+            setList(data.data.reverse());
         });
 
         return [];

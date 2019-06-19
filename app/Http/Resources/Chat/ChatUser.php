@@ -16,11 +16,18 @@ class ChatUser extends JsonResource
      */
     public function toArray($request)
     {
+        $chats = \App\Conversation::hydrate(
+            \DB::select(
+                $this->chat()->select(['conversations.*'])->toSql(), 
+                [$this->id, join(',', \App\User::CHATS_EXCEPT_STATUS)]
+            )
+        );
+
         return [
             'full_name' => $this->full_name,
             'username' => $this->username,
             'ava' => $this->ava,
-            'chat' => new ChatCollection($this->chat),
+            'chat' => new ChatCollection($chats),
             'friend' => new UserCollection($this->friend),
             'm_status' => $this->profile->m_status,
             'm_sound' => $this->profile->m_sound

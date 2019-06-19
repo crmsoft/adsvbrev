@@ -50697,7 +50697,7 @@ var ImageList = function ImageList(_ref2) {
 
     _axios.default.get(url).then(function (_ref3) {
       var data = _ref3.data;
-      setList(data.data);
+      setList(data.data.reverse());
     });
 
     return [];
@@ -76130,7 +76130,7 @@ exports.default = Chat;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CHAT_PUSH = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MARK_MESSAGES_AS_READED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
+exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CHAT_REMOVE = exports.CHAT_UPDATE = exports.CHAT_PUSH = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MARK_MESSAGES_AS_READED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -76156,6 +76156,10 @@ var CHAT_READED = 'CHAT_READED';
 exports.CHAT_READED = CHAT_READED;
 var CHAT_PUSH = 'CHAT_PUSH';
 exports.CHAT_PUSH = CHAT_PUSH;
+var CHAT_UPDATE = 'CHAT_UPDATE';
+exports.CHAT_UPDATE = CHAT_UPDATE;
+var CHAT_REMOVE = 'CHAT_REMOVE';
+exports.CHAT_REMOVE = CHAT_REMOVE;
 var STATUS_ONLINE = 'STATUS_ONLINE';
 exports.STATUS_ONLINE = STATUS_ONLINE;
 var STATUS_OFFLINE = 'STATUS_OFFLINE';
@@ -76249,6 +76253,28 @@ var reducer = function reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _events.CHAT_REMOVE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            chat: state.messenger.chat.filter(function (chat) {
+              return chat.hash_id !== action.data;
+            })
+          })
+        });
+      }
+
+    case _events.CHAT_UPDATE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            chat: [action.data].concat(_toConsumableArray(state.messenger.chat.filter(function (c) {
+              return c.hash_id !== action.data.hash_id;
+            })))
+          })
+        });
+      }
+
     case _events.CHAT_PUSH:
       {
         return Object.assign({}, state, {
@@ -76690,7 +76716,9 @@ var FriendList = function FriendList(_ref2) {
 var _default = function _default(_ref3) {
   var onClose = _ref3.onClose,
       open = _ref3.open,
-      list = _ref3.list;
+      list = _ref3.list,
+      _ref3$update = _ref3.update,
+      update = _ref3$update === void 0 ? false : _ref3$update;
 
   var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -76744,14 +76772,14 @@ var _default = function _default(_ref3) {
 
     setProcessing(true);
 
-    _axios.default.post("/chat/create", {
+    _axios.default.post(update ? "/chat/group/".concat(update, "/update") : "/chat/group/store", {
       users: selected_users
     }).then(function (_ref4) {
       var data = _ref4.data;
       setProcessing(false);
 
       _store.default.dispatch({
-        type: _events.CHAT_PUSH,
+        type: update ? _events.CHAT_UPDATE : _events.CHAT_PUSH,
         data: data.data
       }); // clear selection
 
@@ -76772,7 +76800,7 @@ var _default = function _default(_ref3) {
     onAction: onClose,
     class: "btn-empty"
   }, {
-    title: 'Create',
+    title: update ? 'Update' : 'Create',
     onAction: onSubmit
   }];
   return _react.default.createElement(_Modal.Modal, {
@@ -77707,7 +77735,45 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = MessageList;
-},{"react":"../node_modules/react/index.js","./Message":"../src/chat/Dialog/Message.js","./DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/chat/Dialog/DialogHead.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Message":"../src/chat/Dialog/Message.js","./DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/Modal/Tooltip.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = function _default(_ref) {
+  var _ref$trigger = _ref.trigger,
+      trigger = _ref$trigger === void 0 ? _react.default.createElement("span", {
+    className: "icon-more"
+  }, "\xA0") : _ref$trigger,
+      children = _ref.children,
+      _ref$onOpen = _ref.onOpen,
+      onOpen = _ref$onOpen === void 0 ? function () {} : _ref$onOpen;
+  return _react.default.createElement("div", {
+    className: "dd-tooltip d-inline-block"
+  }, _react.default.createElement(_reactjsPopup.default, {
+    onOpen: onOpen,
+    keepTooltipInside: true,
+    lockScroll: false,
+    closeOnEscape: true,
+    closeOnDocumentClick: true,
+    position: "top center",
+    modal: false,
+    on: 'hover',
+    trigger: trigger
+  }, children));
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"../src/chat/Dialog/DialogHead.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77717,65 +77783,163 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Tooltip = _interopRequireDefault(require("../../Modal/Tooltip"));
+
+var _store = _interopRequireDefault(require("../redux/store"));
+
+var _events = require("../redux/events");
+
+var _CreateGroup = _interopRequireDefault(require("../CreateGroup"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+var DialogOptions = function DialogOptions(_ref) {
+  var hash_id = _ref.hash_id,
+      onDestroy = _ref.onDestroy;
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+  var destroy = function destroy() {
+    _axios.default.post("/chat/".concat(hash_id, "/destroy")).then(function (_ref2) {
+      var data = _ref2.data;
+      onDestroy(hash_id);
+    }).catch(function (err) {
+      return alert('Error');
+    });
+  };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+  return _react.default.createElement("ul", {
+    className: "dialog-options"
+  }, _react.default.createElement("li", {
+    onClick: destroy
+  }, "Delete dialog"));
+};
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var GroupMember = function GroupMember(_ref3) {
+  var hash_id = _ref3.hash_id,
+      onLeave = _ref3.onLeave;
 
-var Header =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Header, _Component);
+  var leave = function leave() {
+    _axios.default.post("/chat/group/".concat(hash_id, "/leave")).then(function (_ref4) {
+      var data = _ref4.data;
+      onLeave(hash_id);
+    }).catch(function (err) {
+      return alert('Error');
+    });
+  };
 
-  function Header() {
-    _classCallCheck(this, Header);
+  return _react.default.createElement("ul", {
+    className: "dialog-options"
+  }, _react.default.createElement("li", {
+    onClick: leave
+  }, "Leave group"));
+};
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
-  }
+var GroupAdmin = function GroupAdmin(_ref5) {
+  var hash_id = _ref5.hash_id,
+      onDestroy = _ref5.onDestroy,
+      onEdit = _ref5.onEdit;
 
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
+  var destroy = function destroy() {
+    _axios.default.post("/chat/group/".concat(hash_id, "/destroy")).then(function (_ref6) {
+      var data = _ref6.data;
+      onDestroy(hash_id);
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
 
-      var _this$props = this.props,
-          members = _this$props.members,
-          me = _this$props.me;
-      return _react.default.createElement("div", {
-        className: "dialog-head"
-      }, _react.default.createElement("div", {
-        className: "dialog-title"
-      }, members.map(function (member) {
-        return me === member.username ? 'Me' : member.first_name;
-      }).join(', ')), _react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return _this.props.closeChat();
-        },
-        className: "dialog-actions"
-      }, "\xD7"));
+  return _react.default.createElement(_react.Fragment, null, _react.default.createElement("ul", {
+    className: "dialog-options"
+  }, _react.default.createElement("li", {
+    onClick: function onClick(e) {
+      return onEdit(true);
     }
-  }]);
+  }, "Edit group"), _react.default.createElement("li", {
+    onClick: destroy
+  }, "Delete group")));
+};
+/**
+ * Header Component
+ */
 
-  return Header;
-}(_react.Component);
 
-exports.default = Header;
-},{"react":"../node_modules/react/index.js"}],"../node_modules/glamor/lib/sheet.js":[function(require,module,exports) {
+var _default = function _default(_ref7) {
+  var chat = _ref7.chat,
+      members = _ref7.members,
+      me = _ref7.me,
+      closeChat = _ref7.closeChat;
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      open = _useState2[0],
+      setOpen = _useState2[1];
+
+  var removeChat = function removeChat(hash_id) {
+    _store.default.dispatch({
+      type: _events.CHAT_REMOVE,
+      data: hash_id
+    });
+
+    closeChat();
+  };
+
+  var member_list = members.map(function (member) {
+    return me === member.username ? 'Me' : member.first_name;
+  }).join(', ');
+  return _react.default.createElement("div", {
+    className: "dialog-head"
+  }, _react.default.createElement(_CreateGroup.default, {
+    update: chat.hash_id,
+    open: open,
+    list: _store.default.getState().messenger.friend.map(function (friend) {
+      friend.selected = members.filter(function (m) {
+        return m.username === friend.username;
+      }).length;
+      return friend;
+    }),
+    onClose: function onClose(e) {
+      return setOpen(false);
+    }
+  }), _react.default.createElement("div", {
+    className: "dialog-title"
+  }, _react.default.createElement(_Tooltip.default, {
+    trigger: _react.default.createElement("span", null, member_list)
+  }, _react.default.createElement("spam", {
+    className: "d-block p-2"
+  }, member_list))), _react.default.createElement("div", {
+    className: "dialog-actions"
+  }, _react.default.createElement("span", {
+    className: "pr-1"
+  }, _react.default.createElement(_Tooltip.default, null, chat.group ? chat.owner ? _react.default.createElement(GroupAdmin, _extends({
+    onEdit: setOpen,
+    onDestroy: removeChat
+  }, chat)) : _react.default.createElement(GroupMember, {
+    onLeave: removeChat,
+    hash_id: chat.hash_id
+  }) : _react.default.createElement(DialogOptions, _extends({}, chat, {
+    onDestroy: removeChat
+  })))), _react.default.createElement("span", {
+    onClick: function onClick(e) {
+      return closeChat();
+    }
+  }, "\xD7")));
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../../Modal/Tooltip":"../src/Modal/Tooltip.js","../redux/store":"../src/chat/redux/store.js","../redux/events":"../src/chat/redux/events.js","../CreateGroup":"../src/chat/CreateGroup.js"}],"../node_modules/glamor/lib/sheet.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -82049,12 +82213,14 @@ function (_Component) {
     value: function render() {
       var _this7 = this;
 
+      var chat = this.props.chat;
       return _react.default.createElement("div", {
         className: "dialog"
       }, _react.default.createElement(_DialogHead.default, {
         members: this.props.chat.members,
         closeChat: this.closeChat.bind(this),
-        me: this.props.messenger.username
+        me: this.props.messenger.username,
+        chat: chat
       }), _react.default.createElement(_reactScrollToBottom.default, {
         animating: false,
         className: "message-container",
@@ -82838,7 +83004,7 @@ function (_Component) {
         if (state.recieved === _events.NOTIFICATION) {
           _NewNotification.default.play();
 
-          _this2.props.onNotificatoinRecieved();
+          _this2.props.onNotificationReceived();
         } // end if
 
       });
@@ -82906,7 +83072,7 @@ function (_Component) {
       }, list.map(function (not, index) {
         var user = not.user;
         return _react.default.createElement("li", {
-          className: "user",
+          className: "user ".concat(not.type),
           key: index
         }, _react.default.createElement("div", {
           className: not.viewed ? 'row' : 'row unread'
@@ -82915,7 +83081,7 @@ function (_Component) {
         }, _react.default.createElement("div", {
           className: "notification-info text-center"
         }, _react.default.createElement("div", {
-          className: "main-color icon-".concat(not.type)
+          className: "icon-".concat(not.type)
         }), _react.default.createElement("span", {
           className: "notification-time"
         }, not.time))), _react.default.createElement("div", {
@@ -82970,6 +83136,8 @@ var _Notification = _interopRequireDefault(require("./Notification"));
 
 var _event = require("../friendship/event");
 
+var _Tooltip = _interopRequireDefault(require("../Modal/Tooltip"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -82993,6 +83161,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var IconFriends = function IconFriends() {
+  return _react.default.createElement("a", {
+    href: "javascript:void(0)",
+    className: "nav-link icon-friend"
+  });
+};
 
 var HeaderComponent =
 /*#__PURE__*/
@@ -83064,7 +83239,7 @@ function (_Component) {
         href: "/",
         className: "navbar-brand d-flex w-50 mr-auto"
       }, _react.default.createElement("img", {
-        src: "/img/logo/logo-h.png",
+        src: "/img/logo/logo_v2.png",
         alt: "Logo"
       })), _react.default.createElement("button", {
         className: "navbar-toggler",
@@ -83108,16 +83283,13 @@ function (_Component) {
 
           _this3.props.reduce_followers();
         },
-        trigger: _react.default.createElement("a", {
-          href: "javascript:void(0)",
-          className: "nav-link icon-friend"
-        })
+        trigger: IconFriends
       })), _react.default.createElement("li", {
         className: "nav-item"
       }, _react.default.createElement("span", {
         className: notifications === 0 ? 'd-none' : 'nav-item-count'
       }, notifications), _react.default.createElement(_Notification.default, {
-        onNotificatoinRecieved: function onNotificatoinRecieved() {
+        onNotificationReceived: function onNotificationReceived() {
           _this3.props.in_not();
         },
         clear: this.props.notifications_viewed.bind(this),
@@ -83187,7 +83359,7 @@ var Header = (0, _reactRedux.connect)(function (state) {
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87625,7 +87797,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45009" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45901" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

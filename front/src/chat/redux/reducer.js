@@ -9,6 +9,8 @@ import {
     INC_CHAT_UNREAD,
     CHAT_READED,
     CHAT_PUSH,
+    CHAT_UPDATE,
+    CHAT_REMOVE,
     MESSAGE_NOTIFIED,
     STATUS_BUSY,
     STATUS_ONLINE,
@@ -29,6 +31,27 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
+        case CHAT_REMOVE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    chat: state.messenger.chat.filter(chat => chat.hash_id !== action.data)
+                }
+            }
+        }
+        case CHAT_UPDATE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    chat: [
+                        action.data,
+                        ...state.messenger.chat.filter(c => c.hash_id !== action.data.hash_id)
+                    ]
+                }
+            } 
+        }
         case CHAT_PUSH : {
             return {
                 ...state,

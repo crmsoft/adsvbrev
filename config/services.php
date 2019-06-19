@@ -64,4 +64,9 @@ return [
         'client_secret' => env('TWITCH_CLIENT_SECRET'), // Your GitHub Client Secret
         'redirect' => 'http://35.205.191.229/social/login/callback/twitch',
     ],
+    'steam' => [
+        'client_id' => null,
+        'client_secret' => env('STEAM_KEY'),
+        'redirect' => 'http://35.205.191.229/social/login/callback/steam',
+    ],
 ];

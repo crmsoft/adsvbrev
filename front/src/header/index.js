@@ -7,6 +7,9 @@ import { load_profile, reduce_followers, n_viewed, increment_notification } from
 import Followers from './Followers';
 import Notification from './Notification';
 import { acceptToFriends, declineFriendship } from '../friendship/event';
+import Tooltip from '../Modal/Tooltip';
+
+const IconFriends = () => <a href="javascript:void(0)" className="nav-link icon-friend"></a>
 
 class HeaderComponent extends Component{
 
@@ -71,9 +74,7 @@ class HeaderComponent extends Component{
                                     <Followers 
                                         onDecline={u => {this.props.decline(u);this.props.reduce_followers();}}
                                         onAccept={u => {this.props.accept(u);this.props.reduce_followers();}}
-                                        trigger={
-                                            <a href="javascript:void(0)" className="nav-link icon-friend"></a>
-                                        }
+                                        trigger={IconFriends}
                                     />
                                 </li>
                                 <li className="nav-item">
@@ -81,7 +82,7 @@ class HeaderComponent extends Component{
                                         {notifications}
                                     </span>
                                     <Notification 
-                                        onNotificatoinRecieved={() => {
+                                        onNotificationReceived={() => {
                                             this.props.in_not()
                                         }}
                                         clear={this.props.notifications_viewed.bind(this)}

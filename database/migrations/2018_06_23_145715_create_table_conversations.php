@@ -18,6 +18,7 @@ class CreateTableConversations extends Migration
             $table->increments('id');
             $table->string('hash_id')->nullable();
             $table->integer('user_id')->unsigned();
+            $table->boolean('is_group')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

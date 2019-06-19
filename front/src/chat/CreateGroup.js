@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Modal} from '../Modal';
 import UserComponent from './User';
 import store from './redux/store';
-import {CHAT_PUSH} from './redux/events';
+import {CHAT_PUSH, CHAT_UPDATE} from './redux/events';
 
 const User = ({
     user,
@@ -49,7 +49,8 @@ const FriendList = ({
 export default ({
     onClose,
     open,
-    list
+    list,
+    update=false
 }) => {
 
     const [processing, setProcessing] = useState(false);
@@ -86,13 +87,13 @@ export default ({
         } // end if
 
         setProcessing(true);
-        axios.post(`/chat/create`, {
+        axios.post(update ? `/chat/group/${update}/update`:`/chat/group/store`, {
             users: selected_users
         })
         .then(({data}) => {
             setProcessing(false);
             store.dispatch({
-                type: CHAT_PUSH,
+                type: update ? CHAT_UPDATE : CHAT_PUSH,
                 data: data.data
             });
             // clear selection
@@ -114,7 +115,7 @@ export default ({
             class: `btn-empty`
         },
         {
-            title: 'Create',
+            title: update ? 'Update' : 'Create',
             onAction: onSubmit
         }
     ];

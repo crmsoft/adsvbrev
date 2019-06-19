@@ -11,6 +11,11 @@ p{
     }
 }
 
+.list-scroll{
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
 .main-color{
     color: $mainColor !important;
 }

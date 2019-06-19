@@ -16,11 +16,15 @@ class ResourceChat extends JsonResource
      */
     public function toArray($request)
     {
+        $user = auth()->user();
+
         return [
             'hash_id' => $this->hash_id,
             'unread' => (int) $this->unread,
             'members' => new UserCollection($this->members),
-            'last' => $this->last_message
+            'owner' => $this->user_id == $user->id,
+            'group' => !!$this->is_group,
+            'last' => $this->last_message,
         ];
     }
 }

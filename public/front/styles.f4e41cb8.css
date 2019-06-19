@@ -6564,13 +6564,13 @@ input[type="text"] {
   input[type="date"]:focus,
   input[type="password"]:focus,
   input[type="text"]:focus {
-    outline-color: #F15A24; }
+    outline-color: #ff4800; }
 
 .has-error {
   border: 1px solid #970000 !important; }
 
 option:checked {
-  background-color: #F15A24; }
+  background-color: #ff4800; }
 
 .form-input-container {
   display: block;
@@ -6594,7 +6594,7 @@ option:checked {
       top: 5px;
       width: 5px;
       height: 10px;
-      border: solid #F15A24;
+      border: solid #ff4800;
       border-width: 0 3px 3px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -6605,7 +6605,7 @@ option:checked {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: #F15A24; }
+      background: #ff4800; }
     .form-input-container input:checked ~ .checkmark {
       background-color: #ccc;
       background-color: #484B52;
@@ -6639,9 +6639,9 @@ button:focus {
   -webkit-border-radius: 4px;
   padding: 10px 30px;
   font-size: 14px;
-  color: #F15A24;
+  color: #ff4800;
   background: transparent;
-  border-color: #F15A24;
+  border-color: #ff4800;
   border-style: solid;
   border-width: 1px;
   cursor: pointer; }
@@ -6651,7 +6651,7 @@ button:focus {
     box-shadow: 0px 0.15px 0px 0.5px #ffe3e3; }
   .dd-btn:hover:not([disabled]) {
     text-decoration: none;
-    background-color: #F15A24;
+    background-color: #ff4800;
     color: #202225; }
   .dd-btn:disabled {
     opacity: 0.75;
@@ -6675,7 +6675,7 @@ button:focus {
     color: #ffffff99; }
 
 .btn-full {
-  background-color: #F15A24;
+  background-color: #ff4800;
   color: #ffffff; }
 
 .btn-yellow {
@@ -6697,7 +6697,7 @@ button:focus {
   border-color: transparent;
   color: #ffffff; }
   .btn-empty:hover {
-    border-color: #F15A24;
+    border-color: #ff4800;
     color: white;
     background-color: transparent; }
 
@@ -6714,15 +6714,21 @@ button:focus {
   background: #CBCBCB; }
 
 body {
-  background-color: #000;
+  background-color: #020205;
   color: #fff; }
+
+p {
+  color: #d1d1d1 !important;
+  font-weight: 300; }
+  p strong {
+    color: #d1d1d1; }
 
 .list-scroll {
   max-height: 75vh;
   overflow-y: auto; }
 
 .main-color {
-  color: #F15A24 !important; }
+  color: #ff4800 !important; }
 
 .light-gray {
   color: #484B52; }
@@ -6758,9 +6764,9 @@ body {
     width: 0;
     height: 0; }
     .switch input:checked + .slider {
-      background-color: #F15A24; }
+      background-color: #ff4800; }
     .switch input:focus + .slider {
-      box-shadow: 0 0 1px #F15A24; }
+      box-shadow: 0 0 1px #ff4800; }
     .switch input:checked + .slider:before {
       -webkit-transform: translateX(26px);
       -ms-transform: translateX(26px);
@@ -7687,7 +7693,7 @@ span.flatpickr-weekday {
                   display: block;
                   padding: 0; }
                 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes {
-                  background-color: #F15A24; }
+                  background-color: #ff4800; }
                 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group {
                   background-color: gray; }
             .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+8), .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1), .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1), .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day:nth-child(1) {
@@ -7758,7 +7764,7 @@ span.flatpickr-weekday {
           .schedule .schedule-event .schedule-contents .schedule-content span.icon-remove, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove {
             float: none;
             width: auto;
-            color: #F15A24; }
+            color: #ff4800; }
         .schedule .schedule-event .schedule-contents .schedule-content .content, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content .content, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content .content {
           width: 70%;
           float: left;
@@ -7862,7 +7868,7 @@ span.flatpickr-weekday {
     height: 75px;
     width: 75px;
     border-radius: 50%;
-    border-color: #F15A24;
+    border-color: #ff4800;
     border-width: 1px;
     border-style: solid;
     text-align: center;
@@ -7870,7 +7876,7 @@ span.flatpickr-weekday {
   .schedule .schedule-create-form .event-cover, .user-settings .content .form-create-group .schedule-create-form .event-cover, .search-results .content .form-create-group .schedule-create-form .event-cover {
     background-color: #484B52;
     height: 75px;
-    border-color: #F15A24;
+    border-color: #ff4800;
     border-width: 1px;
     border-style: solid;
     cursor: pointer; }
@@ -7881,7 +7887,7 @@ span.flatpickr-weekday {
       height: 1100%;
       top: 10px;
       right: -500%;
-      background: #F15A24;
+      background: #ff4800;
       transform-origin: 54% 0;
       transform: rotate(45deg);
       z-index: -1; }
@@ -7905,7 +7911,7 @@ span.flatpickr-weekday {
   .dd-modal.fit-width {
     width: auto !important; }
   .dd-modal .dd-modal-header {
-    background-color: #F15A24;
+    background-color: #ff4800;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -7934,6 +7940,21 @@ span.flatpickr-weekday {
   .dd-modal.processing .dd-modal-footer .processing-indicator {
     display: inline-block; }
 
+.dd-tooltip .icon-more {
+  font-size: 6px; }
+
+.dd-tooltip .popup-content {
+  border-radius: 3px;
+  padding: 0 !important;
+  width: auto !important;
+  background-color: #14191C !important;
+  border: none !important;
+  box-shadow: rgba(255, 63, 17, 0.15) 0px 0px 2px 2px !important;
+  max-width: 250px !important;
+  white-space: normal; }
+  .dd-tooltip .popup-content > div {
+    background-color: #14191C !important; }
+
 .event-profile, .game-profile {
   display: flex;
   align-items: flex-end; }
@@ -7943,7 +7964,7 @@ span.flatpickr-weekday {
     position: relative;
     top: 65px; }
   .event-profile h1, .game-profile h1 {
-    color: #F15A24;
+    color: #ff4800;
     font-size: 22px;
     align-self: flex-end;
     margin-bottom: 0; }
@@ -7962,7 +7983,7 @@ span.flatpickr-weekday {
     float: left;
     margin-right: 0.5rem; }
   .find-your-dudes-title h3 {
-    color: #F05A24;
+    color: #ff4800;
     font-size: 24px; }
 
 .find-your-dudes {
@@ -8028,7 +8049,7 @@ span.flatpickr-weekday {
         margin: 0px 0.5rem; }
       .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content h3 {
         font-size: 14px;
-        color: #F05A24;
+        color: #ff4800;
         margin-bottom: 3px; }
       .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc small {
         font-size: 12px;
@@ -8197,7 +8218,7 @@ span.flatpickr-weekday {
     left: 0;
     top: -13px;
     padding: 12px;
-    background-color: #F15A24;
+    background-color: #ff4800;
     border-radius: 50%;
     z-index: 1; }
   .game-profile .wotes .wotes-stars {
@@ -8222,7 +8243,7 @@ span.flatpickr-weekday {
       top: 1px;
       left: 0;
       bottom: 0;
-      background: #F15A24;
+      background: #ff4800;
       max-width: 95%; }
     .game-profile .wotes .wotes-stars .wote-filler {
       width: 5px;
@@ -8279,7 +8300,7 @@ span.flatpickr-weekday {
 .review-feed {
   margin-top: -15px; }
   .review-feed hr {
-    background-color: #F15A24;
+    background-color: #ff4800;
     height: 3px; }
   .review-feed .filter {
     border: 1px solid #313131;
@@ -8295,7 +8316,7 @@ span.flatpickr-weekday {
       .review-feed .filter a.active {
         background-color: rgba(241, 90, 36, 0.1); }
     .review-feed .filter td {
-      border-right: 1px solid #F15A24; }
+      border-right: 1px solid #ff4800; }
     .review-feed .filter td:last-child {
       border-right: none; }
   .review-feed .comments {
@@ -8487,7 +8508,7 @@ span.flatpickr-weekday {
 .nav-tabs {
   margin: 0 -10px;
   padding: 0 10px;
-  border-bottom: 3px solid #484B52; }
+  border-bottom: 3px solid #293235; }
   .nav-tabs li + li {
     margin-left: 1px; }
   .nav-tabs li a {
@@ -8510,7 +8531,7 @@ span.flatpickr-weekday {
       height: 1100%;
       top: 0;
       right: -500%;
-      background: #2F3136;
+      background: #1e2528;
       transform-origin: 54% 0;
       transform: rotate(45deg);
       z-index: -1; }
@@ -8519,7 +8540,7 @@ span.flatpickr-weekday {
   .nav-tabs li.active a {
     color: #ffffff; }
     .nav-tabs li.active a:before {
-      background-color: #484B52; }
+      background-color: #293235; }
 
 .user-list-item {
   border-bottom: 1px solid #989898;
@@ -8559,7 +8580,7 @@ span.flatpickr-weekday {
     .popup .popup-header .title {
       font-size: 12px; }
     .popup .popup-header .close {
-      color: #F15A24;
+      color: #ff4800;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -8630,7 +8651,7 @@ span.flatpickr-weekday {
       position: absolute;
       left: 0;
       right: 0;
-      border-bottom: 1px solid #F05A24;
+      border-bottom: 1px solid #ff4800;
       bottom: 0;
       margin-left: -10px;
       margin-right: -10px; }
@@ -8654,7 +8675,7 @@ span.flatpickr-weekday {
     outline: 0; }
   .login-register form div.form-group button {
     width: 100%;
-    background-color: #F05A24;
+    background-color: #ff4800;
     border: 0;
     padding: 10px 10px;
     border-radius: 10px;
@@ -8670,7 +8691,7 @@ span.flatpickr-weekday {
 
 /** Header */
 header {
-  background-color: #202225;
+  background-color: #0c0f11;
   padding: 0 50px;
   color: #fff; }
   header ul li {
@@ -8693,7 +8714,7 @@ header {
     padding: 4px 5px;
     line-height: 0.75;
     border-radius: 12px;
-    background-color: #f05a24; }
+    background-color: #ff4800; }
   header .navbar-nav .nav-item .header-ava {
     margin-left: 12px; }
     header .navbar-nav .nav-item .header-ava img {
@@ -8713,24 +8734,28 @@ header {
     width: 15px;
     height: 15px;
     position: absolute;
-    left: 12px; }
+    left: 12px;
+    color: #989898; }
   header .nav-search input {
     min-width: 50%;
-    background-color: #36393F;
+    background-color: #1e2528;
     border: 0;
     border-radius: 0.6rem;
     padding-left: 40px; }
     header .nav-search input:focus {
       border: 0;
       outline: 0;
-      background-color: #36393F;
+      background-color: #293235;
       box-shadow: none;
       color: #fff; }
+  header .nav-search .icon-search + input::focus {
+    color: #CCCCCC; }
 
 .followers-popup .popup-content {
   background-color: #484B52 !important;
   border: 1px solid #484B52 !important;
-  padding: 0 !important; }
+  padding: 0 !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 1px !important; }
   .followers-popup .popup-content > div {
     background-color: #484B52 !important; }
 
@@ -8738,9 +8763,10 @@ header {
   border-radius: 3px;
   width: 395px !important; }
   .followers-popup .popup-content .followers-header {
-    padding: 3px 10px; }
+    padding: 3px 10px;
+    background-color: #3d4444; }
   .followers-popup .popup-content .followers-list, .followers-popup .popup-content .notification-list {
-    background-color: #36393F;
+    background-color: #14191C;
     margin: 0;
     padding: 0;
     max-height: 320px;
@@ -8777,6 +8803,10 @@ header {
       font-size: 11px; }
   .followers-popup .popup-content .notification-list .user {
     border-bottom: 1px solid #2F3136; }
+    .followers-popup .popup-content .notification-list .user.comment .icon-comment {
+      color: #03a5ff; }
+    .followers-popup .popup-content .notification-list .user.liked .icon-liked {
+      color: #ff4800; }
   .followers-popup .popup-content .notification-list li .user-list-user {
     width: auto;
     max-width: initial; }
@@ -8792,7 +8822,7 @@ header {
   width: 49px;
   top: -26px;
   background-color: #000;
-  border-bottom: 1px solid #F15A24;
+  border-bottom: 1px solid #ff4800;
   transform: rotateZ(45deg);
   border-top-left-radius: 60px; }
 
@@ -8804,7 +8834,7 @@ nav.user-profile {
   height: 250px;
   position: relative;
   margin: 25px 0;
-  border: 1px solid #F15A24; }
+  border: 1px solid #ff4800; }
   nav.user-profile .profile {
     padding: 0 25px;
     position: absolute;
@@ -8827,9 +8857,9 @@ nav.user-profile {
       cursor: pointer; }
       nav.user-profile .profile.editable .edit:hover {
         text-decoration: underline;
-        text-decoration-color: #F15A24; }
+        text-decoration-color: #ff4800; }
     nav.user-profile .profile .user {
-      color: #F05A24; }
+      color: #ff4800; }
       nav.user-profile .profile .user .user-level {
         width: 180px;
         height: 23px;
@@ -8841,7 +8871,7 @@ nav.user-profile {
           font-size: 11px;
           color: #fff;
           text-align: right;
-          background: #F05A24; }
+          background: #ff4800; }
       nav.user-profile .profile .user .user-level-value {
         color: #ffffff; }
   nav.user-profile p {
@@ -8851,14 +8881,14 @@ nav.user-profile {
     nav.user-profile .user-about-wrapper .user-about {
       align-self: flex-end; }
       nav.user-profile .user-about-wrapper .user-about .text > span:first-child {
-        color: #F05A24;
+        color: #ff4800;
         margin: 0 5px; }
   nav.user-profile .user-pc {
     display: flex;
     align-self: flex-end; }
     nav.user-profile .user-pc .icon-location {
       padding-top: 5px;
-      color: #F05A24;
+      color: #ff4800;
       margin: 0 5px; }
     nav.user-profile .user-pc .text {
       line-height: 1.2; }
@@ -8922,7 +8952,7 @@ nav.user-profile {
 
 .profile-upload-cover .btn-select-picture {
   margin: 2px;
-  color: #F15A24;
+  color: #ff4800;
   cursor: pointer;
   background-color: #293235;
   outline: none;
@@ -8944,7 +8974,7 @@ nav.user-profile {
     width: 200px;
     border-radius: 100px;
     overflow: hidden;
-    border-color: #F05A24;
+    border-color: #ff4800;
     border-width: 2px;
     border-style: solid;
     position: absolute;
@@ -8966,14 +8996,15 @@ nav.user-profile {
     border-radius: 14px;
     background-color: #ffffff;
     position: absolute;
-    color: #F05A24;
+    color: #ff4800;
     right: 5px;
     top: -15px;
     text-decoration: none; }
 
 .user-uploads {
   padding: 10px;
-  background-color: #202225;
+  background-color: #14191C;
+  border: 1px solid #354247;
   border-radius: 3px; }
   .user-uploads .user-content {
     display: none;
@@ -8982,7 +9013,7 @@ nav.user-profile {
     .user-uploads .user-content .user-content-all {
       position: absolute;
       right: 5px;
-      color: #F15A24;
+      color: #ff4800;
       text-decoration: none;
       bottom: 0;
       font-size: 10px; }
@@ -8999,7 +9030,7 @@ nav.user-profile {
         border-radius: 3px;
         cursor: pointer; }
         .user-uploads .user-content .row .col-4:hover {
-          border: 3px solid #F15A24; }
+          border: 3px solid #ff4800; }
     .user-uploads .user-content.active {
       display: flex; }
 
@@ -9023,7 +9054,7 @@ nav.user-profile {
     bottom: -1px; }
   .profile-aside .block {
     border-radius: 3px;
-    background-color: #202225;
+    background-color: #14191C;
     padding: 10px;
     overflow: hidden;
     border: 1px solid #313131; }
@@ -9057,7 +9088,7 @@ nav.user-profile {
         color: #ffffff;
         font-size: 11px; }
       .profile-aside .block .block-content time {
-        color: #F15A24;
+        color: #ff4800;
         font-size: 10px; }
       .profile-aside .block .block-content .friends .friend {
         width: 33.33335%;
@@ -9086,7 +9117,7 @@ nav.user-profile {
           font-family: 'icomoon';
           border-radius: 50%; }
           .profile-aside .block .block-content .friends .friend .search-more:before {
-            color: #F15A24;
+            color: #ff4800;
             position: absolute;
             margin: -16px 0 0 14px;
             font-size: 22px;
@@ -9097,16 +9128,17 @@ nav.user-profile {
         display: block; }
 
 .profile-about {
+  border: 1px solid #354247;
   border-radius: 3px;
   padding: 10px;
   margin-bottom: 15px;
-  background-color: #202225; }
+  background-color: #14191C; }
   .profile-about .profile-about-header {
     border-bottom: 1px solid #484B52;
     margin: 0 -10px;
     padding: 0 10px; }
     .profile-about .profile-about-header span {
-      color: #F15A24; }
+      color: #ff4800; }
     .profile-about .profile-about-header .profile-header-text {
       display: inline;
       margin-left: 5px;
@@ -9120,11 +9152,11 @@ nav.user-profile {
     font-size: 14px; }
     .profile-about .profile-about-row .profile-about-label {
       min-width: 150px;
-      color: #F15A24; }
+      color: #ff4800; }
   .profile-about .profile-about-footer {
     text-align: right; }
     .profile-about .profile-about-footer .profile-about-more {
-      color: #F15A24;
+      color: #ff4800;
       font-size: 9px; }
       .profile-about .profile-about-footer .profile-about-more:hover {
         text-decoration: underline;
@@ -9137,7 +9169,7 @@ nav.user-profile {
     .profile-about .device-advice .popup-content .device-options {
       margin: 15px 25px; }
     .profile-about .device-advice .popup-content .device-select-header {
-      background-color: #F15A24; }
+      background-color: #ff4800; }
       .profile-about .device-advice .popup-content .device-select-header * {
         line-height: 1; }
       .profile-about .device-advice .popup-content .device-select-header h3 {
@@ -9215,7 +9247,7 @@ nav.user-profile {
         display: block;
         padding: 0; }
       .profile-schedule .flatpickr-day .marks .with-dudes {
-        background-color: #F15A24; }
+        background-color: #ff4800; }
       .profile-schedule .flatpickr-day .marks .with-group {
         background-color: gray; }
   .profile-schedule .prevMonthDay, .profile-schedule .nextMonthDay {
@@ -9285,7 +9317,7 @@ nav.user-profile {
   height: 25px;
   position: relative; }
   .textarea textarea {
-    background-color: #202225;
+    background-color: #293235;
     resize: none;
     outline: 0;
     padding: 0;
@@ -9303,7 +9335,7 @@ nav.user-profile {
     top: 0;
     color: #ffffff; }
     .textarea .emoji.active {
-      color: #F15A24; }
+      color: #ff4800; }
     .textarea .emoji:before {
       content: "\e914"; }
 
@@ -9311,8 +9343,8 @@ nav.user-profile {
   padding: 10px;
   margin-top: 15px;
   border-radius: 3px;
-  background-color: #202225;
-  border: 1px solid #F15A24;
+  background-color: #293235;
+  border: 1px solid #ff4800;
   position: relative; }
   .user-add-post .wrapper {
     width: 100%;
@@ -9383,7 +9415,7 @@ nav.user-profile {
     display: inline-block;
     margin-right: 5px; }
     .previews .preview:hover {
-      border-color: #F15A24; }
+      border-color: #ff4800; }
       .previews .preview:hover .hover {
         display: flex; }
     .previews .preview .hover {
@@ -9425,7 +9457,8 @@ nav.user-profile {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  background-color: #14191C; }
+  background-color: #14191C;
+  border: 1px solid #354247; }
   .post + .post {
     margin-top: 15px; }
   .post .post-header {
@@ -9452,7 +9485,7 @@ nav.user-profile {
         font-size: 19px;
         margin: 0; }
       .post .post-header .post-main-info .post-time {
-        color: #F15A24;
+        color: #ff4800;
         font-size: 12px; }
     .post .post-header .post-options {
       flex-basis: 15px;
@@ -9574,7 +9607,7 @@ nav.user-profile {
         width: 33.333%; }
     .post .post-content .post-actions .icon {
       display: inline-block;
-      color: #F15A24; }
+      color: #ff4800; }
       .post .post-content .post-actions .icon.like span:first-child {
         display: none; }
       .post .post-content .post-actions .icon.like.active span:last-child {
@@ -9592,7 +9625,7 @@ nav.user-profile {
         right: 2rem;
         position: absolute;
         top: 1rem;
-        border: 1px solid #F15A24;
+        border: 1px solid #ff4800;
         color: #ffffff;
         padding: 0 1rem;
         height: 20px;
@@ -9603,7 +9636,7 @@ nav.user-profile {
         border-radius: 5px;
         cursor: pointer; }
         .post .post-content .post-shared .post-header .right-shared-menu .right-shared-btn i {
-          color: #F15A24; }
+          color: #ff4800; }
       .post .post-content .post-shared .post-content {
         margin: 0px;
         padding: 0 10px; }
@@ -9611,7 +9644,7 @@ nav.user-profile {
       color: #ffffff;
       white-space: pre-wrap; }
     .post .post-content a {
-      color: #F15A24; }
+      color: #ff4800; }
       .post .post-content a.more {
         margin: 0px 10px;
         font-weight: 500; }
@@ -9633,7 +9666,7 @@ nav.user-profile {
         font-weight: 600; }
       .post .post-content .post-like-section span.fa {
         float: left;
-        color: #F15A24;
+        color: #ff4800;
         font-size: 20px;
         cursor: pointer;
         font-weight: 100; }
@@ -9650,7 +9683,7 @@ nav.user-profile {
     text-align: center; }
     .comments .all-comments a {
       display: inline-block;
-      color: #F15A24;
+      color: #ff4800;
       text-decoration: none; }
   .comments .comment {
     display: flex;
@@ -9673,6 +9706,7 @@ nav.user-profile {
       .comments .comment .comment-body img {
         max-width: 100%; }
       .comments .comment .comment-body p {
+        font-size: 15px;
         white-space: pre-wrap;
         margin-bottom: 5px; }
         .comments .comment .comment-body p a {
@@ -9682,7 +9716,7 @@ nav.user-profile {
             font-weight: 600;
             padding-right: 5px; }
     .comments .comment .comment-time {
-      color: #F15A24; }
+      color: #ff4800; }
     .comments .comment .comment-dot {
       padding-top: 5px;
       color: #ffffff;
@@ -9710,7 +9744,7 @@ nav.user-profile {
     .comments .comment .comment-actions > span:first-child {
       margin-right: 5px; }
       .comments .comment .comment-actions > span:first-child > span {
-        color: #F15A24; }
+        color: #ff4800; }
         .comments .comment .comment-actions > span:first-child > span:first-child {
           display: none; }
       .comments .comment .comment-actions > span:first-child.active > span:first-child {
@@ -9780,7 +9814,7 @@ nav.user-profile {
       .add-comment .actions span + span {
         margin-left: 5px; }
       .add-comment .actions span:hover {
-        color: #F15A24; }
+        color: #ff4800; }
     .add-comment .actions button {
       color: #ffffff;
       cursor: pointer;
@@ -9791,7 +9825,7 @@ nav.user-profile {
       outline: none;
       background-color: transparent; }
       .add-comment .actions button.active {
-        color: #F15A24; }
+        color: #ff4800; }
 
 .has-emoji .popup-content {
   background-color: #293235 !important;
@@ -9889,7 +9923,7 @@ nav.user-profile {
   border-bottom: 1px solid #293235;
   margin-bottom: 30px; }
   .search-field .search-icon {
-    color: #F15A24;
+    color: #ff4800;
     padding-top: 9px;
     padding-right: 0; }
   .search-field .reset-icon {
@@ -9910,6 +9944,14 @@ nav.user-profile {
   right: 0;
   display: flex;
   z-index: 10; }
+  .chat .create-group-list .form-input-container {
+    margin-top: 15px; }
+  .chat .create-group-list li {
+    cursor: pointer; }
+    .chat .create-group-list li:hover {
+      background-color: rgba(102, 51, 153, 0.08); }
+    .chat .create-group-list li .checkbox-container {
+      padding-right: 0; }
   .chat .chat-wrapper {
     border-radius: 3px;
     margin: 0 5px;
@@ -9994,7 +10036,7 @@ nav.user-profile {
           display: inline-block;
           position: absolute;
           right: 0;
-          background: #f05a24;
+          background: #ff4800;
           border-radius: 15px;
           height: 20px;
           width: 20px;
@@ -10002,7 +10044,7 @@ nav.user-profile {
           vertical-align: middle;
           line-height: 180%; }
     .chat .chat-wrapper .unread-chat-counter {
-      background-color: #F15A24;
+      background-color: #ff4800;
       width: 18px;
       height: 18px;
       color: white;
@@ -10013,14 +10055,6 @@ nav.user-profile {
       display: none; }
     .chat .chat-wrapper.minimized .unread-chat-counter {
       display: inline-block; }
-    .chat .chat-wrapper .create-group-list .form-input-container {
-      margin-top: 15px; }
-    .chat .chat-wrapper .create-group-list li {
-      cursor: pointer; }
-      .chat .chat-wrapper .create-group-list li:hover {
-        background-color: rgba(102, 51, 153, 0.08); }
-      .chat .chat-wrapper .create-group-list li .checkbox-container {
-        padding-right: 0; }
   .chat .dialog-wrapper {
     display: flex; }
     .chat .dialog-wrapper .dialog {
@@ -10034,7 +10068,7 @@ nav.user-profile {
       .chat .dialog-wrapper .dialog .message-list-show-last {
         font-family: icomoon;
         font-size: 5px;
-        color: #F15A24; }
+        color: #ff4800; }
       .chat .dialog-wrapper .dialog .message-container {
         background-image: url("messenger_background.96fff20e.png");
         flex: 1;
@@ -10075,7 +10109,7 @@ nav.user-profile {
             .chat .dialog-wrapper .dialog .input .attach span.icon-cross {
               font-size: 9px;
               padding-left: 5px;
-              color: #F15A24; }
+              color: #ff4800; }
         .chat .dialog-wrapper .dialog .input .emoji-container {
           position: absolute;
           left: 0;
@@ -10085,7 +10119,7 @@ nav.user-profile {
           .chat .dialog-wrapper .dialog .input .emoji-container.show {
             display: block; }
             .chat .dialog-wrapper .dialog .input .emoji-container.show + .emoji {
-              color: #F15A24; }
+              color: #ff4800; }
       .chat .dialog-wrapper .dialog .dialog-head {
         border-bottom: 1px solid gray;
         display: flex;
@@ -10101,6 +10135,17 @@ nav.user-profile {
         .chat .dialog-wrapper .dialog .dialog-head .dialog-actions {
           font-size: 15px;
           cursor: pointer; }
+        .chat .dialog-wrapper .dialog .dialog-head .dialog-options {
+          padding: 0;
+          margin: 5px 0; }
+          .chat .dialog-wrapper .dialog .dialog-head .dialog-options li {
+            list-style: none;
+            white-space: nowrap;
+            font-size: 11px;
+            padding: 0 5px;
+            margin-bottom: 2px; }
+            .chat .dialog-wrapper .dialog .dialog-head .dialog-options li:hover {
+              background-color: #666; }
       .chat .dialog-wrapper .dialog .file-upload {
         position: absolute;
         background: rgba(32, 34, 37, 0.75);
@@ -10537,7 +10582,7 @@ nav.user-profile {
           font-weight: 900;
           color: #3E3F42; }
         .chat-message .message .message-content .message-status.readed:before {
-          color: #F15A24; }
+          color: #ff4800; }
 
 .user .user-list-item {
   display: flex;
@@ -10604,7 +10649,7 @@ nav.user-profile {
       border-radius: 10px;
       align-self: center; }
       .messenger-options .messenger-options-statuses .status.active {
-        background-color: #F15A24; }
+        background-color: #ff4800; }
       .messenger-options .messenger-options-statuses .status.online:before {
         content: ' ';
         display: inline-block;

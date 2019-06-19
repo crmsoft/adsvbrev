@@ -6,6 +6,21 @@
     display: flex;
     z-index: 10;
 
+    .create-group-list{
+        .form-input-container{
+            margin-top: 15px;
+        }
+        li{
+            cursor: pointer;
+            &:hover{
+                background-color: rgba(102, 51, 153, 0.08);
+            }
+            .checkbox-container{
+                padding-right: 0;
+            }
+        }
+    }
+
     .chat-wrapper{
         border-radius: 3px;
         margin: 0 5px;
@@ -233,6 +248,20 @@
                 .dialog-actions{
                     font-size: 15px;
                     cursor: pointer;                    
+                }
+                .dialog-options{
+                    padding: 0;
+                    margin: 5px 0;
+                    li{
+                        list-style: none;
+                        white-space: nowrap;
+                        font-size: 11px;
+                        padding: 0 5px;
+                        margin-bottom: 2px;
+                        &:hover{
+                            background-color: #666;
+                        }
+                    }
                 }
             }
             .file-upload {

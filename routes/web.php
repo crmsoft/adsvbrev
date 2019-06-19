@@ -93,7 +93,7 @@ Route::group([
     Route::post('/post/like/{post}', 'PostController@toggleLike')->name('toggle-like-post');
     Route::post('/post/share/{post}', 'PostController@toggleShare')->name('toggle-share-post');
     Route::post('/post/delete/{post}', 'PostController@deletePost')->name('delete-post');
-    Route::post('/post/more/{username?}', 'PostController@loadMore')->name('loade-more-posts');
+    Route::post('/post/more/{username?}', 'PostController@loadMore')->name('load-more-posts');
 });
 
 // Comment Specific Routes
@@ -191,7 +191,12 @@ Route::group([
     Route::get('/chats', 'ChatController@chats')->name('chat-list');
     Route::post('/chats/{username}/start', 'ChatController@start')->name('create-chat');
     Route::post('/chat/{conversation}/message', 'ChatController@store')->name('store-message');
-    Route::post('/chat/create', 'ChatController@create')->name('create-chat');
+    Route::post('/chat/{conversation}/destroy', 'ChatController@destroy')->name('use-destroy-conversation');
+    
+    Route::post('/chat/group/store', 'GroupController@store')->name('create-chat');
+    Route::post('/chat/group/{conversation}/update', 'GroupController@update')->name('admin-group-update');
+    Route::post('/chat/group/{conversation}/leave', 'GroupController@leave')->name('use-leaves-chat');
+    Route::post('/chat/group/{conversation}/destroy', 'GroupController@destroy')->name('admin-group-destroy');
 
     Route::post('/chat/{conversation}/pull', 'MessageController@pull')->name('pull-latest-messages');
     Route::post('/chat/{conversation}/pull/prev', 'MessageController@pullPrev')->name('pull-latest-messages');

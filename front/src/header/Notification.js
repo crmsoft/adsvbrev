@@ -23,7 +23,7 @@ export default class Notification extends Component{
             if (state.recieved === NOTIFICATION)
             {
                 NewNotification.play();
-                this.props.onNotificatoinRecieved();   
+                this.props.onNotificationReceived();   
             } // end if
 
         });

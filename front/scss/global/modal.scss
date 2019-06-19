@@ -53,3 +53,22 @@
         }
     }
 }
+
+.dd-tooltip{
+    .icon-more{
+        font-size: 6px;
+    }
+    .popup-content{
+        border-radius: 3px;
+        padding: 0 !important;
+        width: auto !important;
+        background-color: $postBack !important;
+        border: none !important;
+        box-shadow: rgba(255, 63, 17, 0.15) 0px 0px 2px 2px !important;
+        max-width: 250px !important;
+        white-space: normal;
+        >div{
+            background-color: $postBack !important;
+        }
+    }
+}
