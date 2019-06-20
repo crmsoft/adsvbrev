@@ -50,19 +50,25 @@ export default class SettingsContnet extends Component {
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-info"></span>
-                            {" Profile"}
+                            <span className="tab-title">
+                                {" Profile"}
+                            </span>
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-art"></span>
-                            {" Security"}
+                            <span className="tab-title">
+                                {" Security"}
+                            </span>
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-art"></span>
-                            {" Your Groups"}
+                            <span className="tab-title">
+                                {" Your Groups"}
+                            </span>
                         </a>
                     </Tab>
                 </TabList>

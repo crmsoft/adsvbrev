@@ -14,13 +14,17 @@ export default class About extends Component{
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
                                 <span className="icon-info"></span>
-                                {" About Me"}
+                                <span className="tab-title">
+                                    {" About Me"}
+                                </span>
                             </a>
                         </Tab>
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
                                 <span className="icon-pc"></span>
-                                {" My Devices"}
+                                <span className="tab-title">
+                                    {" My Devices"}
+                                </span>
                             </a>
                         </Tab>
                     </TabList>

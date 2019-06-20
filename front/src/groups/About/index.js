@@ -10,7 +10,9 @@ const About = ({about}) => {
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-info"></span>
-                            {" About Group"}
+                            <span className="tab-title">
+                                {" About Group"}
+                            </span>
                         </a>
                     </Tab>
                 </TabList>

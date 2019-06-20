@@ -112,7 +112,7 @@ class Guest extends Component{
 
                                         </section>
 
-                                        <section className="block">
+                                        <section className="block my-games">
 
                                             <Games 
                                                 isGuest={false}

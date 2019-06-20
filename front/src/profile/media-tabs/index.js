@@ -38,7 +38,9 @@ export default class MediaTabs extends Component {
                             <Tab selectedClassName="active">
                                 <a href="javascript:void(0);">
                                     <span className="icon-streams" style={streamTabStyle}></span>
-                                    {" Streams"}
+                                    <span className="tab-title">
+                                        {" Streams"}
+                                    </span>
                                 </a>
                             </Tab>
                         ) : null
@@ -46,13 +48,17 @@ export default class MediaTabs extends Component {
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-picture"></span>
-                            {" Images"}
+                            <span className="tab-title">
+                                {" Images"}
+                            </span>
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-play"></span>
-                            {" Videos"}
+                            <span className="tab-title">
+                                {" Videos"}
+                            </span>
                         </a>
                     </Tab>
                 </TabList>

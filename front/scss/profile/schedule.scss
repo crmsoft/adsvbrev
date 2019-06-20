@@ -19,7 +19,7 @@
     }
 
     .header{
-        background-color: $lightGray;
+        background-color: #3d4444;
         text-transform: uppercase;
         text-align: center;
         border-top-left-radius: 3px;
@@ -56,7 +56,7 @@
     }
 
     .dayContainer, .flatpickr-day{
-        background-color: $halfGray;
+        background-color: $postBack;
         color: white;
     }
 
@@ -96,7 +96,7 @@
     }
 
     .flatpickr-months{
-        background-color: $lightGray;
+        background-color: #3d4444;
         justify-content:  center;
         .flatpickr-prev-month,.flatpickr-next-month{
             position: relative !important;

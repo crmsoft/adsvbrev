@@ -40,8 +40,8 @@ export class Games extends Component {
                 <div className="header">
                     <a href="javascript:void(0);">
                         <span className="icon-gamepad"></span>
-                        <h3>Games</h3>
-                        <span className="items-count"> {total}</span>
+                        <h3>My Games</h3>
+                        <span className="items-count"> ({total})</span>
                     </a>
                 </div>
     
@@ -52,6 +52,14 @@ export class Games extends Component {
                                 list.map((game, i) => <GameCard key={game.username} active={index === i} game={game} />)
                             }
                         </div>
+                    </div>
+                    <div className="text-center pt-3">
+                        <a href="/my-games" className="dd-btn btn-sm">
+                            <small>
+                                <span className="icon-plus"></span>
+                                Add new games
+                            </small>
+                        </a>
                     </div>
                 </div>
             </div>

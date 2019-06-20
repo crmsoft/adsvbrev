@@ -11,7 +11,9 @@ const About = ({about}) => {
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-info"></span>
-                            {" About Game"}
+                            <span className="tab-title">
+                                {" About Game"}
+                            </span>
                         </a>
                     </Tab>
                 </TabList>

@@ -14,13 +14,17 @@ export default class FriendsAndFollowersContent extends Component{
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-friends"></span>
-                            {" Friends"}
+                            <span className="tab-title">
+                                {" Friends"}
+                            </span>
                         </a>
                     </Tab>
                     <Tab selectedClassName="active">
                         <a href="javascript:void(0);">
                             <span className="icon-add-dude"></span>
-                            {" Followers"}
+                            <span className="tab-title">
+                                {" Followers"}
+                            </span>
                         </a>
                     </Tab>
                 </TabList>

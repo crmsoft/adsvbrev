@@ -16,7 +16,9 @@ export default class About extends Component{
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
                                 <span className="icon-info"></span>
-                                {" About Event"}
+                                <span className="tab-title">
+                                    {" About Event"}
+                                </span>
                             </a>
                         </Tab>
                     </TabList>
