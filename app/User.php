@@ -10,6 +10,7 @@ use Cog\Laravel\Love\Reacterable\Models\Traits\Reacterable;
 
 use App\Entities\Profile;
 use \App\Entities\Group;
+use \App\Entities\Game;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -223,6 +224,11 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
 
     public function group(){
         return $this->belongsToMany(Group::class, 'user_groups', 'user_id', 'group_id');
+    }
+
+    public function games(){
+        return $this->belongsToMany(Game::class, 'user_groups', 'user_id', 'group_id')
+        ->where('is_game', 1);
     }
 
     public function feed(){
