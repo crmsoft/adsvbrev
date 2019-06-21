@@ -50476,17 +50476,21 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Groups;
-},{"react":"../node_modules/react/index.js","./partials/header":"../src/profile/groups/partials/header.js","./partials/group":"../src/profile/groups/partials/group.js","./popup/index":"../src/profile/groups/popup/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/games/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./partials/header":"../src/profile/groups/partials/header.js","./partials/group":"../src/profile/groups/partials/group.js","./popup/index":"../src/profile/groups/popup/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/feed/GameGroups.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Games = void 0;
+exports.default = exports.GameCard = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -50511,8 +50515,168 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var GameCard = function GameCard(_ref) {
-  var game = _ref.game,
-      active = _ref.active;
+  var game = _ref.game;
+  return _react.default.createElement(_reactRouterDom.Link, {
+    to: "/g/".concat(game.username),
+    className: "game-group row ml-1 mb-2"
+  }, _react.default.createElement("div", null, _react.default.createElement("img", {
+    src: game.ava,
+    style: {
+      width: 50
+    }
+  })), _react.default.createElement("div", {
+    className: "col"
+  }, _react.default.createElement("div", {
+    className: "name main-color"
+  }, _react.default.createElement("small", {
+    title: game.full_name
+  }, game.full_name)), _react.default.createElement("span", {
+    className: "gamer-count"
+  }, _react.default.createElement("small", null, game.gamers, " ", "gamers"))));
+};
+
+exports.GameCard = GameCard;
+
+var GameGroups =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GameGroups, _Component);
+
+  function GameGroups() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, GameGroups);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(GameGroups)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      list: []
+    });
+
+    return _this;
+  }
+
+  _createClass(GameGroups, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios.default.get("/game/list/groups").then(function (_ref2) {
+        var data = _ref2.data;
+
+        _this2.setState(function () {
+          return {
+            list: data.data,
+            total: data.total
+          };
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var list = this.state.list;
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "header"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-group"
+      }), _react.default.createElement("h3", null, "Game Groups"))), _react.default.createElement("div", {
+        className: "block-content"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col"
+      }, list.map(function (game, i) {
+        return _react.default.createElement(GameCard, {
+          key: game.id,
+          game: game
+        });
+      })), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/search?i=gr"
+      }, _react.default.createElement("small", {
+        className: "main-color"
+      }, "show all groups"))))));
+    }
+  }]);
+
+  return GameGroups;
+}(_react.Component);
+
+exports.default = GameGroups;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js"}],"../src/profile/games/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Games = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _Modal = require("../../Modal");
+
+var _GameGroups = require("../../feed/GameGroups");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GamesModal = function GamesModal(_ref) {
+  var open = _ref.open,
+      onClose = _ref.onClose,
+      list = _ref.list;
+  var actions = [{
+    onAction: onClose,
+    title: 'Close'
+  }];
+  return _react.default.createElement(_Modal.Modal, {
+    title: "My Games",
+    open: open,
+    onClose: onClose,
+    actions: actions
+  }, _react.default.createElement("div", {
+    className: "list-scroll p-3"
+  }, list.map(function (game) {
+    return _react.default.createElement(_GameGroups.GameCard, {
+      key: game.username,
+      game: game
+    });
+  })));
+};
+
+var GameSlide = function GameSlide(_ref2) {
+  var game = _ref2.game,
+      active = _ref2.active;
   var st = active ? {
     display: 'block',
     position: 'relative',
@@ -50563,7 +50727,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Games)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      index: 0
+      index: 0,
+      modal: false
     });
 
     return _this;
@@ -50586,13 +50751,34 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _this$props = this.props,
           total = _this$props.total,
           list = _this$props.list;
-      var index = this.state.index;
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
+      var _this$state = this.state,
+          index = _this$state.index,
+          modal = _this$state.modal;
+      return _react.default.createElement("div", null, _react.default.createElement(GamesModal, {
+        list: list,
+        onClose: function onClose() {
+          return _this3.setState(function () {
+            return {
+              modal: false
+            };
+          });
+        },
+        open: modal
+      }), _react.default.createElement("div", {
         className: "header"
       }, _react.default.createElement("a", {
+        onClick: function onClick() {
+          return _this3.setState(function () {
+            return {
+              modal: true
+            };
+          });
+        },
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-gamepad"
@@ -50605,7 +50791,7 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "col"
       }, list.map(function (game, i) {
-        return _react.default.createElement(GameCard, {
+        return _react.default.createElement(GameSlide, {
           key: game.username,
           active: index === i,
           game: game
@@ -50625,7 +50811,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.Games = Games;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../../Modal":"../src/Modal/index.js","../../feed/GameGroups":"../src/feed/GameGroups.js"}],"../src/profile/media-tabs/image-content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84526,7 +84712,7 @@ function (_Component) {
         className: "icon-friends"
       }), _react.default.createElement("h3", null, title ? title : "Participants"), _react.default.createElement("span", {
         className: "items-count"
-      }, " ", event.total_participant ? event.total_participant : '')), _react.default.createElement(_index.Modal, {
+      }, " ", event.total_participant ? "(".concat(event.total_participant, ")") : '')), _react.default.createElement(_index.Modal, {
         open: this.state.open,
         onClose: this.closeModal.bind(this),
         actions: actions,
@@ -87426,142 +87612,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = List;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../profile/feed/index":"../src/profile/feed/index.js"}],"../src/feed/GameGroups.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _axios = _interopRequireDefault(require("axios"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GameCard = function GameCard(_ref) {
-  var game = _ref.game;
-  return _react.default.createElement(_reactRouterDom.Link, {
-    to: "/g/".concat(game.username),
-    className: "game-group row ml-1 mb-2"
-  }, _react.default.createElement("div", null, _react.default.createElement("img", {
-    src: game.ava,
-    style: {
-      width: 50
-    }
-  })), _react.default.createElement("div", {
-    className: "col"
-  }, _react.default.createElement("div", {
-    className: "name main-color"
-  }, _react.default.createElement("small", {
-    title: game.full_name
-  }, game.full_name)), _react.default.createElement("span", {
-    className: "gamer-count"
-  }, _react.default.createElement("small", null, game.gamers, " ", "gamers"))));
-};
-
-var GameGroups =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(GameGroups, _Component);
-
-  function GameGroups() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    _classCallCheck(this, GameGroups);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(GameGroups)).call.apply(_getPrototypeOf2, [this].concat(args)));
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      list: []
-    });
-
-    return _this;
-  }
-
-  _createClass(GameGroups, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios.default.get("/game/list/groups").then(function (_ref2) {
-        var data = _ref2.data;
-
-        _this2.setState(function () {
-          return {
-            list: data.data,
-            total: data.total
-          };
-        });
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var list = this.state.list;
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
-        className: "header"
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0);"
-      }, _react.default.createElement("span", {
-        className: "icon-group"
-      }), _react.default.createElement("h3", null, "Game Groups"))), _react.default.createElement("div", {
-        className: "block-content"
-      }, _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col"
-      }, list.map(function (game, i) {
-        return _react.default.createElement(GameCard, {
-          key: game.id,
-          game: game
-        });
-      })), _react.default.createElement("div", {
-        className: "col"
-      }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/search?i=gr"
-      }, _react.default.createElement("small", {
-        className: "main-color"
-      }, "show all groups"))))));
-    }
-  }]);
-
-  return GameGroups;
-}(_react.Component);
-
-exports.default = GameGroups;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","axios":"../../node_modules/axios/index.js"}],"../src/feed/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../profile/feed/index":"../src/profile/feed/index.js"}],"../src/feed/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87850,7 +87901,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40187" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33719" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
