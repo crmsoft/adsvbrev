@@ -47542,10 +47542,10 @@ function (_Component) {
           _this.props.total && _this.props.showModal();
         }
       }, _react.default.createElement("span", {
-        className: "icon-friend aside-firends-icon"
+        className: "icon-friends aside-firends-icon"
       }), _react.default.createElement("h3", null, "friends"), _react.default.createElement("span", {
         className: "items-count"
-      }, " ", this.props.total));
+      }, " (", this.props.total, ")"));
     }
   }]);
 
@@ -49612,13 +49612,17 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), " Friends")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Friends"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-add-dude"
-      }), " Followers"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Followers")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_reactRedux.Provider, {
         store: _index.default
@@ -49875,7 +49879,7 @@ var Header = function Header(_ref) {
     className: "icon-group"
   }), _react.default.createElement("h3", null, "Groups"), _react.default.createElement("span", {
     className: "items-count"
-  }, " ", total));
+  }, " (", total, ")"));
 };
 
 var _default = Header;
@@ -50592,9 +50596,9 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-gamepad"
-      }), _react.default.createElement("h3", null, "Games"), _react.default.createElement("span", {
+      }), _react.default.createElement("h3", null, "My Games"), _react.default.createElement("span", {
         className: "items-count"
-      }, " ", total))), _react.default.createElement("div", {
+      }, " (", total, ")"))), _react.default.createElement("div", {
         className: "block-content"
       }, _react.default.createElement("div", {
         className: "row"
@@ -50606,7 +50610,14 @@ function (_Component) {
           active: index === i,
           game: game
         });
-      })))));
+      }))), _react.default.createElement("div", {
+        className: "text-center pt-3"
+      }, _react.default.createElement("a", {
+        href: "/my-games",
+        className: "dd-btn btn-sm"
+      }, _react.default.createElement("small", null, _react.default.createElement("span", {
+        className: "icon-plus"
+      }), "Add new games")))));
     }
   }]);
 
@@ -51161,19 +51172,25 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "icon-streams",
         style: streamTabStyle
-      }), " Streams")) : null, _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Streams"))) : null, _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-picture"
-      }), " Images")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Images"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-play"
-      }), " Videos"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Videos")))), _react.default.createElement("div", {
         className: "content"
       }, streams && streams.length ? _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_StreamList.StreamList, {
         streams: streams
@@ -60947,13 +60964,17 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-info"
-      }), " About Me")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-pc"
-      }), " My Devices"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " My Devices")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         profile: user.profile
@@ -63959,7 +63980,7 @@ function (_Component) {
           list: groups,
           total: totals.groups
         })), _react.default.createElement("section", {
-          className: "block"
+          className: "block my-games"
         }, _react.default.createElement(_index4.Games, {
           isGuest: false,
           list: games,
@@ -64138,7 +64159,7 @@ function (_Component) {
           list: groups,
           total: totals.groups
         })), _react.default.createElement("section", {
-          className: "block"
+          className: "block my-games"
         }, _react.default.createElement(_index5.Games, {
           isGuest: false,
           list: games,
@@ -74987,19 +75008,25 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-info"
-      }), " Profile")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Profile"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-art"
-      }), " Security")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Security"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-art"
-      }), " Your Groups"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Your Groups")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_profile.default, {
         profile: data.profile,
@@ -75710,13 +75737,17 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), " Gamers")), _react.default.createElement(_reactTabs.Tab, {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Gamers"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-group"
-      }), " Groups"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Groups")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_SearchField.default, {
         onQuery: this.onQueryChange,
@@ -83660,7 +83691,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(CreateEvent)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      open: false
+      open: false,
+      processing: false
     });
 
     return _this;
@@ -83671,7 +83703,8 @@ function (_Component) {
     value: function doOpen() {
       this.setState(function () {
         return {
-          open: true
+          open: true,
+          processing: false
         };
       });
     }
@@ -83689,13 +83722,26 @@ function (_Component) {
     value: function onSave() {
       var _this2 = this;
 
+      this.setState(function () {
+        return {
+          processing: true
+        };
+      });
+
       _axios.default.post("/event/store", this.contentRef).then(function (_ref) {
         var data = _ref.data;
         return _this2.setState({
-          open: false
+          open: false,
+          processing: false
         });
       }).catch(function (err) {
-        return console.log(err);
+        console.log(err);
+
+        _this2.setState(function () {
+          return {
+            processing: false
+          };
+        });
       });
     }
   }, {
@@ -83713,9 +83759,10 @@ function (_Component) {
         class: "btn-full"
       }];
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
+        processing: this.state.processing,
         open: this.state.open,
         onClose: this.doClose.bind(this),
-        title: 'Merhaba, Bir event olusturmak istermiydiniz ?',
+        title: 'Create an event',
         actions: actions
       }, _react.default.createElement(_Form.default, {
         onForm: function onForm(form) {
@@ -84259,7 +84306,9 @@ function (_Component) {
         href: "javascript:void(0);"
       }, _react.default.createElement("span", {
         className: "icon-info"
-      }), " About Event"))), _react.default.createElement("div", {
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " About Event")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         description: about
@@ -85346,7 +85395,9 @@ var About = function About(_ref) {
     href: "javascript:void(0);"
   }, _react.default.createElement("span", {
     className: "icon-info"
-  }), " About Game"))), _react.default.createElement("div", {
+  }), _react.default.createElement("span", {
+    className: "tab-title"
+  }, " About Game")))), _react.default.createElement("div", {
     className: "content"
   }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_TabContent.default, {
     data: about
@@ -86623,7 +86674,9 @@ var About = function About(_ref) {
     href: "javascript:void(0);"
   }, _react.default.createElement("span", {
     className: "icon-info"
-  }), " About Group"))), _react.default.createElement("div", {
+  }), _react.default.createElement("span", {
+    className: "tab-title"
+  }, " About Group")))), _react.default.createElement("div", {
     className: "content"
   }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("p", null, about)))));
 };
@@ -87797,7 +87850,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45901" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40187" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

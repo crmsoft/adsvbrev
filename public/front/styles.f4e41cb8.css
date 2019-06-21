@@ -6719,7 +6719,7 @@ body {
 
 p {
   color: #d1d1d1 !important;
-  font-weight: 300; }
+  font-weight: 400; }
   p strong {
     color: #d1d1d1; }
 
@@ -6744,6 +6744,11 @@ p {
 .react-tabs__tab {
   z-index: 0;
   font-weight: 900; }
+  .react-tabs__tab a {
+    letter-spacing: 0.7px; }
+    .react-tabs__tab a .tab-title {
+      padding-left: 5px;
+      text-transform: none; }
 
 .content-bottom {
   display: flex;
@@ -8540,7 +8545,7 @@ span.flatpickr-weekday {
   .nav-tabs li.active a {
     color: #ffffff; }
     .nav-tabs li.active a:before {
-      background-color: #293235; }
+      background-color: #3D4444; }
 
 .user-list-item {
   border-bottom: 1px solid #989898;
@@ -9045,13 +9050,13 @@ nav.user-profile {
     margin-right: -10px;
     padding-right: 10px; }
   .profile-aside .friends .header .aside-firends-icon {
-    font-size: 18px; }
+    font-size: 21px; }
   .profile-aside .friends + .dec {
     height: 55px;
     width: auto !important;
     position: absolute;
     right: -9px;
-    bottom: -1px; }
+    bottom: -7px; }
   .profile-aside .block {
     border-radius: 3px;
     background-color: #14191C;
@@ -9061,16 +9066,29 @@ nav.user-profile {
     .profile-aside .block + .block {
       margin-top: 15px; }
     .profile-aside .block a {
-      color: #ffffff;
+      color: #d1d1d1;
       text-decoration: none; }
+    .profile-aside .block.my-games {
+      background-image: url("my_games_back.3d5de867.png");
+      background-repeat: no-repeat;
+      background-position: 2px 0px; }
+      .profile-aside .block.my-games .header a {
+        color: #ffffff; }
+        .profile-aside .block.my-games .header a .items-count {
+          color: #ffffff !important; }
     .profile-aside .block .header h3 {
       text-transform: uppercase;
       margin-left: 5px;
       display: inline-block;
-      font-size: 12px; }
+      font-size: 12px;
+      padding: 0 5px;
+      font-weight: 900;
+      letter-spacing: 0.7px; }
     .profile-aside .block .header .items-count {
       font-size: 12px;
       color: #989898; }
+    .profile-aside .block .header .icon-group {
+      font-size: 18px; }
     .profile-aside .block .block-content {
       padding: 5px;
       position: relative; }
@@ -9204,11 +9222,12 @@ nav.user-profile {
     padding: 0 !important;
     margin-top: -4px; }
   .profile-schedule .header {
-    background-color: #484B52;
+    background-color: #3d4444;
     text-transform: uppercase;
     text-align: center;
     border-top-left-radius: 3px;
-    border-top-right-radius: 3px; }
+    border-top-right-radius: 3px;
+    letter-spacing: 0.7px; }
   .profile-schedule .flatpickr-input, .profile-schedule .numInputWrapper {
     display: none; }
   .profile-schedule .flatpickr-calendar {
@@ -9226,7 +9245,7 @@ nav.user-profile {
   .profile-schedule .flatpickr-days, .profile-schedule .flatpickr-innerContainer {
     border: 0; }
   .profile-schedule .dayContainer, .profile-schedule .flatpickr-day {
-    background-color: #2F3136;
+    background-color: #14191C;
     color: white; }
   .profile-schedule .flatpickr-day {
     position: relative;
@@ -9253,7 +9272,7 @@ nav.user-profile {
   .profile-schedule .prevMonthDay, .profile-schedule .nextMonthDay {
     opacity: 0.3; }
   .profile-schedule .flatpickr-months {
-    background-color: #484B52;
+    background-color: #3d4444;
     justify-content: center; }
     .profile-schedule .flatpickr-months .flatpickr-prev-month, .profile-schedule .flatpickr-months .flatpickr-next-month {
       position: relative !important;
@@ -9482,8 +9501,9 @@ nav.user-profile {
         font-size: 19px;
         margin-bottom: 3px; }
       .post .post-header .post-main-info .post-username {
-        font-size: 19px;
-        margin: 0; }
+        font-size: 14px;
+        margin: 0;
+        font-weight: 400; }
       .post .post-header .post-main-info .post-time {
         color: #ff4800;
         font-size: 12px; }
@@ -9845,7 +9865,7 @@ nav.user-profile {
 .user-settings, .search-results {
   margin-top: 60px;
   padding: 10px;
-  background-color: #202225;
+  background-color: #14191C;
   border-radius: 3px; }
   .user-settings .header, .search-results .header {
     position: relative; }
