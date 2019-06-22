@@ -11,6 +11,7 @@ use \App\Http\Controllers\Controller;
 use App\Http\Resources\Events\EventCollection;
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Events\EventResource;
+use App\Http\Resources\Events\Event as StoreEventResponse;
 use App\Entities\Event;
 
 class EventController extends Controller
@@ -45,6 +46,7 @@ class EventController extends Controller
         $event = new Event();
 
         $event->fill($data);
+        $event->is_private = $request->get('is_private') == 'true';
         $event->start = Carbon::parse($request->start)->timestamp;
 
         $event->save();
@@ -84,7 +86,9 @@ class EventController extends Controller
 
         $event->poster = "public/{$users_dir}/{$name}";
 
-        return $event->save() ? 1:0;
+        $event->save();
+
+        return new StoreEventResponse($event);
     }
 
     public function listDay(int $timestamp)

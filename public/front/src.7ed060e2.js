@@ -83719,6 +83719,7 @@ function (_Component) {
           name = _this$state.name,
           description = _this$state.description,
           date = _this$state.date;
+      var errors = this.props.errors;
       return _react.default.createElement("div", {
         className: "schedule-create-form"
       }, _react.default.createElement("input", {
@@ -83746,7 +83747,7 @@ function (_Component) {
           backgroundImage: "url(".concat(srcAva, ")")
         } : {},
         onClick: this.onAvaSelect.bind(this),
-        className: "event-ava back-img " + (srcAva.length ? 'selected' : '')
+        className: "event-ava back-img " + (errors.ava ? ' has-error ' : '') + (srcAva.length ? ' selected ' : '')
       }, _react.default.createElement("span", null, "Click to Upload"))), _react.default.createElement("div", {
         className: "col"
       }, _react.default.createElement("div", {
@@ -83754,7 +83755,7 @@ function (_Component) {
           backgroundImage: "url(".concat(srcCover, ")")
         } : {},
         onClick: this.onCoverSelect.bind(this),
-        className: "event-cover back-img " + (srcCover.length ? 'selected' : '')
+        className: "event-cover back-img " + (errors.poster ? ' has-error ' : '') + (srcCover.length ? ' selected ' : '')
       }, _react.default.createElement("span", null, "Click to Upload")))))), _react.default.createElement("div", {
         className: "row"
       }, _react.default.createElement("div", {
@@ -83767,7 +83768,8 @@ function (_Component) {
           return _this5.setValue('name', e.target.value);
         },
         name: "event-name",
-        type: "text"
+        type: "text",
+        className: errors.name ? 'has-error' : null
       }))), _react.default.createElement("div", {
         className: "row"
       }, _react.default.createElement("div", {
@@ -83790,6 +83792,7 @@ function (_Component) {
         className: "col-8"
       }, _react.default.createElement("textarea", {
         value: description,
+        className: errors.description ? 'has-error' : null,
         onChange: function onChange(e) {
           return _this5.setValue('description', e.target.value);
         }
@@ -83804,7 +83807,7 @@ function (_Component) {
       }, _react.default.createElement("input", {
         value: name,
         onChange: function onChange(e) {
-          return _this5.setValue('is-private', e.target.value);
+          return _this5.setValue('is_private', e.target.checked);
         },
         name: "event-is-private",
         type: "checkbox"
@@ -83878,7 +83881,8 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       open: false,
-      processing: false
+      processing: false,
+      errors: {}
     });
 
     return _this;
@@ -83890,7 +83894,8 @@ function (_Component) {
       this.setState(function () {
         return {
           open: true,
-          processing: false
+          processing: false,
+          errors: {}
         };
       });
     }
@@ -83916,16 +83921,20 @@ function (_Component) {
 
       _axios.default.post("/event/store", this.contentRef).then(function (_ref) {
         var data = _ref.data;
-        return _this2.setState({
+
+        _this2.props.onEvent(data.data);
+
+        _this2.setState({
           open: false,
           processing: false
         });
-      }).catch(function (err) {
-        console.log(err);
+      }).catch(function (_ref2) {
+        var response = _ref2.response;
 
         _this2.setState(function () {
           return {
-            processing: false
+            processing: false,
+            errors: response.data.errors
           };
         });
       });
@@ -83944,6 +83953,7 @@ function (_Component) {
         onAction: this.onSave.bind(this),
         class: "btn-full"
       }];
+      var errors = this.state.errors;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
         processing: this.state.processing,
         open: this.state.open,
@@ -83951,6 +83961,7 @@ function (_Component) {
         title: 'Create an event',
         actions: actions
       }, _react.default.createElement(_Form.default, {
+        errors: errors,
         onForm: function onForm(form) {
           _this3.contentRef = form;
         }
@@ -84078,6 +84089,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -84229,6 +84248,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       var _this$state = this.state,
           date = _this$state.date,
           events = _this$state.events;
@@ -84269,7 +84290,17 @@ function (_Component) {
         className: "schedule-dudes"
       }, _react.default.createElement("span", null), "Dudes"), _react.default.createElement("div", {
         className: "schedule-me"
-      }, _react.default.createElement("span", null), "Me"), _react.default.createElement(_CreateEvent.default, null)), _react.default.createElement("div", {
+      }, _react.default.createElement("span", null), "Me"), _react.default.createElement(_CreateEvent.default, {
+        onEvent: function onEvent(event) {
+          if (_luxon.DateTime.fromJSDate(date).toISODate() === event.start) {
+            _this5.setState(function () {
+              return {
+                events: [event].concat(_toConsumableArray(events))
+              };
+            });
+          }
+        }
+      })), _react.default.createElement("div", {
         className: "schedule-contents"
       }, events.map(function (event) {
         return _react.default.createElement(_Event.default, {
@@ -87901,7 +87932,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33719" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33168" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
