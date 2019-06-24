@@ -15,21 +15,40 @@
                 text-decoration: none;
                 color: #CBCBCB;
                 text-transform: uppercase;
+                .icon{
+                    color: $mainColor;
+                }
                 .icon-schedule{
-                    font-size: 12.5px;
+                    font-size: 15.5px;
+                    margin-right: 10px;
                 }
                 span{
                     width: 15px;
                     display: inline-block;
                     text-align: center;
-                    &::before{
-                        color: #B2B2B2;
-                    }
                 }
                 &.active{
+                    color: #fff;
                     &:after{
-                        @include right-edge-cut(0, #2F3136);
+                        @include right-edge-cut(0, #ff480020);
                     }
+                }
+
+                .icon-info{
+                    font-size: 15.5px;
+                    margin-right: 10px;
+                }
+                .icon-fist{
+                    margin-right: 10px;
+                }
+                .icon-basket{
+                    margin-right: 10px;
+                }
+                .icon-group{
+                    margin-right: 10px;
+                }
+                .icon-binocolo{
+                    margin-right: 10px;
                 }
             }
         }

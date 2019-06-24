@@ -28,17 +28,32 @@ export default class Menu extends Component {
                                                 return match || location.pathname === '/schedule' || location.pathname === '/settings';
                                             }}
                                         >
-                                            <span className="icon-profile icon-info"></span> {` my profile`}
+                                            <span className="icon icon-info"></span> {` my profile`}
                                         </NavLink>
                                     </li>
                                     <li>
                                         <NavLink activeClassName="active" to="/feed">
-                                            <span className="icon-profile icon-schedule"></span> {` feed`}
+                                            <span className="icon icon-schedule"></span> {` my feed`}
                                         </NavLink>
                                     </li>
                                     <li>
                                         <NavLink activeClassName="active" to="/dudes">
-                                            <span className="icon-profile"></span> {` Find Dudes`}
+                                            <span className="icon icon-binocolo"></span> {` Find Your Dudes`}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink activeClassName="active" to="/abc">
+                                            <span className="icon icon-group"></span> {` Groups`}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink activeClassName="active" to="/abc">
+                                            <span className="icon icon-basket"></span> {` Trade`}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink activeClassName="active" to="/abc">
+                                            <span className="icon icon-fist"></span> {` Clans`}
                                         </NavLink>
                                     </li>
                                 </ul>

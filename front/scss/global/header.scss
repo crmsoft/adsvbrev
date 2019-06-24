@@ -10,9 +10,12 @@ header{
     .navbar-nav{
         .nav-item{
             .nav-link{
-                color: #fff;
+                color: $mainGray;
                 &:focus,&:hover{
                     color: #fff;
+                }
+                &:active{
+                    color: inherit;
                 }
                 &:after{
                     border: none;
@@ -20,6 +23,11 @@ header{
                 &.icon-friend:before,&.icon-notification:before{
                     font-size: 33px;
                 }
+            }
+            .followers-popup:hover{
+                padding: 13px 0;
+                margin-top: -15px;
+                background-color: #131719;
             }
             .nav-item-count{
                 position: absolute;
@@ -163,12 +171,17 @@ header{
                 border-bottom: 1px solid $halfGray;
                 &.comment{
                     .icon-comment{
-                        color: #03a5ff;
+                        color: #438600;
                     }
                 }
                 &.liked{
                     .icon-liked{
                         color: $mainColor;
+                    }
+                }
+                &.shared{
+                    .icon-shared{
+                        color: #dfef11
                     }
                 }
             }
