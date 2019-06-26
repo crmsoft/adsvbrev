@@ -50146,7 +50146,7 @@ var GroupListItem = function GroupListItem(_ref) {
     style: {
       fontWeight: 'bold'
     }
-  }, group.full_name))), _react.default.createElement("div", null, _react.default.createElement("button", {
+  }, group.full_name))), group.manages ? null : _react.default.createElement("div", null, _react.default.createElement("button", {
     onClick: function onClick(e) {
       return leave(group.username);
     },
@@ -87193,7 +87193,7 @@ function (_Component) {
         className: "icon-steam"
       })))), _react.default.createElement("div", {
         className: "profile-actions"
-      }, data.participant ? _react.default.createElement("button", {
+      }, data.manages ? null : data.participant ? _react.default.createElement("button", {
         onClick: function onClick(e) {
           return _this.props.onLeave();
         },

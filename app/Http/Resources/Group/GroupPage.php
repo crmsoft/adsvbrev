@@ -30,7 +30,8 @@ class GroupPage extends JsonResource
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
             'total_participant' => $this->participants->count(),
             'feed' => new PostCollection($this->posts()->orderBy('id','desc')->take(2)->get()),
-            'related' => new GroupCollection($this->related_groups)
+            'related' => new GroupCollection($this->related_groups),
+            'manages' => !empty($this->role)
         ];
     }
 }

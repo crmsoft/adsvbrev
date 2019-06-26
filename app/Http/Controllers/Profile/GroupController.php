@@ -54,6 +54,8 @@ class GroupController extends Controller
             'related'       => ['required']
         ]);
 
+        $user = auth()->user();
+
         $group = new Group;
         $group->slug = str_slug($slug);
         $group->name = $request->name;
@@ -67,7 +69,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        $group->managers()->attach(auth()->user());
+        $group->managers()->attach($user);
 
         // save avatar
         $media = $request->file('ava');
@@ -105,6 +107,12 @@ class GroupController extends Controller
         $group->poster = "public/{$users_dir}/{$name}";
 
         $group->save();
+
+        // admin automatically joins the group
+        $u_group = new UserGroup;
+        $u_group->user_id = $user->id;
+        $u_group->group_id = $group->id;
+        $u_group->save();
 
         return new ManagerGroup($group);
     }
@@ -172,10 +180,18 @@ class GroupController extends Controller
             if ($request->has('managers'))
             {
                 $group->managers()->sync(
-                    collect(explode(',', $request->get('managers')))->reduce(function($data, $username) {
+                    collect(explode(',', $request->get('managers')))->reduce(function($data, $username) use ($group) {
                         $user = \App\User::where('username', $username)->first();
                         if ($user)
                         {
+                            try{
+                                // automatically joins the group
+                                $u_group = new UserGroup;
+                                $u_group->user_id = $user->id;
+                                $u_group->group_id = $group->id;
+                                $u_group->save();
+                            }catch(\Illuminate\Database\QueryException $e){}
+
                             $data[$user->id] = ['hierarchy' => 2];
                             return $data;
                         } // end if
