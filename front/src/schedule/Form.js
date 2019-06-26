@@ -81,7 +81,8 @@ export default class Form extends Component{
 
     render()
     {   
-        const {srcAva, srcCover, name, description, date} = this.state;     
+        const {srcAva, srcCover, name, description, date} = this.state;
+        const {errors} = this.props;     
         
         return (
             <div className="schedule-create-form">
@@ -111,7 +112,7 @@ export default class Form extends Component{
                                         backgroundImage: `url(${srcAva})`
                                     } : {}}
                                     onClick={this.onAvaSelect.bind(this)}
-                                    className={"event-ava back-img " + (srcAva.length ? 'selected':'')}
+                                    className={"event-ava back-img " + (errors.ava ? ' has-error ':'') + (srcAva.length ? ' selected ':'')}
                                 >
                                     <span>
                                         Click to Upload
@@ -124,7 +125,8 @@ export default class Form extends Component{
                                         backgroundImage: `url(${srcCover})`
                                     } : {}}
                                     onClick={this.onCoverSelect.bind(this)}
-                                    className={"event-cover back-img " + (srcCover.length ? 'selected':'')}>
+                                    className={"event-cover back-img " + (errors.poster ? ' has-error ':'') + (srcCover.length ? ' selected ':'')}
+                                >
                                     <span>
                                         Click to Upload
                                     </span>
@@ -146,6 +148,7 @@ export default class Form extends Component{
                             onChange={e => this.setValue('name', e.target.value)}
                             name="event-name" 
                             type='text' 
+                            className={errors.name ? 'has-error':null}
                         />
                     </div>
                 </div>
@@ -176,6 +179,7 @@ export default class Form extends Component{
                     <div className="col-8">
                         <textarea 
                             value={description}
+                            className={errors.description ? 'has-error':null}
                             onChange={e => this.setValue('description', e.target.value)}
                         />
                     </div>
@@ -191,7 +195,7 @@ export default class Form extends Component{
                         <label className="form-input-container">
                             <input 
                                 value={name}
-                                onChange={e => this.setValue('is-private', e.target.value)}
+                                onChange={e => this.setValue('is_private', e.target.checked)}
                                 name="event-is-private" 
                                 type='checkbox' 
                             />

@@ -175,7 +175,14 @@ export default class Schedule extends Component {
                                     Me
                                 </div>
 
-                                <CreateEvent />
+                                <CreateEvent 
+                                    onEvent={event => {
+                                        if (DateTime.fromJSDate(date).toISODate() === event.start)
+                                        {
+                                            this.setState(() => ({events:[event,...events]}))
+                                        }
+                                    }}
+                                />
                             </div>
                                 <div className="schedule-contents">
 

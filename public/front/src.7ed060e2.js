@@ -59981,18 +59981,30 @@ function (_Component) {
             return match || location.pathname === '/schedule' || location.pathname === '/settings';
           }
         }, _react.default.createElement("span", {
-          className: "icon-profile icon-info"
+          className: "icon icon-info"
         }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
           activeClassName: "active",
           to: "/feed"
         }, _react.default.createElement("span", {
-          className: "icon-profile icon-schedule"
-        }), " ", " feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          className: "icon icon-schedule"
+        }), " ", " my feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
           activeClassName: "active",
           to: "/dudes"
         }, _react.default.createElement("span", {
-          className: "icon-profile"
-        }), " ", " Find Dudes")));
+          className: "icon icon-binocolo"
+        }), " ", " Find Your Dudes")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-group"
+        }), " ", " Groups")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-basket"
+        }), " ", " Trade")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-fist"
+        }), " ", " Clans")));
       }));
     }
   }]);
@@ -87932,7 +87944,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33168" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38496" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

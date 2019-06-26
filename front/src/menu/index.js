@@ -42,19 +42,19 @@ export default class Menu extends Component {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink activeClassName="active" to="/abc">
+                                        <a href="javascript:void(0)">
                                             <span className="icon icon-group"></span> {` Groups`}
-                                        </NavLink>
+                                        </a>
                                     </li>
                                     <li>
-                                        <NavLink activeClassName="active" to="/abc">
+                                        <a href="javascript:void(0)">
                                             <span className="icon icon-basket"></span> {` Trade`}
-                                        </NavLink>
+                                        </a>
                                     </li>
                                     <li>
-                                        <NavLink activeClassName="active" to="/abc">
+                                        <a href="javascript:void(0)">
                                             <span className="icon icon-fist"></span> {` Clans`}
-                                        </NavLink>
+                                        </a>
                                     </li>
                                 </ul>
                             )

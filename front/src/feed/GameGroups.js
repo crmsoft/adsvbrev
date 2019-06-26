@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-const GameCard = ({game}) => {
+export const GameCard = ({game}) => {
     return (
         <Link to={`/g/${game.username}`} className="game-group row ml-1 mb-2">
             <div>

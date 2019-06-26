@@ -6,14 +6,18 @@ import axios from 'axios';
 export default class CreateEvent extends Component{
 
     state = {
-        open: false
+        open: false,
+        processing: false,
+        errors: {}
     }
 
     doOpen()
     {
         this.setState(() => {
             return {
-                open: true
+                open: true,
+                processing: false,
+                errors: {}
             }
         })
     }
@@ -29,9 +33,15 @@ export default class CreateEvent extends Component{
 
     onSave()
     {
+        this.setState(() => ({processing:true}))
         axios.post(`/event/store`, this.contentRef)
-        .then(({data}) => this.setState({open: false}))
-        .catch(err => console.log(err))
+        .then(({data}) => {
+            this.props.onEvent(data.data);
+            this.setState({open: false, processing: false})
+        })
+        .catch(({response}) => {
+            this.setState(() => ({processing:false, errors: response.data.errors}))
+        })
     }
 
     render()
@@ -49,17 +59,21 @@ export default class CreateEvent extends Component{
             }
         ];
 
+        const {errors} = this.state;
+
         return (
             <Fragment>
                 <Modal 
+                    processing={this.state.processing}
                     open={this.state.open}
                     onClose={this.doClose.bind(this)}
-                    title={'Merhaba, Bir event olusturmak istermiydiniz ?'}
+                    title={'Create an event'}
                     actions={
                         actions
                     }
                 >
                     <Form 
+                        errors={errors}
                         onForm={
                             form => {
                                 this.contentRef = form;

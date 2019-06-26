@@ -7594,6 +7594,11 @@ span.flatpickr-weekday {
     display: none;
     visibility: hidden;
     opacity: 0; }
+  .schedule .flatpickr-day.selected, .user-settings .content .form-create-group .flatpickr-day.selected, .search-results .content .form-create-group .flatpickr-day.selected {
+    border-color: transparent;
+    background-color: rgba(255, 72, 0, 0.5) !important;
+    color: white !important;
+    font-weight: 900; }
   .schedule .has-event, .user-settings .content .form-create-group .has-event, .search-results .content .form-create-group .has-event {
     display: flex;
     flex-flow: row wrap;
@@ -7692,8 +7697,8 @@ span.flatpickr-weekday {
                 right: 5px;
                 bottom: 5px; }
                 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .mark {
-                  width: 4px;
-                  height: 4px;
+                  width: 12px;
+                  height: 12px;
                   border-radius: 50%;
                   display: block;
                   padding: 0; }
@@ -7705,10 +7710,12 @@ span.flatpickr-weekday {
               border-left: 0px !important; }
             .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .prevMonthDay {
               border-bottom: 3px solid #bab7be69;
-              border-left: 1px solid #bab7be69; }
+              border-left: 1px solid #bab7be69;
+              color: transparent; }
             .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .nextMonthDay {
               border-bottom: 3px solid #bab7be69;
-              border-left: 1px solid #bab7be69; }
+              border-left: 1px solid #bab7be69;
+              color: transparent; }
   .schedule .schedule-event, .user-settings .content .form-create-group .schedule-event, .search-results .content .form-create-group .schedule-event {
     margin: 2rem 0px;
     font-family: "Roboto Regular"; }
@@ -7726,8 +7733,9 @@ span.flatpickr-weekday {
         float: left; }
         .schedule .schedule-event .create-event .schedule-group span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-group span, .search-results .content .form-create-group .schedule-event .create-event .schedule-group span {
           float: left;
-          width: 20px;
-          height: 10px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
           margin-right: 5px;
           background: #F05A24; }
       .schedule .schedule-event .create-event .schedule-dudes, .user-settings .content .form-create-group .schedule-event .create-event .schedule-dudes, .search-results .content .form-create-group .schedule-event .create-event .schedule-dudes {
@@ -7738,8 +7746,9 @@ span.flatpickr-weekday {
         float: left; }
         .schedule .schedule-event .create-event .schedule-dudes span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-dudes span, .search-results .content .form-create-group .schedule-event .create-event .schedule-dudes span {
           float: left;
-          width: 20px;
-          height: 10px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
           margin-right: 5px;
           background: #6DB100; }
       .schedule .schedule-event .create-event .schedule-me, .user-settings .content .form-create-group .schedule-event .create-event .schedule-me, .search-results .content .form-create-group .schedule-event .create-event .schedule-me {
@@ -7750,8 +7759,9 @@ span.flatpickr-weekday {
         float: left; }
         .schedule .schedule-event .create-event .schedule-me span, .user-settings .content .form-create-group .schedule-event .create-event .schedule-me span, .search-results .content .form-create-group .schedule-event .create-event .schedule-me span {
           float: left;
-          width: 20px;
-          height: 10px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
           margin-right: 5px;
           background: #662D91; }
       .schedule .schedule-event .create-event .dd-btn, .user-settings .content .form-create-group .schedule-event .create-event .dd-btn, .search-results .content .form-create-group .schedule-event .create-event .dd-btn {
@@ -8703,13 +8713,19 @@ header {
     position: relative;
     height: 45px; }
   header .navbar-nav .nav-item .nav-link {
-    color: #fff; }
+    color: #CBCBCB; }
     header .navbar-nav .nav-item .nav-link:focus, header .navbar-nav .nav-item .nav-link:hover {
       color: #fff; }
+    header .navbar-nav .nav-item .nav-link:active {
+      color: inherit; }
     header .navbar-nav .nav-item .nav-link:after {
       border: none; }
     header .navbar-nav .nav-item .nav-link.icon-friend:before, header .navbar-nav .nav-item .nav-link.icon-notification:before {
       font-size: 33px; }
+  header .navbar-nav .nav-item .followers-popup:hover {
+    padding: 13px 0;
+    margin-top: -15px;
+    background-color: #131719; }
   header .navbar-nav .nav-item .nav-item-count {
     position: absolute;
     right: -5px;
@@ -8809,9 +8825,11 @@ header {
   .followers-popup .popup-content .notification-list .user {
     border-bottom: 1px solid #2F3136; }
     .followers-popup .popup-content .notification-list .user.comment .icon-comment {
-      color: #03a5ff; }
+      color: #438600; }
     .followers-popup .popup-content .notification-list .user.liked .icon-liked {
       color: #ff4800; }
+    .followers-popup .popup-content .notification-list .user.shared .icon-shared {
+      color: #dfef11; }
   .followers-popup .popup-content .notification-list li .user-list-user {
     width: auto;
     max-width: initial; }
@@ -9311,25 +9329,39 @@ nav.user-profile {
         text-decoration: none;
         color: #CBCBCB;
         text-transform: uppercase; }
+        .menu ul li a .icon {
+          color: #ff4800; }
         .menu ul li a .icon-schedule {
-          font-size: 12.5px; }
+          font-size: 15.5px;
+          margin-right: 10px; }
         .menu ul li a span {
           width: 15px;
           display: inline-block;
           text-align: center; }
-          .menu ul li a span::before {
-            color: #B2B2B2; }
-        .menu ul li a.active:after {
-          content: '';
-          position: absolute;
-          width: 1100%;
-          height: 1100%;
-          top: 0;
-          right: -500%;
-          background: #2F3136;
-          transform-origin: 54% 0;
-          transform: rotate(45deg);
-          z-index: -1; }
+        .menu ul li a.active {
+          color: #fff; }
+          .menu ul li a.active:after {
+            content: '';
+            position: absolute;
+            width: 1100%;
+            height: 1100%;
+            top: 0;
+            right: -500%;
+            background: rgba(255, 72, 0, 0.2);
+            transform-origin: 54% 0;
+            transform: rotate(45deg);
+            z-index: -1; }
+        .menu ul li a .icon-info {
+          font-size: 15.5px;
+          margin-right: 10px; }
+        .menu ul li a .icon-fist {
+          margin-right: 10px; }
+        .menu ul li a .icon-basket {
+          margin-right: 10px; }
+        .menu ul li a .icon-group {
+          margin-right: 10px; }
+        .menu ul li a .icon-binocolo {
+          margin-right: 10px; }
 
 /** Post creation */
 .textarea {

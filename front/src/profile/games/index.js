@@ -1,7 +1,40 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-const GameCard = ({game, active}) => {
+import {Modal} from '../../Modal';
+import {GameCard} from '../../feed/GameGroups';
+
+const GamesModal = ({
+    open,
+    onClose,
+    list
+}) => {
+    
+    const actions = [
+        {
+            onAction: onClose,
+            title: 'Close'
+        }
+    ]
+    
+    return (
+        <Modal
+            title="My Games"
+            open={open}
+            onClose={onClose}
+            actions={actions}
+
+        >
+            <div className="list-scroll p-3">
+                {
+                    list.map(game => <GameCard key={game.username} game={game} />)
+                }
+            </div>
+        </Modal>
+    )
+} 
+
+const GameSlide = ({game, active}) => {
     let st = active ? {display:'block',position:'relative', minHeight: '150px'}:{position:'relative',display:'none', minHeight: '150px'}
     return (
         <Link to={`/g/${game.username}`} style={st}>
@@ -16,7 +49,8 @@ const GameCard = ({game, active}) => {
 export class Games extends Component {
     
     state = {
-        index: 0
+        index: 0,
+        modal: false
     }
 
     componentDidMount()
@@ -33,12 +67,19 @@ export class Games extends Component {
     render()
     {
         const {total, list} = this.props;
-        const {index} = this.state;
+        const {index, modal} = this.state;
 
         return (
             <div>
+                <GamesModal 
+                    list={list}
+                    onClose={() => this.setState(() => ({modal:false}))}
+                    open={modal}
+                />
                 <div className="header">
-                    <a href="javascript:void(0);">
+                    <a 
+                        onClick={() => this.setState(() => ({modal:true}))}
+                        href="javascript:void(0);">
                         <span className="icon-gamepad"></span>
                         <h3>My Games</h3>
                         <span className="items-count"> ({total})</span>
@@ -49,7 +90,7 @@ export class Games extends Component {
                     <div className="row">
                         <div className="col">
                             {
-                                list.map((game, i) => <GameCard key={game.username} active={index === i} game={game} />)
+                                list.map((game, i) => <GameSlide key={game.username} active={index === i} game={game} />)
                             }
                         </div>
                     </div>

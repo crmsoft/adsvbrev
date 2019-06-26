@@ -53,7 +53,7 @@ export default class Participants extends Component {
                         <h3>
                             {title ? title:`Participants`} 
                         </h3>
-                        <span className="items-count"> {event.total_participant ? event.total_participant : ''}</span>
+                        <span className="items-count"> {event.total_participant ? `(${event.total_participant})` : ''}</span>
                     </a>
                     <Modal
                         open={this.state.open}
