@@ -23,7 +23,7 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->string('ava')->default('');
             $table->string('poster')->default('');
-            $table->timestamp('start')->default('0000-00-00 00:00:00');
+            $table->timestamp('start');
             $table->boolean('is_private');
             
             $table->timestamps();
