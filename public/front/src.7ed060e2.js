@@ -50130,7 +50130,8 @@ var leave = function leave(id) {
 };
 
 var GroupListItem = function GroupListItem(_ref) {
-  var group = _ref.group;
+  var group = _ref.group,
+      isGuest = _ref.isGuest;
   return _react.default.createElement("div", {
     className: "user-list-item p-3"
   }, _react.default.createElement(_reactRouterDom.Link, {
@@ -50146,7 +50147,7 @@ var GroupListItem = function GroupListItem(_ref) {
     style: {
       fontWeight: 'bold'
     }
-  }, group.full_name))), group.manages || guest ? null : _react.default.createElement("div", null, _react.default.createElement("button", {
+  }, group.full_name))), group.manages || isGuest ? null : _react.default.createElement("div", null, _react.default.createElement("button", {
     onClick: function onClick(e) {
       return leave(group.username);
     },
@@ -87920,7 +87921,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34236" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41969" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
