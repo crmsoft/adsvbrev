@@ -45,8 +45,8 @@ class Profile extends Model
 
     public function getMainPhotoAttribute(){
         // TODO: remove code below 1
-        if( strpos($this->ava, 'https') !== false ){
-            return $this->ava;
+        if( strpos($this->ava, 'via.placeholder.com') !== false ){
+            return '/img/default_ava.png';
         }
 
         return $this->user ? Storage::url("user-media/{$this->user->dir}/200_{$this->ava}") : "200_{$this->ava}";

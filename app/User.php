@@ -128,7 +128,13 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
     }
 
     public function getFullNameAttribute(){
-        return $this->first_name . ' ' . $this->last_name;
+        $full_name = $this->first_name . ' ' . $this->last_name;
+        return $full_name;
+    }
+
+    public function getAvaAttribute($value)
+    {
+        return empty($value) ? '/img/default_ava.png':$value;
     }
 
     public function getStatusAttribute(){
@@ -155,7 +161,7 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
     public function profile()
     {
         return $this->hasOne(Profile::class)->withDefault([
-            'ava' => 'http://via.placeholder.com/160/95a/fff?text=?'
+            'ava' => '/img/default_ava.png'
         ]);
     }
 

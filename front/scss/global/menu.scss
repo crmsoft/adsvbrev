@@ -30,7 +30,7 @@
                 &.active{
                     color: #fff;
                     &:after{
-                        @include right-edge-cut(0, #ff480020);
+                        @include right-edge-cut(0, rgba(255, 72, 0, 0.2));
                     }
                 }
 
