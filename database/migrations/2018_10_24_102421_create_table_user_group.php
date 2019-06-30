@@ -18,7 +18,7 @@ class CreateTableUserGroup extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('group_id');
 
-            $table->string('status');
+            $table->string('status')->default(null);
 
             $table->primary([
                 'user_id',
