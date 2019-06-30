@@ -58,8 +58,8 @@ class ProfileController extends Controller
         );
     }
 
-    public function listGroups(){
-        $user = auth()->user();
+    public function listGroups(User $user){
+        $user = $user->id ? $user : auth()->user();
 
         return new GroupCollection($user->group()->where('is_game', 0)->with('profile')->get());
     }

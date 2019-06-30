@@ -61,7 +61,7 @@ Route::group([
     Route::post('/profile/ava', 'ProfileController@storeAva')->name('upload-avatar');
     Route::get('/friend/list/{username?}', 'ProfileController@listFriends')->name('list-fo-friends');
     Route::get('/followers/list/{username?}', 'ProfileController@listFollowers')->name('list-fo-friends');
-    Route::get('/group/list/{group?}', 'ProfileController@listGroups')->name('list-fo-groups');
+    Route::get('/group/list/{user?}', 'ProfileController@listGroups')->name('list-fo-groups');
     Route::get('/notification/list', 'ProfileController@notifications')->name('list-fo-friends');
     Route::get('/media/list/{user?}', 'ProfileController@listMedia')->name('list-user-media');
 

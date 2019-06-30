@@ -50251,9 +50251,9 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = _default;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _groupsList = _interopRequireDefault(require("./groups-list"));
 
@@ -50263,52 +50263,16 @@ var _store = _interopRequireDefault(require("../redux/store"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var GroupListContent =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(GroupListContent, _Component);
-
-  function GroupListContent() {
-    _classCallCheck(this, GroupListContent);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(GroupListContent).apply(this, arguments));
-  }
-
-  _createClass(GroupListContent, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "content"
-      }, _react.default.createElement(_reactRedux.Provider, {
-        store: _store.default
-      }, _react.default.createElement(_groupsList.default, null)));
-    }
-  }]);
-
-  return GroupListContent;
-}(_react.Component);
-
-exports.default = GroupListContent;
+function _default(_ref) {
+  var user = _ref.user;
+  return _react.default.createElement("div", {
+    className: "content"
+  }, _react.default.createElement(_reactRedux.Provider, {
+    store: _store.default
+  }, _react.default.createElement(_groupsList.default, {
+    user: user ? user.username : null
+  })));
+}
 },{"react":"../node_modules/react/index.js","./groups-list":"../src/profile/groups/popup/groups-list.js","react-redux":"../../node_modules/react-redux/es/index.js","../redux/store":"../src/profile/groups/redux/store.js"}],"../src/profile/groups/popup/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -50327,7 +50291,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var GroupList = function GroupList(_ref) {
   var show = _ref.show,
-      closeModal = _ref.closeModal;
+      closeModal = _ref.closeModal,
+      user = _ref.user;
   var actions = [{
     title: 'Ok',
     onAction: function onAction() {
@@ -50341,7 +50306,9 @@ var GroupList = function GroupList(_ref) {
     },
     open: show,
     actions: actions
-  }, _react.default.createElement(_popupContent.default, null));
+  }, _react.default.createElement(_popupContent.default, {
+    user: user
+  }));
 };
 
 var _default = GroupList;
@@ -64353,6 +64320,7 @@ function (_Component) {
         })), _react.default.createElement("section", {
           className: "block"
         }, _react.default.createElement(_index4.default, {
+          user: profile.user,
           isGuest: true,
           list: groups,
           total: totals.groups
@@ -87944,7 +87912,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46389" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34122" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
