@@ -50146,7 +50146,7 @@ var GroupListItem = function GroupListItem(_ref) {
     style: {
       fontWeight: 'bold'
     }
-  }, group.full_name))), group.manages ? null : _react.default.createElement("div", null, _react.default.createElement("button", {
+  }, group.full_name))), group.manages || guest ? null : _react.default.createElement("div", null, _react.default.createElement("button", {
     onClick: function onClick(e) {
       return leave(group.username);
     },
@@ -50213,7 +50213,9 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var items = this.props.items;
+      var _this$props = this.props,
+          items = _this$props.items,
+          isGuest = _this$props.isGuest;
       return _react.default.createElement("div", {
         style: {
           maxHeight: '70vh',
@@ -50221,6 +50223,7 @@ function (_Component) {
         }
       }, items.map(function (item) {
         return _react.default.createElement(_groupListItem.default, {
+          isGuest: isGuest,
           key: item.username,
           group: item
         });
@@ -50264,12 +50267,14 @@ var _store = _interopRequireDefault(require("../redux/store"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _default(_ref) {
-  var user = _ref.user;
+  var user = _ref.user,
+      isGuest = _ref.isGuest;
   return _react.default.createElement("div", {
     className: "content"
   }, _react.default.createElement(_reactRedux.Provider, {
     store: _store.default
   }, _react.default.createElement(_groupsList.default, {
+    isGuest: isGuest,
     user: user ? user.username : null
   })));
 }
@@ -50292,7 +50297,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var GroupList = function GroupList(_ref) {
   var show = _ref.show,
       closeModal = _ref.closeModal,
-      user = _ref.user;
+      user = _ref.user,
+      isGuest = _ref.isGuest;
   var actions = [{
     title: 'Ok',
     onAction: function onAction() {
@@ -50307,6 +50313,7 @@ var GroupList = function GroupList(_ref) {
     open: show,
     actions: actions
   }, _react.default.createElement(_popupContent.default, {
+    isGuest: isGuest,
     user: user
   }));
 };
@@ -50418,6 +50425,7 @@ function (_Component) {
         showModal: this.showModal,
         total: total
       }), _react.default.createElement(_index.default, {
+        isGuest: isGuest,
         user: user,
         closeModal: this.closeModal,
         show: show
@@ -87912,7 +87920,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34122" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34236" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
