@@ -45,6 +45,18 @@ class FeedController extends Controller
                                         $user->id, 
                                         $user->id 
                                     ])
+                                    ->orWhereRaw("
+                                    (
+                                        postables.postable_type = ? 
+                                        AND postables.postable_id in (
+                                            select group_id from user_groups 
+                                            where user_id = ?
+                                        )
+                                    )
+                                    ", [
+                                        'App\Entities\Group',
+                                        $user->id
+                                    ])
                                 ->with([
                                     'media', 
                                     'postable', 
@@ -106,6 +118,18 @@ class FeedController extends Controller
                                         'App\Entities\Event' ,
                                         $user->id, 
                                         $user->id 
+                                    ])
+                                    ->orWhereRaw("
+                                    (
+                                        postables.postable_type = ? 
+                                        AND postables.postable_id in (
+                                            select group_id from user_groups 
+                                            where user_id = ?
+                                        )
+                                    )
+                                    ", [
+                                        'App\Entities\Group',
+                                        $user->id
                                     ])
                                 ->with([
                                     'media', 

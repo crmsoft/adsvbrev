@@ -59371,6 +59371,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _AvaPopup = _interopRequireDefault(require("./edit/AvaPopup"));
 
+var _ImageZoom = _interopRequireDefault(require("../../general/ImageZoom"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -59439,15 +59441,20 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var ava_path = "".concat(this.props.ava);
+      var _this$props = this.props,
+          ava = _this$props.ava,
+          isGuest = _this$props.isGuest;
       return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "ava-holder",
         onClick: this.showModal
-      }, !this.props.isGuest ? editAva() : null, _react.default.createElement("img", {
-        src: ava_path,
+      }, !isGuest ? editAva() : null, isGuest ? _react.default.createElement(_ImageZoom.default, {
+        src: ava.replace('200_', 'original_'),
+        thumb: ava
+      }) : _react.default.createElement("img", {
+        src: ava,
         alt: "That's you !"
       })), _react.default.createElement(_AvaPopup.default, {
-        ava: ava_path,
+        ava: ava.replace('200_', 'original_'),
         closeModal: this.closeModal,
         show: this.state.show
       }));
@@ -59458,7 +59465,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = AvaComponent;
-},{"react":"../node_modules/react/index.js","./edit/AvaPopup":"../src/profile/ava/edit/AvaPopup.js"}],"../src/profile/profile-actions/FriendShipAction.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./edit/AvaPopup":"../src/profile/ava/edit/AvaPopup.js","../../general/ImageZoom":"../src/general/ImageZoom.js"}],"../src/profile/profile-actions/FriendShipAction.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -64214,6 +64221,8 @@ var _feed = _interopRequireDefault(require("../feed"));
 
 var _index5 = require("../games/index");
 
+var _postAdd = _interopRequireDefault(require("../../post-add"));
+
 var _events = require("../fetch/events");
 
 var _about = _interopRequireDefault(require("../about"));
@@ -64300,6 +64309,11 @@ function (_Component) {
         totalImage: totals.media,
         user: profile.user
       })), _react.default.createElement("section", {
+        className: "user-add-post"
+      }, _react.default.createElement(_postAdd.default, {
+        type: "user-feed",
+        id: profile.user.username
+      })), _react.default.createElement("section", {
         className: "posts"
       }, _react.default.createElement(_feed.default, {
         list: feed,
@@ -64358,7 +64372,7 @@ var GuestComponent = (0, _reactRedux.connect)(function (state) {
 })(Guest);
 var _default = GuestComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../feed":"../src/profile/feed/index.js","../games/index":"../src/profile/games/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","../friends/index":"../src/profile/friends/index.js","../media-tabs/index":"../src/profile/media-tabs/index.js","../profile-main":"../src/profile/profile-main.js","../../menu/index":"../src/menu/index.js","../groups/index":"../src/profile/groups/index.js","../feed":"../src/profile/feed/index.js","../games/index":"../src/profile/games/index.js","../../post-add":"../src/post-add/index.js","../fetch/events":"../src/profile/fetch/events.js","../about":"../src/profile/about/index.js"}],"../src/settings/submit.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87921,7 +87935,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41969" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43913" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
