@@ -28,7 +28,7 @@ class PostController extends Controller
 
         $request->validate([
             'post' => 'required',
-            'type' => 'in:event,feed,game,group'
+            'type' => 'in:event,feed,game,group,user-feed'
         ]);
 
         $user = auth()->user();
@@ -82,6 +82,14 @@ class PostController extends Controller
                 // attach post to event
                 $group->posts()->attach($post);
 
+            } else if ($request->type == 'user-feed')
+            {
+                $post->postable()->associate($user);
+                $user_wall = User::where('username', $request->id)->first();
+
+                // save resource
+                $post->save();
+                $user_wall->feed()->attach($post);
             } else if ($request->type == 'feed')
             {
                 $post->postable()->associate($user);
