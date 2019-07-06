@@ -27,7 +27,8 @@ class Event extends JsonResource
             'owner' => [
                 'username' => $this->user->username,
                 'full_name' => $this->user->full_name
-            ] 
+            ],
+            'path' => isset($this->additional['path']) ? $this->additional['path'] : null
         ];
     }
 }

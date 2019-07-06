@@ -25,10 +25,10 @@ class ResourcePost extends JsonResource
 
         switch ( $this->postable_type )
         {
-            case 'App\Entities\Event'   : $poster = new Event($this->event); break;
-            case 'App\Entities\Group'   : $poster = new Group($this->group); break;
-            case 'App\Entities\Game'    : $poster = new Game($this->game); break;
-            case 'App\User'             : $poster = new User($this->user); break;
+            case 'App\Entities\Event'   : $poster = new Event($this->event); $poster->additional(['path' => 'event']); break;
+            case 'App\Entities\Group'   : $poster = new Group($this->group); $poster->additional(['path' => 'gr']); break;
+            case 'App\Entities\Game'    : $poster = new Game($this->game); $poster->additional(['path' => 'g']); break;
+            case 'App\User'             : $poster = new User($this->user); $poster->additional(['path' => 'gg']); break;
         } // end switch
 
         $repost = null;

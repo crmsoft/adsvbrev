@@ -21,6 +21,7 @@ class Game extends JsonResource
             'participant_count' => $this->participants->count(),
             'full_name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),
+            'path' => isset($this->additional['path']) ? $this->additional['path'] : null
         ];
     }
 }

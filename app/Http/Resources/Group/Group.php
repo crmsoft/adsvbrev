@@ -32,7 +32,8 @@ class Group extends JsonResource
             'username' => $this->slug,
             'full_name' => $this->name,
             'manages' => !empty($this->role),
-            'ava' => url(\Storage::url($this->ava))
+            'ava' => url(\Storage::url($this->ava)),
+            'path' => isset($this->additional['path']) ? $this->additional['path'] : null
         ];
     }
 }

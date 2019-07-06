@@ -16,8 +16,8 @@ class FeedController extends Controller
 
         return new PostCollection(
             Post::join('postables', 'postables.post_id', '=', 'posts.id')
-            ->whereRaw("(postables.postable_type = ?
-                            AND (postables.postable_id IN (SELECT 
+            ->whereRaw("(posts.postable_type = ?
+                            AND (posts.postable_id IN (SELECT 
                                 user_id
                             FROM
                                 user_friends
@@ -47,8 +47,8 @@ class FeedController extends Controller
                                     ])
                                     ->orWhereRaw("
                                     (
-                                        postables.postable_type = ? 
-                                        AND postables.postable_id in (
+                                        posts.postable_type = ? 
+                                        AND posts.postable_id in (
                                             select group_id from user_groups 
                                             where user_id = ?
                                         )
@@ -90,8 +90,8 @@ class FeedController extends Controller
                 $query->on('postables.post_id', '=', 'posts.id');
                 $query->on('postables.post_id', '<', \DB::raw($last_id));
             })
-                    ->whereRaw("(postables.postable_type = ?
-                            AND (postables.postable_id IN (SELECT 
+                    ->whereRaw("(posts.postable_type = ?
+                            AND (posts.postable_id IN (SELECT 
                                 user_id
                             FROM
                                 user_friends
@@ -121,8 +121,8 @@ class FeedController extends Controller
                                     ])
                                     ->orWhereRaw("
                                     (
-                                        postables.postable_type = ? 
-                                        AND postables.postable_id in (
+                                        posts.postable_type = ? 
+                                        AND posts.postable_id in (
                                             select group_id from user_groups 
                                             where user_id = ?
                                         )
