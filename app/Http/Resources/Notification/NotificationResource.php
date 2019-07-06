@@ -54,6 +54,8 @@ class NotificationResource extends JsonResource
         {
             case 'App\Entities\Comment' : {
                 $type = 'comment';
+                $main_subject = $this->notifiable->commentable;
+                
                 if ($this->notifiable->commentable_type == 'App\Post') 
                 {
                     $user = $this->notifiable->creator;
