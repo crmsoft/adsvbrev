@@ -55,7 +55,7 @@ class NotificationResource extends JsonResource
             case 'App\Entities\Comment' : {
                 $type = 'comment';
                 $main_subject = $this->notifiable->commentable;
-                
+
                 if ($this->notifiable->commentable_type == 'App\Post') 
                 {
                     $user = $this->notifiable->creator;
@@ -89,6 +89,7 @@ class NotificationResource extends JsonResource
                         $type = 'liked';
                         if ($subject->type == 'App\Entities\Comment')
                         {
+                            $main_subject = $main_subject->commentable;
                             $message = 'likes your comment';
                         } else if ($subject->type == 'App\Post') {
                             $message = 'likes your post';
