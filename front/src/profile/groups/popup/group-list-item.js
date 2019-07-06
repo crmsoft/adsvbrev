@@ -15,7 +15,7 @@ const leave = id => {
     })
 }
 
-const GroupListItem = ({group}) => {
+const GroupListItem = ({group, isGuest}) => {
     return (
         <div className="user-list-item p-3">
             <Link to={`/gr/${group.username}`} className="d-flex">
@@ -26,11 +26,15 @@ const GroupListItem = ({group}) => {
                     <span style={{fontWeight:'bold'}}>{group.full_name}</span>
                 </div>
             </Link>
-            <div>
-                <button 
-                    onClick={e => leave(group.username)}
-                    className="dd-btn btn-sm btn-gray">Leave</button>
-            </div>
+            {
+                (group.manages || isGuest) ? null : (
+                    <div>
+                        <button 
+                            onClick={e => leave(group.username)}
+                            className="dd-btn btn-sm btn-gray">Leave</button>
+                    </div>
+                )
+            }
         </div>
     )
 }

@@ -8,7 +8,6 @@ import {Footer} from './Footer';
 export const Modal = (props) => {
     
     const  {
-        open,
         onClose,
         title,
         actions,
@@ -19,15 +18,16 @@ export const Modal = (props) => {
     return (
         <Popup
             className={processing ? `${cls} dd-modal processing` : `${cls} dd-modal`}
-            onClose={onClose}
-            open={open}
+            {...props}
             modal={true}
         >
             <Fragment>
-                <Header 
-                    title={title}
-                    onClose={onClose}
-                />
+                {
+                    title ? <Header 
+                        title={title}
+                        onClose={onClose}
+                    /> : null
+                }
                 {props.children}
                 <Footer 
                     actions={actions}

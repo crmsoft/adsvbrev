@@ -44228,6 +44228,7 @@ exports.parseUrl = function (input, options) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getHashParams = getHashParams;
 exports.urlify = exports.inViewPort = exports.placeEmoji = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
@@ -44629,6 +44630,25 @@ var urlify = function urlify(text) {
 };
 
 exports.urlify = urlify;
+
+function getHashParams(url) {
+  var hashParams = {};
+
+  var e,
+      a = /\+/g,
+      // Regex for replacing addition symbol with a space
+  r = /([^&;=]+)=?([^&;]*)/g,
+      d = function d(s) {
+    return decodeURIComponent(s.replace(a, " "));
+  },
+      q = url ? url.substring(1) : window.location.hash.substring(1);
+
+  while (e = r.exec(q)) {
+    hashParams[d(e[1])] = d(e[2]);
+  }
+
+  return hashParams;
+}
 },{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","query-string":"../node_modules/query-string/index.js","axios":"../../node_modules/axios/index.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
 "use strict";
 
@@ -45038,23 +45058,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 var Modal = function Modal(props) {
-  var open = props.open,
-      onClose = props.onClose,
+  var onClose = props.onClose,
       title = props.title,
       actions = props.actions,
       processing = props.processing,
       _props$cls = props.cls,
       cls = _props$cls === void 0 ? '' : _props$cls;
-  return _react.default.createElement(_reactjsPopup.default, {
-    className: processing ? "".concat(cls, " dd-modal processing") : "".concat(cls, " dd-modal"),
-    onClose: onClose,
-    open: open,
+  return _react.default.createElement(_reactjsPopup.default, _extends({
+    className: processing ? "".concat(cls, " dd-modal processing") : "".concat(cls, " dd-modal")
+  }, props, {
     modal: true
-  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Header.default, {
+  }), _react.default.createElement(_react.Fragment, null, title ? _react.default.createElement(_Header.default, {
     title: title,
     onClose: onClose
-  }), props.children, _react.default.createElement(_Footer.Footer, {
+  }) : null, props.children, _react.default.createElement(_Footer.Footer, {
     actions: actions
   })));
 };
@@ -47087,7 +47107,7 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "post-main-info"
       }, _react.default.createElement(_reactRouterDom.Link, {
-        to: post.poster.username ? "/gg/".concat(post.poster.username) : "/event/".concat(post.poster.id)
+        to: post.poster.username ? "/".concat(post.poster.path, "/").concat(post.poster.username) : "/event/".concat(post.poster.id, "#some=id")
       }, _react.default.createElement("h3", {
         className: "post-user"
       }, post.poster.full_name)), _react.default.createElement("h4", {
@@ -83307,7 +83327,7 @@ function (_Component) {
         }, not.time))), _react.default.createElement("div", {
           className: "col p-0"
         }, _react.default.createElement(_reactRouterDom.Link, {
-          to: "/gg/".concat(user.username),
+          to: "#p=".concat(not.target),
           className: "user-list-item d-inline-flex"
         }, _react.default.createElement("div", {
           className: "ava-wrapper"
@@ -87749,7 +87769,199 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Feed;
-},{"react":"../node_modules/react/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","../menu":"../src/menu/index.js","../post-add":"../src/post-add/index.js","./List":"../src/feed/List.js","../profile/schedule":"../src/profile/schedule/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","./GameGroups":"../src/feed/GameGroups.js"}],"../src/socket/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","../menu":"../src/menu/index.js","../post-add":"../src/post-add/index.js","./List":"../src/feed/List.js","../profile/schedule":"../src/profile/schedule/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","./GameGroups":"../src/feed/GameGroups.js"}],"../src/detached/route-listeners/ShowPost.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Modal = require("../../Modal");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Post = _interopRequireDefault(require("../../profile/feed/Post"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var ShowPost =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ShowPost, _Component);
+
+  function ShowPost() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ShowPost);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ShowPost)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      open: true,
+      processing: true
+    });
+
+    return _this;
+  }
+
+  _createClass(ShowPost, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios.default.get("/p/".concat(this.props.post_id)).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.setState(function () {
+          return {
+            data: data.data,
+            processing: false
+          };
+        });
+      });
+    }
+  }, {
+    key: "removeHash",
+    value: function removeHash() {
+      this.setState(function () {
+        return {
+          open: false
+        };
+      }, function () {
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+      });
+    }
+    /**
+     * Toggle post like
+     * 
+     * @return void
+     */
+
+  }, {
+    key: "toggle",
+    value: function toggle() {
+      this.setState(function (state) {
+        var post = Object.assign({}, state.data);
+        post.likes = !post.likes;
+        return {
+          data: post
+        };
+      });
+    }
+    /**
+     * Toggle post share
+     * 
+     * @return void
+     */
+
+  }, {
+    key: "toggleShare",
+    value: function toggleShare() {
+      this.setState(function (state) {
+        var post = Object.assign({}, state.data);
+        post.shares = !post.shares;
+        return {
+          data: post
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          open = _this$state.open,
+          processing = _this$state.processing,
+          data = _this$state.data;
+      return _react.default.createElement(_Modal.Modal, {
+        overlayStyle: {
+          overflowY: 'auto'
+        },
+        contentStyle: {
+          maxHeight: 'inherit'
+        },
+        open: open,
+        onClose: this.removeHash.bind(this),
+        processing: processing
+      }, _react.default.createElement("div", null, data ? _react.default.createElement(_Post.default, {
+        key: Math.random(),
+        toggle: this.toggle.bind(this),
+        toggleShare: this.toggleShare.bind(this),
+        post: data
+      }) : _react.default.createElement("div", null, "Loading...")));
+    }
+  }]);
+
+  return ShowPost;
+}(_react.Component);
+
+exports.default = ShowPost;
+},{"react":"../node_modules/react/index.js","../../Modal":"../src/Modal/index.js","axios":"../../node_modules/axios/index.js","../../profile/feed/Post":"../src/profile/feed/Post.js"}],"../src/detached/route-listeners/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _utils = require("../../utils");
+
+var _ShowPost = _interopRequireDefault(require("./ShowPost"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default() {
+  return _react.default.createElement("div", {
+    id: "app-dynamic"
+  }, _react.default.createElement(TheRouteIsChanged, null));
+}
+
+var TheRouteIsChanged = function TheRouteIsChanged() {
+  var params = (0, _utils.getHashParams)();
+
+  if (params.p) {
+    return _react.default.createElement(_ShowPost.default, {
+      key: Math.random(),
+      post_id: params.p
+    });
+  } // end if
+
+
+  return null;
+};
+},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","./ShowPost":"../src/detached/route-listeners/ShowPost.js"}],"../src/socket/index.js":[function(require,module,exports) {
 "use strict";
 
 var _store = _interopRequireDefault(require("./redux/store"));
@@ -87848,6 +88060,8 @@ var _store5 = _interopRequireDefault(require("./groups/store"));
 
 var _feed = _interopRequireDefault(require("./feed"));
 
+var _routeListeners = _interopRequireDefault(require("./detached/route-listeners"));
+
 var _socket = _interopRequireDefault(require("./socket"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -87904,11 +88118,11 @@ var App = function App() {
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/gr/:id",
     component: _index3.default
-  }))), _react.default.createElement(_chat.default, null)));
+  })), _react.default.createElement(_routeListeners.default, null)), _react.default.createElement(_chat.default, null)));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./groups/index":"../src/groups/index.js","./groups/store":"../src/groups/store/index.js","./feed":"../src/feed/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./groups/index":"../src/groups/index.js","./groups/store":"../src/groups/store/index.js","./feed":"../src/feed/index.js","./detached/route-listeners":"../src/detached/route-listeners/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -87935,7 +88149,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43913" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41788" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

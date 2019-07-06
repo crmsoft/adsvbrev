@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AvaPopup from './edit/AvaPopup';
+import ImageZoom from '../../general/ImageZoom';
 
 const editAva = () => {
     return (
@@ -30,16 +31,19 @@ export default class AvaComponent extends Component {
     }
 
     render(){
-        const ava_path = `${this.props.ava}`;
+        const {ava, isGuest} = this.props;
         return (
             <div>
                 <div className="ava-holder" onClick={this.showModal}>
                     {
-                        !this.props.isGuest ? editAva() : null
+                        !isGuest ? editAva() : null
                     }
-                    <img src={ava_path} alt="That's you !" />
+                    {
+                        isGuest ? <ImageZoom src={ava.replace('200_', 'original_')} thumb={ava}  /> : 
+                        <img src={ava} alt="That's you !" />
+                    }
                 </div>
-                <AvaPopup ava={ava_path} closeModal={this.closeModal} show={this.state.show} />
+                <AvaPopup ava={ava.replace('200_', 'original_')} closeModal={this.closeModal} show={this.state.show} />
             </div>
         )
     }

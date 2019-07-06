@@ -43,6 +43,7 @@ class NotificationResource extends JsonResource
         $message = 'Not known...';
         $user = $this->user;
         $type = 'unknown';
+        $main_subject = $this->notifiable;
 
         if ($this->skip)
         {
@@ -78,7 +79,9 @@ class NotificationResource extends JsonResource
 
                     $reaction_type = $reaction->type->name;
                     $user = $reaction->reacter->reacterable;
-
+                    
+                    $main_subject = $subject->reactable;
+                    
                     if ($reaction_type == 'like')
                     {
                         $type = 'liked';
@@ -105,7 +108,8 @@ class NotificationResource extends JsonResource
             'time' => $this->created_at->diffForHumans(null, true, true),
             'user' => new User($user),
             'viewed' => (bool) $this->viewed,
-            'type' => $type
+            'type' => $type,
+            'target' => $main_subject->hash
         ];
     }
 }

@@ -27,6 +27,7 @@ import GroupPage from './groups/index';
 import groupStore from './groups/store';
 
 import Feed from './feed';
+import RouteListeners from './detached/route-listeners';
 
 const App = () => {
     return (
@@ -58,6 +59,7 @@ const App = () => {
                     <Provider store={groupStore}>
                         <Route path="/gr/:id" component={GroupPage} />
                     </Provider>
+                    <RouteListeners />
                 </div>
                 <Chat />
             </Fragment>

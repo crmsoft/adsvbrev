@@ -45,7 +45,7 @@ export default class Groups extends Component{
             <div>
                 <div className="header">
                     <Header showModal={this.showModal} total={total} />
-                    <GroupList user={user} closeModal={this.closeModal} show={show} />
+                    <GroupList isGuest={isGuest} user={user} closeModal={this.closeModal} show={show} />
                 </div>
 
                 <div className="block-content">

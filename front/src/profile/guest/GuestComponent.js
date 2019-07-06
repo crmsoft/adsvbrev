@@ -4,11 +4,12 @@ import { StickyContainer, Sticky } from 'react-sticky';
 
 import Friends from '../friends/index';
 import MediaTabs from '../media-tabs/index';
-import UserProfle from '../profile-main';
+import UserProfile from '../profile-main';
 import Menu from '../../menu/index';
 import Groups from '../groups/index';
 import FeedList from '../feed';
 import {Games} from '../games/index';
+import CreatePost from '../../post-add';
 
 import {
     fetchGamerProfile
@@ -50,7 +51,7 @@ class Guest extends Component{
                     
                     <div className="triangle-right"></div>
 
-                    <UserProfle info={this.props.data} guest={true}/>
+                    <UserProfile info={this.props.data} guest={true}/>
 
                 </nav>
 
@@ -70,6 +71,13 @@ class Guest extends Component{
                                 user={profile.user}
                             />
 
+                        </section>
+
+                        <section className="user-add-post">
+                            <CreatePost 
+                                type={`user-feed`}
+                                id={profile.user.username}
+                            />
                         </section>
 
                         <section className="posts">
@@ -105,6 +113,7 @@ class Guest extends Component{
                                         <section className="block">
 
                                             <Groups 
+                                                user={profile.user}
                                                 isGuest={true}
                                                 list={groups} 
                                                 total={totals.groups} 

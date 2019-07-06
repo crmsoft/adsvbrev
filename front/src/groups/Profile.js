@@ -63,20 +63,22 @@ export default class Profile extends Component {
 
                                 <div className="profile-actions">
                                 {
-                                    data.participant ? (
-                                        <button 
-                                            onClick={e => this.props.onLeave()}
-                                            className="dd-btn btn-gray btn-sm">
-                                            <span className="icon-remove"></span>
-                                            {`Leave Group`}
-                                        </button>
-                                    ) : (
-                                        <button 
-                                            onClick={e => this.props.onJoin()}
-                                            className="dd-btn btn-sm btn-full">
-                                            <span className="icon-plus"></span>
-                                            {`Join Group`}
-                                        </button>
+                                    data.manages ? null : (
+                                        data.participant ? (
+                                            <button 
+                                                onClick={e => this.props.onLeave()}
+                                                className="dd-btn btn-gray btn-sm">
+                                                <span className="icon-remove"></span>
+                                                {`Leave Group`}
+                                            </button>
+                                        ) : (
+                                            <button 
+                                                onClick={e => this.props.onJoin()}
+                                                className="dd-btn btn-sm btn-full">
+                                                <span className="icon-plus"></span>
+                                                {`Join Group`}
+                                            </button>
+                                        )
                                     )
                                 }
                                     

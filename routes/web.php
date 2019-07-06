@@ -79,6 +79,8 @@ Route::group([
     
     Route::get('/groups/{group}', 'GroupManagerController@index')->name('get-group-info');
 
+    Route::get('/p/{post}', 'PostController@index')->name('get-post-details');
+
 });
 
 // Post Specific Routes

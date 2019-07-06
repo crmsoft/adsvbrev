@@ -92,7 +92,7 @@ export default class Notification extends Component{
                                                     </div>  
                                                 </div>
                                                 <div className="col p-0">
-                                                    <Link to={`/gg/${user.username}`} className="user-list-item d-inline-flex">
+                                                    <Link to={`#p=${not.target}`} className="user-list-item d-inline-flex">
                                                         <div className="ava-wrapper">
                                                             <div className="status offline"></div>
                                                             <div className="user-list-ava">

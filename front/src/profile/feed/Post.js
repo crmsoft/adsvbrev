@@ -191,7 +191,7 @@ class Post extends Component{
 						<img src={post.poster.ava} alt={post.poster.full_name} />
 					</div>
 					<div className="post-main-info">
-						<Link to={post.poster.username ? `/gg/${post.poster.username}` : `/event/${post.poster.id}`}>
+						<Link to={post.poster.username ? `/${post.poster.path}/${post.poster.username}` : `/event/${post.poster.id}#some=id`}>
 							<h3 className="post-user">{post.poster.full_name}</h3>
 						</Link>
 						<h4 className="post-username">{post.poster.username}</h4>

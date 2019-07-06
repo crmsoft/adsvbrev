@@ -11,11 +11,11 @@ class GroupListComponent extends Component {
     }
 
     render(){
-        const {items} = this.props;
+        const {items, isGuest} = this.props;
 
         return (
             <div style={{maxHeight: '70vh', overflowY: 'auto'}}>
-                {items.map( item => <GroupListItem key={item.username} group={item} />)}
+                {items.map( item => <GroupListItem isGuest={isGuest} key={item.username} group={item} />)}
             </div>
         )
     }
