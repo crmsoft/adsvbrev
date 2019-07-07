@@ -105,7 +105,10 @@ class EeventProfileComponent extends Component{
                     <Menu />
 
                     <section className="user-middle">
-                        
+
+
+
+
                         <About 
                             about={description}
                         /> 

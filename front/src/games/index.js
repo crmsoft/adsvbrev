@@ -77,7 +77,33 @@ class GamePageComponent extends Component{
                                 />        
                             ) : (
                                 <Fragment>
-
+                                    <div className="event-schedule">
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <div className="event-schedule-left">
+                                                    <h3>FEB</h3>
+                                                    <div className="event-schedule-number">
+                                                        12
+                                                    </div>
+                                                    <h4>Tournament</h4>
+                                                    <h5>Public</h5>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-9">
+                                                <div className="event-schedule-right">
+                                                    <div className="event-schedule-date" ><span
+                                                        className="icon-friends"></span>Sunday, February 24, 2019 at 5 PM – 8 PM</div>
+                                                    <div className="event-schedule-date"><span
+                                                        className="icon-friends"></span>Via İnternet <a href="www.gamecounter.com">www.gamecounter.com</a>
+                                                    </div>
+                                                    <div className="event-schedule-buttons">
+                                                        <div className="left-button">Interested</div>
+                                                        <div className="right-button">Attending</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <About 
                                         about={data.options}
                                     /> 
@@ -139,6 +165,74 @@ class GamePageComponent extends Component{
                         <Buy 
                             data={data}
                         />
+
+                        <section className="block">
+                            <div className="event-sugested-friend">
+                                <div className="event-sugested-friend-header">
+                                    Sugested Friends
+                                </div>
+                                <div className="event-sugested-friend-content">
+                                    <div className="event-sugested-friend-box">
+                                        <div className="sugested-friend-img-content">
+                                        <div className="sugested-friend-img">
+
+                                        </div>
+                                        </div>
+                                        <div className="sugested-friend-name">
+                                            <small className="name">george Bovie</small>
+                                            <small>george44</small>
+                                        </div>
+                                        <div className="sugested-friend-button">
+                                            invite&nbsp;>
+                                        </div>
+                                    </div>
+                                    <div className="event-sugested-friend-box">
+                                        <div className="sugested-friend-img-content">
+                                            <div className="sugested-friend-img">
+
+                                            </div>
+                                        </div>
+                                        <div className="sugested-friend-name">
+                                            <small className="name">george Bovie</small>
+                                            <small>george44</small>
+                                        </div>
+                                        <div className="sugested-friend-button">
+                                            invite&nbsp;>
+                                        </div>
+                                    </div>
+                                    <div className="event-sugested-friend-box">
+                                        <div className="sugested-friend-img-content">
+                                            <div className="sugested-friend-img">
+
+                                            </div>
+                                        </div>
+                                        <div className="sugested-friend-name">
+                                            <small className="name">george Bovie</small>
+                                            <small>george44</small>
+                                        </div>
+                                        <div className="sugested-friend-button">
+                                            invite&nbsp;>
+                                        </div>
+                                    </div>
+                                    <div className="event-sugested-friend-box">
+                                        <div className="sugested-friend-img-content">
+                                            <div className="sugested-friend-img">
+
+                                            </div>
+                                        </div>
+                                        <div className="sugested-friend-name">
+                                            <small className="name">george Bovie</small>
+                                            <small>george44</small>
+                                        </div>
+                                        <div className="sugested-friend-button">
+                                            invite&nbsp;>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
 
                     </aside>
                 

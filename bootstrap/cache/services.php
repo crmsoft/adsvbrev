@@ -23,19 +23,19 @@
     19 => 'Illuminate\\Translation\\TranslationServiceProvider',
     20 => 'Illuminate\\Validation\\ValidationServiceProvider',
     21 => 'Illuminate\\View\\ViewServiceProvider',
-    22 => 'Intervention\\Image\\ImageServiceProvider',
-    23 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    24 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    25 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    26 => 'Carbon\\Laravel\\ServiceProvider',
-    27 => 'Vinkla\\Hashids\\HashidsServiceProvider',
-    28 => 'Barryvdh\\Cors\\ServiceProvider',
-    29 => 'Kalnoy\\Nestedset\\NestedSetServiceProvider',
-    30 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
-    31 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    32 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    33 => 'SocialiteProviders\\Manager\\ServiceProvider',
-    34 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    22 => 'Barryvdh\\Cors\\ServiceProvider',
+    23 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    24 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
+    25 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    26 => 'Intervention\\Image\\ImageServiceProvider',
+    27 => 'Kalnoy\\Nestedset\\NestedSetServiceProvider',
+    28 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    29 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    30 => 'Carbon\\Laravel\\ServiceProvider',
+    31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    32 => 'SocialiteProviders\\Manager\\ServiceProvider',
+    33 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
+    34 => 'Vinkla\\Hashids\\HashidsServiceProvider',
     35 => 'App\\Providers\\AppServiceProvider',
     36 => 'App\\Providers\\AuthServiceProvider',
     37 => 'App\\Providers\\BroadcastServiceProvider',
@@ -56,15 +56,15 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
-    10 => 'Intervention\\Image\\ImageServiceProvider',
-    11 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
-    12 => 'Carbon\\Laravel\\ServiceProvider',
-    13 => 'Vinkla\\Hashids\\HashidsServiceProvider',
-    14 => 'Barryvdh\\Cors\\ServiceProvider',
+    10 => 'Barryvdh\\Cors\\ServiceProvider',
+    11 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    12 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
+    13 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    14 => 'Intervention\\Image\\ImageServiceProvider',
     15 => 'Kalnoy\\Nestedset\\NestedSetServiceProvider',
-    16 => 'BrianFaust\\Commentable\\CommentableServiceProvider',
-    17 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    18 => 'Cog\\Laravel\\Love\\LoveServiceProvider',
+    16 => 'Carbon\\Laravel\\ServiceProvider',
+    17 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
+    18 => 'Vinkla\\Hashids\\HashidsServiceProvider',
     19 => 'App\\Providers\\AppServiceProvider',
     20 => 'App\\Providers\\AuthServiceProvider',
     21 => 'App\\Providers\\BroadcastServiceProvider',
@@ -175,9 +175,9 @@
     'translation.loader' => 'Illuminate\\Translation\\TranslationServiceProvider',
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
+    'Laravel\\Socialite\\Contracts\\Factory' => 'SocialiteProviders\\Manager\\ServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
     'NunoMaduro\\Collision\\Contracts\\Provider' => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    'Laravel\\Socialite\\Contracts\\Factory' => 'SocialiteProviders\\Manager\\ServiceProvider',
   ),
   'when' => 
   array (
@@ -217,13 +217,13 @@
     'Illuminate\\Validation\\ValidationServiceProvider' => 
     array (
     ),
+    'Laravel\\Socialite\\SocialiteServiceProvider' => 
+    array (
+    ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 
     array (
     ),
     'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => 
-    array (
-    ),
-    'Laravel\\Socialite\\SocialiteServiceProvider' => 
     array (
     ),
     'SocialiteProviders\\Manager\\ServiceProvider' => 
