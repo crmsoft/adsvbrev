@@ -214,25 +214,64 @@ class GamePageComponent extends Component{
                                             invite&nbsp;>
                                         </div>
                                     </div>
-                                    <div className="event-sugested-friend-box">
-                                        <div className="sugested-friend-img-content">
-                                            <div className="sugested-friend-img">
-
-                                            </div>
-                                        </div>
-                                        <div className="sugested-friend-name">
-                                            <small className="name">george Bovie</small>
-                                            <small>george44</small>
-                                        </div>
-                                        <div className="sugested-friend-button">
-                                            invite&nbsp;>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="event-sugested-all">
+                                    <a href="#">All Friends</a>
                                 </div>
                             </div>
                         </section>
 
+                        <section className="block">
+                            <div className="related-events">
+                                <div className="related-events-header">
+                                    related events
+                                </div>
+                                <div className="related-events-content">
+                                    <div className="related-events-box">
+                                        <div className="related-events-img-content">
+                                            <div className="related-events-img">
 
+                                            </div>
+                                        </div>
+                                        <div className="related-events-name">
+                                            <small className="name">LEAGUE OF LEGENDS
+                                                INTERNATIONAL WORLD CUP.</small>
+                                            <small >Sunday, February 24, 2019 at ...</small>
+                                            <small>122 Guests <a href="#">Interested | Attending</a></small>
+                                        </div>
+                                    </div>
+                                    <div className="related-events-box">
+                                        <div className="related-events-img-content">
+                                            <div className="related-events-img">
+
+                                            </div>
+                                        </div>
+                                        <div className="related-events-name">
+                                            <small className="name">LEAGUE OF LEGENDS
+                                                INTERNATIONAL WORLD CUP.</small>
+                                            <small >Sunday, February 24, 2019 at ...</small>
+                                            <small>122 Guests <a href="#">Interested | Attending</a></small>
+                                        </div>
+                                    </div>
+                                    <div className="related-events-box">
+                                        <div className="related-events-img-content">
+                                            <div className="related-events-img">
+
+                                            </div>
+                                        </div>
+                                        <div className="related-events-name">
+                                            <small className="name">LEAGUE OF LEGENDS
+                                                INTERNATIONAL WORLD CUP.</small>
+                                            <small >Sunday, February 24, 2019 at ...</small>
+                                            <small>122 Guests <a href="#">Interested | Attending</a></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="related-events-seemore">
+                                    <a href="#">See More</a>
+                                </div>
+                            </div>
+                        </section>
 
                     </aside>
                 

@@ -18,8 +18,7 @@ const About = ({about}) => {
                     </Tab>
                 </TabList>
                 <div className="content">
-                    <TabPanel> 
-
+                    <TabPanel>
                         <TabContent data={about} />
 
                     </TabPanel>

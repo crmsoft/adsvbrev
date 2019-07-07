@@ -355,27 +355,134 @@
 
 
 .event-sugested-friend
+ {
+     .event-sugested-friend-header
+     {
+         border-bottom: 1px solid #313131;
+         text-align: left;
+         padding-left: 15px;
+         margin-bottom: 10px;
+         margin: 0px -15px;
+         text-transform: uppercase;
+         font-size: 12px;
+         height: 35px;
+         line-height: 30px;
+         padding-bottom: 10px;
+         font-weight: 900;
+         letter-spacing: 0.7px;
+     }
+     .event-sugested-friend-content
+     {
+         .event-sugested-friend-box
+         {
+             margin: 15px 0px;
+             height: 30px;
+             line-height: 30px;
+             position: relative;
+             width: 100%;
+             display: flex;
+             .sugested-friend-img-content
+             {
+                 flex-shrink: 1;
+                 .sugested-friend-img
+                 {
+
+                     height: 30px;
+                     line-height: 30px;
+                     width: 30px;
+                     -webkit-border-radius: 100%;
+                     -moz-border-radius: 100%;
+                     border-radius: 100%;
+                     background-color: $mainColor;
+                 }
+             }
+             .sugested-friend-name
+             {
+                 height: 30px;
+                 line-height: 15px;
+                 small {
+                     display: inline-block;
+                     padding: 0px 10px;
+                     height: 15px;
+                     line-height: 15px;
+                     font-size:13px;
+                     &.name
+                     {
+                         font-size:12px;
+                     }
+                 }
+             }
+             .sugested-friend-button
+             {
+                 height: 20px;
+                 line-height: 20px;
+                 display: inline-block;
+                 padding: 0px 5px;
+                 -webkit-border-radius: 3px;
+                 -moz-border-radius: 3px;
+                 border-radius: 3px;
+                 background: $mainColor;
+                 border:1px solid $mainColor;
+                 color:$whitecolor;
+                 font-size:11px;
+                 cursor:pointer;
+                 &:hover
+                 {
+                     background:transparent;
+                 }
+             }
+         }
+     }
+
+     .event-sugested-all
+     {
+         text-align: center;
+         a
+         {
+             color: $mainColor !important;
+             font-size:10px;
+             font-weight: 100;
+         }
+     }
+ }
+
+
+
+
+
+
+
+.related-events
 {
-    .event-sugested-friend-header
+    .related-events-header
     {
-        border-bottom:1px solid #313131;
-        text-align:center;
-        margin-bottom:10px;
+        border-bottom: 1px solid #313131;
+        text-align: left;
+        padding-left: 15px;
+        margin-bottom: 10px;
+        margin: 0px -15px;
+        text-transform: uppercase;
+        font-size: 12px;
+        height: 35px;
+        line-height: 30px;
+        padding-bottom: 10px;
+        font-weight: 900;
+        letter-spacing: 0.7px;
     }
-    .event-sugested-friend-content
+    .related-events-content
     {
-        .event-sugested-friend-box
+        .related-events-box
         {
             margin: 15px 0px;
-            height: 40px;
+            height: auto;
             line-height: 40px;
             position: relative;
             width: 100%;
             display: flex;
-            .sugested-friend-img-content
+            .related-events-img-content
             {
                 flex-shrink: 1;
-                .sugested-friend-img
+                .related-events-img
                 {
 
                     height: 40px;
@@ -387,23 +494,33 @@
                     background-color: $mainColor;
                 }
             }
-            .sugested-friend-name
+            .related-events-name
             {
-                height: 40px;
+                height: auto;
                 line-height: 20px;
+                font-size: 11px;
+                line-height: normal;
                 small {
                     display: inline-block;
-                    padding: 0px 10px;
-                    height: 20px;
+                    padding: 0px 2px;
+                    height: auto;
                     line-height: 20px;
-                    font-size:13px;
+                    font-size: 10px;
+                    color:$mainGray;
+                    line-height: normal;
+                    a
+                    {
+                        color:$mainColor;
+                    }
                     &.name
                     {
-                        font-size:12px;
+                        font-size:10px;
+                        color:$whitecolor;
+
                     }
                 }
             }
-            .sugested-friend-button
+            .related-events-button
             {
                 height: 20px;
                 line-height: 20px;
@@ -424,4 +541,16 @@
             }
         }
     }
+
+    .related-events-seemore
+    {
+        text-align: center;
+        a
+        {
+            color: $mainColor !important;
+            font-size:10px;
+            font-weight: 100;
+        }
+    }
 }
+
