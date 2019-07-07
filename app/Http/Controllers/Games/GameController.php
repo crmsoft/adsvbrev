@@ -56,7 +56,7 @@ class GameController extends Controller
 
         $user = auth()->user();
 
-        if($user->group()->where('is_game', 1)->where('id', $game->id)->count() == 0)
+        if($user->games()->where('id', $game->id)->count() == 0)
         {
             return response()->json([
                 'message' => __('Only players of this game can vote.'),

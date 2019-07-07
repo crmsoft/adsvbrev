@@ -46914,15 +46914,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var PostContent = function PostContent(_ref) {
   var more = _ref.more,
       content = _ref.content,
+      post_id = _ref.post_id,
       repost = _ref.repost,
       media = _ref.media;
+  console.log(post_id);
   return repost ? _react.default.createElement("div", {
     className: "post-shared"
   }, _react.default.createElement(Post, {
     key: repost.id,
     post: repost,
     repost: true
-  })) : _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
+  })) : _react.default.createElement("a", {
+    href: "#p=".concat(post_id),
+    style: {
+      textDecoration: 'none'
+    }
+  }, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
     className: media.length > 1 ? "post-media n-".concat(media.length) : "post-media"
   }, media.map(function (url) {
     return _react.default.createElement("div", {
@@ -47144,6 +47151,7 @@ function (_Component) {
       }))), _react.default.createElement("div", {
         className: "post-content"
       }, _react.default.createElement(PostContent, {
+        post_id: post.id,
         more: more,
         content: content,
         repost: post.repost,
@@ -86315,7 +86323,12 @@ function (_Component) {
         className: "d-inline-block"
       }, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/gg/".concat(user.username)
-      }, _react.default.createElement("strong", null, user.full_name)), _react.default.createElement("span", {
+      }, _react.default.createElement("strong", null, user.full_name), _react.default.createElement("p", {
+        className: "m-0",
+        style: {
+          lineHeight: '0.7'
+        }
+      }, user.username)), _react.default.createElement("span", {
         className: "comment-time d-block"
       }, review.created_at))), _react.default.createElement("div", {
         className: "float-right"
@@ -86341,7 +86354,7 @@ function (_Component) {
         style: {
           marginLeft: '-65px'
         }
-      }, _react.default.createElement("div", null, (0, _utils.placeEmoji)(review.text)), _react.default.createElement("div", {
+      }, _react.default.createElement("p", null, (0, _utils.placeEmoji)(review.text)), _react.default.createElement("div", {
         className: "w-100 "
       }, _react.default.createElement("div", {
         className: "comment-actions"
@@ -88149,7 +88162,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41788" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46774" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
