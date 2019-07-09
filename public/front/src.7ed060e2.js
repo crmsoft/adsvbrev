@@ -46917,7 +46917,6 @@ var PostContent = function PostContent(_ref) {
       post_id = _ref.post_id,
       repost = _ref.repost,
       media = _ref.media;
-  console.log(post_id);
   return repost ? _react.default.createElement("div", {
     className: "post-shared"
   }, _react.default.createElement(Post, {
@@ -84556,11 +84555,27 @@ function (_Component) {
         className: "icon-info"
       }), _react.default.createElement("span", {
         className: "tab-title"
-      }, " About Event")))), _react.default.createElement("div", {
+      }, " About Event"))), _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-picture"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Images"))), _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-play"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Videos")))), _react.default.createElement("div", {
         className: "content"
       }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         description: about
-      })))));
+      })), _react.default.createElement(_reactTabs.TabPanel, null, "Images of the event ...."), _react.default.createElement(_reactTabs.TabPanel, null, "Will be available soon..."))));
     }
   }]);
 
@@ -84772,7 +84787,7 @@ function (_Component) {
         href: "javascript:void(0)"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), _react.default.createElement("h3", null, title ? title : "Participants"), _react.default.createElement("span", {
+      }), _react.default.createElement("h3", null, title ? title : "Participants", " (", event.participants.length, ")"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", event.total_participant ? "(".concat(event.total_participant, ")") : '')), _react.default.createElement(_index.Modal, {
         open: this.state.open,
@@ -84820,7 +84835,61 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Participants;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/Actions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _luxon = require("luxon");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = function _default(_ref) {
+  var data = _ref.data;
+  return _react.default.createElement("div", {
+    className: "event-schedule"
+  }, _react.default.createElement("div", {
+    className: "row"
+  }, _react.default.createElement("div", {
+    className: "col-md-3"
+  }, _react.default.createElement("div", {
+    className: "event-schedule-left"
+  }, _react.default.createElement("h3", null, _luxon.DateTime.fromISO(data.start).toLocaleString({
+    month: 'short'
+  })), _react.default.createElement("div", {
+    className: "event-schedule-number"
+  }, _luxon.DateTime.fromISO(data.start).toLocaleString({
+    day: '2-digit'
+  })), _react.default.createElement("h4", null, "Tournament"), _react.default.createElement("h5", null, data.is_private ? 'private' : 'public'))), _react.default.createElement("div", {
+    className: "col-md-9"
+  }, _react.default.createElement("div", {
+    className: "event-schedule-right"
+  }, _react.default.createElement("div", {
+    className: "event-schedule-date"
+  }, _react.default.createElement("span", {
+    className: "icon-friends"
+  }), "Sunday, February 24, 2019 at 5 PM \u2013 8 PM"), _react.default.createElement("div", {
+    className: "event-schedule-date"
+  }, _react.default.createElement("span", {
+    className: "icon-friends"
+  }), "Via \u0130nternet ", _react.default.createElement("a", {
+    href: "www.gamecounter.com"
+  }, "www.gamecounter.com")), _react.default.createElement("div", {
+    className: "event-schedule-buttons"
+  }, _react.default.createElement("button", {
+    className: "dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4"
+  }, "Interested"), _react.default.createElement("button", {
+    className: "dd-btn btn-sm btn-full pr-lg-5 pl-lg-5"
+  }, "Attending"))))));
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84833,8 +84902,6 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactRedux = require("react-redux");
 
 var _index = _interopRequireDefault(require("../menu/index"));
-
-var _mediaTabs = _interopRequireDefault(require("../profile/media-tabs"));
 
 var _event = require("./redux/event");
 
@@ -84849,6 +84916,8 @@ var _Participants = _interopRequireDefault(require("./Participants"));
 var _store = _interopRequireDefault(require("../header/store"));
 
 var _feed = _interopRequireDefault(require("../profile/feed"));
+
+var _Actions = _interopRequireDefault(require("./Actions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84981,12 +85050,11 @@ function (_Component) {
         className: "d-flex"
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
-      }, _react.default.createElement(_About.default, {
+      }, _react.default.createElement(_Actions.default, {
+        data: this.props
+      }), _react.default.createElement(_About.default, {
         about: description
       }), _react.default.createElement("section", {
-        className: "user-uploads w-100",
-        id: "media-container"
-      }, _react.default.createElement(_mediaTabs.default, null)), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_postAdd.default, {
         type: "event",
@@ -85001,11 +85069,108 @@ function (_Component) {
         className: "block",
         id: "section-friends"
       }, _react.default.createElement(_Participants.default, {
+        title: "Joined",
         event: this.props,
         load: function load() {
           _this3.props.loadParticipants(_this3.props.id);
         }
-      })))));
+      })), _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement("div", {
+        className: "event-suggested-friend"
+      }, _react.default.createElement("div", {
+        className: "event-suggested-friend-header"
+      }, "Suggested Friends"), _react.default.createElement("div", {
+        className: "event-suggested-friend-content"
+      }, _react.default.createElement("div", {
+        className: "event-suggested-friend-box"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img-content"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img"
+      })), _react.default.createElement("div", {
+        className: "suggested-friend-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
+        className: "suggested-friend-button"
+      }, "invite\xA0>")), _react.default.createElement("div", {
+        className: "event-suggested-friend-box"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img-content"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img"
+      })), _react.default.createElement("div", {
+        className: "suggested-friend-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
+        className: "suggested-friend-button"
+      }, "invite\xA0>")), _react.default.createElement("div", {
+        className: "event-suggested-friend-box"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img-content"
+      }, _react.default.createElement("div", {
+        className: "suggested-friend-img"
+      })), _react.default.createElement("div", {
+        className: "suggested-friend-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
+        className: "suggested-friend-button"
+      }, "invite\xA0>"))), _react.default.createElement("div", {
+        class: "event-suggested-all"
+      }, _react.default.createElement("a", {
+        href: "#"
+      }, "All Friends")))), _react.default.createElement("section", {
+        className: "block"
+      }, _react.default.createElement("div", {
+        className: "related-events"
+      }, _react.default.createElement("div", {
+        className: "related-events-header"
+      }, "related events"), _react.default.createElement("div", {
+        className: "related-events-content"
+      }, _react.default.createElement("div", {
+        className: "related-events-box"
+      }, _react.default.createElement("div", {
+        className: "related-events-img-content"
+      }, _react.default.createElement("div", {
+        className: "related-events-img"
+      })), _react.default.createElement("div", {
+        className: "related-events-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "LEAGUE OF LEGENDS INTERNATIONAL WORLD CUP."), _react.default.createElement("small", null, "Sunday, February 24, 2019 at ..."), _react.default.createElement("small", null, "122 Guests ", _react.default.createElement("a", {
+        href: "#"
+      }, "Interested | Attending")))), _react.default.createElement("div", {
+        className: "related-events-box"
+      }, _react.default.createElement("div", {
+        className: "related-events-img-content"
+      }, _react.default.createElement("div", {
+        className: "related-events-img"
+      })), _react.default.createElement("div", {
+        className: "related-events-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "LEAGUE OF LEGENDS INTERNATIONAL WORLD CUP."), _react.default.createElement("small", null, "Sunday, February 24, 2019 at ..."), _react.default.createElement("small", null, "122 Guests ", _react.default.createElement("a", {
+        href: "#"
+      }, "Interested | Attending")))), _react.default.createElement("div", {
+        className: "related-events-box"
+      }, _react.default.createElement("div", {
+        className: "related-events-img-content"
+      }, _react.default.createElement("div", {
+        className: "related-events-img"
+      })), _react.default.createElement("div", {
+        className: "related-events-name"
+      }, _react.default.createElement("small", {
+        className: "name"
+      }, "LEAGUE OF LEGENDS INTERNATIONAL WORLD CUP."), _react.default.createElement("small", null, "Sunday, February 24, 2019 at ..."), _react.default.createElement("small", null, "122 Guests ", _react.default.createElement("a", {
+        href: "#"
+      }, "Interested | Attending"))))), _react.default.createElement("div", {
+        className: "related-events-see-more"
+      }, _react.default.createElement("a", {
+        href: "#"
+      }, "See More")))))));
     }
   }]);
 
@@ -85035,7 +85200,7 @@ var EeventProfile = (0, _reactRedux.connect)(function (state) {
 })(EeventProfileComponent);
 var _default = EeventProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -87798,6 +87963,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _Post = _interopRequireDefault(require("../../profile/feed/Post"));
 
+var _Loading = require("../../general/Loading");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -87931,7 +88098,7 @@ function (_Component) {
         toggle: this.toggle.bind(this),
         toggleShare: this.toggleShare.bind(this),
         post: data
-      }) : _react.default.createElement("div", null, "Loading...")));
+      }) : _react.default.createElement(_Loading.Loading, null)));
     }
   }]);
 
@@ -87939,7 +88106,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = ShowPost;
-},{"react":"../node_modules/react/index.js","../../Modal":"../src/Modal/index.js","axios":"../../node_modules/axios/index.js","../../profile/feed/Post":"../src/profile/feed/Post.js"}],"../src/detached/route-listeners/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../Modal":"../src/Modal/index.js","axios":"../../node_modules/axios/index.js","../../profile/feed/Post":"../src/profile/feed/Post.js","../../general/Loading":"../src/general/Loading.js"}],"../src/detached/route-listeners/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -88162,7 +88329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46774" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41820" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
