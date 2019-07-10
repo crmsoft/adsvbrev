@@ -125,6 +125,29 @@ class GamePageComponent extends Component{
                                         />
                                     </section>
 
+                                    <section>
+                                        <div className="about-event">
+                                            <div className="about-event-title">About Event</div>
+                                            <div className="about-event-content">
+                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                                                nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                                                volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                                                ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                Duis autem vel eum iriure dolor in hendrerit in
+                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                                                nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                                                volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                                                ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                Duis autem vel eum iriure dolor in hendrerit in
+                                            </div>
+                                            <div className="about-event-button">
+                                                <div className="about-event-pencil">
+                                                    <span className="icon-friends"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
                                     <FeedList 
                                         list={data.feed}
                                         user={id}
@@ -175,7 +198,7 @@ class GamePageComponent extends Component{
                                     <div className="event-sugested-friend-box">
                                         <div className="sugested-friend-img-content">
                                         <div className="sugested-friend-img">
-
+                                            <img src="../img/kurukafa.png" alt=""/>
                                         </div>
                                         </div>
                                         <div className="sugested-friend-name">
@@ -230,7 +253,7 @@ class GamePageComponent extends Component{
                                     <div className="related-events-box">
                                         <div className="related-events-img-content">
                                             <div className="related-events-img">
-
+                                                <img src="../img/kurukafa.png" alt=""/>
                                             </div>
                                         </div>
                                         <div className="related-events-name">

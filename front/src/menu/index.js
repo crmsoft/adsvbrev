@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import {NavLink} from 'react-router-dom';
+import React from 'react';
 
 export default class Menu extends Component {
     render()
     {
+
         return(
             <StickyContainer className="menu" style={this.props.style}>
                 
@@ -57,12 +59,25 @@ export default class Menu extends Component {
                                         </a>
                                     </li>
                                 </ul>
+
+
                             )
                         }
                     }
+
                 </Sticky>
-                
+                <div className="left-banner">
+                    <div className="banner-header">
+                        <div className="banner-triangle-right"></div>
+                        <h3>Game Groups </h3>
+                        <p>Lol Gamer Community</p>
+                    </div>
+                    <img src="../img/reklam-banner.jpg" alt="The Last of us"/>
+
+
+                </div>
             </StickyContainer>
+
         )
     }
 }
