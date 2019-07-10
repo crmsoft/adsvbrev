@@ -84781,13 +84781,13 @@ function (_Component) {
           event = _this$props.event,
           title = _this$props.title;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
-        className: "header"
+        className: "header "
       }, _react.default.createElement("a", {
         onClick: this.openModal.bind(this),
         href: "javascript:void(0)"
       }, _react.default.createElement("span", {
         className: "icon-friends"
-      }), _react.default.createElement("h3", null, title ? title : "Participants", " (", event.participants.length, ")"), _react.default.createElement("span", {
+      }), _react.default.createElement("h3", null, title ? title : "Participants", " (", event.participants ? event.participants.length : 0, ")"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", event.total_participant ? "(".concat(event.total_participant, ")") : '')), _react.default.createElement(_index.Modal, {
         open: this.state.open,
@@ -88329,7 +88329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41820" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36104" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
