@@ -44713,6 +44713,8 @@ function (_Component) {
       })) : _react.default.createElement("div", {
         className: "yt-video",
         onClick: function onClick(e) {
+          e.preventDefault();
+
           _this2.setState({
             loaded: true
           });
@@ -44830,6 +44832,8 @@ function (_Component2) {
       })) : _react.default.createElement("div", {
         className: "yt-video",
         onClick: function onClick(e) {
+          e.preventDefault();
+
           _this5.setState({
             loaded: true
           });
@@ -88358,7 +88362,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34770" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37989" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
