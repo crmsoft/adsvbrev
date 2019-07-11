@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Modal} from '../../Modal';
 import axios from 'axios';
 import Post from '../../profile/feed/Post';
-
+import {Loading} from '../../general/Loading';
 
 
 export default class ShowPost extends Component {
@@ -70,7 +70,7 @@ export default class ShowPost extends Component {
     render()
     {
         const {open,processing,data} = this.state;
-        
+
         return (
                     <Modal
                         overlayStyle={{overflowY:'auto'}}
@@ -80,12 +80,13 @@ export default class ShowPost extends Component {
                         processing={processing}
                     >
                         <div>                   
-                            {data ? <Post 
+                            {data ? <Post
+                                modal={true} 
                                 key={Math.random()}
                                 toggle={this.toggle.bind(this)}
                                 toggleShare={this.toggleShare.bind(this)}
                                 post={data}
-                            /> : <div>Loading...</div>}
+                            /> : <Loading />}
                         </div>
                     </Modal>
         )

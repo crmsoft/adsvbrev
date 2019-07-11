@@ -21,11 +21,41 @@ export default class About extends Component{
                                 </span>
                             </a>
                         </Tab>
+
+                        <Tab selectedClassName="active">
+                            <a href="javascript:void(0);">
+                                <span className="icon-picture"></span>
+                                <span className="tab-title">
+                                    {" Images"}
+                                </span>
+                            </a>
+                        </Tab>
+
+                        <Tab selectedClassName="active">
+                            <a href="javascript:void(0);">
+                                <span className="icon-play"></span>
+                                <span className="tab-title">
+                                    {" Videos"}
+                                </span>
+                            </a>
+                        </Tab>
                     </TabList>
                     <div className="content">
                         <TabPanel> 
 
                             <AboutTab description={about} />
+
+                        </TabPanel>
+
+                        <TabPanel> 
+
+                            Images of the event ....
+
+                        </TabPanel>
+
+                        <TabPanel> 
+
+                            Will be available soon...
 
                         </TabPanel>
                     </div>

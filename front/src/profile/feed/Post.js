@@ -3,6 +3,7 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import handleViewport from 'react-in-viewport';
 import {Link} from 'react-router-dom';
+import ImageZoom from '../../general/ImageZoom';
 
 import {placeEmoji, urlify} from '../../utils';
 import Comments from '../../comment/Comments';
@@ -11,20 +12,23 @@ import AddComment from '../../comment/AddComment';
 const PostContent = ({
 	more,
 	content,
+	post_id,
 	repost,
-	media
+	media,
+	modal
 }) => {
 	return (
 		repost ? (
 			<div className="post-shared">
 				<Post 
+					modal={modal}
 					key={repost.id}
 					post={repost}
 					repost={true}
 				/>
 			</div>
 		) : (
-			<Fragment>
+			<a href={modal ? `javascript:void(0)` : `#p=${post_id}`} style={{textDecoration:'none'}}>
 				<p>
 					{
 						content
@@ -35,16 +39,21 @@ const PostContent = ({
 				</p>
 				<div className={ media.length > 1 ? `post-media n-${media.length}` : "post-media"  }>
 					{
-						media.map(url => {
+						media.map((url, index) => {
 							return (
 								<div className="media" key={url.full_path}>
-									<img src={url.full_path}/>
+									<ImageZoom 
+										disabled={!modal}
+										key={index} 
+										src={url.full_path.replace('520', 'original')} 
+										thumb={url.full_path}  
+									/>
 								</div>
 							)
 						})
 					}
 				</div>
-			</Fragment>
+			</a>
 		)
 	)
 }
@@ -230,6 +239,8 @@ class Post extends Component{
 
 				<div className="post-content">
 					<PostContent 
+						modal={this.props.modal}
+						post_id={post.id}
 						more={more}
 						content={content}
 						repost={post.repost}

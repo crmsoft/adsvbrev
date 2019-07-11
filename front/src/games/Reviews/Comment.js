@@ -47,6 +47,7 @@ class Comment extends Component {
                             <p>
                                 <Link to={`/gg/${user.username}`} >
                                     <strong>{user.full_name}</strong>
+                                    <p className="m-0" style={{lineHeight: '0.7'}}>{user.username}</p>
                                 </Link>
                                 <span className="comment-time d-block">
                                     {review.created_at}
@@ -76,9 +77,9 @@ class Comment extends Component {
                     
                     <div style={{marginLeft: '-65px'}}>
 
-                        <div>
+                        <p>
                             {placeEmoji(review.text)}
-                        </div>
+                        </p>
                         <div className="w-100 ">
                             <div className="comment-actions">
                                 <span 

@@ -33,11 +33,11 @@ export default class ImageZoom extends Component {
 
     render()
     {
-        const {thumb, src} = this.props;
+        const {thumb, src, disabled} = this.props;
         const {shown, loaded} = this.state;
 
         return (
-            <div onClick={this.open.bind(this)} style={{cursor:'pointer'}}>
+            <div onClick={disabled ? () => {} : this.open.bind(this)} style={{cursor:'pointer'}}>
                 <img className="thumb" src={thumb} />
                 <Modal
                     processing={!loaded}

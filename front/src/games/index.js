@@ -77,7 +77,7 @@ class GamePageComponent extends Component{
                                 />        
                             ) : (
                                 <Fragment>
-
+                                    
                                     <About 
                                         about={data.options}
                                     /> 

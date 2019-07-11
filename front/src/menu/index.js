@@ -18,45 +18,56 @@ export default class Menu extends Component {
                             } : style;
 
                             return (
-                                <ul style={_style}>
-                                    <li>
-                                        <NavLink 
-                                            exact 
-                                            activeClassName="active" 
-                                            to="/"
-                                            isActive={(match, location) => {
-                                                return match || location.pathname === '/schedule' || location.pathname === '/settings';
-                                            }}
-                                        >
-                                            <span className="icon icon-info"></span> {` my profile`}
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink activeClassName="active" to="/feed">
-                                            <span className="icon icon-schedule"></span> {` my feed`}
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink activeClassName="active" to="/dudes">
-                                            <span className="icon icon-binocolo"></span> {` Find Your Dudes`}
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span className="icon icon-group"></span> {` Groups`}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span className="icon icon-basket"></span> {` Trade`}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span className="icon icon-fist"></span> {` Clans`}
-                                        </a>
-                                    </li>
-                                </ul>
+                                <div style={_style}>
+                                    <ul>
+                                        <li>
+                                            <NavLink 
+                                                exact 
+                                                activeClassName="active" 
+                                                to="/"
+                                                isActive={(match, location) => {
+                                                    return match || location.pathname === '/schedule' || location.pathname === '/settings';
+                                                }}
+                                            >
+                                                <span className="icon icon-info"></span> {` my profile`}
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink activeClassName="active" to="/feed">
+                                                <span className="icon icon-schedule"></span> {` my feed`}
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink activeClassName="active" to="/dudes">
+                                                <span className="icon icon-binocolo"></span> {` Find Your Dudes`}
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <span className="icon icon-group"></span> {` Groups`}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <span className="icon icon-basket"></span> {` Trade`}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <span className="icon icon-fist"></span> {` Clans`}
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div className="left-banner">
+                                        <div className="banner-header">
+                                            <div className="banner-triangle-right"></div>
+                                            <h3>Game Groups </h3>
+                                            <p>Lol Gamer Community</p>
+                                        </div>
+                                        <img src="../img/reklam-banner.jpg" alt="The Last of us"/>
+                                    </div>
+                                </div>
                             )
                         }
                     }

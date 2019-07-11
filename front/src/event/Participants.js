@@ -44,7 +44,7 @@ export default class Participants extends Component {
 
         return (
             <Fragment>
-                <div className="header">
+                <div className="header ">
                     <a
                         onClick={this.openModal.bind(this)}
                         href="javascript:void(0)"

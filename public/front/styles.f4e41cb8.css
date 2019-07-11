@@ -8003,8 +8003,13 @@ span.flatpickr-weekday {
       font-size: 2vw;
       margin: 0px; }
     .event-schedule .event-schedule-left .event-schedule-number {
+      background: url("event-date.2cefae49.svg");
+      background-position: center;
       font-size: 2.5vw;
-      margin: 0px; }
+      background-repeat: no-repeat;
+      height: 80px;
+      line-height: 100px;
+      margin: 10px 0px; }
     .event-schedule .event-schedule-left h4 {
       font-size: 0.8vw;
       color: #ff4800;
@@ -8079,12 +8084,16 @@ span.flatpickr-weekday {
     flex-shrink: 1; }
     .event-suggested-friend .event-suggested-friend-content .event-suggested-friend-box .suggested-friend-img-content .suggested-friend-img {
       height: 30px;
-      line-height: 30px;
+      line-height: 28px;
       width: 30px;
       -webkit-border-radius: 100%;
       -moz-border-radius: 100%;
       border-radius: 100%;
       background-color: #ff4800; }
+      .event-suggested-friend .event-suggested-friend-content .event-suggested-friend-box .suggested-friend-img-content .suggested-friend-img img {
+        object-fit: cover;
+        max-width: 100%;
+        border-radius: 100%; }
   .event-suggested-friend .event-suggested-friend-content .event-suggested-friend-box .suggested-friend-name {
     height: 30px;
     line-height: 15px; }
@@ -8150,6 +8159,10 @@ span.flatpickr-weekday {
       -moz-border-radius: 100%;
       border-radius: 100%;
       background-color: #ff4800; }
+      .related-events .related-events-content .related-events-box .related-events-img-content .related-events-img img {
+        object-fit: cover;
+        max-width: 100%;
+        border-radius: 100%; }
   .related-events .related-events-content .related-events-box .related-events-name {
     height: auto;
     line-height: 20px;
@@ -9565,6 +9578,40 @@ nav.user-profile {
           margin-right: 10px; }
         .menu ul li a .icon-binocolo {
           margin-right: 10px; }
+
+/** Advertisement */
+.left-banner {
+  position: relative;
+  padding-right: 10px; }
+  .left-banner .banner-header {
+    position: absolute;
+    width: 80%;
+    background-color: #ff4800 !important;
+    padding: 1rem 1rem 0 1rem;
+    text-align: right;
+    margin-top: 60%; }
+    .left-banner .banner-header .banner-triangle-right {
+      position: absolute;
+      right: -12px;
+      height: 25px;
+      width: 25px;
+      top: -12px;
+      background-color: #000;
+      transform: rotateZ(45deg);
+      border-top-left-radius: 60px; }
+    .left-banner .banner-header h3 {
+      color: #fff;
+      font-weight: 500;
+      font-size: 18px;
+      margin: 0px; }
+    .left-banner .banner-header p {
+      font-size: 12px;
+      color: #fff !important;
+      font-weight: 100;
+      margin: 0px; }
+  .left-banner img {
+    object-fit: cover;
+    width: 100%; }
 
 /** Post creation */
 .textarea {

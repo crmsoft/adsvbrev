@@ -29,9 +29,10 @@ class EventResource extends JsonResource
             'ava' => url(\Storage::url($this->ava)),
             'poster' => url(\Storage::url($this->poster)),
             'user_participant' => $this->userParticipants(),
+            'is_private' => boolval($this->is_private),
             'participants' => [],
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
-            'total_participiant' => $this->participants()->count(),
+            'total_participant' => $this->participants()->count(),
             'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get())
         ];
     }
