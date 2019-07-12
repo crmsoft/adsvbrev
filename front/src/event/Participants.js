@@ -26,7 +26,7 @@ export default class Participants extends Component {
                 open: true
             }
         }, () => {
-            this.props.load();
+            this.props.load(this.props.event.id);
         });
     }
 

@@ -125,7 +125,8 @@ class Youtube extends Component{
                 className="yt-video"
                 onClick={
                     e => {
-                        this.setState({loaded:true})
+                        e.preventDefault();
+                        this.setState({loaded:true});
                     }
                 }
                 key={url}>
@@ -215,6 +216,7 @@ class Twitch extends Component{
                 className="yt-video"
                 onClick={
                     e => {
+                        e.preventDefault();
                         this.setState({loaded:true})
                     }
                 }

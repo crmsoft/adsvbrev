@@ -4,7 +4,8 @@ import {
     USER_LEAVED,
     REVIEWS_HIDDEN,
     REVIEWS_SHOWN,
-    REVIEW_PUSH
+    REVIEW_PUSH,
+    ALL_GAMERS
 } from './action';
 
 const initialState = {
@@ -26,6 +27,14 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type)
     {
+        case ALL_GAMERS : {
+            return {
+                data: {
+                    ...state.data,
+                    participants: action.data
+                }
+            }
+        }
         case REVIEWS_HIDDEN: {
             return {
                 data: {

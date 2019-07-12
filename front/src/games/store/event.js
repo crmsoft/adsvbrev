@@ -6,7 +6,8 @@ import {
     USER_LEAVED,
     REVIEWS_HIDDEN,
     REVIEWS_SHOWN,
-    REVIEW_PUSH
+    REVIEW_PUSH,
+    ALL_GAMERS
 } from './action';
 
 export const push_review = (review) => {
@@ -68,6 +69,18 @@ export const leave = group => {
                 type: USER_LEAVED,
                 data:data
             })
+        })
+    }
+}
+
+export const all_gamers = group => {
+    return dispatch => {
+        axios.get(`/game/participants/${group}`)
+        .then(({data}) => {
+            dispatch({
+                type: ALL_GAMERS,
+                data:data.data
+            });
         })
     }
 }

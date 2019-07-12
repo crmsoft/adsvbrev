@@ -15,7 +15,8 @@ import {
     leave,
     hide_reviews,
     show_reviews,
-    push_review
+    push_review,
+    all_gamers,
 } from './store/event';
 import Vote from './Reviews/Vote';
 import ReviewFeed from './Reviews/ReviewFeed';
@@ -31,11 +32,6 @@ class GamePageComponent extends Component{
     componentDidUpdate()
     {
         document.title = `Game: ${this.props.data.name}`;
-    }
-
-    loadGamers( id )
-    {
-        
     }
 
     render()
@@ -129,8 +125,8 @@ class GamePageComponent extends Component{
                             <Participants 
                                 title={`Gamers`}
                                 event={data}
-                                load={ () => {
-                                    this.loadGamers(this.props.id)
+                                load={id => {
+                                    (data.random.length === 6) && this.props.all_gamers(id)
                                 }}
                             />              
 
@@ -159,7 +155,8 @@ const GamePage = connect(
             leave: group => dispatch(leave(group)),
             show_reviews: can_add_review => dispatch(show_reviews(can_add_review)),
             hide_reviews: () => dispatch(hide_reviews()),
-            push_review: review => dispatch(push_review(review))
+            push_review: review => dispatch(push_review(review)),
+            all_gamers: group => dispatch(all_gamers(group))
         }
     }
 )(GamePageComponent);

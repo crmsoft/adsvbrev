@@ -65,7 +65,7 @@ export default class Menu extends Component {
                                             <h3>Game Groups </h3>
                                             <p>Lol Gamer Community</p>
                                         </div>
-                                        <img src="../img/reklam-banner.jpg" alt="The Last of us"/>
+                                        <img src="../img/ad-sample.jpg" alt="The Last of us"/>
                                     </div>
                                 </div>
                             )
