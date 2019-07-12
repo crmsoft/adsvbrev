@@ -85909,7 +85909,7 @@ exports.Buy = Buy;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.REVIEW_PUSH = exports.REVIEWS_HIDDEN = exports.REVIEWS_SHOWN = exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
+exports.ALL_GAMERS = exports.REVIEW_PUSH = exports.REVIEWS_HIDDEN = exports.REVIEWS_SHOWN = exports.USER_LEAVED = exports.USER_JOINED = exports.INIT = exports.LOADED = void 0;
 var LOADED = "LOADED";
 exports.LOADED = LOADED;
 var INIT = "FETCH_GROUP";
@@ -85924,13 +85924,15 @@ var REVIEWS_HIDDEN = 'REVIEWS_HIDDEN';
 exports.REVIEWS_HIDDEN = REVIEWS_HIDDEN;
 var REVIEW_PUSH = 'REVIEW_PUSH';
 exports.REVIEW_PUSH = REVIEW_PUSH;
+var ALL_GAMERS = 'ALL_GAMERS';
+exports.ALL_GAMERS = ALL_GAMERS;
 },{}],"../src/games/store/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.leave = exports.join = exports.init = exports.hide_reviews = exports.show_reviews = exports.push_review = void 0;
+exports.all_gamers = exports.leave = exports.join = exports.init = exports.hide_reviews = exports.show_reviews = exports.push_review = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -86012,6 +86014,20 @@ var leave = function leave(group) {
 };
 
 exports.leave = leave;
+
+var all_gamers = function all_gamers(group) {
+  return function (dispatch) {
+    _axios.default.get("/game/participants/".concat(group)).then(function (_ref4) {
+      var data = _ref4.data;
+      dispatch({
+        type: _action.ALL_GAMERS,
+        data: data.data
+      });
+    });
+  };
+};
+
+exports.all_gamers = all_gamers;
 },{"axios":"../../node_modules/axios/index.js","./action":"../src/games/store/action.js"}],"../src/games/Reviews/Review.js":[function(require,module,exports) {
 "use strict";
 
@@ -86739,8 +86755,6 @@ var _Vote = _interopRequireDefault(require("./Reviews/Vote"));
 
 var _ReviewFeed = _interopRequireDefault(require("./Reviews/ReviewFeed"));
 
-var _axios = _interopRequireDefault(require("axios"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -86786,24 +86800,9 @@ function (_Component) {
       document.title = "Game: ".concat(this.props.data.name);
     }
   }, {
-    key: "loadGamers",
-    value: function loadGamers(id) {
-      var _this = this;
-
-      _axios.default.get(id ? "/game/participants/".concat(id) : "/game/participants").then(function (_ref) {
-        var data = _ref.data;
-
-        _this.setState(function () {
-          return {
-            participants: data.data
-          };
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var id = this.props.match.params.id;
       var data = this.props.data;
@@ -86817,23 +86816,23 @@ function (_Component) {
         className: "triangle-right"
       }), _react.default.createElement(_Profile.default, {
         init: function init() {
-          return _this2.props.init(data.id);
+          return _this.props.init(data.id);
         },
         data: data,
         onJoin: function onJoin(e) {
-          return _this2.props.join(id);
+          return _this.props.join(id);
         },
         onLeave: function onLeave(e) {
-          return _this2.props.leave(id);
+          return _this.props.leave(id);
         }
       })), _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, data.reviews_open ? _react.default.createElement(_ReviewFeed.default, {
-        pushReview: function pushReview(_ref2) {
-          var data = _ref2.data;
-          return _this2.props.push_review(data);
+        pushReview: function pushReview(_ref) {
+          var data = _ref.data;
+          return _this.props.push_review(data);
         },
         reviews: data.reviews,
         vote: data.votes,
@@ -86865,7 +86864,7 @@ function (_Component) {
         className: "block"
       }, _react.default.createElement(_Vote.default, {
         showReviews: function showReviews(can_add_review) {
-          return _this2.props.show_reviews(can_add_review);
+          return _this.props.show_reviews(can_add_review);
         },
         reviews: data.reviews.slice(0, 2),
         vote: data.votes,
@@ -86876,7 +86875,7 @@ function (_Component) {
         title: "Gamers",
         event: data,
         load: function load(id) {
-          _this2.loadGamers(id);
+          return _this.props.all_gamers(id);
         }
       })), _react.default.createElement(_Buy.Buy, {
         data: data
@@ -86908,12 +86907,15 @@ var GamePage = (0, _reactRedux.connect)(function (store) {
     },
     push_review: function push_review(review) {
       return dispatch((0, _event.push_review)(review));
+    },
+    all_gamers: function all_gamers(group) {
+      return dispatch((0, _event.all_gamers)(group));
     }
   };
 })(GamePageComponent);
 var _default = GamePage;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js","./Buy":"../src/games/Buy.js","./store/event":"../src/games/store/event.js","./Reviews/Vote":"../src/games/Reviews/Vote.js","./Reviews/ReviewFeed":"../src/games/Reviews/ReviewFeed.js","axios":"../../node_modules/axios/index.js"}],"../src/games/store/reducer.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../profile/media-tabs":"../src/profile/media-tabs/index.js","../menu/index":"../src/menu/index.js","./Profile":"../src/games/Profile.js","./About":"../src/games/About/index.js","../post-add":"../src/post-add/index.js","../profile/feed":"../src/profile/feed/index.js","../event/Participants":"../src/event/Participants.js","./Buy":"../src/games/Buy.js","./store/event":"../src/games/store/event.js","./Reviews/Vote":"../src/games/Reviews/Vote.js","./Reviews/ReviewFeed":"../src/games/Reviews/ReviewFeed.js"}],"../src/games/store/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86952,6 +86954,15 @@ var reducer = function reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _action.ALL_GAMERS:
+      {
+        return {
+          data: Object.assign({}, state.data, {
+            participants: action.data
+          })
+        };
+      }
+
     case _action.REVIEWS_HIDDEN:
       {
         return {
