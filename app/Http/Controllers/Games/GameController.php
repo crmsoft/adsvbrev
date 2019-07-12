@@ -12,9 +12,22 @@ use App\Entities\GameReview;
 use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Game\Review as GameReviewResource;
 use App\Http\Resources\Media\MediaCollection;
+use App\Http\Resources\UserList\UserCollection;
 
 class GameController extends Controller
 {
+    /**
+     * List all participants of game
+     * 
+     * @param Game $game
+     * 
+     * @return Resource
+     */
+    public function listParticipants(Game $game)
+    {
+        return new UserCollection($game->gamers()->get());
+    }
+
     public function show(Game $game)
     {
         return new ResourceGame($game);
