@@ -44559,6 +44559,8 @@ var _queryString = _interopRequireDefault(require("query-string"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _Loading = require("./general/Loading");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -44745,41 +44747,93 @@ function (_Component) {
   return Youtube;
 }(_react.Component);
 
-var Twitch =
+var SoundCloud =
 /*#__PURE__*/
 function (_Component2) {
-  _inherits(Twitch, _Component2);
+  _inherits(SoundCloud, _Component2);
 
-  function Twitch() {
+  function SoundCloud() {
     var _getPrototypeOf3;
 
     var _this3;
 
-    _classCallCheck(this, Twitch);
+    _classCallCheck(this, SoundCloud);
 
     for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
       args[_key2] = arguments[_key2];
     }
 
-    _this3 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(Twitch)).call.apply(_getPrototypeOf3, [this].concat(args)));
+    _this3 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(SoundCloud)).call.apply(_getPrototypeOf3, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this3)), "state", {
-      loaded: false,
-      poster: undefined
+      loaded: false
     });
 
     return _this3;
   }
 
+  _createClass(SoundCloud, [{
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var loaded = this.state.loaded;
+      var url = this.props.url;
+      return _react.default.createElement("div", null, loaded ? null : _react.default.createElement(_Loading.Loading, null), _react.default.createElement("iframe", {
+        onLoad: function onLoad(e) {
+          return _this4.setState({
+            loaded: true
+          });
+        },
+        scrolling: "no",
+        allow: "autoplay",
+        allowFullScreen: true,
+        src: url,
+        height: "166",
+        frameBorder: "0",
+        className: loaded ? "w-100" : "d-none"
+      }));
+    }
+  }]);
+
+  return SoundCloud;
+}(_react.Component);
+
+var Twitch =
+/*#__PURE__*/
+function (_Component3) {
+  _inherits(Twitch, _Component3);
+
+  function Twitch() {
+    var _getPrototypeOf4;
+
+    var _this5;
+
+    _classCallCheck(this, Twitch);
+
+    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+
+    _this5 = _possibleConstructorReturn(this, (_getPrototypeOf4 = _getPrototypeOf(Twitch)).call.apply(_getPrototypeOf4, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this5)), "state", {
+      loaded: false,
+      poster: undefined
+    });
+
+    return _this5;
+  }
+
   _createClass(Twitch, [{
     key: "fetchPoster",
     value: function fetchPoster(id) {
-      var _this4 = this;
+      var _this6 = this;
 
       if (this.state.poster === undefined) {
         _axios.default.get("/api/v1/twitch/video/".concat(id, "/thumb")).then(function (_ref) {
           var data = _ref.data;
-          !_this4.state.loaded && _this4.setState(function () {
+          !_this6.state.loaded && _this6.setState(function () {
             return {
               poster: data.medium
             };
@@ -44791,7 +44845,7 @@ function (_Component2) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this7 = this;
 
       var _this$state = this.state,
           loaded = _this$state.loaded,
@@ -44847,7 +44901,7 @@ function (_Component2) {
         onClick: function onClick(e) {
           e.preventDefault();
 
-          _this5.setState({
+          _this7.setState({
             loaded: true
           });
         },
@@ -44874,8 +44928,8 @@ var Anchor = function Anchor(_ref2) {
 
 var Url =
 /*#__PURE__*/
-function (_Component3) {
-  _inherits(Url, _Component3);
+function (_Component4) {
+  _inherits(Url, _Component4);
 
   function Url() {
     _classCallCheck(this, Url);
@@ -44899,6 +44953,11 @@ function (_Component3) {
       return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
     }
   }, {
+    key: "isSoundCloud",
+    value: function isSoundCloud(text) {
+      return text.indexOf('soundcloud.com/player') !== -1;
+    }
+  }, {
     key: "render",
     value: function render() {
       var text = this.props.text;
@@ -44913,6 +44972,8 @@ function (_Component3) {
       }, this.isLink(text) ? this.isYoutube(text) ? _react.default.createElement(Youtube, {
         url: text
       }) : this.isTwitch(text) ? _react.default.createElement(Twitch, {
+        url: text
+      }) : this.isSoundCloud(text) ? _react.default.createElement(SoundCloud, {
         url: text
       }) : _react.default.createElement(Anchor, {
         url: text
@@ -44973,7 +45034,7 @@ function getHashParams(url) {
 
   return hashParams;
 }
-},{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","query-string":"../node_modules/query-string/index.js","axios":"../../node_modules/axios/index.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","query-string":"../node_modules/query-string/index.js","axios":"../../node_modules/axios/index.js","./general/Loading":"../src/general/Loading.js"}],"../src/profile/fetch/actions.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47094,6 +47155,11 @@ function (_Component) {
       });
     }
   }, {
+    key: "hasMedia",
+    value: function hasMedia(text) {
+      return text.indexOf('soundcloud.com/player') !== -1 || text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1 || text.indexOf('https://youtu') !== -1 || text.indexOf('https://www.youtu') !== -1;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this7 = this;
@@ -47103,10 +47169,16 @@ function (_Component) {
           repost = _this$state2.repost;
       var hasMore = this.state.hasMore;
       var content = post.content;
+      var more = null;
 
-      if (hasMore) {
+      if (hasMore && !this.hasMedia(content)) {
         content = content.substr(0, 240);
         content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")));
+        more = _react.default.createElement("a", {
+          className: "more",
+          href: "javascript:void(0)",
+          onClick: this.showAll.bind(this)
+        }, "More...");
       } // end if
 
 
@@ -47121,11 +47193,6 @@ function (_Component) {
       } // end if
 
 
-      var more = hasMore ? _react.default.createElement("a", {
-        className: "more",
-        href: "javascript:void(0)",
-        onClick: this.showAll.bind(this)
-      }, "More...") : null;
       return _react.default.createElement("div", {
         className: "post"
       }, _react.default.createElement("div", {
@@ -88582,7 +88649,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38330" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45499" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
