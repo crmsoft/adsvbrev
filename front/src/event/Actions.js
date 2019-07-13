@@ -1,10 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {DateTime} from 'luxon';
+import axios from 'axios';
 
-export default ({data}) => {
+import {Modal, actions} from '../Modal';
+import Form from '../schedule/Form';
+
+const Edit = ({
+    edit,
+    setEdit,
+    onUpdate,
+    data
+}) => {
+
+    const [formData,onFormData] = useState(new FormData());
+
+    const update = () => {
+        axios.post(`/event/update/${data.id}`, formData)
+        .then(({data}) => {
+            onUpdate();
+            setEdit(false);
+        })
+    }
+
+    return (
+        <Modal
+            title={`Edit Event`}
+            open={edit}
+            onClose={e => setEdit(false)}
+            actions={actions(() => setEdit(false), update)}
+        >
+            <div className="schedule">
+                <Form 
+                    data={data}
+                    errors={{}}
+                    onForm={frm => onFormData(frm)}
+                />
+            </div>
+        </Modal>
+    )
+}
+
+
+export default ({data, onUpdate}) => {
     
+    const [edit,setEdit] = useState(false);
+
     return (
         <div className="event-schedule">
+            
+            <Edit onUpdate={onUpdate} edit={edit} setEdit={setEdit} data={data} />
+
+            <button 
+                onClick={e => setEdit(true)}
+                className={data.is_owner ? 'edit':'d-none'}    
+            >
+                <span className="icon icon-cake"></span>
+            </button>
+
             <div className="row">
                 <div className="col-md-3">
                     <div className="event-schedule-left">
@@ -23,15 +75,19 @@ export default ({data}) => {
                 <div className="col-md-9">
                     <div className="event-schedule-right">
                         <div className="event-schedule-date" ><span
-                            className="icon-friends"></span>Sunday, February 24, 2019 at 5 PM – 8 PM</div>
+                            className="icon-friends"></span>{DateTime.fromISO(data.start).toLocaleString(DateTime.DATE_HUGE)}</div>
                         <div className="event-schedule-date"><span
                             className="icon-friends"></span>Via İnternet <a href="www.gamecounter.com">www.gamecounter.com</a>
                         </div>
                         <div className="event-schedule-buttons">
-                            <button className="dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4">
+                            <button 
+                                onClick={e => 5}
+                                className="dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4">
                                 Interested
                             </button>
-                            <button className="dd-btn btn-sm btn-full pr-lg-5 pl-lg-5">
+                            <button 
+                                onClick={e => 6}
+                                className="dd-btn btn-sm btn-full pr-lg-5 pl-lg-5">
                                 Attending
                             </button>
                         </div>

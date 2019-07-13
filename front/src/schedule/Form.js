@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
+import {components} from 'react-select';
 import {DateTime} from 'luxon';
+
+import {Select} from '../select';
+import {Game} from '../select/formaters/Game';
+import searchGames from '../select/Request/gameSearch';
+
+const MultiValueLabel = ({ children, ...props }) => {    
+    return (
+        <components.MultiValueLabel key={props.data.id} {...props}>{props.data.full_name}</components.MultiValueLabel>
+    );
+} 
+
 
 export default class Form extends Component{
 
@@ -12,15 +24,46 @@ export default class Form extends Component{
 
 
         this.state = {
+            init: true,
             form: new FormData(),
             srcAva: '',
             srcCover: '',
             name: '',
             description: '',
+            related: [],
             date: DateTime.fromMillis((+ new Date))
         }
 
         this.state.form.append('start', DateTime.fromMillis((+ new Date)).toISODate());
+    }
+
+    static getDerivedStateFromProps(props, state)
+    {   
+        if (state.init && props.data)
+        {
+            const {data} = props;
+            const frm = new FormData();
+
+            frm.append('name', data.name);
+            frm.append('description', data.description);
+            frm.append('is_private', data.is_private);
+            frm.append('start', data.start);
+            frm.append('related', data.related.map(game => game.id).join(','));
+
+            return {
+                init:        false,
+                name:        data.name,
+                description: data.description,
+                srcAva: data.ava,
+                srcCover: data.poster,
+                related: data.related,
+                date: DateTime.fromISO(data.start),
+                is_private: data.is_private,
+                form: frm
+            }
+        } // end if
+        
+        return null;
     }
 
     setValue(name, value)
@@ -81,11 +124,11 @@ export default class Form extends Component{
 
     render()
     {   
-        const {srcAva, srcCover, name, description, date} = this.state;
+        const {srcAva, srcCover, name, description, date, related, is_private} = this.state;
         const {errors} = this.props;     
         
         return (
-            <div className="schedule-create-form">
+            <div className="schedule-create-form list-scroll">
                 <input 
                     onChange={this.avaSelected.bind(this)}
                     className="d-none" 
@@ -173,6 +216,26 @@ export default class Form extends Component{
                 <div className="row">
                     <div className="col-4">
                         <label>
+                            Related Games
+                        </label>
+                    </div>
+                    <div className="col-8">
+                        <Select     
+                            hasError={errors.related}
+                            defaultValue={related}
+                            onChange={selected => this.setValue('related', (selected ? selected:[]).map(opt => opt.id).join(','))}
+                            isMulti
+                            components={{MultiValueLabel}}
+                            loadOptions={searchGames}
+                            cacheOptions={true}
+                            formatOptionLabel={Game}
+                        />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-4">
+                        <label>
                             About Event
                         </label>
                     </div>
@@ -196,6 +259,7 @@ export default class Form extends Component{
                             <input 
                                 value={name}
                                 onChange={e => this.setValue('is_private', e.target.checked)}
+                                checked={is_private}
                                 name="event-is-private" 
                                 type='checkbox' 
                             />

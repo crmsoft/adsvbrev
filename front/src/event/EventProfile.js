@@ -92,8 +92,6 @@ class EeventProfileComponent extends Component{
                     <div className="triangle-right"></div>
 
                     <Profile 
-                        leave={this.leave.bind(this)}
-                        join={this.join.bind(this)}
                         data={this.props}
                         editor={editor}
                     />
@@ -107,6 +105,9 @@ class EeventProfileComponent extends Component{
                     <section className="user-middle">
                         
                         <Actions 
+                            onLeave={this.leave.bind(this)}
+                            onJoin={this.join.bind(this)}
+                            onUpdate={e => this.props.load(this.props.id)}
                             data={this.props}
                         />
 
@@ -193,7 +194,7 @@ class EeventProfileComponent extends Component{
                                         </div>
                                     </div>
                                 </div>
-                                <div class="event-suggested-all">
+                                <div className="event-suggested-all">
                                     <a href="#">All Friends</a>
                                 </div>
                             </div>

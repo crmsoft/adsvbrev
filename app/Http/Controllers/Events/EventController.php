@@ -30,6 +30,8 @@ class EventController extends Controller
         $request->validate([
             'name'          => ['required', 'min:3'],
             'description'   => ['required', 'min:10'],
+
+            'related'       => ['required'],
             
             'ava'           => ['required'],
             'poster'        => ['required'],
@@ -51,6 +53,11 @@ class EventController extends Controller
 
         $event->save();
 
+        // attach related games
+        $event->games()->attach(collect(explode(',', $request->related))->map(function($id) {
+            return \Hashids::decode($id)[0];
+        }));
+
         // save avatar
         $media = $request->file('ava');
 
@@ -60,14 +67,17 @@ class EventController extends Controller
         $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
         $users_dir = "user-media/{$user->dir}/events/{$event->id}";
 
+        Storage::disk('public')
+                        ->put("{$users_dir}/original_{$name}", $image);
+
         // profile main image;
         $image->fit(200);
         $image->stream();
 
         Storage::disk('public')
-                    ->put("{$users_dir}/{$name}", $image);
+                    ->put("{$users_dir}/200_{$name}", $image);
 
-        $event->ava = "public/{$users_dir}/{$name}";
+        $event->ava = "public/{$users_dir}/200_{$name}";
 
         // save poster
         $media = $request->file('poster');
@@ -90,6 +100,93 @@ class EventController extends Controller
 
         return new StoreEventResponse($event);
     }
+
+    /**
+     * Update Event Resource
+     * 
+     * @param Request $request
+     * @param Event $event
+     * 
+     * @return int
+     */
+    public function update(Request $request, Event $event)
+    {
+        // validate request
+        $request->validate([
+            'name'          => ['required', 'min:3'],
+            'description'   => ['required', 'min:10'],
+
+            'related'       => ['required'],
+            
+            'ava'           => ['image'],
+            'poster'        => ['image'],
+            
+            'start'         => ['required', 'date']
+        ]);
+
+        $user = auth()->user();
+
+        // set fillable attributes 
+        $event->fill($request->all());
+
+        // mark event is private
+        $event->is_private = $request->get('is_private') == 'true';
+
+        // attach related games
+        $event->games()->sync(collect(explode(',', $request->related))->map(function($id) {
+            return \Hashids::decode($id)[0];
+        }));
+
+        // save Avatar
+        if ($request->hasFile('ava'))
+        {
+            $media = $request->file('ava');
+
+            $image = Image::make($media->getRealPath());
+
+            $image->stream();
+            $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
+            $users_dir = "user-media/{$user->dir}/events/{$event->id}";
+
+            Storage::disk('public')
+                        ->put("{$users_dir}/original_{$name}", $image);
+
+            // profile main image;
+            $image->fit(200);
+            $image->stream();
+
+            Storage::disk('public')
+                        ->put("{$users_dir}/200_{$name}", $image);
+
+            $event->ava = "public/{$users_dir}/200_{$name}";
+        } // end if
+
+        // save Cover
+        if ($request->hasFile('poster'))
+        {
+            // save poster
+            $media = $request->file('poster');
+
+            $image = Image::make($media->getRealPath());
+
+            $image->stream();
+            $name = hash('sha256', str_random() . $image) .'.'. $media->getClientOriginalExtension();
+            $users_dir = "user-media/{$user->dir}/events/{$event->id}";
+
+            $image->fit(1110,250);
+            $image->stream();
+
+            Storage::disk('public')
+                        ->put("{$users_dir}/{$name}", $image);
+
+            $event->poster = "public/{$users_dir}/{$name}";
+        } // end if
+
+        // update resource
+        $event->save();
+
+        return 1;
+    } // end @update
 
     public function listDay(int $timestamp)
     {

@@ -15,11 +15,13 @@ class Event extends Model
         'start',
         'description',
         'name',
+        'is_private',
         'creator_id'
     ];
 
     protected $casts = [
-        'start' => 'date'
+        'start' => 'date',
+        'is_private' => 'bool'
     ];
 
     public function getHashAttribute()
@@ -58,5 +60,10 @@ class Event extends Model
     public function posts()
     {
         return $this->morphToMany(\App\Post::class, 'postable')->withTimestamps();
+    }
+
+    public function games()
+    {
+        return $this->belongsToMany(\App\Entities\Game::class, 'event_group', 'event_id', 'group_id');
     }
 }

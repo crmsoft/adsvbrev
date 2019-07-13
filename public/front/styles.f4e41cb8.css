@@ -6620,8 +6620,8 @@ option:checked {
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 24px;
+    width: 24px;
     background-color: #eee; }
   .form-input-container:hover input:checked {
     background-color: #ccc; }
@@ -7895,17 +7895,6 @@ span.flatpickr-weekday {
     border-width: 1px;
     border-style: solid;
     cursor: pointer; }
-    .schedule .schedule-create-form .event-cover:before, .user-settings .content .form-create-group .schedule-create-form .event-cover:before, .search-results .content .form-create-group .schedule-create-form .event-cover:before {
-      content: '';
-      position: absolute;
-      width: 1100%;
-      height: 1100%;
-      top: 10px;
-      right: -500%;
-      background: #ff4800;
-      transform-origin: 54% 0;
-      transform: rotate(45deg);
-      z-index: -1; }
   .schedule .schedule-create-form .back-img, .user-settings .content .form-create-group .schedule-create-form .back-img, .search-results .content .form-create-group .schedule-create-form .back-img {
     text-align: center;
     background-size: cover;
@@ -7993,7 +7982,26 @@ span.flatpickr-weekday {
   border-radius: 3px;
   padding: 10px;
   margin-bottom: 15px;
-  background-color: #14191C; }
+  background-color: #14191C;
+  position: relative; }
+  .event-schedule .schedule, .event-schedule .user-settings .content .form-create-group, .user-settings .content .event-schedule .form-create-group, .event-schedule .search-results .content .form-create-group, .search-results .content .event-schedule .form-create-group {
+    border: none;
+    margin: 0;
+    padding: 0; }
+  .event-schedule .edit {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    opacity: 0.6;
+    background: none;
+    color: #ff4800;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    cursor: pointer; }
+    .event-schedule .edit:hover {
+      opacity: 1; }
   .event-schedule .event-schedule-left {
     text-align: center;
     font-weight: 100; }
@@ -8003,11 +8011,11 @@ span.flatpickr-weekday {
       font-size: 2vw;
       margin: 0px; }
     .event-schedule .event-schedule-left .event-schedule-number {
-      background: url("event-date.2cefae49.svg");
+      background: url("event-date.bb759e68.png");
       background-position: center;
       font-size: 2.5vw;
       background-repeat: no-repeat;
-      height: 80px;
+      height: 84px;
       line-height: 100px;
       margin: 10px 0px; }
     .event-schedule .event-schedule-left h4 {

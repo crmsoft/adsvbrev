@@ -5,6 +5,18 @@ import Popup from 'reactjs-popup';
 import Header from './Header';
 import {Footer} from './Footer';
 
+export const actions = (cancel, submit) => [
+    {
+        title: 'Cancel',
+        onAction: cancel,
+        class: `btn-empty`
+    },
+    {
+        title: 'Submit',
+        onAction: submit
+    }
+];  
+
 export const Modal = (props) => {
     
     const  {

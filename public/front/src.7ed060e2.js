@@ -40427,7 +40427,7 @@ exports.Footer = Footer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Modal = void 0;
+exports.Modal = exports.actions = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -40444,6 +40444,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var actions = function actions(cancel, submit) {
+  return [{
+    title: 'Cancel',
+    onAction: cancel,
+    class: "btn-empty"
+  }, {
+    title: 'Submit',
+    onAction: submit
+  }];
+};
+
+exports.actions = actions;
 
 var Modal = function Modal(props) {
   var onClose = props.onClose,
@@ -83628,7 +83641,29 @@ var Header = (0, _reactRedux.connect)(function (state) {
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/select/Request/gameSearch.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(query) {
+  return new Promise(function (resolve, reject) {
+    _axios.default.get("/filter/games/".concat(query)).then(function (_ref) {
+      var data = _ref.data;
+      resolve(data.data);
+    }).catch(function (err) {
+      return reject(err);
+    });
+  });
+}
+},{"axios":"../../node_modules/axios/index.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -83638,7 +83673,17 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactSelect = require("react-select");
+
 var _luxon = require("luxon");
+
+var _select = require("../select");
+
+var _Game = require("../select/formaters/Game");
+
+var _gameSearch = _interopRequireDefault(require("../select/Request/gameSearch"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -83662,6 +83707,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var MultiValueLabel = function MultiValueLabel(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, ["children"]);
+
+  return _react.default.createElement(_reactSelect.components.MultiValueLabel, _extends({
+    key: props.data.id
+  }, props), props.data.full_name);
+};
+
 var Form =
 /*#__PURE__*/
 function (_Component) {
@@ -83682,11 +83742,13 @@ function (_Component) {
     _this.avaFileInput = _react.default.createRef();
     _this.coverFileInput = _react.default.createRef();
     _this.state = {
+      init: true,
       form: new FormData(),
       srcAva: '',
       srcCover: '',
       name: '',
       description: '',
+      related: [],
       date: _luxon.DateTime.fromMillis(+new Date())
     };
 
@@ -83770,10 +83832,12 @@ function (_Component) {
           srcCover = _this$state.srcCover,
           name = _this$state.name,
           description = _this$state.description,
-          date = _this$state.date;
+          date = _this$state.date,
+          related = _this$state.related,
+          is_private = _this$state.is_private;
       var errors = this.props.errors;
       return _react.default.createElement("div", {
-        className: "schedule-create-form"
+        className: "schedule-create-form list-scroll"
       }, _react.default.createElement("input", {
         onChange: this.avaSelected.bind(this),
         className: "d-none",
@@ -83840,6 +83904,27 @@ function (_Component) {
         className: "row"
       }, _react.default.createElement("div", {
         className: "col-4"
+      }, _react.default.createElement("label", null, "Related Games")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement(_select.Select, {
+        hasError: errors.related,
+        defaultValue: related,
+        onChange: function onChange(selected) {
+          return _this5.setValue('related', (selected ? selected : []).map(function (opt) {
+            return opt.id;
+          }).join(','));
+        },
+        isMulti: true,
+        components: {
+          MultiValueLabel: MultiValueLabel
+        },
+        loadOptions: _gameSearch.default,
+        cacheOptions: true,
+        formatOptionLabel: _Game.Game
+      }))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
       }, _react.default.createElement("label", null, "About Event")), _react.default.createElement("div", {
         className: "col-8"
       }, _react.default.createElement("textarea", {
@@ -83861,11 +83946,41 @@ function (_Component) {
         onChange: function onChange(e) {
           return _this5.setValue('is_private', e.target.checked);
         },
+        checked: is_private,
         name: "event-is-private",
         type: "checkbox"
       }), _react.default.createElement("span", {
         className: "checkmark"
       })))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.init && props.data) {
+        var data = props.data;
+        var frm = new FormData();
+        frm.append('name', data.name);
+        frm.append('description', data.description);
+        frm.append('is_private', data.is_private);
+        frm.append('start', data.start);
+        frm.append('related', data.related.map(function (game) {
+          return game.id;
+        }).join(','));
+        return {
+          init: false,
+          name: data.name,
+          description: data.description,
+          srcAva: data.ava,
+          srcCover: data.poster,
+          related: data.related,
+          date: _luxon.DateTime.fromISO(data.start),
+          is_private: data.is_private,
+          form: frm
+        };
+      } // end if
+
+
+      return null;
     }
   }]);
 
@@ -83873,7 +83988,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Form;
-},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/schedule/CreateEvent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-select":"../node_modules/react-select/dist/react-select.browser.esm.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","../select":"../src/select/index.js","../select/formaters/Game":"../src/select/formaters/Game.js","../select/Request/gameSearch":"../src/select/Request/gameSearch.js"}],"../src/schedule/CreateEvent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84005,10 +84120,12 @@ function (_Component) {
         onAction: this.onSave.bind(this),
         class: "btn-full"
       }];
-      var errors = this.state.errors;
+      var _this$state = this.state,
+          errors = _this$state.errors,
+          open = _this$state.open;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
         processing: this.state.processing,
-        open: this.state.open,
+        open: open || this.props.open,
         onClose: this.doClose.bind(this),
         title: 'Create an event',
         actions: actions
@@ -84019,7 +84136,7 @@ function (_Component) {
         }
       })), _react.default.createElement("button", {
         onClick: this.doOpen.bind(this),
-        className: "dd-btn btn-sm btn-full"
+        className: "dd-btn btn-sm btn-full btn-create-event"
       }, "Create Event"));
     }
   }]);
@@ -84615,6 +84732,10 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _ImageZoom = _interopRequireDefault(require("../general/ImageZoom"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -84644,10 +84765,9 @@ var Ava = function Ava(_ref) {
     id: "ava"
   }, _react.default.createElement("div", {
     className: "ava-holder"
-  }, _react.default.createElement("div", {
-    className: "ava-edit"
-  }, _react.default.createElement("span", null, "Edit Avatar")), _react.default.createElement("img", {
-    src: src
+  }, _react.default.createElement(_ImageZoom.default, {
+    thumb: src,
+    src: src.replace('200', 'original')
   }))));
 };
 
@@ -84665,9 +84785,7 @@ function (_Component) {
   _createClass(Profile, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          data = _this$props.data,
-          editor = _this$props.editor;
+      var data = this.props.data;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "profile"
       }), _react.default.createElement("div", {
@@ -84677,7 +84795,7 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "col-auto"
       }, _react.default.createElement(Ava, {
-        src: data.ava
+        src: data.ava ? data.ava : ''
       })), _react.default.createElement("div", {
         className: "col-auto"
       }, _react.default.createElement("div", {
@@ -84690,13 +84808,7 @@ function (_Component) {
         className: "col-auto flex-grow-1"
       }, _react.default.createElement("div", {
         className: "content-bottom flex-column-reverse"
-      }, editor ? null : data.user_participant ? _react.default.createElement("button", {
-        onClick: this.props.leave,
-        className: "dd-btn"
-      }, "Leave Event") : _react.default.createElement("button", {
-        onClick: this.props.join,
-        className: "dd-btn"
-      }, "Join"))))));
+      })))));
     }
   }]);
 
@@ -84704,7 +84816,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Profile;
-},{"react":"../node_modules/react/index.js"}],"../src/event/Participants.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../general/ImageZoom":"../src/general/ImageZoom.js"}],"../src/event/Participants.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84865,17 +84977,91 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _luxon = require("luxon");
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Modal = require("../Modal");
+
+var _Form = _interopRequireDefault(require("../schedule/Form"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _default = function _default(_ref) {
-  var data = _ref.data;
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var Edit = function Edit(_ref) {
+  var edit = _ref.edit,
+      setEdit = _ref.setEdit,
+      onUpdate = _ref.onUpdate,
+      data = _ref.data;
+
+  var _useState = (0, _react.useState)(new FormData()),
+      _useState2 = _slicedToArray(_useState, 2),
+      formData = _useState2[0],
+      onFormData = _useState2[1];
+
+  var update = function update() {
+    _axios.default.post("/event/update/".concat(data.id), formData).then(function (_ref2) {
+      var data = _ref2.data;
+      onUpdate();
+      setEdit(false);
+    });
+  };
+
+  return _react.default.createElement(_Modal.Modal, {
+    title: "Edit Event",
+    open: edit,
+    onClose: function onClose(e) {
+      return setEdit(false);
+    },
+    actions: (0, _Modal.actions)(function () {
+      return setEdit(false);
+    }, update)
+  }, _react.default.createElement("div", {
+    className: "schedule"
+  }, _react.default.createElement(_Form.default, {
+    data: data,
+    errors: {},
+    onForm: function onForm(frm) {
+      return onFormData(frm);
+    }
+  })));
+};
+
+var _default = function _default(_ref3) {
+  var data = _ref3.data,
+      onUpdate = _ref3.onUpdate;
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      edit = _useState4[0],
+      setEdit = _useState4[1];
+
   return _react.default.createElement("div", {
     className: "event-schedule"
-  }, _react.default.createElement("div", {
+  }, _react.default.createElement(Edit, {
+    onUpdate: onUpdate,
+    edit: edit,
+    setEdit: setEdit,
+    data: data
+  }), _react.default.createElement("button", {
+    onClick: function onClick(e) {
+      return setEdit(true);
+    },
+    className: data.is_owner ? 'edit' : 'd-none'
+  }, _react.default.createElement("span", {
+    className: "icon icon-cake"
+  })), _react.default.createElement("div", {
     className: "row"
   }, _react.default.createElement("div", {
     className: "col-md-3"
@@ -84895,7 +85081,7 @@ var _default = function _default(_ref) {
     className: "event-schedule-date"
   }, _react.default.createElement("span", {
     className: "icon-friends"
-  }), "Sunday, February 24, 2019 at 5 PM \u2013 8 PM"), _react.default.createElement("div", {
+  }), _luxon.DateTime.fromISO(data.start).toLocaleString(_luxon.DateTime.DATE_HUGE)), _react.default.createElement("div", {
     className: "event-schedule-date"
   }, _react.default.createElement("span", {
     className: "icon-friends"
@@ -84904,14 +85090,20 @@ var _default = function _default(_ref) {
   }, "www.gamecounter.com")), _react.default.createElement("div", {
     className: "event-schedule-buttons"
   }, _react.default.createElement("button", {
+    onClick: function onClick(e) {
+      return 5;
+    },
     className: "dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4"
   }, "Interested"), _react.default.createElement("button", {
+    onClick: function onClick(e) {
+      return 6;
+    },
     className: "dd-btn btn-sm btn-full pr-lg-5 pl-lg-5"
   }, "Attending"))))));
 };
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","axios":"../../node_modules/axios/index.js","../Modal":"../src/Modal/index.js","../schedule/Form":"../src/schedule/Form.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85065,8 +85257,6 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "triangle-right"
       }), _react.default.createElement(_Profile.default, {
-        leave: this.leave.bind(this),
-        join: this.join.bind(this),
         data: this.props,
         editor: editor
       })), _react.default.createElement("div", {
@@ -85074,6 +85264,11 @@ function (_Component) {
       }, _react.default.createElement(_index.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_Actions.default, {
+        onLeave: this.leave.bind(this),
+        onJoin: this.join.bind(this),
+        onUpdate: function onUpdate(e) {
+          return _this3.props.load(_this3.props.id);
+        },
         data: this.props
       }), _react.default.createElement(_About.default, {
         about: description
@@ -85151,7 +85346,7 @@ function (_Component) {
       }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
         className: "suggested-friend-button"
       }, "invite\xA0>"))), _react.default.createElement("div", {
-        class: "event-suggested-all"
+        className: "event-suggested-all"
       }, _react.default.createElement("a", {
         href: "#"
       }, "All Friends")))), _react.default.createElement("section", {
@@ -86875,7 +87070,7 @@ function (_Component) {
         title: "Gamers",
         event: data,
         load: function load(id) {
-          return _this.props.all_gamers(id);
+          data.random.length === 6 && _this.props.all_gamers(id);
         }
       })), _react.default.createElement(_Buy.Buy, {
         data: data
@@ -88387,7 +88582,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42633" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38330" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

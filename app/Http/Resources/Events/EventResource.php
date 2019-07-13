@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserList\User;
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Post\PostCollection;
+use App\Http\Resources\Group\GroupCollection;
 
 class EventResource extends JsonResource
 {
@@ -26,6 +27,8 @@ class EventResource extends JsonResource
             'start' => $this->start->format('Y-m-d'),
             'start_human' => $this->start->format('d M, Y'),
             'owner' => new User($this->user),
+            'is_owner' => $this->user->id == auth()->user()->id,
+            'related' => new GroupCollection($this->games),
             'ava' => url(\Storage::url($this->ava)),
             'poster' => url(\Storage::url($this->poster)),
             'user_participant' => $this->userParticipants(),

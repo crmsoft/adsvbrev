@@ -34,6 +34,36 @@
     padding: 10px;
     margin-bottom: 15px;
     background-color: #14191C;
+    position: relative;
+
+    .schedule{
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .edit{
+        padding: 0;
+        margin: 0;
+
+        border: 0;
+        opacity: 0.6;
+
+        background: none;
+        color: $mainColor;
+        
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 1;
+
+        cursor: pointer;
+
+        &:hover{
+            opacity: 1;
+        }
+    }
+    
     .event-schedule-left
     {
         text-align: center;
@@ -47,11 +77,11 @@
         }
         .event-schedule-number
         {
-            background:url("../img/event-date.svg ");
+            background:url("../img/event-date.png");
             background-position: center;
             font-size: 2.5vw;
             background-repeat: no-repeat;
-            height: 80px;
+            height: 84px;
             line-height: 100px;
             margin: 10px 0px;
         }

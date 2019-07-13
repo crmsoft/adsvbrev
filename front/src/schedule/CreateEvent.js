@@ -59,13 +59,13 @@ export default class CreateEvent extends Component{
             }
         ];
 
-        const {errors} = this.state;
+        const {errors, open} = this.state;
 
         return (
             <Fragment>
                 <Modal 
                     processing={this.state.processing}
-                    open={this.state.open}
+                    open={open || this.props.open}
                     onClose={this.doClose.bind(this)}
                     title={'Create an event'}
                     actions={
@@ -83,7 +83,7 @@ export default class CreateEvent extends Component{
                 </Modal>
                 <button 
                     onClick={this.doOpen.bind(this)}
-                    className="dd-btn btn-sm btn-full"
+                    className="dd-btn btn-sm btn-full btn-create-event"
                 >Create Event</button>
             </Fragment>
         )
