@@ -228,6 +228,42 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
                                 AND deleted_at IS NULL) AS t2 ON t2.friend_id = t1.friend_id) AS tt"), 'tt.friend_id', '=', 'users.id');
     } // end getMutualFriendsAttribute
 
+    public function getSuggestedFriends()
+    {
+        $user_id = $this->id;
+
+        return self::hydrate(\DB::select("SELECT DISTINCT
+                                users.*
+                            FROM
+                                `users`
+                                    INNER JOIN
+                                `user_friends` ON `user_friends`.`friend_id` = `users`.`id`
+                            WHERE
+                                users.id <> $user_id 
+                                AND `user_friends`.`deleted_at` IS NULL
+                                    AND `user_friends`.`user_id` IN (SELECT 
+                                        users.id
+                                    FROM
+                                        `users`
+                                            INNER JOIN
+                                        `user_friends` ON `user_friends`.`friend_id` = `users`.`id`
+                                    WHERE
+                                        `user_friends`.`deleted_at` IS NULL
+                                            AND `user_friends`.`user_id` = $user_id
+                                            AND `status` = 'friend')
+                                    AND `status` = 'friend'
+                                    AND users.id NOT IN (SELECT 
+                                        users.id
+                                    FROM
+                                        `users`
+                                            INNER JOIN
+                                        `user_friends` ON `user_friends`.`friend_id` = `users`.`id`
+                                    WHERE
+                                        `user_friends`.`deleted_at` IS NULL
+                                            AND `user_friends`.`user_id` = $user_id
+                                            AND `status` = 'friend')"));
+    }
+
     public function group(){
         return $this->belongsToMany(Group::class, 'user_groups', 'user_id', 'group_id');
     }

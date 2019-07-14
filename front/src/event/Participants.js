@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import {Modal} from '../Modal/index';
 import User from '../profile/friends/partials/friend';
@@ -49,7 +50,7 @@ export default class Participants extends Component {
                         onClick={this.openModal.bind(this)}
                         href="javascript:void(0)"
                     >
-                        <span className="icon-friends"></span>
+                        <span className="icon icon-friends"></span>
                         <h3>
                             {title ? title:`Participants`} 
                         </h3>
@@ -61,29 +62,81 @@ export default class Participants extends Component {
                         actions={actions}
                         title={`Participants`}
                     >
-                        <div
-                            className="container-fluid mt-3 event-user-list"
-                        >
-                            {
-                                event.participants && event.participants.map(user => {
-                                    return (
-                                        <div 
-                                            key={user.username}
-                                            className="user-list-item">
-                                            <Link to={`/gg/${user.username}`} className="d-flex">
-                                                <div className="user-list-ava">
-                                                    <img src={`${user.ava}`}/>
+                        <Tabs className="mt-2 ml-2">
+                            <TabList className="nav nav-tabs">
+                                <Tab selectedClassName="active">
+                                    <a href="javascript:void(0);">
+                                        <span className="icon-info"></span>
+                                        <span className="tab-title">
+                                            {" Attenders"}
+                                        </span>
+                                    </a>
+                                </Tab>
+
+                                <Tab selectedClassName="active">
+                                    <a href="javascript:void(0);">
+                                        <span className="icon-picture"></span>
+                                        <span className="tab-title">
+                                            {" Interested"}
+                                        </span>
+                                    </a>
+                                </Tab>
+                            </TabList>
+                            <TabPanel> 
+                                <div
+                                    className="container-fluid mt-3 event-user-list"
+                                >
+                                    {
+                                        event.participants && event.participants
+                                        .filter(u => u.type === 'attends')
+                                        .map(user => {
+                                            return (
+                                                <div 
+                                                    key={user.username}
+                                                    className="user-list-item">
+                                                    <Link to={`/gg/${user.username}`} className="d-flex">
+                                                        <div className="user-list-ava">
+                                                            <img src={`${user.ava}`}/>
+                                                        </div>
+                                                        <div className="user-list-user">
+                                                            <span style={{fontWeight:'bold'}}>{user.full_name}</span>
+                                                            <span style={{fontSize:'14px'}}>{user.username}</span>
+                                                        </div>
+                                                    </Link>
                                                 </div>
-                                                <div className="user-list-user">
-                                                    <span style={{fontWeight:'bold'}}>{user.full_name}</span>
-                                                    <span style={{fontSize:'14px'}}>{user.username}</span>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </TabPanel>
+                            <TabPanel> 
+                                <div
+                                    className="container-fluid mt-3 event-user-list"
+                                >
+                                    {
+                                        event.participants && event.participants
+                                        .filter(u => u.type === 'interested')
+                                        .map(user => {
+                                            return (
+                                                <div 
+                                                    key={user.username}
+                                                    className="user-list-item">
+                                                    <Link to={`/gg/${user.username}`} className="d-flex">
+                                                        <div className="user-list-ava">
+                                                            <img src={`${user.ava}`}/>
+                                                        </div>
+                                                        <div className="user-list-user">
+                                                            <span style={{fontWeight:'bold'}}>{user.full_name}</span>
+                                                            <span style={{fontSize:'14px'}}>{user.username}</span>
+                                                        </div>
+                                                    </Link>
                                                 </div>
-                                            </Link>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </TabPanel>
+                        </Tabs>
                     </Modal>
                 </div>
                 <div className="block-content">

@@ -44,7 +44,7 @@ class Event extends Model
     public function userParticipants()
     {
         $user = auth()->user();
-        return $this->participants()->where('user_id', $user->id)->count() > 0;
+        return $this->participants()->where('user_id', $user->id)->first();
     }
 
     public function user()
@@ -54,7 +54,7 @@ class Event extends Model
 
     public function participants()
     {
-        return $this->belongsToMany(\App\User::class, 'event_participants');
+        return $this->belongsToMany(\App\User::class, 'event_participants')->withPivot('type');
     }
 
     public function posts()

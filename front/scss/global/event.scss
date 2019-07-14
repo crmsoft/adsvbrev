@@ -117,7 +117,13 @@
         }
         .event-schedule-buttons
         {
-            margin:15px 0px;
+            .event-schedule-leave{
+                padding: 5px;
+                color: $white;
+                font-size: 12px;
+            }
+
+            margin: 51px 0px 45px;
             .left-button
             {
 
@@ -220,6 +226,10 @@
                      height: 15px;
                      line-height: 15px;
                      font-size:13px;
+                     width: 120px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                      &.name
                      {
                          font-size:12px;

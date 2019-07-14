@@ -3,6 +3,8 @@ import { Emoji, emojiIndex } from 'emoji-mart'
 import qString from 'query-string';
 import axios from 'axios';
 
+import {Loading} from './general/Loading';
+
 const placeEmoji = text => {
     const emojies = text.match(/\:[\S]*\:/g);
         
@@ -140,6 +142,35 @@ class Youtube extends Component{
 	}
 }
 
+class SoundCloud extends Component{
+
+    state = {
+		loaded: false
+	}
+
+	render()
+	{
+        
+		const {loaded} = this.state;
+        const {url} = this.props;
+
+		return (
+            <div>
+                {loaded ? null : <Loading />}
+                <iframe 
+                    onLoad={e => this.setState(({loaded: true}))}
+                    scrolling="no"
+                    allow="autoplay"
+                    allowFullScreen
+                    src={url} 
+                    height="166"
+                    frameBorder="0"
+                    className={loaded ? `w-100`:`d-none`} />
+            </div>
+		) 
+	}
+}
+
 class Twitch extends Component{
 
     state = {
@@ -258,6 +289,11 @@ class Url extends Component{
         return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
     }
 
+    isSoundCloud(text)
+    {
+        return text.indexOf('soundcloud.com/player') !== -1;
+    }
+
     render()
     {
         const {text} = this.props;
@@ -270,7 +306,9 @@ class Url extends Component{
             {
                 this.isLink(text) ? (
                     this.isYoutube( text ) ? <Youtube url={text} /> : (
-                        this.isTwitch( text ) ? <Twitch url={text} /> : <Anchor url={text} />
+                        this.isTwitch( text ) ? <Twitch url={text} /> : (
+                            this.isSoundCloud( text ) ? <SoundCloud url={text} /> : <Anchor url={text} />
+                        )
                     )
                 ) : text
             }

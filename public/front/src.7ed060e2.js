@@ -84178,15 +84178,6 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var actions = [{
-        title: "Close",
-        onAction: this.doClose.bind(this),
-        class: "btn-empty"
-      }, {
-        title: "Create",
-        onAction: this.onSave.bind(this),
-        class: "btn-full"
-      }];
       var _this$state = this.state,
           errors = _this$state.errors,
           open = _this$state.open;
@@ -84195,7 +84186,7 @@ function (_Component) {
         open: open || this.props.open,
         onClose: this.doClose.bind(this),
         title: 'Create an event',
-        actions: actions
+        actions: (0, _Modal.actions)(this.doClose.bind(this), this.onSave.bind(this))
       }, _react.default.createElement(_Form.default, {
         errors: errors,
         onForm: function onForm(form) {
@@ -84580,7 +84571,8 @@ var leave = function leave(event) {
     _axios.default.post("/event/leave/".concat(event)).then(function (_ref) {
       var data = _ref.data;
       dispatch({
-        type: USER_LEAVE
+        type: USER_LEAVE,
+        data: data.data
       });
     });
   };
@@ -84588,12 +84580,16 @@ var leave = function leave(event) {
 
 exports.leave = leave;
 
-var join = function join(event) {
+var join = function join(event, type) {
   return function (dispatch) {
-    _axios.default.post("/event/join/".concat(event)).then(function (_ref2) {
+    _axios.default.post("/event/join/".concat(event), {
+      type: type
+    }).then(function (_ref2) {
       var data = _ref2.data;
       dispatch({
-        type: USER_JOIN
+        type: USER_JOIN,
+        data: data.data,
+        as: type
       });
     });
   };
@@ -84895,6 +84891,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _reactTabs = require("react-tabs");
+
 var _index = require("../Modal/index");
 
 var _friend = _interopRequireDefault(require("../profile/friends/partials/friend"));
@@ -84987,7 +84985,7 @@ function (_Component) {
         onClick: this.openModal.bind(this),
         href: "javascript:void(0)"
       }, _react.default.createElement("span", {
-        className: "icon-friends"
+        className: "icon icon-friends"
       }), _react.default.createElement("h3", null, title ? title : "Participants"), _react.default.createElement("span", {
         className: "items-count"
       }, " ", event.total_participant ? "(".concat(event.total_participant, ")") : '')), _react.default.createElement(_index.Modal, {
@@ -84995,9 +84993,31 @@ function (_Component) {
         onClose: this.closeModal.bind(this),
         actions: actions,
         title: "Participants"
-      }, _react.default.createElement("div", {
+      }, _react.default.createElement(_reactTabs.Tabs, {
+        className: "mt-2 ml-2"
+      }, _react.default.createElement(_reactTabs.TabList, {
+        className: "nav nav-tabs"
+      }, _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-info"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Attenders"))), _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-picture"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Interested")))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
         className: "container-fluid mt-3 event-user-list"
-      }, event.participants && event.participants.map(function (user) {
+      }, event.participants && event.participants.filter(function (u) {
+        return u.type === 'attends';
+      }).map(function (user) {
         return _react.default.createElement("div", {
           key: user.username,
           className: "user-list-item"
@@ -85019,7 +85039,33 @@ function (_Component) {
             fontSize: '14px'
           }
         }, user.username))));
-      })))), _react.default.createElement("div", {
+      }))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
+        className: "container-fluid mt-3 event-user-list"
+      }, event.participants && event.participants.filter(function (u) {
+        return u.type === 'interested';
+      }).map(function (user) {
+        return _react.default.createElement("div", {
+          key: user.username,
+          className: "user-list-item"
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/gg/".concat(user.username),
+          className: "d-flex"
+        }, _react.default.createElement("div", {
+          className: "user-list-ava"
+        }, _react.default.createElement("img", {
+          src: "".concat(user.ava)
+        })), _react.default.createElement("div", {
+          className: "user-list-user"
+        }, _react.default.createElement("span", {
+          style: {
+            fontWeight: 'bold'
+          }
+        }, user.full_name), _react.default.createElement("span", {
+          style: {
+            fontSize: '14px'
+          }
+        }, user.username))));
+      })))))), _react.default.createElement("div", {
         className: "block-content"
       }, _react.default.createElement("div", {
         className: "friends"
@@ -85036,7 +85082,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Participants;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/Actions.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","../Modal/index":"../src/Modal/index.js","../profile/friends/partials/friend":"../src/profile/friends/partials/friend.js"}],"../src/event/Actions.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85051,6 +85097,8 @@ var _luxon = require("luxon");
 var _axios = _interopRequireDefault(require("axios"));
 
 var _Modal = require("../Modal");
+
+var _Tooltip = _interopRequireDefault(require("../Modal/Tooltip"));
 
 var _Form = _interopRequireDefault(require("../schedule/Form"));
 
@@ -85107,7 +85155,10 @@ var Edit = function Edit(_ref) {
 
 var _default = function _default(_ref3) {
   var data = _ref3.data,
-      onUpdate = _ref3.onUpdate;
+      onUpdate = _ref3.onUpdate,
+      onLeave = _ref3.onLeave,
+      onJoin = _ref3.onJoin,
+      onInterested = _ref3.onInterested;
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -85157,20 +85208,80 @@ var _default = function _default(_ref3) {
   }, "www.gamecounter.com")), _react.default.createElement("div", {
     className: "event-schedule-buttons"
   }, _react.default.createElement("button", {
-    onClick: function onClick(e) {
-      return 5;
-    },
+    onClick: onInterested,
     className: "dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4"
-  }, "Interested"), _react.default.createElement("button", {
-    onClick: function onClick(e) {
-      return 6;
-    },
+  }, "Interested", data.user_participant_as === 'interested' ? _react.default.createElement(_Tooltip.default, {
+    trigger: _react.default.createElement("span", {
+      className: "icon icon-ticke ml-2"
+    })
+  }, _react.default.createElement("span", {
+    className: "event-schedule-leave",
+    onClick: onLeave
+  }, "Leave Event")) : null), _react.default.createElement("button", {
+    onClick: onJoin,
     className: "dd-btn btn-sm btn-full pr-lg-5 pl-lg-5"
-  }, "Attending"))))));
+  }, "Attending", data.user_participant_as === 'attends' ? _react.default.createElement(_Tooltip.default, {
+    trigger: _react.default.createElement("span", {
+      className: "icon icon-ticke ml-2"
+    })
+  }, _react.default.createElement("span", {
+    className: "event-schedule-leave",
+    onClick: onLeave
+  }, "Leave Event")) : null))))));
 };
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","axios":"../../node_modules/axios/index.js","../Modal":"../src/Modal/index.js","../schedule/Form":"../src/schedule/Form.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","axios":"../../node_modules/axios/index.js","../Modal":"../src/Modal/index.js","../Modal/Tooltip":"../src/Modal/Tooltip.js","../schedule/Form":"../src/schedule/Form.js"}],"../src/event/SuggestedParticipants.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Suggested = function Suggested(_ref) {
+  var user = _ref.user;
+  return _react.default.createElement("div", {
+    className: "event-suggested-friend-box"
+  }, _react.default.createElement("div", {
+    className: "suggested-friend-img-content"
+  }, _react.default.createElement("div", {
+    className: "suggested-friend-img"
+  }, _react.default.createElement("img", {
+    src: user.ava,
+    alt: user.full_name
+  }))), _react.default.createElement("div", {
+    className: "suggested-friend-name"
+  }, _react.default.createElement("small", {
+    className: "name"
+  }, user.first_name), _react.default.createElement("small", null, user.username)), _react.default.createElement("div", {
+    className: "suggested-friend-button"
+  }, "invite\xA0>"));
+};
+
+function _default(_ref2) {
+  var list = _ref2.list;
+  return _react.default.createElement("div", {
+    className: "event-suggested-friend"
+  }, _react.default.createElement("div", {
+    className: "event-suggested-friend-header"
+  }, "Suggested Friends"), _react.default.createElement("div", {
+    className: "event-suggested-friend-content"
+  }, list.map(function (user) {
+    return _react.default.createElement(Suggested, {
+      user: user
+    });
+  })), _react.default.createElement("div", {
+    className: "event-suggested-all"
+  }, _react.default.createElement("a", {
+    href: "#"
+  }, "All Friends")));
+}
+},{"react":"../node_modules/react/index.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85199,6 +85310,8 @@ var _store = _interopRequireDefault(require("../header/store"));
 var _feed = _interopRequireDefault(require("../profile/feed"));
 
 var _Actions = _interopRequireDefault(require("./Actions"));
+
+var _SuggestedParticipants = _interopRequireDefault(require("./SuggestedParticipants"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85285,7 +85398,12 @@ function (_Component) {
   }, {
     key: "join",
     value: function join() {
-      this.props.join(this.props.id);
+      !this.props.user_participant && this.props.join(this.props.id);
+    }
+  }, {
+    key: "interested",
+    value: function interested() {
+      !this.props.user_participant && this.props.join(this.props.id, 'interested');
     }
   }, {
     key: "leave",
@@ -85307,7 +85425,7 @@ function (_Component) {
           poster = _this$props.poster,
           owner = _this$props.owner,
           feed = _this$props.feed,
-          total_participant = _this$props.total_participant;
+          suggested = _this$props.suggested;
       var loggedIn = this.state.user;
       var editor = false;
 
@@ -85333,6 +85451,7 @@ function (_Component) {
       }, _react.default.createElement(_Actions.default, {
         onLeave: this.leave.bind(this),
         onJoin: this.join.bind(this),
+        onInterested: this.interested.bind(this),
         onUpdate: function onUpdate(e) {
           return _this3.props.load(_this3.props.id);
         },
@@ -85359,64 +85478,11 @@ function (_Component) {
         load: function load() {
           _this3.props.loadParticipants(_this3.props.id);
         }
-      })), _react.default.createElement("section", {
+      })), (suggested ? suggested : []).length ? _react.default.createElement("section", {
         className: "block"
-      }, _react.default.createElement("div", {
-        className: "event-suggested-friend"
-      }, _react.default.createElement("div", {
-        className: "event-suggested-friend-header"
-      }, "Suggested Friends"), _react.default.createElement("div", {
-        className: "event-suggested-friend-content"
-      }, _react.default.createElement("div", {
-        className: "event-suggested-friend-box"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img-content"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img"
-      }, _react.default.createElement("img", {
-        src: "../img/default_ava.png",
-        alt: ""
-      }))), _react.default.createElement("div", {
-        className: "suggested-friend-name"
-      }, _react.default.createElement("small", {
-        className: "name"
-      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
-        className: "suggested-friend-button"
-      }, "invite\xA0>")), _react.default.createElement("div", {
-        className: "event-suggested-friend-box"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img-content"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img"
-      }, _react.default.createElement("img", {
-        src: "../img/default_ava.png",
-        alt: ""
-      }))), _react.default.createElement("div", {
-        className: "suggested-friend-name"
-      }, _react.default.createElement("small", {
-        className: "name"
-      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
-        className: "suggested-friend-button"
-      }, "invite\xA0>")), _react.default.createElement("div", {
-        className: "event-suggested-friend-box"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img-content"
-      }, _react.default.createElement("div", {
-        className: "suggested-friend-img"
-      }, _react.default.createElement("img", {
-        src: "../img/default_ava.png",
-        alt: ""
-      }))), _react.default.createElement("div", {
-        className: "suggested-friend-name"
-      }, _react.default.createElement("small", {
-        className: "name"
-      }, "george Bovie"), _react.default.createElement("small", null, "george44")), _react.default.createElement("div", {
-        className: "suggested-friend-button"
-      }, "invite\xA0>"))), _react.default.createElement("div", {
-        className: "event-suggested-all"
-      }, _react.default.createElement("a", {
-        href: "#"
-      }, "All Friends")))), _react.default.createElement("section", {
+      }, _react.default.createElement(_SuggestedParticipants.default, {
+        list: suggested
+      })) : null, _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement("div", {
         className: "related-events"
@@ -85478,8 +85544,8 @@ var EeventProfile = (0, _reactRedux.connect)(function (state) {
     load: function load(event) {
       return dispatch((0, _event.load)(event));
     },
-    join: function join(event) {
-      return dispatch((0, _event.join)(event));
+    join: function join(event, type) {
+      return dispatch((0, _event.join)(event, type));
     },
     leave: function leave(event) {
       return dispatch((0, _event.leave)(event));
@@ -85494,7 +85560,7 @@ var EeventProfile = (0, _reactRedux.connect)(function (state) {
 })(EeventProfileComponent);
 var _default = EeventProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85522,14 +85588,22 @@ var reducer = function reducer(state, action) {
     case _event.USER_JOIN:
       {
         return Object.assign({}, state, {
-          user_participant: true
+          random: action.data && state.random.length < 6 ? [].concat(_toConsumableArray(state.random), [action.data]) : state.random,
+          user_participant: true,
+          user_participant_as: action.as === 'interested' ? 'interested' : 'attends',
+          total_participant: action.data ? state.total_participant + 1 : state.total_participant
         });
       }
 
     case _event.USER_LEAVE:
       {
         return Object.assign({}, state, {
-          user_participant: false
+          user_participant: false,
+          user_participant_as: null,
+          random: action.data && state.random.length ? state.random.filter(function (u) {
+            return u.username !== action.data.username;
+          }) : state.random,
+          total_participant: action.data ? state.total_participant - 1 : state.total_participant
         });
       }
 
@@ -88649,7 +88723,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45499" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40225" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

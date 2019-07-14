@@ -126,7 +126,7 @@ Route::group([
     Route::post('/event/update/{event}', 'EventController@update')->name('user-event-update');
     Route::post('/event/join/{event}', 'EventController@join')->name('user-event-join');
     Route::post('/event/leave/{event}', 'EventController@leave')->name('user-event-leave');
-    Route::get('/event/participants/{event}', 'EventController@listPartipicants')->name('user-event-list-p');
+    Route::get('/event/participants/{event}', 'EventController@listParticipants')->name('user-event-list-p');
 
 });
 

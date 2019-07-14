@@ -3,6 +3,7 @@ import {DateTime} from 'luxon';
 import axios from 'axios';
 
 import {Modal, actions} from '../Modal';
+import Tooltip from '../Modal/Tooltip';
 import Form from '../schedule/Form';
 
 const Edit = ({
@@ -41,7 +42,13 @@ const Edit = ({
 }
 
 
-export default ({data, onUpdate}) => {
+export default ({
+    data, 
+    onUpdate, 
+    onLeave, 
+    onJoin,
+    onInterested
+}) => {
     
     const [edit,setEdit] = useState(false);
 
@@ -81,14 +88,42 @@ export default ({data, onUpdate}) => {
                         </div>
                         <div className="event-schedule-buttons">
                             <button 
-                                onClick={e => 5}
+                                onClick={onInterested}
                                 className="dd-btn btn-sm btn-gray mr-5 pr-lg-4 pl-lg-4">
                                 Interested
+                                {
+                                    data.user_participant_as === 'interested' ? (
+                                        <Tooltip
+                                            trigger={<span className="icon icon-ticke ml-2"></span>}
+                                        >
+                                            <span
+                                                className="event-schedule-leave"
+                                                onClick={onLeave}
+                                            >
+                                                Leave Event
+                                            </span>
+                                        </Tooltip>
+                                    ) : null
+                                }
                             </button>
                             <button 
-                                onClick={e => 6}
+                                onClick={onJoin}
                                 className="dd-btn btn-sm btn-full pr-lg-5 pl-lg-5">
                                 Attending
+                                {
+                                    data.user_participant_as === 'attends' ? (
+                                        <Tooltip
+                                            trigger={<span className="icon icon-ticke ml-2"></span>}
+                                        >
+                                            <span
+                                                className="event-schedule-leave"
+                                                onClick={onLeave}
+                                            >
+                                                Leave Event
+                                            </span>
+                                        </Tooltip>
+                                    ) : null
+                                }
                             </button>
                         </div>
                     </div>

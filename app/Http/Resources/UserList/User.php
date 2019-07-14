@@ -22,7 +22,9 @@ class User extends JsonResource
             'value' => $this->username,
             'ava' => $this->ava,
             'status' => $this->status,
+            // show mutual count
             'mutual' => isset($this->additional['mutual']) ? $this->getMutualFriendsOf(auth()->id())->count() : -1,
+            // url path
             'path' => isset($this->additional['path']) ? $this->additional['path'] : null
         ];
     }

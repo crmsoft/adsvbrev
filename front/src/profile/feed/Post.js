@@ -160,6 +160,17 @@ class Post extends Component{
 		})
 	}
 
+	hasMedia(text)
+	{
+		return (
+			text.indexOf('soundcloud.com/player') !== -1 || 
+			text.indexOf('www.twitch.tv') !== -1 || 
+			text.indexOf('player.twitch.tv') !== -1 || 
+			text.indexOf('https://youtu') !== -1 ||
+			text.indexOf('https://www.youtu') !== -1
+		);
+	}
+
     render()
     {
 		
@@ -167,11 +178,20 @@ class Post extends Component{
 		const {hasMore} = this.state;
 
 		let content  = (post.content);
+		let more = null;
 
-		if (hasMore)
+		if (hasMore && !this.hasMedia(content))
 		{
 			content = content.substr(0,240)
 			content = content.substr(0, Math.min(content.length, content.lastIndexOf(" ")))
+
+			more = (
+				<a 
+					className="more"
+					href="javascript:void(0)"
+					onClick={this.showAll.bind(this)}
+				>More...</a>
+			);
 		} // end if
 
 		content = placeEmoji(content);
@@ -184,14 +204,7 @@ class Post extends Component{
 				return (typeof c === 'string') ? urlify(c) : c;
 			})
 		} // end if
-
-		const more = hasMore ? (
-						<a 
-							className="more"
-							href="javascript:void(0)"
-							onClick={this.showAll.bind(this)}
-						>More...</a>
-					) : null
+			
         return (
             <div className="post">
 

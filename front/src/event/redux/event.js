@@ -13,18 +13,21 @@ const leave = event => {
         axios.post(`/event/leave/${event}`)
         .then(({data}) => {
             dispatch({
-                type: USER_LEAVE
+                type: USER_LEAVE,
+                data: data.data
             })
         })
     }
 }
 
-const join = event => {
+const join = (event, type) => {
     return dispatch => {
-        axios.post(`/event/join/${event}`)
+        axios.post(`/event/join/${event}`, {type:type})
         .then(({data}) => {
             dispatch({
-                type: USER_JOIN
+                type: USER_JOIN,
+                data: data.data,
+                as: type
             })
         })
     }

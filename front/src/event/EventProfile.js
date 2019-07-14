@@ -16,6 +16,7 @@ import Participants from './Participants';
 import headerStore from '../header/store';
 import FeedList from '../profile/feed';
 import Actions from './Actions';
+import SuggestedParticipants from './SuggestedParticipants';
 
 let unlisten = () => {}
 
@@ -59,7 +60,12 @@ class EeventProfileComponent extends Component{
 
     join()
     {
-        this.props.join(this.props.id);
+        !this.props.user_participant && this.props.join(this.props.id);
+    }
+
+    interested()
+    {
+        !this.props.user_participant && this.props.join(this.props.id, 'interested');
     }
 
     leave()
@@ -74,7 +80,7 @@ class EeventProfileComponent extends Component{
 
     render()
     {
-        const {description, poster, owner, feed, total_participant} = this.props;
+        const {description, poster, owner, feed, suggested} = this.props;
         const loggedIn = this.state.user;
         let editor = false;
 
@@ -107,6 +113,7 @@ class EeventProfileComponent extends Component{
                         <Actions 
                             onLeave={this.leave.bind(this)}
                             onJoin={this.join.bind(this)}
+                            onInterested={this.interested.bind(this)}
                             onUpdate={e => this.props.load(this.props.id)}
                             data={this.props}
                         />
@@ -145,60 +152,15 @@ class EeventProfileComponent extends Component{
 
                         </section>
 
-                        <section className="block">
-                            <div className="event-suggested-friend">
-                                <div className="event-suggested-friend-header">
-                                    Suggested Friends
-                                </div>
-                                <div className="event-suggested-friend-content">
-                                    <div className="event-suggested-friend-box">
-                                        <div className="suggested-friend-img-content">
-                                        <div className="suggested-friend-img">
-                                            <img src="../img/default_ava.png" alt=""/>
-                                        </div>
-                                        </div>
-                                        <div className="suggested-friend-name">
-                                            <small className="name">george Bovie</small>
-                                            <small>george44</small>
-                                        </div>
-                                        <div className="suggested-friend-button">
-                                            invite&nbsp;>
-                                        </div>
-                                    </div>
-                                    <div className="event-suggested-friend-box">
-                                        <div className="suggested-friend-img-content">
-                                            <div className="suggested-friend-img">
-                                                <img src="../img/default_ava.png" alt=""/>
-                                            </div>
-                                        </div>
-                                        <div className="suggested-friend-name">
-                                            <small className="name">george Bovie</small>
-                                            <small>george44</small>
-                                        </div>
-                                        <div className="suggested-friend-button">
-                                            invite&nbsp;>
-                                        </div>
-                                    </div>
-                                    <div className="event-suggested-friend-box">
-                                        <div className="suggested-friend-img-content">
-                                            <div className="suggested-friend-img">
-                                                <img src="../img/default_ava.png" alt=""/>
-                                            </div>
-                                        </div>
-                                        <div className="suggested-friend-name">
-                                            <small className="name">george Bovie</small>
-                                            <small>george44</small>
-                                        </div>
-                                        <div className="suggested-friend-button">
-                                            invite&nbsp;>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="event-suggested-all">
-                                    <a href="#">All Friends</a>
-                                </div>
-                            </div>
-                        </section>
+                        {
+                            (suggested ? suggested : []).length ? (
+                                <section className="block">
+                                    <SuggestedParticipants 
+                                        list={suggested}
+                                    />
+                                </section>
+                            ) : null
+                        }
 
                         <section className="block">
                             <div className="related-events">
@@ -269,7 +231,7 @@ const EeventProfile = connect(
     dispatch => {
         return {
             load: event => dispatch(load(event)),
-            join: event => dispatch(join(event)),
+            join: (event, type) => dispatch(join(event,type)),
             leave: event => dispatch(leave(event)),
             loadParticipants: event => dispatch(loadParticipants(event)),
             pushPost: post => dispatch(postAdded(post))

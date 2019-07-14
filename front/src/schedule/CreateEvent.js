@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Modal} from '../Modal';
+import {Modal, actions} from '../Modal';
 import Form from './Form';
 import axios from 'axios';
 
@@ -46,18 +46,6 @@ export default class CreateEvent extends Component{
 
     render()
     {   
-        const actions = [
-            {
-                title: `Close`,
-                onAction:this.doClose.bind(this),
-                class: `btn-empty`
-            },
-            {
-                title: `Create`,
-                onAction: this.onSave.bind(this),
-                class: `btn-full`
-            }
-        ];
 
         const {errors, open} = this.state;
 
@@ -69,7 +57,7 @@ export default class CreateEvent extends Component{
                     onClose={this.doClose.bind(this)}
                     title={'Create an event'}
                     actions={
-                        actions
+                        actions(this.doClose.bind(this), this.onSave.bind(this))
                     }
                 >
                     <Form 

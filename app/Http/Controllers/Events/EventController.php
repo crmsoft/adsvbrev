@@ -3,19 +3,28 @@
 namespace App\Http\Controllers\Events;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
-use \App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Events\EventCollection;
-use App\Http\Resources\UserList\UserCollection;
+use App\Http\Resources\Events\ParticipantCollection;
+use App\Http\Resources\UserList\User;
 use App\Http\Resources\Events\EventResource;
 use App\Http\Resources\Events\Event as StoreEventResponse;
 use App\Entities\Event;
 
+use App\Mail\NotifyNewEvent;
+
 class EventController extends Controller
 {
+    /**
+     * Get list of user events
+     * 
+     * @return Response
+     */
     public function list()
     {
         $user = auth()->user();
@@ -25,6 +34,13 @@ class EventController extends Controller
         return new EventCollection($events);
     }
 
+    /**
+     * Create an Event
+     * 
+     * @param Request $request
+     * 
+     * @return Response
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -97,6 +113,14 @@ class EventController extends Controller
         $event->poster = "public/{$users_dir}/{$name}";
 
         $event->save();
+
+        if (!$event->is_private)
+        {
+            foreach($user->friend as $friend)
+            {
+                Mail::to($friend)->send(new NotifyNewEvent($event, $friend));
+            } // end foreach
+        } // end if
 
         return new StoreEventResponse($event);
     }
@@ -211,10 +235,11 @@ class EventController extends Controller
      * 
      * @return Response
      */
-    public function join(Event $event)
+    public function join(Request $request, Event $event)
     {
         $user = auth()->user();
-        return $event->participants()->attach($user);
+        $result = $event->participants()->syncWithoutDetaching([$user->id => ['type' => $request->type == 'interested' ? 'interested':'attends']]);
+        return count($result['attached']) ? new User($user) : null;
     }
 
     /**
@@ -225,12 +250,19 @@ class EventController extends Controller
     public function leave(Event $event)
     {
         $user = auth()->user();
-        return $event->participants()->detach($user);
+        return $event->participants()->detach($user) == 1 ? new User($user) : null;
     }
 
-    public function listPartipicants(Event $event)
+    /**
+     * List event participants
+     * 
+     * @param Event $event
+     * 
+     * @return Response
+     */
+    public function listParticipants(Event $event)
     {
-        return new UserCollection(
+        return new ParticipantCollection(
             $event->participants
         );
     }

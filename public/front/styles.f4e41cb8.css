@@ -7959,6 +7959,12 @@ span.flatpickr-weekday {
   .dd-tooltip .popup-content > div {
     background-color: #14191C !important; }
 
+.dd-tooltip ul {
+  margin: 0;
+  padding: 0; }
+  .dd-tooltip ul li {
+    list-style: none; }
+
 .event-profile, .game-profile {
   display: flex;
   align-items: flex-end; }
@@ -8036,7 +8042,11 @@ span.flatpickr-weekday {
         color: #ff4800;
         margin: 0px; }
     .event-schedule .event-schedule-right .event-schedule-buttons {
-      margin: 15px 0px; }
+      margin: 51px 0px 45px; }
+      .event-schedule .event-schedule-right .event-schedule-buttons .event-schedule-leave {
+        padding: 5px;
+        color: #ffffff;
+        font-size: 12px; }
       .event-schedule .event-schedule-right .event-schedule-buttons .left-button {
         color: #CBCBCB;
         background: transparent;
@@ -8110,7 +8120,11 @@ span.flatpickr-weekday {
       padding: 0px 10px;
       height: 15px;
       line-height: 15px;
-      font-size: 13px; }
+      font-size: 13px;
+      width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
       .event-suggested-friend .event-suggested-friend-content .event-suggested-friend-box .suggested-friend-name small.name {
         font-size: 12px; }
   .event-suggested-friend .event-suggested-friend-content .event-suggested-friend-box .suggested-friend-button {
