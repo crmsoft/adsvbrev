@@ -44603,7 +44603,7 @@ var placeEmoji = function placeEmoji(text) {
     return {
       emoji: _react.default.createElement(_emojiMart.Emoji, {
         key: i,
-        size: 16,
+        sheetSize: 20,
         emoji: emo,
         set: "google"
       }),
@@ -77790,7 +77790,7 @@ function (_Component) {
         onSelect: this.insertEmoji.bind(this),
         tooltip: false,
         set: "google",
-        sheetSize: "16"
+        sheetSize: "20"
       })), _react.default.createElement("div", {
         className: "emoji",
         onClick: this.toggleEmoji.bind(this)
@@ -88723,7 +88723,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40225" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42507" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
