@@ -84922,6 +84922,112 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var Content = function Content(_ref) {
+  var event = _ref.event;
+  return _react.default.createElement(_reactTabs.Tabs, {
+    className: "mt-2 ml-2"
+  }, _react.default.createElement(_reactTabs.TabList, {
+    className: "nav nav-tabs"
+  }, _react.default.createElement(_reactTabs.Tab, {
+    selectedClassName: "active"
+  }, _react.default.createElement("a", {
+    href: "javascript:void(0);"
+  }, _react.default.createElement("span", {
+    className: "icon-info"
+  }), _react.default.createElement("span", {
+    className: "tab-title"
+  }, " Attenders"))), _react.default.createElement(_reactTabs.Tab, {
+    selectedClassName: "active"
+  }, _react.default.createElement("a", {
+    href: "javascript:void(0);"
+  }, _react.default.createElement("span", {
+    className: "icon-picture"
+  }), _react.default.createElement("span", {
+    className: "tab-title"
+  }, " Interested")))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
+    className: "container-fluid mt-3 event-user-list"
+  }, event.participants && event.participants.filter(function (u) {
+    return u.type === 'attends';
+  }).map(function (user) {
+    return _react.default.createElement("div", {
+      key: user.username,
+      className: "user-list-item"
+    }, _react.default.createElement(_reactRouterDom.Link, {
+      to: "/gg/".concat(user.username),
+      className: "d-flex"
+    }, _react.default.createElement("div", {
+      className: "user-list-ava"
+    }, _react.default.createElement("img", {
+      src: "".concat(user.ava)
+    })), _react.default.createElement("div", {
+      className: "user-list-user"
+    }, _react.default.createElement("span", {
+      style: {
+        fontWeight: 'bold'
+      }
+    }, user.full_name), _react.default.createElement("span", {
+      style: {
+        fontSize: '14px'
+      }
+    }, user.username))));
+  }))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
+    className: "container-fluid mt-3 event-user-list"
+  }, event.participants && event.participants.filter(function (u) {
+    return u.type === 'interested';
+  }).map(function (user) {
+    return _react.default.createElement("div", {
+      key: user.username,
+      className: "user-list-item"
+    }, _react.default.createElement(_reactRouterDom.Link, {
+      to: "/gg/".concat(user.username),
+      className: "d-flex"
+    }, _react.default.createElement("div", {
+      className: "user-list-ava"
+    }, _react.default.createElement("img", {
+      src: "".concat(user.ava)
+    })), _react.default.createElement("div", {
+      className: "user-list-user"
+    }, _react.default.createElement("span", {
+      style: {
+        fontWeight: 'bold'
+      }
+    }, user.full_name), _react.default.createElement("span", {
+      style: {
+        fontSize: '14px'
+      }
+    }, user.username))));
+  }))));
+};
+
+var OtherModuleContent = function OtherModuleContent(_ref2) {
+  var event = _ref2.event;
+  return _react.default.createElement("div", {
+    className: "container-fluid mt-3 event-user-list"
+  }, event.participants && event.participants.map(function (user) {
+    return _react.default.createElement("div", {
+      key: user.username,
+      className: "user-list-item"
+    }, _react.default.createElement(_reactRouterDom.Link, {
+      to: "/gg/".concat(user.username),
+      className: "d-flex"
+    }, _react.default.createElement("div", {
+      className: "user-list-ava"
+    }, _react.default.createElement("img", {
+      src: "".concat(user.ava)
+    })), _react.default.createElement("div", {
+      className: "user-list-user"
+    }, _react.default.createElement("span", {
+      style: {
+        fontWeight: 'bold'
+      }
+    }, user.full_name), _react.default.createElement("span", {
+      style: {
+        fontSize: '14px'
+      }
+    }, user.username))));
+  }));
+};
+
 var Participants =
 /*#__PURE__*/
 function (_Component) {
@@ -84979,7 +85085,8 @@ function (_Component) {
       }];
       var _this$props = this.props,
           event = _this$props.event,
-          title = _this$props.title;
+          title = _this$props.title,
+          page = _this$props.page;
       return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
         className: "header "
       }, _react.default.createElement("a", {
@@ -84994,79 +85101,11 @@ function (_Component) {
         onClose: this.closeModal.bind(this),
         actions: actions,
         title: "Participants"
-      }, _react.default.createElement(_reactTabs.Tabs, {
-        className: "mt-2 ml-2"
-      }, _react.default.createElement(_reactTabs.TabList, {
-        className: "nav nav-tabs"
-      }, _react.default.createElement(_reactTabs.Tab, {
-        selectedClassName: "active"
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0);"
-      }, _react.default.createElement("span", {
-        className: "icon-info"
-      }), _react.default.createElement("span", {
-        className: "tab-title"
-      }, " Attenders"))), _react.default.createElement(_reactTabs.Tab, {
-        selectedClassName: "active"
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0);"
-      }, _react.default.createElement("span", {
-        className: "icon-picture"
-      }), _react.default.createElement("span", {
-        className: "tab-title"
-      }, " Interested")))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
-        className: "container-fluid mt-3 event-user-list"
-      }, event.participants && event.participants.filter(function (u) {
-        return u.type === 'attends';
-      }).map(function (user) {
-        return _react.default.createElement("div", {
-          key: user.username,
-          className: "user-list-item"
-        }, _react.default.createElement(_reactRouterDom.Link, {
-          to: "/gg/".concat(user.username),
-          className: "d-flex"
-        }, _react.default.createElement("div", {
-          className: "user-list-ava"
-        }, _react.default.createElement("img", {
-          src: "".concat(user.ava)
-        })), _react.default.createElement("div", {
-          className: "user-list-user"
-        }, _react.default.createElement("span", {
-          style: {
-            fontWeight: 'bold'
-          }
-        }, user.full_name), _react.default.createElement("span", {
-          style: {
-            fontSize: '14px'
-          }
-        }, user.username))));
-      }))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
-        className: "container-fluid mt-3 event-user-list"
-      }, event.participants && event.participants.filter(function (u) {
-        return u.type === 'interested';
-      }).map(function (user) {
-        return _react.default.createElement("div", {
-          key: user.username,
-          className: "user-list-item"
-        }, _react.default.createElement(_reactRouterDom.Link, {
-          to: "/gg/".concat(user.username),
-          className: "d-flex"
-        }, _react.default.createElement("div", {
-          className: "user-list-ava"
-        }, _react.default.createElement("img", {
-          src: "".concat(user.ava)
-        })), _react.default.createElement("div", {
-          className: "user-list-user"
-        }, _react.default.createElement("span", {
-          style: {
-            fontWeight: 'bold'
-          }
-        }, user.full_name), _react.default.createElement("span", {
-          style: {
-            fontSize: '14px'
-          }
-        }, user.username))));
-      })))))), _react.default.createElement("div", {
+      }, page === 'event' ? _react.default.createElement(Content, {
+        event: event
+      }) : _react.default.createElement(OtherModuleContent, {
+        event: event
+      }))), _react.default.createElement("div", {
         className: "block-content"
       }, _react.default.createElement("div", {
         className: "friends"
@@ -85474,6 +85513,7 @@ function (_Component) {
         className: "block",
         id: "section-friends"
       }, _react.default.createElement(_Participants.default, {
+        page: 'event',
         title: "Joined",
         event: this.props,
         load: function load() {
@@ -88724,7 +88764,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39704" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44171" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
