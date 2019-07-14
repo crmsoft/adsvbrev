@@ -23,8 +23,8 @@ class ResourcePlainPost extends JsonResource
 
         switch ( $this->postable_type )
         {
-            case 'App\User'  : $poster = new User($this->user); break;
-            case 'App\Entities\Event' : $poster = new Event($this->event); break;
+            case 'App\User'  : $poster = new User($this->user); $poster->additional(['path' => 'gg']); break;
+            case 'App\Entities\Event' : $poster = new Event($this->event); $poster->additional(['path' => 'event']); break;
         } // end switch
 
         return [
