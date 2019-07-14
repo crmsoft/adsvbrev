@@ -76776,7 +76776,9 @@ var reducer = function reducer() {
         return Object.assign({}, state, {
           action: null,
           messenger: Object.assign({}, state.messenger, {
-            chat: chats,
+            chat: chats.sort(function (a, b) {
+              return a.unread < b.unread;
+            }),
             unread_chats: chats.reduce(function (count, chat) {
               return chat.unread ? ++count : count;
             }, 0)
@@ -88824,7 +88826,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44171" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37159" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
