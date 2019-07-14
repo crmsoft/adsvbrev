@@ -5,7 +5,59 @@ import axios from 'axios';
 
 import {Loading} from './general/Loading';
 
-const placeEmoji = text => {
+const placeEmoji = (str, result) => {
+
+    let start_index;
+    let length = str.length;
+    result = result ? result : [];
+
+    for(var cursor = 0; cursor < length; cursor++ )
+    {
+        let char = str[cursor];
+        
+        // no space in emoji tag
+        if (start_index && char === ' ')
+        {
+            result.push(str.substring(0, cursor));
+            return placeEmoji(str.substring(cursor, length), result);
+        } // end if
+
+        if (char === ':')
+        {
+            // terminating semicolon ?
+            if (start_index !== undefined)
+            {        
+                let emoji_tag = str.substring(start_index + 1, cursor);
+                let exists = emojiIndex.search(emoji_tag);
+
+                if (!exists || !exists.filter(emo => emo.id === emoji_tag).length)
+                {
+                    result.push(str.substring(0, cursor));
+                    return placeEmoji(str.substring(cursor, length), result);
+                } // end if
+
+                // we have something before 
+                if (start_index)
+                {
+                    result.push(
+                        str.substr(0, start_index)
+                    );
+                } // end if
+
+                result.push(<Emoji key={Math.random()+`_${emoji_tag}`} sheetSize={20} size={20} emoji={emoji_tag} set="google" />);
+                var next = str.substr(cursor+1, length);
+
+                return str[cursor + 1] ? placeEmoji(next, result) : result;
+            } else {                
+                start_index = cursor;
+            } // end if
+        } // end if
+    } // end for
+
+    result.push(str);
+
+    return result;
+/*
     const emojies = text.match(/\:[\S]*\:/g);
         
     if(!emojies)
@@ -20,7 +72,7 @@ const placeEmoji = text => {
         return matches && matches.filter(emo => emo.colons === emoji).length;
     }).map((emo, i) => {
         return {
-            emoji: <Emoji key={i} size={16} emoji={emo} set="google" />,
+            emoji: <Emoji key={i} sheetSize={20} size={20} emoji={emo} set="google" />,
             index: text.indexOf(emo),
             length: emo.length
         }
@@ -28,7 +80,7 @@ const placeEmoji = text => {
     
     /**
      * no emoji found in index !
-     */
+     *
     if (result.length === 0)
     {
         return text;
@@ -40,7 +92,7 @@ const placeEmoji = text => {
         // current to insert
         const emo = result[i];
 
-        // first item in message is not emojit
+        // first item in message is not emoji
         if(emo.index !== 0)
         {
             if(i === 0)
@@ -57,7 +109,7 @@ const placeEmoji = text => {
         r.push( emo.emoji );
     }
 
-    return r;
+    return r; */
 }
 
 String.prototype.nl2br = function() {

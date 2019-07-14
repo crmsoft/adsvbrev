@@ -143,6 +143,7 @@ class EeventProfileComponent extends Component{
                         <section className="block" id="section-friends">
 
                             <Participants 
+                                page={'event'}
                                 title={`Joined`}
                                 event={this.props}
                                 load={ () => {

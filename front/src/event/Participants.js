@@ -5,6 +5,116 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {Modal} from '../Modal/index';
 import User from '../profile/friends/partials/friend';
 
+
+const Content = ({
+    event
+}) => (
+    <Tabs className="mt-2 ml-2">
+        <TabList className="nav nav-tabs">
+            <Tab selectedClassName="active">
+                <a href="javascript:void(0);">
+                    <span className="icon-group"></span>
+                    <span className="tab-title">
+                        {" Attenders"}
+                    </span>
+                </a>
+            </Tab>
+
+            <Tab selectedClassName="active">
+                <a href="javascript:void(0);">
+                    <span className="icon-group"></span>
+                    <span className="tab-title">
+                        {" Interested"}
+                    </span>
+                </a>
+            </Tab>
+        </TabList>
+        <TabPanel> 
+            <div
+                className="container-fluid mt-3 event-user-list"
+            >
+                {
+                    event.participants && event.participants
+                    .filter(u => u.type === 'attends')
+                    .map(user => {
+                        return (
+                            <div 
+                                key={user.username}
+                                className="user-list-item">
+                                <Link to={`/gg/${user.username}`} className="d-flex">
+                                    <div className="user-list-ava">
+                                        <img src={`${user.ava}`}/>
+                                    </div>
+                                    <div className="user-list-user">
+                                        <span style={{fontWeight:'bold'}}>{user.full_name}</span>
+                                        <span style={{fontSize:'14px'}}>{user.username}</span>
+                                    </div>
+                                </Link>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </TabPanel>
+        <TabPanel> 
+            <div
+                className="container-fluid mt-3 event-user-list"
+            >
+                {
+                    event.participants && event.participants
+                    .filter(u => u.type === 'interested')
+                    .map(user => {
+                        return (
+                            <div 
+                                key={user.username}
+                                className="user-list-item">
+                                <Link to={`/gg/${user.username}`} className="d-flex">
+                                    <div className="user-list-ava">
+                                        <img src={`${user.ava}`}/>
+                                    </div>
+                                    <div className="user-list-user">
+                                        <span style={{fontWeight:'bold'}}>{user.full_name}</span>
+                                        <span style={{fontSize:'14px'}}>{user.username}</span>
+                                    </div>
+                                </Link>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </TabPanel>
+    </Tabs>
+)
+
+const OtherModuleContent = ({
+    event
+}) => (
+    <div
+        className="container-fluid mt-3 event-user-list"
+    >
+        {
+            event.participants && event.participants
+            .map(user => {
+                return (
+                    <div 
+                        key={user.username}
+                        className="user-list-item">
+                        <Link to={`/gg/${user.username}`} className="d-flex">
+                            <div className="user-list-ava">
+                                <img src={`${user.ava}`}/>
+                            </div>
+                            <div className="user-list-user">
+                                <span style={{fontWeight:'bold'}}>{user.full_name}</span>
+                                <span style={{fontSize:'14px'}}>{user.username}</span>
+                            </div>
+                        </Link>
+                    </div>
+                )
+            })
+        }
+    </div>
+)
+
 export default class Participants extends Component {
 
     state = {
@@ -40,7 +150,7 @@ export default class Participants extends Component {
                 class: `btn-empty`
             }
         ];
-        const {event, title} = this.props;
+        const {event, title, page} = this.props;
 
 
         return (
@@ -62,81 +172,7 @@ export default class Participants extends Component {
                         actions={actions}
                         title={`Participants`}
                     >
-                        <Tabs className="mt-2 ml-2">
-                            <TabList className="nav nav-tabs">
-                                <Tab selectedClassName="active">
-                                    <a href="javascript:void(0);">
-                                        <span className="icon-info"></span>
-                                        <span className="tab-title">
-                                            {" Attenders"}
-                                        </span>
-                                    </a>
-                                </Tab>
-
-                                <Tab selectedClassName="active">
-                                    <a href="javascript:void(0);">
-                                        <span className="icon-picture"></span>
-                                        <span className="tab-title">
-                                            {" Interested"}
-                                        </span>
-                                    </a>
-                                </Tab>
-                            </TabList>
-                            <TabPanel> 
-                                <div
-                                    className="container-fluid mt-3 event-user-list"
-                                >
-                                    {
-                                        event.participants && event.participants
-                                        .filter(u => u.type === 'attends')
-                                        .map(user => {
-                                            return (
-                                                <div 
-                                                    key={user.username}
-                                                    className="user-list-item">
-                                                    <Link to={`/gg/${user.username}`} className="d-flex">
-                                                        <div className="user-list-ava">
-                                                            <img src={`${user.ava}`}/>
-                                                        </div>
-                                                        <div className="user-list-user">
-                                                            <span style={{fontWeight:'bold'}}>{user.full_name}</span>
-                                                            <span style={{fontSize:'14px'}}>{user.username}</span>
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </TabPanel>
-                            <TabPanel> 
-                                <div
-                                    className="container-fluid mt-3 event-user-list"
-                                >
-                                    {
-                                        event.participants && event.participants
-                                        .filter(u => u.type === 'interested')
-                                        .map(user => {
-                                            return (
-                                                <div 
-                                                    key={user.username}
-                                                    className="user-list-item">
-                                                    <Link to={`/gg/${user.username}`} className="d-flex">
-                                                        <div className="user-list-ava">
-                                                            <img src={`${user.ava}`}/>
-                                                        </div>
-                                                        <div className="user-list-user">
-                                                            <span style={{fontWeight:'bold'}}>{user.full_name}</span>
-                                                            <span style={{fontSize:'14px'}}>{user.username}</span>
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </TabPanel>
-                        </Tabs>
+                        { page==='event' ?  <Content event={event}/> : <OtherModuleContent event={event}/>}
                     </Modal>
                 </div>
                 <div className="block-content">

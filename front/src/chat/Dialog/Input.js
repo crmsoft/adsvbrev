@@ -108,7 +108,7 @@ export default class Input extends Component{
                         onSelect={this.insertEmoji.bind(this)}
                         tooltip={false} 
                         set="google" 
-                        sheetSize="16" 
+                        sheetSize="20" 
                     />
                 </div>
                 <div className="emoji" onClick={this.toggleEmoji.bind(this)}>

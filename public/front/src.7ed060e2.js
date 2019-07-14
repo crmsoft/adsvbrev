@@ -44565,8 +44565,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -44585,64 +44583,126 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var placeEmoji = function placeEmoji(text) {
-  var emojies = text.match(/\:[\S]*\:/g);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  if (!emojies) {
-    return text;
-  } // end if
+var placeEmoji = function placeEmoji(str, result) {
+  var start_index;
+  var length = str.length;
+  result = result ? result : [];
 
+  for (var cursor = 0; cursor < length; cursor++) {
+    var char = str[cursor]; // no space in emoji tag
 
-  var result = emojies.filter(function (emoji) {
-    var matches = _emojiMart.emojiIndex.search(emoji.replace(/\:/g, ''));
-
-    return matches && matches.filter(function (emo) {
-      return emo.colons === emoji;
-    }).length;
-  }).map(function (emo, i) {
-    return {
-      emoji: _react.default.createElement(_emojiMart.Emoji, {
-        key: i,
-        sheetSize: 20,
-        size: 20,
-        emoji: emo,
-        set: "google"
-      }),
-      index: text.indexOf(emo),
-      length: emo.length
-    };
-  });
-  /**
-   * no emoji found in index !
-   */
-
-  if (result.length === 0) {
-    return text;
-  } // end if
+    if (start_index && char === ' ') {
+      result.push(str.substring(0, cursor));
+      return placeEmoji(str.substring(cursor, length), result);
+    } // end if
 
 
-  var r = [];
+    if (char === ':') {
+      // terminating semicolon ?
+      if (start_index !== undefined) {
+        var next;
 
-  for (var i = 0; i < result.length; i++) {
-    // current to insert
-    var emo = result[i]; // first item in message is not emojit
+        var _ret = function () {
+          var emoji_tag = str.substring(start_index + 1, cursor);
 
-    if (emo.index !== 0) {
-      if (i === 0) {
-        r.push(text.substring(0, emo.index));
+          var exists = _emojiMart.emojiIndex.search(emoji_tag);
+
+          if (!exists || !exists.filter(function (emo) {
+            return emo.id === emoji_tag;
+          }).length) {
+            result.push(str.substring(0, cursor));
+            return {
+              v: placeEmoji(str.substring(cursor, length), result)
+            };
+          } // end if
+          // we have something before 
+
+
+          if (start_index) {
+            result.push(str.substr(0, start_index));
+          } // end if
+
+
+          result.push(_react.default.createElement(_emojiMart.Emoji, {
+            key: Math.random() + "_".concat(emoji_tag),
+            sheetSize: 20,
+            size: 20,
+            emoji: emoji_tag,
+            set: "google"
+          }));
+          next = str.substr(cursor + 1, length);
+          return {
+            v: str[cursor + 1] ? placeEmoji(next, result) : result
+          };
+        }();
+
+        if (_typeof(_ret) === "object") return _ret.v;
       } else {
-        // prev emoji; to calculate previous emoji start index
-        var pemo = result[i - 1];
-        r.push(text.substring(pemo.index + pemo.length, emo.index));
+        start_index = cursor;
       } // end if
 
-    } // end if        
+    } // end if
+
+  } // end for
 
 
-    r.push(emo.emoji);
-  }
-
-  return r;
+  result.push(str);
+  return result;
+  /*
+      const emojies = text.match(/\:[\S]*\:/g);
+          
+      if(!emojies)
+      {
+          return text;
+      } // end if
+      
+      const result = emojies.filter(emoji => {
+          const matches = emojiIndex.search( emoji.replace(/\:/g, '') );
+  
+  
+          return matches && matches.filter(emo => emo.colons === emoji).length;
+      }).map((emo, i) => {
+          return {
+              emoji: <Emoji key={i} sheetSize={20} size={20} emoji={emo} set="google" />,
+              index: text.indexOf(emo),
+              length: emo.length
+          }
+      });  
+      
+      /**
+       * no emoji found in index !
+       *
+      if (result.length === 0)
+      {
+          return text;
+      } // end if
+      
+      let r = [];
+      for(let i=0; i<result.length; i++)
+      {
+          // current to insert
+          const emo = result[i];
+  
+          // first item in message is not emoji
+          if(emo.index !== 0)
+          {
+              if(i === 0)
+              {
+                  r.push( text.substring( 0, emo.index ) )
+              }
+              else
+              {
+                  // prev emoji; to calculate previous emoji start index
+                  const pemo = result[i-1];
+                  r.push( text.substring( pemo.index + pemo.length, emo.index  ) );
+              } // end if
+          }// end if        
+          r.push( emo.emoji );
+      }
+  
+      return r; */
 };
 
 exports.placeEmoji = placeEmoji;
@@ -84933,7 +84993,7 @@ var Content = function Content(_ref) {
   }, _react.default.createElement("a", {
     href: "javascript:void(0);"
   }, _react.default.createElement("span", {
-    className: "icon-info"
+    className: "icon-group"
   }), _react.default.createElement("span", {
     className: "tab-title"
   }, " Attenders"))), _react.default.createElement(_reactTabs.Tab, {
@@ -84941,7 +85001,7 @@ var Content = function Content(_ref) {
   }, _react.default.createElement("a", {
     href: "javascript:void(0);"
   }, _react.default.createElement("span", {
-    className: "icon-picture"
+    className: "icon-group"
   }), _react.default.createElement("span", {
     className: "tab-title"
   }, " Interested")))), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement("div", {
