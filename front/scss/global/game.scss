@@ -573,7 +573,7 @@
 .left-banner
 {
     position:relative;
-    paddimg-right:10px;
+    padding-right:10px;
     .banner-header
     {
         position: absolute;
@@ -614,3 +614,146 @@
         width: 100%;
     }
 }
+
+
+
+
+/* like button start  */
+
+.heart-pulse
+{
+    animation-name: heartpulse;
+    animation-duration: 2s;
+}
+.fa-heart, fa-users
+{
+    color:#ff4800;
+}
+
+.block-content
+{
+    border-radius: 3px;
+    background-color: #14191C;
+    padding: 10px;
+    overflow: hidden;
+    border: 1px solid #313131;
+}
+
+
+.menu
+{
+    ul
+    {
+
+        li
+        {
+            transition: all .2s ease-in;
+            -moz-transition: all .2s ease-in;
+            -webkit-transition: all .2s ease-in;
+            -ms-transition: all .2s ease-in;
+            &:hover
+            {
+                padding-left:5px;
+                transition: all .2s ease-in;
+                -moz-transition: all .2s ease-in;
+                -webkit-transition: all .2s ease-in;
+                -ms-transition: all .2s ease-in;
+                a
+                {
+                    span
+                    {
+                        font-size: 15.5px;
+                        margin-right: 20px;
+                        margin-left: 5px;
+                        transition: all .2s ease-in;
+                        -moz-transition: all .2s ease-in;
+                        -webkit-transition: all .2s ease-in;
+                        -ms-transition: all .2s ease-in;
+                        -webkit-transform: rotate(-45deg);
+                        -ms-transform: rotate(-45deg);
+                        -moz-transform: rotate(-45deg);
+                    }
+
+                }
+            }
+            a
+            {
+                color: $whitecolor;
+                text-decoration: none;
+                padding: 10px 0px;
+                span
+                {
+                    color:$mainColor;
+                    font-size: 15.5px;
+                    margin-right: 16px;
+                    transition: all .2s ease-in;
+                    -moz-transition: all .2s ease-in;
+                    -webkit-transition: all .2s ease-in;
+                    -ms-transition: all .2s ease-in;
+                }
+            }
+        }
+    }
+}
+/* menu animation finish  */
+
+
+
+/* about animation start  */
+.about-event
+{
+    display: flex;
+    .about-event-title
+    {
+        color:$mainColor;
+        flex-shrink: 1;
+        padding: 0px 2rem;
+        text-align: center;
+        white-space: nowrap;
+
+    }
+    .about-event-content
+    {
+        color:$whitecolor;
+    }
+    .about-event-button
+    {
+        .about-event-pencil
+        {
+            height: 25px;
+            width: 25px;
+            line-height: 25px;
+            text-align: center;
+            border-radius: 100%;
+            cursor:pointer;
+            transition: all .2s ease-in;
+            -moz-transition: all .2s ease-in;
+            -webkit-transition: all .2s ease-in;
+            -ms-transition: all .2s ease-in;
+
+            span
+            {
+                color:$whitecolor;
+                transition: all .2s ease-in;
+                -moz-transition: all .2s ease-in;
+                -webkit-transition: all .2s ease-in;
+                -ms-transition: all .2s ease-in;
+            }
+            &:hover
+            {
+                background: $sectionInnerColor;
+                transition: all .2s ease-in;
+                -moz-transition: all .2s ease-in;
+                -webkit-transition: all .2s ease-in;
+                -ms-transition: all .2s ease-in;
+
+                span
+                {
+                    color:$mainColor;
+
+                }
+            }
+        }
+    }
+}
+/* about animation finish   */

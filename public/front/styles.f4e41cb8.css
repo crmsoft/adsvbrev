@@ -12383,6 +12383,7 @@ span.flatpickr-weekday {
 
 .left-banner {
   position: relative;
+  padding-right: 10px;
 }
 .left-banner .banner-header {
   position: absolute;
@@ -12419,6 +12420,110 @@ span.flatpickr-weekday {
   width: 100%;
 }
 
+/* like button start  */
+.heart-pulse {
+  animation-name: heartpulse;
+  animation-duration: 2s;
+}
+
+.fa-heart, fa-users {
+  color: #ff4800;
+}
+
+.block-content {
+  border-radius: 3px;
+  background-color: #14191C;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid #313131;
+}
+
+.menu ul li {
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+.menu ul li:hover {
+  padding-left: 5px;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+.menu ul li:hover a span {
+  font-size: 15.5px;
+  margin-right: 20px;
+  margin-left: 5px;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+}
+.menu ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 0px;
+}
+.menu ul li a span {
+  color: #ff4800;
+  font-size: 15.5px;
+  margin-right: 16px;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+
+/* menu animation finish  */
+/* about animation start  */
+.about-event {
+  display: flex;
+}
+.about-event .about-event-title {
+  color: #ff4800;
+  flex-shrink: 1;
+  padding: 0px 2rem;
+  text-align: center;
+  white-space: nowrap;
+}
+.about-event .about-event-content {
+  color: #fff;
+}
+.about-event .about-event-button .about-event-pencil {
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+.about-event .about-event-button .about-event-pencil span {
+  color: #fff;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+.about-event .about-event-button .about-event-pencil:hover {
+  background: #484B52;
+  transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+}
+.about-event .about-event-button .about-event-pencil:hover span {
+  color: #ff4800;
+}
+
+/* about animation finish   */
 .select-games-banner {
   text-align: center;
   position: relative;
@@ -15347,4 +15452,85 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 .messenger-options .messenger-options-statuses .status:before {
   vertical-align: -5%;
   margin-right: 2px;
+}
+
+/** animates */
+/* like button start  */
+@keyframes heartpulse {
+  0% {
+    transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+  }
+  25% {
+    transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1);
+  }
+  50% {
+    transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+  }
+  100% {
+    transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1);
+  }
+}
+/* like button finish  */
+/* menu animation start  */
+@keyframes vibration {
+  0% {
+    transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+  }
+  25% {
+    transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+  }
+  50% {
+    transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+  }
+  100% {
+    transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+  }
 }

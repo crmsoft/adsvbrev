@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import {NavLink} from 'react-router-dom';
-import React from 'react';
+//import React from 'react';
 
 export default class Menu extends Component {
     render()
