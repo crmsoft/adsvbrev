@@ -148,7 +148,7 @@ const reducer = (state = initialState, action) => {
                 action: null,
                 messenger: {
                     ...state.messenger,
-                    chat: chats,
+                    chat: chats.sort((a,b) => a.unread < b.unread),
                     unread_chats: chats.reduce((count, chat) => {
                         return chat.unread ? (++count) : count;
                     }, 0)

@@ -1,3 +1,19 @@
+.event-page{
+    .about{
+        padding-top: 10px;
+        .title{
+            color:$mainColor;
+            flex-shrink: 1;
+            padding: 0px 2rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .content{
+            color:$white;
+        }
+    }
+}
+
 .event-profile{
     display: flex;
     align-items: flex-end;
@@ -43,6 +59,17 @@
     }
 
     .edit{
+        height: 25px;
+        width: 25px;
+        line-height: 25px;
+        text-align: center;
+        border-radius: 100%;
+
+        transition: all .2s ease-in;
+        -moz-transition: all .2s ease-in;
+        -webkit-transition: all .2s ease-in;
+        -ms-transition: all .2s ease-in;
+
         padding: 0;
         margin: 0;
 
@@ -58,6 +85,29 @@
         z-index: 1;
 
         cursor: pointer;
+
+        span
+        {
+            color:$whitecolor;
+            transition: all .2s ease-in;
+            -moz-transition: all .2s ease-in;
+            -webkit-transition: all .2s ease-in;
+            -ms-transition: all .2s ease-in;
+        }
+        &:hover
+        {
+            background: $sectionInnerColor;
+            transition: all .2s ease-in;
+            -moz-transition: all .2s ease-in;
+            -webkit-transition: all .2s ease-in;
+            -ms-transition: all .2s ease-in;
+
+            span
+            {
+                color:$mainColor;
+
+            }
+        }
 
         &:hover{
             opacity: 1;

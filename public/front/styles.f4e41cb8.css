@@ -7965,6 +7965,17 @@ span.flatpickr-weekday {
   .dd-tooltip ul li {
     list-style: none; }
 
+.event-page .about {
+  padding-top: 10px; }
+  .event-page .about .title {
+    color: #ff4800;
+    flex-shrink: 1;
+    padding: 0px 2rem;
+    text-align: center;
+    white-space: nowrap; }
+  .event-page .about .content {
+    color: #ffffff; }
+
 .event-profile, .game-profile {
   display: flex;
   align-items: flex-end; }
@@ -7995,6 +8006,15 @@ span.flatpickr-weekday {
     margin: 0;
     padding: 0; }
   .event-schedule .edit {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 100%;
+    transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
     padding: 0;
     margin: 0;
     border: 0;
@@ -8006,6 +8026,20 @@ span.flatpickr-weekday {
     top: 10px;
     z-index: 1;
     cursor: pointer; }
+    .event-schedule .edit span {
+      color: #fff;
+      transition: all .2s ease-in;
+      -moz-transition: all .2s ease-in;
+      -webkit-transition: all .2s ease-in;
+      -ms-transition: all .2s ease-in; }
+    .event-schedule .edit:hover {
+      background: #484B52;
+      transition: all .2s ease-in;
+      -moz-transition: all .2s ease-in;
+      -webkit-transition: all .2s ease-in;
+      -ms-transition: all .2s ease-in; }
+      .event-schedule .edit:hover span {
+        color: #ff4800; }
     .event-schedule .edit:hover {
       opacity: 1; }
   .event-schedule .event-schedule-left {
@@ -9556,16 +9590,20 @@ nav.user-profile {
   .menu ul {
     padding: 0; }
     .menu ul li {
+      transition: all .2s ease-in;
+      -moz-transition: all .2s ease-in;
+      -webkit-transition: all .2s ease-in;
+      -ms-transition: all .2s ease-in;
       list-style: none;
       padding: 0 10px; }
       .menu ul li a {
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 0px;
         position: relative;
         overflow: hidden;
-        padding: 10px;
         line-height: 0;
         display: block;
-        text-decoration: none;
-        color: #CBCBCB;
         text-transform: uppercase; }
         .menu ul li a .icon {
           color: #ff4800; }
@@ -9573,6 +9611,13 @@ nav.user-profile {
           font-size: 15.5px;
           margin-right: 10px; }
         .menu ul li a span {
+          color: #ff4800;
+          font-size: 15.5px;
+          margin-right: 16px;
+          transition: all .2s ease-in;
+          -moz-transition: all .2s ease-in;
+          -webkit-transition: all .2s ease-in;
+          -ms-transition: all .2s ease-in;
           width: 15px;
           display: inline-block;
           text-align: center; }
@@ -9600,6 +9645,23 @@ nav.user-profile {
           margin-right: 10px; }
         .menu ul li a .icon-binocolo {
           margin-right: 10px; }
+      .menu ul li:hover {
+        padding-left: 5px;
+        transition: all .2s ease-in;
+        -moz-transition: all .2s ease-in;
+        -webkit-transition: all .2s ease-in;
+        -ms-transition: all .2s ease-in; }
+        .menu ul li:hover a span {
+          font-size: 15.5px;
+          margin-right: 20px;
+          margin-left: 5px;
+          transition: all .2s ease-in;
+          -moz-transition: all .2s ease-in;
+          -webkit-transition: all .2s ease-in;
+          -ms-transition: all .2s ease-in;
+          -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+          -moz-transform: rotate(-45deg); }
 
 /** Advertisement */
 .left-banner {
@@ -9934,10 +9996,13 @@ nav.user-profile {
       color: #ff4800; }
       .post .post-content .post-actions .icon.like span:first-child {
         display: none; }
-      .post .post-content .post-actions .icon.like.active span:last-child {
-        display: none; }
-      .post .post-content .post-actions .icon.like.active span:first-child {
-        display: inline-block; }
+      .post .post-content .post-actions .icon.like.active {
+        animation-name: pulse;
+        animation-duration: 2s; }
+        .post .post-content .post-actions .icon.like.active span:last-child {
+          display: none; }
+        .post .post-content .post-actions .icon.like.active span:first-child {
+          display: inline-block; }
     .post .post-content .post-actions > span {
       margin: 5px;
       display: inline-block; }
@@ -11003,3 +11068,74 @@ nav.user-profile {
       .messenger-options .messenger-options-statuses .status:before {
         vertical-align: -5%;
         margin-right: 2px; }
+
+/** Animation */
+@keyframes pulse {
+  0% {
+    transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -webkit-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -moz-transform: scale(1.5); }
+  25% {
+    transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -webkit-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1); }
+  50% {
+    transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -webkit-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -moz-transform: scale(1.5); }
+  100% {
+    transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -webkit-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+/* like button finish  */
+/* menu animation start  */
+@keyframes vibrate {
+  0% {
+    transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg); }
+  25% {
+    transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg); }
+  50% {
+    transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg); }
+  100% {
+    transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg); } }

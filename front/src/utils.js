@@ -18,8 +18,7 @@ const placeEmoji = (str, result) => {
         // no space in emoji tag
         if (start_index && char === ' ')
         {
-            result.push(str.substring(0, cursor));
-            return placeEmoji(str.substring(cursor, length), result);
+            start_index = undefined;
         } // end if
 
         if (char === ':')

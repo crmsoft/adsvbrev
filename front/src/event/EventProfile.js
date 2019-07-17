@@ -90,7 +90,7 @@ class EeventProfileComponent extends Component{
         } // end if
         
         return (
-            <div>
+            <div className="event-page">
                 <nav className="user-profile event-profile"
                     style={{backgroundImage: `url(${poster})`}}
                 >

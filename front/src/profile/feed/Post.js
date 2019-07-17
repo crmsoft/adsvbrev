@@ -195,6 +195,7 @@ class Post extends Component{
 		} // end if
 
 		content = placeEmoji(content);
+console.log(content);
 
 		if (typeof(content) === 'string')
 		{

@@ -44594,8 +44594,7 @@ var placeEmoji = function placeEmoji(str, result) {
     var char = str[cursor]; // no space in emoji tag
 
     if (start_index && char === ' ') {
-      result.push(str.substring(0, cursor));
-      return placeEmoji(str.substring(cursor, length), result);
+      start_index = undefined;
     } // end if
 
 
@@ -47244,6 +47243,7 @@ function (_Component) {
 
 
       content = (0, _utils.placeEmoji)(content);
+      console.log(content);
 
       if (typeof content === 'string') {
         content = (0, _utils.urlify)(content);
@@ -84747,9 +84747,15 @@ function (_Component) {
     key: "render",
     value: function render() {
       var description = this.props.description;
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("p", {
-        className: "p-2 m-0"
-      }, description));
+      return _react.default.createElement("div", {
+        className: "row about"
+      }, _react.default.createElement("div", {
+        className: "col-auto title"
+      }, "About Event"), _react.default.createElement("div", {
+        className: "col-auto content"
+      }, _react.default.createElement("p", {
+        className: "m-0"
+      }, description)));
     }
   }]);
 
@@ -85536,7 +85542,9 @@ function (_Component) {
       } // end if
 
 
-      return _react.default.createElement("div", null, _react.default.createElement("nav", {
+      return _react.default.createElement("div", {
+        className: "event-page"
+      }, _react.default.createElement("nav", {
         className: "user-profile event-profile",
         style: {
           backgroundImage: "url(".concat(poster, ")")
@@ -88826,7 +88834,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42353" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
