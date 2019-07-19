@@ -33,7 +33,7 @@ class EventResource extends JsonResource
             'is_owner' => $is_owner,
             'related' => new GroupCollection($this->games),
             'suggested' => ($user_participant || $is_owner) ? new UserCollection(
-                $this->user->friend()
+                auth()->user()->friend()
                 ->whereNotIn('users.id', $this->participants->pluck('id'))
                 ->take(3)->inRandomOrder()->get()
             ) : [],
