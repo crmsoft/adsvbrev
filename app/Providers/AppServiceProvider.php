@@ -9,6 +9,7 @@ use Log;
 
 use App\Entities\Comment;
 use App\Entities\UserNotification;
+use App\Entities\Invitation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Comment::observe(\App\Observers\CommentObserver::class);
+        Invitation::observe(\App\Observers\InvitationObserver::class);
         UserNotification::observe(\App\Observers\UserNotificationObserver::class);
         // DB::listen(function($query) {
         //     Log::info(

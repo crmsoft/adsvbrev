@@ -15,6 +15,7 @@ use App\Http\Resources\UserList\User;
 use App\Http\Resources\Events\EventResource;
 use App\Http\Resources\Events\Event as StoreEventResponse;
 use App\Entities\Event;
+use App\Entities\Invitation;
 
 use App\Mail\NotifyNewEvent;
 
@@ -265,5 +266,41 @@ class EventController extends Controller
         return new ParticipantCollection(
             $event->participants
         );
+    }
+
+    /**
+     * User invites friend to join an event
+     * 
+     * @param Request $request
+     * @param Event $event
+     * 
+     * @return Response
+     */
+    public function inviteUser(Request $request, Event $event)
+    {
+        $request->validate([
+            'username' => ['required']
+        ]);
+
+        $user = auth()->user();
+        $friend = $user->friend()->where('username', $request->username)->first();
+
+        if (!$friend)
+        {
+            abort(404);
+        } // end if
+        
+        if (Invitation::where('initiator_id', $user->id)->where('to_id', $event->id)->count())
+        {
+            return response(null, 302);
+        } // end if
+
+        $invitation = new Invitation;
+        $invitation->initiator()->associate($user);
+        $invitation->user()->associate($friend);
+        $invitation->to()->associate($event);
+        $invitation->save();
+
+        return 1;
     }
 }

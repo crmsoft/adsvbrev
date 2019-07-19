@@ -40,10 +40,14 @@ class NotificationResource extends JsonResource
      */
     public function toArray($request)
     {
-        $message = 'Not known...';
+        $message = $this->message;
         $user = $this->user;
         $type = 'unknown';
         $main_subject = $this->notifiable;
+        $title = null;
+
+        // cherry pick data
+        $extra_data = [];
 
         if ($this->skip)
         {
@@ -58,7 +62,8 @@ class NotificationResource extends JsonResource
 
                 if ($this->notifiable->commentable_type == 'App\Post') 
                 {
-                    $user = $this->notifiable->creator;
+                    $user = new User($this->notifiable->creator);
+                    $title = $user->full_name;
                     if ($this->notifiable->parent_id == null)
                     {
                         $message = 'commented your post';
@@ -80,7 +85,8 @@ class NotificationResource extends JsonResource
                     })->first();
 
                     $reaction_type = $reaction->type->name;
-                    $user = $reaction->reacter->reacterable;
+                    $user = new User($reaction->reacter->reacterable);
+                    $title = $user->full_name;
                     
                     $main_subject = $subject->reactable;
                     
@@ -103,16 +109,25 @@ class NotificationResource extends JsonResource
                     } // end if
                 } // end if
             } break;
+            case 'App\Entities\Invitation' : {
+                $user = new User($main_subject->initiator);
+                $type = 'event';
+                $extra_data = [
+                    'id' => $main_subject->to->hash,
+                    'participant' => !!$main_subject->to->userParticipants()
+                ];
+            } break;
         }
 
         return [
-            'id' => $this->id,
             'message' => $message,
             'time' => $this->created_at->diffForHumans(null, true, true),
-            'user' => new User($user),
+            'title' => $title,
+            'user' => $user,
             'viewed' => (bool) $this->viewed,
             'type' => $type,
-            'target' => $main_subject->hash
+            'target' => $main_subject->hash,
+            'data' => $extra_data
         ];
     }
 }

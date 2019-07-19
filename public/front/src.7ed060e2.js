@@ -47243,7 +47243,6 @@ function (_Component) {
 
 
       content = (0, _utils.placeEmoji)(content);
-      console.log(content);
 
       if (typeof content === 'string') {
         content = (0, _utils.urlify)(content);
@@ -82537,7 +82536,6 @@ function (_Component) {
           }, function () {
             var parent = _this3.containerRef.current.parentNode;
             var childs = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message')).reverse();
-            console.log(_this3.state.beforePull, childs[_this3.state.beforePull]);
             childs[_this3.state.beforePull] && childs[_this3.state.beforePull].scrollIntoView();
           });
         });
@@ -83275,7 +83273,190 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Followers;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/chat/sounds/NewNotification.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FETCH_PARTICIPANTS = exports.USER_LEAVE = exports.USER_JOIN = exports.FETCH_DONE = exports.postAdded = exports.loadParticipants = exports.leave = exports.join = exports.load = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _actions = require("../../post-add/redux/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOADING = 'LOADING';
+var FETCH_DONE = 'FETCH_DONE';
+exports.FETCH_DONE = FETCH_DONE;
+var USER_JOIN = 'USER_JOIN';
+exports.USER_JOIN = USER_JOIN;
+var USER_LEAVE = 'USER_LEAVE';
+exports.USER_LEAVE = USER_LEAVE;
+var FETCH_PARTICIPANTS = 'FETCH_PARTICIPANTS';
+exports.FETCH_PARTICIPANTS = FETCH_PARTICIPANTS;
+
+var leave = function leave(event) {
+  return function (dispatch) {
+    _axios.default.post("/event/leave/".concat(event)).then(function (_ref) {
+      var data = _ref.data;
+      dispatch({
+        type: USER_LEAVE,
+        data: data.data
+      });
+    });
+  };
+};
+
+exports.leave = leave;
+
+var join = function join(event, type, reduce) {
+  return function (dispatch) {
+    _axios.default.post("/event/join/".concat(event), {
+      type: type
+    }).then(function (_ref2) {
+      var data = _ref2.data;
+      !reduce && dispatch({
+        type: USER_JOIN,
+        data: data.data,
+        as: type
+      });
+    });
+  };
+};
+
+exports.join = join;
+
+var load = function load(event) {
+  return function (dispatch) {
+    dispatch({
+      type: LOADING
+    });
+
+    _axios.default.get("/event/show/".concat(event)).then(function (_ref3) {
+      var data = _ref3.data;
+      dispatch({
+        type: FETCH_DONE,
+        data: data.data
+      });
+    });
+  };
+};
+
+exports.load = load;
+
+var loadParticipants = function loadParticipants(event) {
+  return function (dispatch) {
+    _axios.default.get("/event/participants/".concat(event)).then(function (_ref4) {
+      var data = _ref4.data;
+      dispatch({
+        type: FETCH_PARTICIPANTS,
+        data: data
+      });
+    });
+  };
+};
+
+exports.loadParticipants = loadParticipants;
+
+var postAdded = function postAdded(post) {
+  return function (dispatch) {
+    dispatch({
+      type: _actions.POST_ADDED,
+      data: post
+    });
+  };
+};
+
+exports.postAdded = postAdded;
+},{"axios":"../../node_modules/axios/index.js","../../post-add/redux/actions":"../src/post-add/redux/actions.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _event = require("./event");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case _event.FETCH_DONE:
+      {
+        return Object.assign({}, action.data);
+      }
+
+    case _event.USER_JOIN:
+      {
+        return Object.assign({}, state, {
+          random: action.data && state.random.length < 6 ? [].concat(_toConsumableArray(state.random), [action.data]) : state.random,
+          user_participant: true,
+          user_participant_as: action.as === 'interested' ? 'interested' : 'attends',
+          total_participant: action.data ? state.total_participant + 1 : state.total_participant
+        });
+      }
+
+    case _event.USER_LEAVE:
+      {
+        return Object.assign({}, state, {
+          user_participant: false,
+          user_participant_as: null,
+          random: action.data && state.random.length ? state.random.filter(function (u) {
+            return u.username !== action.data.username;
+          }) : state.random,
+          total_participant: action.data ? state.total_participant - 1 : state.total_participant
+        });
+      }
+
+    case _event.FETCH_PARTICIPANTS:
+      {
+        return Object.assign({}, state, {
+          participants: _toConsumableArray(action.data.data)
+        });
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./event":"../src/event/redux/event.js"}],"../src/event/redux/store.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxLogger = require("redux-logger");
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _logger = new _reduxLogger.createLogger({
+  collapsed: true
+});
+
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
+var _default = store;
+exports.default = _default;
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/chat/sounds/NewNotification.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -83333,7 +83514,7 @@ function () {
 var player = new NewNotification();
 var _default = player;
 exports.default = _default;
-},{}],"../src/header/Notification.js":[function(require,module,exports) {
+},{}],"../src/header/notifications/Event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -83343,17 +83524,114 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRedux = require("react-redux");
+
+var _event = require("../../event/redux/event");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var EventComponent = function EventComponent(_ref) {
+  var not = _ref.not,
+      index = _ref.index,
+      join = _ref.join,
+      id = _ref.id,
+      user_participant = _ref.user_participant;
+
+  var _useState = (0, _react.useState)(not.data.participant || id === not.data.id && user_participant),
+      _useState2 = _slicedToArray(_useState, 2),
+      participant = _useState2[0],
+      setParticipant = _useState2[1];
+
+  return _react.default.createElement("li", {
+    className: "user ".concat(not.type),
+    key: index
+  }, _react.default.createElement("div", {
+    className: not.viewed ? 'row' : 'row unread'
+  }, _react.default.createElement("div", {
+    className: "col-auto align-self-center p-0"
+  }, _react.default.createElement("div", {
+    className: "notification-info text-center"
+  }, _react.default.createElement("div", {
+    className: "icon-".concat(not.type)
+  }), _react.default.createElement("span", {
+    className: "notification-time"
+  }, not.time))), _react.default.createElement("div", {
+    className: "col p-0"
+  }, _react.default.createElement("a", {
+    className: "user-list-item d-inline-flex"
+  }, _react.default.createElement("div", {
+    className: "ava-wrapper"
+  }, _react.default.createElement("div", {
+    className: "status offline"
+  }), _react.default.createElement("div", {
+    className: "user-list-ava"
+  }, _react.default.createElement("img", {
+    src: not.user.ava
+  }))), _react.default.createElement("div", {
+    className: "user-list-user"
+  }, _react.default.createElement("span", {
+    className: "user-list-username"
+  }, not.message, "\xA0", _react.default.createElement("span", {
+    className: participant ? 'd-none' : ''
+  }, _react.default.createElement("span", {
+    className: "btn-link",
+    onClick: function onClick(e) {
+      return !setParticipant(true) && join(not.data.id, 'interested', id !== not.data.id);
+    }
+  }, "Interested"), "/", _react.default.createElement("span", {
+    className: "btn-link",
+    onClick: function onClick(e) {
+      return !setParticipant(true) && join(not.data.id, undefined, id !== not.data.id);
+    }
+  }, "Attending"))))))));
+};
+
+var _default = (0, _reactRedux.connect)(function (state) {
+  return Object.assign({}, state);
+}, function (dispatch) {
+  return {
+    join: function join(event, type, dsp) {
+      return dispatch((0, _event.join)(event, type, dsp));
+    }
+  };
+})(EventComponent);
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../../event/redux/event":"../src/event/redux/event.js"}],"../src/header/Notification.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _store = _interopRequireDefault(require("../event/redux/store"));
+
 var _reactRouterDom = require("react-router-dom");
 
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _store = _interopRequireDefault(require("../socket/redux/store"));
+var _store2 = _interopRequireDefault(require("../socket/redux/store"));
 
 var _events = require("../socket/redux/events");
 
 var _NewNotification = _interopRequireDefault(require("../chat/sounds/NewNotification"));
+
+var _Event = _interopRequireDefault(require("./notifications/Event"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -83410,8 +83688,8 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.socketSubscription = _store.default.subscribe(function () {
-        var state = _store.default.getState();
+      this.socketSubscription = _store2.default.subscribe(function () {
+        var state = _store2.default.getState();
 
         if (state.recieved === _events.NOTIFICATION) {
           _NewNotification.default.play();
@@ -83430,23 +83708,19 @@ function (_Component) {
 
     }
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
+    key: "loadNotifications",
+    value: function loadNotifications() {
       var _this3 = this;
 
-      if (this.state.load) {
-        _axios.default.get("/notification/list").then(function (response) {
-          return _this3.setState(function () {
-            return {
-              load: false,
-              list: response.data.data
-            };
-          }, function () {
-            _this3.props.clear();
-          });
+      _axios.default.get("/notification/list").then(function (response) {
+        return _this3.setState(function () {
+          return {
+            list: response.data.data
+          };
+        }, function () {
+          _this3.props.clear();
         });
-      } // end if
-
+      });
     }
   }, {
     key: "onClose",
@@ -83467,9 +83741,7 @@ function (_Component) {
         className: "followers-popup"
       }, _react.default.createElement(_reactjsPopup.default, {
         onOpen: function onOpen(e) {
-          return _this4.setState({
-            load: true
-          });
+          return _this4.loadNotifications();
         },
         modal: false,
         overlayStyle: {
@@ -83482,40 +83754,17 @@ function (_Component) {
       }, "Notifications"), _react.default.createElement("ul", {
         className: "notification-list"
       }, list.map(function (not, index) {
-        var user = not.user;
-        return _react.default.createElement("li", {
-          className: "user ".concat(not.type),
-          key: index
-        }, _react.default.createElement("div", {
-          className: not.viewed ? 'row' : 'row unread'
-        }, _react.default.createElement("div", {
-          className: "col-auto align-self-center p-0"
-        }, _react.default.createElement("div", {
-          className: "notification-info text-center"
-        }, _react.default.createElement("div", {
-          className: "icon-".concat(not.type)
-        }), _react.default.createElement("span", {
-          className: "notification-time"
-        }, not.time))), _react.default.createElement("div", {
-          className: "col p-0"
-        }, _react.default.createElement(_reactRouterDom.Link, {
-          to: "#p=".concat(not.target),
-          className: "user-list-item d-inline-flex"
-        }, _react.default.createElement("div", {
-          className: "ava-wrapper"
-        }, _react.default.createElement("div", {
-          className: "status offline"
-        }), _react.default.createElement("div", {
-          className: "user-list-ava"
-        }, _react.default.createElement("img", {
-          src: user.ava
-        }))), _react.default.createElement("div", {
-          className: "user-list-user"
-        }, _react.default.createElement("span", {
-          className: "user-list-user-name"
-        }, user.full_name), _react.default.createElement("span", {
-          className: "user-list-username"
-        }, not.message))))));
+        return not.type === 'liked' || not.type === 'comment' || not.type === 'shared' ? _react.default.createElement(TypeSharedComment, {
+          key: index,
+          index: index,
+          not: not
+        }) : _react.default.createElement(_reactRedux.Provider, {
+          key: index,
+          store: _store.default
+        }, _react.default.createElement(_Event.default, {
+          index: index,
+          not: not
+        }));
       })))));
     }
   }]);
@@ -83524,7 +83773,45 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Notification;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/sounds/NewNotification":"../src/chat/sounds/NewNotification.js"}],"../src/header/index.js":[function(require,module,exports) {
+
+var TypeSharedComment = function TypeSharedComment(_ref) {
+  var not = _ref.not,
+      index = _ref.index;
+  return _react.default.createElement("li", {
+    className: "user ".concat(not.type),
+    key: index
+  }, _react.default.createElement("div", {
+    className: not.viewed ? 'row' : 'row unread'
+  }, _react.default.createElement("div", {
+    className: "col-auto align-self-center p-0"
+  }, _react.default.createElement("div", {
+    className: "notification-info text-center"
+  }, _react.default.createElement("div", {
+    className: "icon-".concat(not.type)
+  }), _react.default.createElement("span", {
+    className: "notification-time"
+  }, not.time))), _react.default.createElement("div", {
+    className: "col p-0"
+  }, _react.default.createElement(_reactRouterDom.Link, {
+    to: "#p=".concat(not.target),
+    className: "user-list-item d-inline-flex"
+  }, _react.default.createElement("div", {
+    className: "ava-wrapper"
+  }, _react.default.createElement("div", {
+    className: "status offline"
+  }), _react.default.createElement("div", {
+    className: "user-list-ava"
+  }, _react.default.createElement("img", {
+    src: not.user.ava
+  }))), _react.default.createElement("div", {
+    className: "user-list-user"
+  }, _react.default.createElement("span", {
+    className: "user-list-user-name"
+  }, not.title), _react.default.createElement("span", {
+    className: "user-list-username"
+  }, not.message))))));
+};
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../event/redux/store":"../src/event/redux/store.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/sounds/NewNotification":"../src/chat/sounds/NewNotification.js","./notifications/Event":"../src/header/notifications/Event.js"}],"../src/header/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84605,104 +84892,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Schedule;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.FETCH_PARTICIPANTS = exports.USER_LEAVE = exports.USER_JOIN = exports.FETCH_DONE = exports.postAdded = exports.loadParticipants = exports.leave = exports.join = exports.load = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _actions = require("../../post-add/redux/actions");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var LOADING = 'LOADING';
-var FETCH_DONE = 'FETCH_DONE';
-exports.FETCH_DONE = FETCH_DONE;
-var USER_JOIN = 'USER_JOIN';
-exports.USER_JOIN = USER_JOIN;
-var USER_LEAVE = 'USER_LEAVE';
-exports.USER_LEAVE = USER_LEAVE;
-var FETCH_PARTICIPANTS = 'FETCH_PARTICIPANTS';
-exports.FETCH_PARTICIPANTS = FETCH_PARTICIPANTS;
-
-var leave = function leave(event) {
-  return function (dispatch) {
-    _axios.default.post("/event/leave/".concat(event)).then(function (_ref) {
-      var data = _ref.data;
-      dispatch({
-        type: USER_LEAVE,
-        data: data.data
-      });
-    });
-  };
-};
-
-exports.leave = leave;
-
-var join = function join(event, type) {
-  return function (dispatch) {
-    _axios.default.post("/event/join/".concat(event), {
-      type: type
-    }).then(function (_ref2) {
-      var data = _ref2.data;
-      dispatch({
-        type: USER_JOIN,
-        data: data.data,
-        as: type
-      });
-    });
-  };
-};
-
-exports.join = join;
-
-var load = function load(event) {
-  return function (dispatch) {
-    dispatch({
-      type: LOADING
-    });
-
-    _axios.default.get("/event/show/".concat(event)).then(function (_ref3) {
-      var data = _ref3.data;
-      dispatch({
-        type: FETCH_DONE,
-        data: data.data
-      });
-    });
-  };
-};
-
-exports.load = load;
-
-var loadParticipants = function loadParticipants(event) {
-  return function (dispatch) {
-    _axios.default.get("/event/participants/".concat(event)).then(function (_ref4) {
-      var data = _ref4.data;
-      dispatch({
-        type: FETCH_PARTICIPANTS,
-        data: data
-      });
-    });
-  };
-};
-
-exports.loadParticipants = loadParticipants;
-
-var postAdded = function postAdded(post) {
-  return function (dispatch) {
-    dispatch({
-      type: _actions.POST_ADDED,
-      data: post
-    });
-  };
-};
-
-exports.postAdded = postAdded;
-},{"axios":"../../node_modules/axios/index.js","../../post-add/redux/actions":"../src/post-add/redux/actions.js"}],"../src/event/AboutTab.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/AboutTab.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85347,12 +85537,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _default;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var Suggested = function Suggested(_ref) {
-  var user = _ref.user;
+  var user = _ref.user,
+      onInvite = _ref.onInvite;
   return _react.default.createElement("div", {
     className: "event-suggested-friend-box"
   }, _react.default.createElement("div", {
@@ -85366,30 +85569,54 @@ var Suggested = function Suggested(_ref) {
     className: "suggested-friend-name"
   }, _react.default.createElement("small", {
     className: "name"
-  }, user.first_name), _react.default.createElement("small", null, user.username)), _react.default.createElement("div", {
+  }, user.first_name), _react.default.createElement("small", null, user.username)), user.invited ? null : _react.default.createElement("div", {
+    onClick: function onClick(e) {
+      return onInvite(user.username);
+    },
     className: "suggested-friend-button"
   }, "invite\xA0>"));
 };
 
 function _default(_ref2) {
-  var list = _ref2.list;
+  var list = _ref2.list,
+      event = _ref2.event;
+
+  var _useState = (0, _react.useState)(list),
+      _useState2 = _slicedToArray(_useState, 2),
+      users = _useState2[0],
+      setUser = _useState2[1];
+
+  var onInvite = function onInvite(username) {
+    setUser(users.map(function (user) {
+      user.invited = user.invited || username === user.username;
+      return user;
+    }));
+
+    _axios.default.post("/event/".concat(event, "/invite"), {
+      username: username
+    });
+  };
+
   return _react.default.createElement("div", {
     className: "event-suggested-friend"
   }, _react.default.createElement("div", {
     className: "event-suggested-friend-header"
   }, "Suggested Friends"), _react.default.createElement("div", {
     className: "event-suggested-friend-content"
-  }, list.map(function (user) {
+  }, users.map(function (user) {
     return _react.default.createElement(Suggested, {
+      key: user.username,
+      onInvite: onInvite,
       user: user
     });
   })), _react.default.createElement("div", {
     className: "event-suggested-all"
   }, _react.default.createElement("a", {
+    className: users.length === 3 ? '' : 'd-none',
     href: "#"
   }, "All Friends")));
 }
-},{"react":"../node_modules/react/index.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js"}],"../src/event/EventProfile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85447,23 +85674,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var unlisten = function unlisten() {};
 
-var EeventProfileComponent =
+var EventProfileComponent =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(EeventProfileComponent, _Component);
+  _inherits(EventProfileComponent, _Component);
 
-  function EeventProfileComponent() {
+  function EventProfileComponent() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, EeventProfileComponent);
+    _classCallCheck(this, EventProfileComponent);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(EeventProfileComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(EventProfileComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       user: undefined
@@ -85472,7 +85699,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(EeventProfileComponent, [{
+  _createClass(EventProfileComponent, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (this.props.name) {
@@ -85592,7 +85819,8 @@ function (_Component) {
       })), (suggested ? suggested : []).length ? _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement(_SuggestedParticipants.default, {
-        list: suggested
+        list: suggested,
+        event: this.props.id
       })) : null, _react.default.createElement("section", {
         className: "block"
       }, _react.default.createElement("div", {
@@ -85645,10 +85873,10 @@ function (_Component) {
     }
   }]);
 
-  return EeventProfileComponent;
+  return EventProfileComponent;
 }(_react.Component);
 
-var EeventProfile = (0, _reactRedux.connect)(function (state) {
+var EventProfile = (0, _reactRedux.connect)(function (state) {
   return Object.assign({}, state);
 }, function (dispatch) {
   return {
@@ -85668,96 +85896,10 @@ var EeventProfile = (0, _reactRedux.connect)(function (state) {
       return dispatch((0, _event.postAdded)(post));
     }
   };
-})(EeventProfileComponent);
-var _default = EeventProfile;
+})(EventProfileComponent);
+var _default = EventProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/event/redux/reducer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _event = require("./event");
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-var reducer = function reducer(state, action) {
-  switch (action.type) {
-    case _event.FETCH_DONE:
-      {
-        return Object.assign({}, action.data);
-      }
-
-    case _event.USER_JOIN:
-      {
-        return Object.assign({}, state, {
-          random: action.data && state.random.length < 6 ? [].concat(_toConsumableArray(state.random), [action.data]) : state.random,
-          user_participant: true,
-          user_participant_as: action.as === 'interested' ? 'interested' : 'attends',
-          total_participant: action.data ? state.total_participant + 1 : state.total_participant
-        });
-      }
-
-    case _event.USER_LEAVE:
-      {
-        return Object.assign({}, state, {
-          user_participant: false,
-          user_participant_as: null,
-          random: action.data && state.random.length ? state.random.filter(function (u) {
-            return u.username !== action.data.username;
-          }) : state.random,
-          total_participant: action.data ? state.total_participant - 1 : state.total_participant
-        });
-      }
-
-    case _event.FETCH_PARTICIPANTS:
-      {
-        return Object.assign({}, state, {
-          participants: _toConsumableArray(action.data.data)
-        });
-      }
-
-    default:
-      return Object.assign({}, state);
-  }
-};
-
-var _default = reducer;
-exports.default = _default;
-},{"./event":"../src/event/redux/event.js"}],"../src/event/redux/store.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _redux = require("redux");
-
-var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
-
-var _reduxLogger = require("redux-logger");
-
-var _reducer = _interopRequireDefault(require("./reducer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _logger = new _reduxLogger.createLogger({
-  collapsed: true
-});
-
-var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
-var _default = store;
-exports.default = _default;
-},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -88657,7 +88799,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = new WebSocket('wss://divdudes.com/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
 
-socket.onclose = function () {//document.location.reload();
+socket.onclose = function () {
+  //document.location.reload();
+  (function () {
+    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = '/img/overflow.ico';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  })();
 };
 
 socket.onmessage = function (_ref) {
@@ -88834,7 +88984,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42353" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33793" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

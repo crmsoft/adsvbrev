@@ -92,7 +92,6 @@ class DialogComponent extends Component{
                 const childs = Array.prototype.slice.call(
                                     parent.querySelectorAll('div.chat-message')
                                 ).reverse();
-                console.log(this.state.beforePull, childs[this.state.beforePull]);
                 
                 childs[this.state.beforePull] && childs[this.state.beforePull].scrollIntoView();
             }))

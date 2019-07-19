@@ -9104,7 +9104,8 @@ header {
       color: #dfef11; }
   .followers-popup .popup-content .notification-list li .user-list-user {
     width: auto;
-    max-width: initial; }
+    max-width: initial;
+    white-space: pre-line; }
   .followers-popup .popup-content .notification-list li .user-list-user-name {
     font-size: 15px;
     text-overflow: unset; }

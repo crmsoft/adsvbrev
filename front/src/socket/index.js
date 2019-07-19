@@ -10,6 +10,14 @@ const socket = new WebSocket('wss://divdudes.com/yraMgipTBPDo42aK/?token=' + win
 
 socket.onclose = function(){
     //document.location.reload();
+
+    (function() {
+        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = '/img/overflow.ico';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    })();
 }
 
 socket.onmessage = ({data}) => {

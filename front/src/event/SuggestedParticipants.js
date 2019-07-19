@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 
 const Suggested = ({
-    user
+    user,
+    onInvite
 }) => (
     <div className="event-suggested-friend-box">
         <div className="suggested-friend-img-content">
@@ -13,25 +15,47 @@ const Suggested = ({
             <small className="name">{user.first_name}</small>
             <small>{user.username}</small>
         </div>
-        <div className="suggested-friend-button">
-            invite&nbsp;>
-        </div>
+        {
+            user.invited ? null : (
+                <div 
+                    onClick={e => onInvite(user.username)}
+                    className="suggested-friend-button">
+                    invite&nbsp;>
+                </div>
+            )
+        }
     </div>
 )
 
 export default function ({
-    list
+    list,
+    event
 }){
+    const [users, setUser] = useState(list);
+
+    const onInvite = username => {
+        setUser(
+            users.map(user => {
+                user.invited = user.invited || (username === user.username);
+                return user;
+            })
+        );
+
+        axios.post(`/event/${event}/invite`, {
+            username: username
+        });
+    }
+
     return (
         <div className="event-suggested-friend">
             <div className="event-suggested-friend-header">
                 Suggested Friends
             </div>
             <div className="event-suggested-friend-content">
-                {list.map(user => <Suggested user={user} />)}
+                {users.map(user => <Suggested key={user.username} onInvite={onInvite} user={user} />)}
             </div>
             <div className="event-suggested-all">
-                <a href="#">All Friends</a>
+                <a className={users.length === 3 ? '' : 'd-none'} href="#">All Friends</a>
             </div>
         </div>
     )

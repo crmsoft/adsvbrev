@@ -99,4 +99,9 @@ class Group extends Model implements ReactableContract
     public function media(){
         return $this->morphMany(\App\Media::class, 'mediable');
     }
+
+    public function invitations()
+    {
+        return $this->morphsToMany(\App\Entities\Group::class, 'to');
+    }
 }

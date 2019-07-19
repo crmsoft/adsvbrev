@@ -66,4 +66,9 @@ class Event extends Model
     {
         return $this->belongsToMany(\App\Entities\Game::class, 'event_group', 'event_id', 'group_id');
     }
+
+    public function invitations()
+    {
+        return $this->morphsToMany(\App\Entities\Group::class, 'to');
+    }
 }

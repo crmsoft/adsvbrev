@@ -20,7 +20,7 @@ import SuggestedParticipants from './SuggestedParticipants';
 
 let unlisten = () => {}
 
-class EeventProfileComponent extends Component{
+class EventProfileComponent extends Component{
 
     state = {
         user: undefined
@@ -158,6 +158,7 @@ class EeventProfileComponent extends Component{
                                 <section className="block">
                                     <SuggestedParticipants 
                                         list={suggested}
+                                        event={this.props.id}
                                     />
                                 </section>
                             ) : null
@@ -223,7 +224,7 @@ class EeventProfileComponent extends Component{
     }
 }
 
-const EeventProfile = connect(
+const EventProfile = connect(
     state => {
         return {
             ...state
@@ -238,6 +239,6 @@ const EeventProfile = connect(
             pushPost: post => dispatch(postAdded(post))
         }
     }
-)(EeventProfileComponent);
+)(EventProfileComponent);
 
-export default EeventProfile;
+export default EventProfile;
