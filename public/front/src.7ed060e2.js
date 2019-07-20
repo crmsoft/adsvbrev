@@ -64475,9 +64475,7 @@ function (_Component) {
           feed = _this$props$data.feed,
           profile = _this$props$data.profile,
           guest = _this$props$data.guest;
-      return _react.default.createElement("div", null, guest ? null : _react.default.createElement(_reactRouterDom.Redirect, {
-        to: "/"
-      }), _react.default.createElement("nav", {
+      return _react.default.createElement("div", null, _react.default.createElement("nav", {
         className: "user-profile",
         style: profile.cover ? {
           backgroundImage: "url(".concat(profile.cover, ")")
@@ -91556,7 +91554,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46817" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34871" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
