@@ -167,7 +167,7 @@ class ProfileController extends Controller
         }
 
         return (new ResourceProfile($user))->additional(
-            [ 'guest' => $username != null ]
+            [ 'guest' => $username != auth()->user()->username ]
         );
     }
 

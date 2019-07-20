@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 import Menu from '../menu/index';
 import {
@@ -80,7 +81,7 @@ class EventProfileComponent extends Component{
 
     render()
     {
-        const {description, poster, owner, feed, suggested} = this.props;
+        const {description, denied, poster, owner, feed, suggested, is_private} = this.props;
         const loggedIn = this.state.user;
         let editor = false;
 
@@ -91,6 +92,10 @@ class EventProfileComponent extends Component{
         
         return (
             <div className="event-page">
+                {/* check if user has privilege to see this page */}
+                {
+                    denied ? <Redirect to="/" /> : null
+                }
                 <nav className="user-profile event-profile"
                     style={{backgroundImage: `url(${poster})`}}
                 >

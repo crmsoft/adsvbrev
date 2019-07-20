@@ -5,8 +5,6 @@ import SearchResult from './SearchResults';
 import {connect} from 'react-redux';
 import { performSearch } from '../redux/events'
 import queryString from 'query-string';
-import UserListComponent from '../Components/UserListComponent';
-import GroupListComponent from '../Components/GroupListComponent';
 
 class ContentComponent extends Component{
 
@@ -105,7 +103,7 @@ class ContentComponent extends Component{
                                 text={ this.state.search ? this.state.search :  '' } 
                             />
                             <SearchResult 
-                                render={UserListComponent}
+                                render={'users'}
                                 items={this.props.items} 
                             />
 
@@ -117,7 +115,7 @@ class ContentComponent extends Component{
                                 text={ this.state.search ? this.state.search : '' } 
                             />
                             <SearchResult 
-                                render={GroupListComponent}
+                                render={'groups'}
                                 items={this.props.items} />
 
                         </TabPanel>

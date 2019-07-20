@@ -285,8 +285,11 @@ class User extends Authenticatable implements JWTSubject, ReacterableContract
                                 function($query) use ($user) {
                                     $query->on('user_friends.friend_id', 'events.creator_id');
                                     $query->on('user_friends.user_id', '=', \DB::raw($user->id));
-                                })->select(['events.*']);
-
+                                })->select([
+                                    'events.*'
+                                    ])->whereRaw(
+                                        "(case when is_private then (select count(*) from event_participants where user_id = {$user->id} and event_id=events.id) else 1 end) > 0"
+                                    );
         if ($date)
         {
             $user_friends_events->whereDate('start', $date);

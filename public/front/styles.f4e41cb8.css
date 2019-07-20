@@ -10281,11 +10281,13 @@ nav.user-profile {
       justify-content: center; }
 
 /** Search Page */
-.search-results .content {
-  max-width: none;
-  padding: 30px 55px; }
-  .search-results .content .row {
-    border-top: none; }
+.search-results {
+  min-height: 450px; }
+  .search-results .content {
+    max-width: none;
+    padding: 30px 55px; }
+    .search-results .content .row {
+      border-top: none; }
 
 .user-ava {
   border-radius: 30px;

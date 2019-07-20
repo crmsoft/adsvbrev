@@ -47,6 +47,9 @@ class Profile extends Model
         // TODO: remove code below 1
         if( strpos($this->ava, 'via.placeholder.com') !== false ){
             return '/img/default_ava.png';
+        } else if (strpos($this->ava, 'randomuser') !== false)
+        {
+            return $this->ava;
         }
 
         return $this->user ? Storage::url("user-media/{$this->user->dir}/200_{$this->ava}") : "200_{$this->ava}";

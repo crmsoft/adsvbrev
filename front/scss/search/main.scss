@@ -1,5 +1,6 @@
 .search-results{
     @extend .user-settings;
+    min-height: 450px;
     .content{
         max-width: none;
         padding: 30px 55px;

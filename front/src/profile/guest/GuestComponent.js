@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { StickyContainer, Sticky } from 'react-sticky';
+import {Redirect} from 'react-router-dom';
 
 import Friends from '../friends/index';
 import MediaTabs from '../media-tabs/index';
@@ -42,11 +43,16 @@ class Guest extends Component{
             games,
             totals,
             feed,
-            profile
+            profile,
+            guest
         } = this.props.data;
 
         return (
             <div>
+                {/** user can not see his profile as guest */}
+                {
+                    guest ? null:<Redirect to='/' />
+                }
                 <nav className="user-profile" style={ profile.cover ? {backgroundImage:`url(${profile.cover})`} : {}}> 
                     
                     <div className="triangle-right"></div>

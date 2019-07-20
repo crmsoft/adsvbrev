@@ -5,6 +5,12 @@ export default class GroupListComponent extends Component{
 
     render(){
         const group = this.props.data;
+
+        if (!group)
+        {
+            return null;
+        }
+
         return (
             <div className="search-item-user">
                 <Link to={group.gamers !== undefined ? `/g/${group.username}`:`/gr/${group.username}`} className="d-flex">

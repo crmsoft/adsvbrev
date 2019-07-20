@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {DateTime} from 'luxon';
 
-import { placeEmoji } from '../../utils';
+import { placeEmoji, urlify } from '../../utils';
 import ImageZoom from '../../general/ImageZoom';
 
 const MessageUserInfo = ({data}) => {
@@ -41,6 +41,10 @@ export default class Message extends Component{
         const {showUser} = this.state;
         const {author} = this.state;
         
+        const message_content = placeEmoji(message.message).map(c => {
+            return (typeof c === 'string') ? urlify(c) : c;
+        });
+
         return (
             <div className="chat-message">
                 { showUser ? <MessageUserAva data={message} /> : <div style={{width:34}}></div> }
@@ -51,13 +55,12 @@ export default class Message extends Component{
                             {
                                 message.media.map((image, index) => {
                                     return <ImageZoom key={index} src={image.full_path} thumb={image.thumb}  />
-                                    //<img key={index} src={image.full_path} style={{height: image.options ? image.options['chat']['height']:`auto`}} />
                                 })
                             }
                         </div>
                         <div className="message-footer">
                             <span className="message-text">
-                                {placeEmoji(message.message)}
+                                {message_content}
                             </span>
                             {
                                 author ? (

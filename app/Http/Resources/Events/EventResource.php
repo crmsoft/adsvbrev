@@ -22,7 +22,7 @@ class EventResource extends JsonResource
         $user_participant = $this->userParticipants();
         $is_owner = $this->user->id == auth()->user()->id;
 
-        return [
+        return $is_owner || $user_participant || !boolval($this->is_private) ? [
             'id' => $this->hash,
             'type' => 'dudes',
             'name' => $this->name,
@@ -46,6 +46,8 @@ class EventResource extends JsonResource
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
             'total_participant' => $this->participants()->count(),
             'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get())
+        ] : [
+            'denied' => true
         ];
     }
 }

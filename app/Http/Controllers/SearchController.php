@@ -16,6 +16,11 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
+        $request->validate([
+            'from' => ['min:0', 'lt:to'],
+            'to'    => ['min:0', 'gt:from']
+        ]);
+
         $search = $request->get('q','');
         $searchTab = $request->get('i', 'fr');
 
@@ -35,13 +40,20 @@ class SearchController extends Controller
                     });
                 }
 
-                return new UserCollection($result->get());
+                if ($request->has('from') && $request->has('to'))
+                {
+                    $data = $result->offset($request->from)->take($request->to - $request->from)->get();
+                } else {
+                    $data = $result->take(25)->get();
+                }// end if
+
+                $result = new UserCollection($data);
 
             } break;
             case 'gr' : {
                 $result = new GroupCollection(Group::where(function( $query ) use ($search){
                     $query->orWhere('name','like',"%$search%");
-                })->get());
+                })->offset($request->from ?? 0)->take(($request->to ?? 24) - $request->from)->get());
             }
         }
 
