@@ -34,6 +34,7 @@ class FeedController extends Controller
                                 events e ON e.creator_id = user_friends.user_id
                             WHERE
                                 (friend_id = ? AND status = 'friend'
+                                    AND e.is_private = 0
                                     AND user_friends.deleted_at IS NULL
                                     AND e.deleted_at IS NULL)
                                     OR (e.creator_id = ? 

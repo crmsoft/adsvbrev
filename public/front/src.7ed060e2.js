@@ -47001,13 +47001,110 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = AddComment;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","../post-add/Media":"../src/post-add/Media.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","../header/store":"../src/header/store.js"}],"../src/profile/feed/Post.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","../post-add/Media":"../src/post-add/Media.js","../profile/fetch/store":"../src/profile/fetch/store.js","../profile/fetch/actions":"../src/profile/fetch/actions.js","../header/store":"../src/header/store.js"}],"../src/profile/feed/Share.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Modal = require("../../Modal");
+
+var _Post = _interopRequireDefault(require("./Post"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var _default = function _default(_ref) {
+  var onClose = _ref.onClose,
+      post = _ref.post,
+      toggleShare = _ref.toggleShare;
+
+  var _useState = (0, _react.useState)(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      open = _useState2[0],
+      setOpen = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      comment = _useState4[0],
+      setComment = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      processing = _useState6[0],
+      setProcessing = _useState6[1];
+
+  var cancel = function cancel() {
+    onClose();
+    setOpen(false);
+  };
+
+  var submit = function submit() {
+    if (processing) {
+      return;
+    } // end if
+
+
+    setProcessing(true);
+
+    _axios.default.post("/post/share/".concat(post.id), {
+      content: comment
+    }).then(function (response) {
+      if (response.data === 1) {
+        toggleShare(post.id);
+        setProcessing(false);
+        cancel();
+      } // end if
+
+    });
+  };
+
+  return _react.default.createElement(_Modal.Modal, {
+    processing: processing,
+    onClose: cancel,
+    open: open,
+    title: "Share post of ".concat(post.poster.full_name),
+    actions: (0, _Modal.actions)(cancel, submit)
+  }, _react.default.createElement("div", {
+    className: "list-scroll"
+  }, _react.default.createElement("div", {
+    className: "m-2"
+  }, _react.default.createElement("textarea", {
+    value: comment,
+    onChange: function onChange(e) {
+      return setComment(e.target.value);
+    },
+    placeholder: "Put your comments"
+  })), _react.default.createElement("div", {
+    className: "m-2"
+  }, _react.default.createElement(_Post.default, {
+    post: post
+  }))));
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","../../Modal":"../src/Modal/index.js","./Post":"../src/profile/feed/Post.js"}],"../src/profile/feed/Post.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.PostContent = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -47026,6 +47123,8 @@ var _utils = require("../../utils");
 var _Comments = _interopRequireDefault(require("../../comment/Comments"));
 
 var _AddComment = _interopRequireDefault(require("../../comment/AddComment"));
+
+var _Share = _interopRequireDefault(require("./Share"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47059,17 +47158,20 @@ var PostContent = function PostContent(_ref) {
       media = _ref.media,
       modal = _ref.modal;
   return repost ? _react.default.createElement("div", {
+    key: "post_content_".concat(post_id)
+  }, content, _react.default.createElement("div", {
     className: "post-shared"
   }, _react.default.createElement(Post, {
     modal: modal,
     key: repost.id,
     post: repost,
     repost: true
-  })) : _react.default.createElement("a", {
+  }))) : _react.default.createElement("a", {
     href: modal ? "javascript:void(0)" : "#p=".concat(post_id),
     style: {
       textDecoration: 'none'
-    }
+    },
+    key: "post_content_".concat(post_id)
   }, _react.default.createElement("p", null, content, more), _react.default.createElement("div", {
     className: media.length > 1 ? "post-media n-".concat(media.length) : "post-media"
   }, media.map(function (url, index) {
@@ -47084,6 +47186,8 @@ var PostContent = function PostContent(_ref) {
     }));
   })));
 };
+
+exports.PostContent = PostContent;
 
 var Post =
 /*#__PURE__*/
@@ -47129,18 +47233,16 @@ function (_Component) {
   }, {
     key: "toggleShare",
     value: function toggleShare() {
-      var _this3 = this;
-
-      var post = this.state.post;
-
-      _axios.default.post("/post/share/".concat(post.id)).then(function (response) {
-        return response.data === 1 && _this3.props.toggleShare(post.id);
+      return this.setState(function (state) {
+        return {
+          sharing: true
+        };
       });
     }
   }, {
     key: "deletePost",
     value: function deletePost() {
-      var _this4 = this;
+      var _this3 = this;
 
       var _this$state = this.state,
           post = _this$state.post,
@@ -47154,12 +47256,12 @@ function (_Component) {
         var data = _ref2.data;
 
         if (data.action) {
-          _this4.setState(function (state) {
+          _this3.setState(function (state) {
             return {
               open: false
             };
           }, function () {
-            return _this4.props.onDelete(_this4.state.post.id);
+            return _this3.props.onDelete(_this3.state.post.id);
           });
         } // end if
 
@@ -47168,7 +47270,7 @@ function (_Component) {
   }, {
     key: "reply",
     value: function reply(user, comment_id) {
-      var _this5 = this;
+      var _this4 = this;
 
       this.setState(function () {
         return {
@@ -47178,7 +47280,7 @@ function (_Component) {
           }
         };
       }, function () {
-        _this5.setState(function () {
+        _this4.setState(function () {
           return {
             reply: null
           };
@@ -47188,7 +47290,7 @@ function (_Component) {
   }, {
     key: "onCommentAdded",
     value: function onCommentAdded(_ref3) {
-      var _this6 = this;
+      var _this5 = this;
 
       var data = _ref3.data;
       this.setState(function () {
@@ -47196,7 +47298,7 @@ function (_Component) {
           pushComment: data
         };
       }, function () {
-        _this6.setState(function () {
+        _this5.setState(function () {
           return {
             pushComment: null
           };
@@ -47214,6 +47316,15 @@ function (_Component) {
       });
     }
   }, {
+    key: "closeShare",
+    value: function closeShare() {
+      this.setState(function () {
+        return {
+          sharing: false
+        };
+      });
+    }
+  }, {
     key: "hasMedia",
     value: function hasMedia(text) {
       return text.indexOf('soundcloud.com/player') !== -1 || text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1 || text.indexOf('https://youtu') !== -1 || text.indexOf('https://www.youtu') !== -1;
@@ -47221,11 +47332,12 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this6 = this;
 
       var _this$state2 = this.state,
           post = _this$state2.post,
-          repost = _this$state2.repost;
+          repost = _this$state2.repost,
+          sharing = _this$state2.sharing;
       var hasMore = this.state.hasMore;
       var content = post.content;
       var more = null;
@@ -47254,7 +47366,11 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         className: "post"
-      }, _react.default.createElement("div", {
+      }, sharing ? _react.default.createElement(_Share.default, {
+        toggleShare: this.props.toggleShare,
+        post: post,
+        onClose: this.closeShare.bind(this)
+      }) : null, _react.default.createElement("div", {
         className: "post-header"
       }, _react.default.createElement("div", {
         className: "user-ava"
@@ -47276,12 +47392,12 @@ function (_Component) {
       }, !this.props.guest && !repost ? _react.default.createElement(_reactjsPopup.default, {
         open: this.state.open,
         onClose: function onClose() {
-          _this7.setState({
+          _this6.setState({
             open: false
           });
         },
         onOpen: function onOpen() {
-          _this7.setState({
+          _this6.setState({
             open: true
           });
         },
@@ -47355,7 +47471,7 @@ function (_Component) {
 var PostComponent = (0, _reactInViewport.default)(Post);
 var _default = PostComponent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../../general/ImageZoom":"../src/general/ImageZoom.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js"}],"../src/post-add/redux/actions.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","react-in-viewport":"../node_modules/react-in-viewport/dist/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../../general/ImageZoom":"../src/general/ImageZoom.js","../../utils":"../src/utils.js","../../comment/Comments":"../src/comment/Comments.js","../../comment/AddComment":"../src/comment/AddComment.js","./Share":"../src/profile/feed/Share.js"}],"../src/post-add/redux/actions.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91554,7 +91670,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34871" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41888" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

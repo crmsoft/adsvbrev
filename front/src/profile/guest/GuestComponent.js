@@ -49,10 +49,6 @@ class Guest extends Component{
 
         return (
             <div>
-                {/** user can not see his profile as guest */}
-                {
-                    guest ? null:<Redirect to='/' />
-                }
                 <nav className="user-profile" style={ profile.cover ? {backgroundImage:`url(${profile.cover})`} : {}}> 
                     
                     <div className="triangle-right"></div>

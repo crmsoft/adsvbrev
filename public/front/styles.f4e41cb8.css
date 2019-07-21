@@ -10009,27 +10009,25 @@ nav.user-profile {
       display: inline-block; }
     .post .post-content .post-actions > span:nth-child(odd) {
       cursor: pointer; }
-    .post .post-content .post-shared {
-      border: 1px solid #3E3F42; }
-      .post .post-content .post-shared .post-header .right-shared-menu {
-        right: 2rem;
-        position: absolute;
-        top: 1rem;
-        border: 1px solid #ff4800;
-        color: #ffffff;
-        padding: 0 1rem;
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        cursor: pointer; }
-        .post .post-content .post-shared .post-header .right-shared-menu .right-shared-btn i {
-          color: #ff4800; }
-      .post .post-content .post-shared .post-content {
-        margin: 0px;
-        padding: 0 10px; }
+    .post .post-content .post-shared .post-header .right-shared-menu {
+      right: 2rem;
+      position: absolute;
+      top: 1rem;
+      border: 1px solid #ff4800;
+      color: #ffffff;
+      padding: 0 1rem;
+      height: 20px;
+      line-height: 20px;
+      font-size: 14px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      cursor: pointer; }
+      .post .post-content .post-shared .post-header .right-shared-menu .right-shared-btn i {
+        color: #ff4800; }
+    .post .post-content .post-shared .post-content {
+      margin: 0px;
+      padding: 0 10px; }
     .post .post-content p {
       color: #ffffff;
       white-space: pre-wrap; }

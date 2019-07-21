@@ -8,8 +8,9 @@ import ImageZoom from '../../general/ImageZoom';
 import {placeEmoji, urlify} from '../../utils';
 import Comments from '../../comment/Comments';
 import AddComment from '../../comment/AddComment';
+import Share from './Share';
 
-const PostContent = ({
+export const PostContent = ({
 	more,
 	content,
 	post_id,
@@ -19,16 +20,19 @@ const PostContent = ({
 }) => {
 	return (
 		repost ? (
-			<div className="post-shared">
-				<Post 
-					modal={modal}
-					key={repost.id}
-					post={repost}
-					repost={true}
-				/>
+			<div key={`post_content_${post_id}`}>
+				{content}
+				<div className="post-shared">
+					<Post 
+						modal={modal}
+						key={repost.id}
+						post={repost}
+						repost={true}
+					/>
+				</div>
 			</div>
 		) : (
-			<a href={modal ? `javascript:void(0)` : `#p=${post_id}`} style={{textDecoration:'none'}}>
+			<a href={modal ? `javascript:void(0)` : `#p=${post_id}`} style={{textDecoration:'none'}} key={`post_content_${post_id}`}>
 				<p>
 					{
 						content
@@ -94,9 +98,7 @@ class Post extends Component{
 
 	toggleShare()
 	{
-		const {post} = this.state;
-		axios.post(`/post/share/${post.id}`)
-		.then(response => (response.data === 1) && this.props.toggleShare(post.id))
+		return this.setState(state => ({sharing: true}))
 	}
 
 	deletePost()
@@ -160,6 +162,15 @@ class Post extends Component{
 		})
 	}
 
+	closeShare()
+	{
+		this.setState(() => {
+			return {
+				sharing: false,
+			}
+		})
+	}
+
 	hasMedia(text)
 	{
 		return (
@@ -174,7 +185,7 @@ class Post extends Component{
     render()
     {
 		
-		const {post, repost} = this.state;
+		const {post, repost, sharing} = this.state;
 		const {hasMore} = this.state;
 
 		let content  = (post.content);
@@ -207,7 +218,7 @@ class Post extends Component{
 			
         return (
             <div className="post">
-
+				{sharing ? <Share toggleShare={this.props.toggleShare} post={post} onClose={this.closeShare.bind(this)}/> : null}
 				<div className="post-header">
 					<div className="user-ava">
 						<img src={post.poster.ava} alt={post.poster.full_name} />

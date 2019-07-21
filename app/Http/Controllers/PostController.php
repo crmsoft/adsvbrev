@@ -151,7 +151,7 @@ class PostController extends Controller
                     $reacter->reactTo($post->getLoveReactant(), $reactionType);
     }
 
-    public function toggleShare( Post $post )
+    public function toggleShare( Post $post, Request $request )
     {
 
         $saved = false;
@@ -174,6 +174,7 @@ class PostController extends Controller
             $user_post = new Post;
             
             $user_post->postable()->associate( $user );
+            $user_post->content = $request->content;
             $user_post->parent_id = $post->id;
             $saved = $user_post->save();
             $user->feed()->toggle($user_post);
