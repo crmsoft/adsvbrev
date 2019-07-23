@@ -74096,9 +74096,7 @@ function (_Component) {
         className: "left-banner"
       }, _react.default.createElement("div", {
         className: "banner-header"
-      }, _react.default.createElement("div", {
-        className: "banner-triangle-right"
-      }), _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
+      }, _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
         src: "../img/reklam-banner.jpg",
         alt: "The Last of us"
       })));
@@ -99712,9 +99710,7 @@ function (_Component) {
         style: {
           backgroundImage: "url(".concat(poster, ")")
         }
-      }, _react.default.createElement("div", {
-        className: "triangle-right"
-      }), _react.default.createElement(_Profile.default, {
+      }, _react.default.createElement(_Profile.default, {
         init: function init() {
           return _this.props.init(data.id);
         },
@@ -101174,7 +101170,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55912" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64910" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

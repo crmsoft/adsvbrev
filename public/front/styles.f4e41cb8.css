@@ -13128,7 +13128,7 @@ nav.user-profile {
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
-  height: 250px;
+  height: 200px;
   position: relative;
   margin: 25px 0;
   border: 1px solid #ff4800;
@@ -15533,4 +15533,9 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
     -ms-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
   }
+}
+.block, .event-schedule, .profile-about, .user-uploads {
+  -webkit-box-shadow: 0px 0px 2px 0px white;
+  -moz-box-shadow: 0px 0px 2px 0px white;
+  box-shadow: 0px 0px 2px 0px white;
 }
