@@ -1,3 +1,9 @@
+.dd-block-shadow{
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(255,255,255,1);
+    box-shadow: 0px 0px 2px 0px rgba(255,255,255,1);
+}
+
 .profile-aside{
     width: 20.9%;
     padding-left: 10px;
@@ -29,7 +35,7 @@
         }
     }
     .block{
-
+        @extend .dd-block-shadow;
         @include section-border-radius();
         background-color: $postBack; 
         padding: 10px;

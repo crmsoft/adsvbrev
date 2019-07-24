@@ -111,7 +111,10 @@ class PostController extends Controller
             Storage::disk('public')
                 ->put("{$users_dir}original_{$name}", $image);
             // profile main image;
-            $image->fit(635);
+            $image->resize(635, null, function ($canvas) {
+                    $canvas->aspectRatio();
+                    $canvas->upsize();
+            });
             $image->stream();
 
             Storage::disk('public')

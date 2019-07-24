@@ -45,8 +45,6 @@ class ProfileComponent extends Component{
                     <Poster 
                         src={this.props.data}
                     />
-                    
-                    <div className="triangle-right"></div>
 
                     <UserProfile info={this.props.data}/>
 

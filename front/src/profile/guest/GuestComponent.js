@@ -50,8 +50,6 @@ class Guest extends Component{
         return (
             <div>
                 <nav className="user-profile" style={ profile.cover ? {backgroundImage:`url(${profile.cover})`} : {}}> 
-                    
-                    <div className="triangle-right"></div>
 
                     <UserProfile info={this.props.data} guest={true}/>
 

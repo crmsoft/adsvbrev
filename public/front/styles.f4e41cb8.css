@@ -9127,7 +9127,7 @@ nav.user-profile {
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
-  height: 250px;
+  height: 200px;
   position: relative;
   margin: 25px 0;
   border: 1px solid #ff4800; }
@@ -9329,6 +9329,11 @@ nav.user-profile {
           border: 3px solid #ff4800; }
     .user-uploads .user-content.active {
       display: flex; }
+
+.dd-block-shadow, .profile-aside .block {
+  -webkit-box-shadow: 0px 0px 2px 0px white;
+  -moz-box-shadow: 0px 0px 2px 0px white;
+  box-shadow: 0px 0px 2px 0px white; }
 
 .profile-aside {
   width: 20.9%;
@@ -10552,6 +10557,22 @@ nav.user-profile {
           object-fit: cover; }
         .chat .dialog-wrapper .dialog .file-upload .container, .chat .dialog-wrapper .dialog .file-upload .schedule .schedule-create-form, .schedule .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .user-settings .content .form-create-group .schedule-create-form, .user-settings .content .form-create-group .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .search-results .content .form-create-group .schedule-create-form, .search-results .content .form-create-group .chat .dialog-wrapper .dialog .file-upload .schedule-create-form, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .followers-list li, .followers-popup .popup-content .followers-list .chat .dialog-wrapper .dialog .file-upload li, .chat .dialog-wrapper .dialog .file-upload .followers-popup .popup-content .notification-list li, .followers-popup .popup-content .notification-list .chat .dialog-wrapper .dialog .file-upload li {
           padding-top: 15px; }
+      .chat .dialog-wrapper .dialog .dialog-username-helper {
+        position: absolute;
+        background: rgba(32, 34, 37, 0.75);
+        top: 20px;
+        bottom: 50px;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end; }
+        .chat .dialog-wrapper .dialog .dialog-username-helper ul {
+          padding: 0;
+          padding-left: 45px;
+          margin: 0; }
+          .chat .dialog-wrapper .dialog .dialog-username-helper ul li {
+            list-style: none; }
 
 .emoji-mart,
 .emoji-mart * {
@@ -10954,13 +10975,16 @@ nav.user-profile {
         max-width: 100%; }
       .chat-message .message .message-content .message-footer {
         align-self: flex-start;
-        word-break: break-all;
         display: flex; }
       .chat-message .message .message-content .message-text {
         border-radius: 3px;
         padding: 2px 3px;
         background-color: aliceblue;
         display: inline-block; }
+        .chat-message .message .message-content .message-text .btn-link {
+          color: inherit;
+          font-weight: 700;
+          cursor: pointer; }
       .chat-message .message .message-content .message-status {
         align-self: flex-end; }
         .chat-message .message .message-content .message-status:before {

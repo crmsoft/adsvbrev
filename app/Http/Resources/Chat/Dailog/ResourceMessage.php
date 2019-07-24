@@ -22,7 +22,8 @@ class ResourceMessage extends JsonResource
             'created_at' => $this->created_at->getTimestamp(),
             'user' => new User($this->user),
             'readed' => $this->readed,
-            'media' => new MediaCollection($this->mediable)
+            'media' => new MediaCollection($this->mediable),
+            'markers' => ['willy81', 'zlittle']
         ];
     }
 }

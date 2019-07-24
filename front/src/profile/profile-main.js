@@ -33,11 +33,11 @@ const UserProfile = (data) => {
             <div className="profile editable">
                 <div className="d-flex w-100">
                     <div className="ava-wrapper">
-                        <div className="ava" id="ava">
+                        <div className="ava" id="ava" style={guest ? {top:'15px'}:{}}>
                             <Ava isGuest={guest} ava={profile.main_photo}/>
                         </div>
                     </div>
-                    <div className="w-25">
+                    <div className="w-25 d-flex flex-column-reverse">
                         <div className="user">
                             <h4>
                                 {profile.user.full_name}

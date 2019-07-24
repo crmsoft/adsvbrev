@@ -99,8 +99,6 @@ class EventProfileComponent extends Component{
                 <nav className="user-profile event-profile"
                     style={{backgroundImage: `url(${poster})`}}
                 >
-                    
-                    <div className="triangle-right"></div>
 
                     <Profile 
                         data={this.props}

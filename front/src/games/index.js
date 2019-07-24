@@ -45,8 +45,6 @@ class GamePageComponent extends Component{
                 <nav className="user-profile game-profile"
                     style={{backgroundImage: `url(${poster})`}}
                 >
-                    
-                    <div className="triangle-right"></div>
 
                     <Profile 
                         init={() => this.props.init(data.id)}

@@ -56,59 +56,6 @@ const placeEmoji = (str, result) => {
     result.push(str);
 
     return result;
-/*
-    const emojies = text.match(/\:[\S]*\:/g);
-        
-    if(!emojies)
-    {
-        return text;
-    } // end if
-    
-    const result = emojies.filter(emoji => {
-        const matches = emojiIndex.search( emoji.replace(/\:/g, '') );
-
-
-        return matches && matches.filter(emo => emo.colons === emoji).length;
-    }).map((emo, i) => {
-        return {
-            emoji: <Emoji key={i} sheetSize={20} size={20} emoji={emo} set="google" />,
-            index: text.indexOf(emo),
-            length: emo.length
-        }
-    });  
-    
-    /**
-     * no emoji found in index !
-     *
-    if (result.length === 0)
-    {
-        return text;
-    } // end if
-    
-    let r = [];
-    for(let i=0; i<result.length; i++)
-    {
-        // current to insert
-        const emo = result[i];
-
-        // first item in message is not emoji
-        if(emo.index !== 0)
-        {
-            if(i === 0)
-            {
-                r.push( text.substring( 0, emo.index ) )
-            }
-            else
-            {
-                // prev emoji; to calculate previous emoji start index
-                const pemo = result[i-1];
-                r.push( text.substring( pemo.index + pemo.length, emo.index  ) );
-            } // end if
-        }// end if        
-        r.push( emo.emoji );
-    }
-
-    return r; */
 }
 
 String.prototype.nl2br = function() {
@@ -320,50 +267,29 @@ const Anchor = ({url}) => {
     )
 }
 
-class Url extends Component{
+const URL = (text) => {
 
-    isLink(text)
-    {
-        return (text.indexOf('http://') !== -1) || (text.indexOf('https://') !== -1);
-    }
+    const isLink = text => (text.indexOf('http://') !== -1) || (text.indexOf('https://') !== -1);
 
-    isYoutube( text )
-    {
-        return text.indexOf('https://youtu') !== -1 || (
-            text.indexOf('https://www.youtu') !== -1
-        );
-    }
+    const isYoutube = text => text.indexOf('https://youtu') !== -1 || (
+            text.indexOf('https://www.youtu') !== -1);
 
-    isTwitch( text )
-    {
-        return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
-    }
+    const isTwitch = text => text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
+    
+    const isSoundCloud = text => text.indexOf('soundcloud.com/player') !== -1;
 
-    isSoundCloud(text)
+    if (text.length === 0)
     {
-        return text.indexOf('soundcloud.com/player') !== -1;
-    }
-
-    render()
-    {
-        const {text} = this.props;
-        if (text.length === 0)
-        {
-            return null;
-        } // end if
-   
-        return <Fragment key={text}>
-            {
-                this.isLink(text) ? (
-                    this.isYoutube( text ) ? <Youtube url={text} /> : (
-                        this.isTwitch( text ) ? <Twitch url={text} /> : (
-                            this.isSoundCloud( text ) ? <SoundCloud url={text} /> : <Anchor url={text} />
-                        )
+        return null;
+    } // end if
+        
+    return isLink(text) ? (
+                isYoutube( text ) ? <Youtube key={text} url={text} /> : (
+                    isTwitch( text ) ? <Twitch key={text} url={text} /> : (
+                        isSoundCloud( text ) ? <SoundCloud key={text} url={text} /> : <Anchor key={text} url={text} />
                     )
-                ) : text
-            }
-        </Fragment>
-    }
+                )
+            ) : text;
 }
 
 const urlify = (text) => {
@@ -381,11 +307,11 @@ const urlify = (text) => {
         if ( name === 'iframe')
         {
             results.push(
-                <Url text={node.src}/>
+                URL(node.src)
             )
         } else if ( node.nodeType === Node.TEXT_NODE )
         {
-            node.textContent.split(urlRegex).map(candidate => results.push(<Url text={candidate} />));
+            node.textContent.split(urlRegex).map(candidate => results.push(URL(candidate)));
         } else  {
             results.push(node.textContent);
         }// end if

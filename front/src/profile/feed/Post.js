@@ -49,8 +49,8 @@ export const PostContent = ({
 									<ImageZoom 
 										disabled={!modal}
 										key={index} 
-										src={url.full_path.replace('520', 'original')} 
-										thumb={url.full_path}  
+										src={url.full_path} 
+										thumb={url.thumb}  
 									/>
 								</div>
 							)

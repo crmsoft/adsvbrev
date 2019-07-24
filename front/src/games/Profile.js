@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 const Ava = ({src}) => {
     return (
         <div className="ava-wrapper">
-            <div className="ava" id="ava">
+            <div className="ava" id="ava" style={{top:'15px'}}>
                 <div className="ava-holder">
                     <div className="ava-edit">
                         <span>Edit Avatar</span>
@@ -40,7 +40,7 @@ export default class Profile extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row" style={{height:'150px'}}>
                         <div className="col-auto">
                             <Ava src={`${data.ava}`} />
                         </div>

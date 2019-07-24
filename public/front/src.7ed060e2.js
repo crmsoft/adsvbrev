@@ -44649,59 +44649,6 @@ var placeEmoji = function placeEmoji(str, result) {
 
   result.push(str);
   return result;
-  /*
-      const emojies = text.match(/\:[\S]*\:/g);
-          
-      if(!emojies)
-      {
-          return text;
-      } // end if
-      
-      const result = emojies.filter(emoji => {
-          const matches = emojiIndex.search( emoji.replace(/\:/g, '') );
-  
-  
-          return matches && matches.filter(emo => emo.colons === emoji).length;
-      }).map((emo, i) => {
-          return {
-              emoji: <Emoji key={i} sheetSize={20} size={20} emoji={emo} set="google" />,
-              index: text.indexOf(emo),
-              length: emo.length
-          }
-      });  
-      
-      /**
-       * no emoji found in index !
-       *
-      if (result.length === 0)
-      {
-          return text;
-      } // end if
-      
-      let r = [];
-      for(let i=0; i<result.length; i++)
-      {
-          // current to insert
-          const emo = result[i];
-  
-          // first item in message is not emoji
-          if(emo.index !== 0)
-          {
-              if(i === 0)
-              {
-                  r.push( text.substring( 0, emo.index ) )
-              }
-              else
-              {
-                  // prev emoji; to calculate previous emoji start index
-                  const pemo = result[i-1];
-                  r.push( text.substring( pemo.index + pemo.length, emo.index  ) );
-              } // end if
-          }// end if        
-          r.push( emo.emoji );
-      }
-  
-      return r; */
 };
 
 exports.placeEmoji = placeEmoji;
@@ -44985,63 +44932,42 @@ var Anchor = function Anchor(_ref2) {
   }, url);
 };
 
-var Url =
-/*#__PURE__*/
-function (_Component4) {
-  _inherits(Url, _Component4);
+var URL = function URL(text) {
+  var isLink = function isLink(text) {
+    return text.indexOf('http://') !== -1 || text.indexOf('https://') !== -1;
+  };
 
-  function Url() {
-    _classCallCheck(this, Url);
+  var isYoutube = function isYoutube(text) {
+    return text.indexOf('https://youtu') !== -1 || text.indexOf('https://www.youtu') !== -1;
+  };
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Url).apply(this, arguments));
-  }
+  var isTwitch = function isTwitch(text) {
+    return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
+  };
 
-  _createClass(Url, [{
-    key: "isLink",
-    value: function isLink(text) {
-      return text.indexOf('http://') !== -1 || text.indexOf('https://') !== -1;
-    }
-  }, {
-    key: "isYoutube",
-    value: function isYoutube(text) {
-      return text.indexOf('https://youtu') !== -1 || text.indexOf('https://www.youtu') !== -1;
-    }
-  }, {
-    key: "isTwitch",
-    value: function isTwitch(text) {
-      return text.indexOf('www.twitch.tv') !== -1 || text.indexOf('player.twitch.tv') !== -1;
-    }
-  }, {
-    key: "isSoundCloud",
-    value: function isSoundCloud(text) {
-      return text.indexOf('soundcloud.com/player') !== -1;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var text = this.props.text;
+  var isSoundCloud = function isSoundCloud(text) {
+    return text.indexOf('soundcloud.com/player') !== -1;
+  };
 
-      if (text.length === 0) {
-        return null;
-      } // end if
+  if (text.length === 0) {
+    return null;
+  } // end if
 
 
-      return _react.default.createElement(_react.Fragment, {
-        key: text
-      }, this.isLink(text) ? this.isYoutube(text) ? _react.default.createElement(Youtube, {
-        url: text
-      }) : this.isTwitch(text) ? _react.default.createElement(Twitch, {
-        url: text
-      }) : this.isSoundCloud(text) ? _react.default.createElement(SoundCloud, {
-        url: text
-      }) : _react.default.createElement(Anchor, {
-        url: text
-      }) : text);
-    }
-  }]);
-
-  return Url;
-}(_react.Component);
+  return isLink(text) ? isYoutube(text) ? _react.default.createElement(Youtube, {
+    key: text,
+    url: text
+  }) : isTwitch(text) ? _react.default.createElement(Twitch, {
+    key: text,
+    url: text
+  }) : isSoundCloud(text) ? _react.default.createElement(SoundCloud, {
+    key: text,
+    url: text
+  }) : _react.default.createElement(Anchor, {
+    key: text,
+    url: text
+  }) : text;
+};
 
 var urlify = function urlify(text) {
   var results = [];
@@ -45054,14 +44980,10 @@ var urlify = function urlify(text) {
     var name = node.nodeName.toLocaleLowerCase();
 
     if (name === 'iframe') {
-      results.push(_react.default.createElement(Url, {
-        text: node.src
-      }));
+      results.push(URL(node.src));
     } else if (node.nodeType === Node.TEXT_NODE) {
       node.textContent.split(urlRegex).map(function (candidate) {
-        return results.push(_react.default.createElement(Url, {
-          text: candidate
-        }));
+        return results.push(URL(candidate));
       });
     } else {
       results.push(node.textContent);
@@ -47181,8 +47103,8 @@ var PostContent = function PostContent(_ref) {
     }, _react.default.createElement(_ImageZoom.default, {
       disabled: !modal,
       key: index,
-      src: url.full_path.replace('520', 'original'),
-      thumb: url.full_path
+      src: url.full_path,
+      thumb: url.thumb
     }));
   })));
 };
@@ -60138,12 +60060,15 @@ var UserProfile = function UserProfile(data) {
     className: "ava-wrapper"
   }, _react.default.createElement("div", {
     className: "ava",
-    id: "ava"
+    id: "ava",
+    style: guest ? {
+      top: '15px'
+    } : {}
   }, _react.default.createElement(_ava.default, {
     isGuest: guest,
     ava: profile.main_photo
   }))), _react.default.createElement("div", {
-    className: "w-25"
+    className: "w-25 d-flex flex-column-reverse"
   }, _react.default.createElement("div", {
     className: "user"
   }, _react.default.createElement("h4", null, profile.user.full_name), _react.default.createElement("div", {
@@ -60286,9 +60211,7 @@ function (_Component) {
           className: "left-banner"
         }, _react.default.createElement("div", {
           className: "banner-header"
-        }, _react.default.createElement("div", {
-          className: "banner-triangle-right"
-        }), _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
+        }, _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
           src: "../img/ad-sample.jpg",
           alt: "The Last of us"
         })));
@@ -64419,8 +64342,6 @@ function (_Component) {
         } : {}
       }, _react.default.createElement(_Poster.default, {
         src: this.props.data
-      }), _react.default.createElement("div", {
-        className: "triangle-right"
       }), _react.default.createElement(_profileMain.default, {
         info: this.props.data
       })), _react.default.createElement("div", {
@@ -64596,9 +64517,7 @@ function (_Component) {
         style: profile.cover ? {
           backgroundImage: "url(".concat(profile.cover, ")")
         } : {}
-      }, _react.default.createElement("div", {
-        className: "triangle-right"
-      }), _react.default.createElement(_profileMain.default, {
+      }, _react.default.createElement(_profileMain.default, {
         info: this.props.data,
         guest: true
       })), _react.default.createElement("div", {
@@ -80365,6 +80284,107 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FileUpload;
+},{"react":"../node_modules/react/index.js"}],"../src/chat/Dialog/UserNamesList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getSelection = exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var selection = 0;
+var prev_list_l = 0;
+
+var ListItem =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(ListItem, _PureComponent);
+
+  function ListItem() {
+    _classCallCheck(this, ListItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ListItem).apply(this, arguments));
+  }
+
+  _createClass(ListItem, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          m = _this$props.m,
+          selected = _this$props.selected,
+          onClick = _this$props.onClick;
+      return _react.default.createElement("li", {
+        onClick: onClick,
+        className: selected ? 'bg-info' : ''
+      }, "@".concat(m.username));
+    }
+  }]);
+
+  return ListItem;
+}(_react.PureComponent);
+
+var _default = function _default(_ref) {
+  var pattern = _ref.pattern,
+      members = _ref.members,
+      moveSelection = _ref.moveSelection,
+      onClick = _ref.onClick;
+  // filter members
+  var list = members.filter(function (m) {
+    return m.username.indexOf(pattern) !== -1 || pattern && pattern.length === 0;
+  }); // move selection
+
+  if (moveSelection === 'down' && list.length - 1 > selection) ++selection;
+  if (moveSelection === 'up' && selection) --selection; // reset selection when query changed
+
+  if (prev_list_l !== list.length) {
+    selection = 0;
+  } // cache list size
+
+
+  prev_list_l = list.length;
+  return list.length ? _react.default.createElement("div", {
+    className: "dialog-username-helper"
+  }, _react.default.createElement("ul", {
+    className: "list-group w-100 list-scroll"
+  }, list.map(function (m, index) {
+    return _react.default.createElement(ListItem, {
+      key: index,
+      onClick: onClick,
+      selected: index === selection,
+      m: m
+    });
+  }))) : null;
+};
+
+exports.default = _default;
+
+var getSelection = function getSelection() {
+  return selection;
+};
+
+exports.getSelection = getSelection;
 },{"react":"../node_modules/react/index.js"}],"../src/chat/Dialog/Input.js":[function(require,module,exports) {
 "use strict";
 
@@ -80382,6 +80402,8 @@ require("emoji-mart/css/emoji-mart.css");
 var _emojiMart2 = require("emoji-mart");
 
 var _FileUpload = _interopRequireDefault(require("./FileUpload"));
+
+var _UserNamesList = _interopRequireWildcard(require("./UserNamesList"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80406,6 +80428,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var searchUsernamePattern = function searchUsernamePattern(text, cursor) {
+  var user_helper_shown = null;
+
+  for (var l = cursor - 1; l >= 0; l--) {
+    if (text[l] === ' ') {
+      break;
+    } else if (text[l] === '@' && (text[l - 1] && text[l - 1] === ' ' || l === 0)) {
+      user_helper_shown = text.substring(l + 1, cursor);
+    } // end if
+
+  } // end for
+
+
+  return user_helper_shown;
+};
 
 var Input =
 /*#__PURE__*/
@@ -80438,25 +80476,70 @@ function (_Component) {
   }, {
     key: "onText",
     value: function onText(e) {
-      this.setState(this.state.sended ? {
-        message: '',
-        sended: false,
-        gallery: false,
-        attachment: null
-      } : {
-        message: e.target.value
-      });
+      var _this2 = this;
+
+      if (this.state.sended) {
+        this.setState(function () {
+          return {
+            message: '',
+            sended: false,
+            gallery: false,
+            attachment: null
+          };
+        });
+      } else {
+        var value = e.target.value;
+        this.setState(function () {
+          return {
+            message: value,
+            usernamePattern: searchUsernamePattern(value, _this2.inputRef.selectionStart)
+          };
+        });
+      } // end if
+
     }
   }, {
     key: "sendMessage",
     value: function sendMessage(e) {
-      if (this.state.message.trim() && e.key === 'Enter') {
-        e.stopPropagation();
-        this.props.onMessage(this.state.message.trim(), this.state.gallery ? this.state.attachment : null);
-        this.setState({
-          sended: true
-        });
-      }
+      var keyCode = e.which ? e.which : e.keyCode;
+      var _this$state = this.state,
+          message = _this$state.message,
+          usernamePattern = _this$state.usernamePattern,
+          gallery = _this$state.gallery,
+          attachment = _this$state.attachment;
+
+      if (keyCode === 13) {
+        if (usernamePattern !== null) {
+          e.preventDefault();
+          this.onUserAttach.call(this);
+        } else if (message.trim()) {
+          e.stopPropagation();
+          this.props.onMessage(message.trim(), gallery ? attachment : null);
+          this.setState({
+            sended: true
+          });
+        }
+      } else if (usernamePattern != null) {
+        if (keyCode === 40) {
+          // down
+          this.setState(function () {
+            return {
+              userSelectMoveSelection: 'down'
+            };
+          });
+          e.preventDefault();
+        } else if (keyCode === 38) {
+          // up
+          this.setState(function () {
+            return {
+              userSelectMoveSelection: 'up'
+            };
+          });
+          e.preventDefault();
+        } // end if
+
+      } // end if
+
     }
   }, {
     key: "toggleEmoji",
@@ -80468,7 +80551,7 @@ function (_Component) {
   }, {
     key: "insertEmoji",
     value: function insertEmoji(emoji) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.setState(function (state) {
         return {
@@ -80476,24 +80559,24 @@ function (_Component) {
           emoji: false
         };
       }, function () {
-        return _this2.inputRef.focus();
+        return _this3.inputRef.focus();
       });
     }
   }, {
     key: "toggleGallery",
     value: function toggleGallery() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.setState(function () {
         return {
-          gallery: !_this3.state.gallery
+          gallery: !_this4.state.gallery
         };
       });
     }
   }, {
     key: "onFileSelected",
     value: function onFileSelected(file) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (file) {
         this.setState(function () {
@@ -80501,7 +80584,7 @@ function (_Component) {
             attachment: file
           };
         }, function () {
-          return _this4.inputRef.focus();
+          return _this5.inputRef.focus();
         });
       } else {
         this.setState(function () {
@@ -80513,16 +80596,71 @@ function (_Component) {
 
     }
   }, {
+    key: "showUserAutoComplete",
+    value: function showUserAutoComplete() {
+      var _this6 = this;
+
+      this.setState(function () {
+        return {
+          usernamePattern: searchUsernamePattern(_this6.state.message, _this6.inputRef.selectionStart)
+        };
+      });
+    }
+  }, {
+    key: "onUserAttach",
+    value: function onUserAttach(e) {
+      var _this7 = this;
+
+      var _this$state2 = this.state,
+          usernamePattern = _this$state2.usernamePattern,
+          message = _this$state2.message;
+      var members = this.props.members;
+      var cursor = this.inputRef.selectionStart;
+      var list = members.filter(function (m) {
+        return m.username.indexOf(usernamePattern) !== -1 || usernamePattern && usernamePattern.length === 0;
+      });
+      var member = list[(0, _UserNamesList.getSelection)()];
+
+      var _loop = function _loop(i) {
+        if (message[i] === '@') {
+          return {
+            v: _this7.setState(function () {
+              return {
+                message: message.substring(0, i) + "@".concat(member.username, " ") + message.substring(cursor, message.length),
+                usernamePattern: null
+              };
+            })
+          };
+        } // end if
+
+      };
+
+      for (var i = cursor; i >= 0; i--) {
+        var _ret = _loop(i);
+
+        if (_typeof(_ret) === "object") return _ret.v;
+      } // end for
+
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this8 = this;
 
-      var gallery = this.state.gallery;
+      var _this$state3 = this.state,
+          gallery = _this$state3.gallery,
+          usernamePattern = _this$state3.usernamePattern,
+          userSelectMoveSelection = _this$state3.userSelectMoveSelection;
       return _react.default.createElement("div", {
         className: "input has-emoji"
       }, _react.default.createElement(_FileUpload.default, {
         onFileChosen: this.onFileSelected.bind(this),
         open: gallery
+      }), _react.default.createElement(_UserNamesList.default, {
+        onClick: this.onUserAttach.bind(this),
+        moveSelection: userSelectMoveSelection,
+        members: this.props.members,
+        pattern: usernamePattern
       }), _react.default.createElement("div", {
         className: this.state.emoji ? "emoji-container show" : "emoji-container"
       }, _react.default.createElement(_emojiMart2.Picker, {
@@ -80536,8 +80674,9 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "icon-icons"
       })), _react.default.createElement(_reactTextareaAutosize.default, {
+        onClick: this.showUserAutoComplete.bind(this),
         inputRef: function inputRef(ref) {
-          _this5.inputRef = ref;
+          _this8.inputRef = ref;
         },
         placeholder: "Hello my friend...",
         maxRows: 2,
@@ -80557,7 +80696,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Input;
-},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","emoji-mart/css/emoji-mart.css":"../node_modules/emoji-mart/css/emoji-mart.css","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","./FileUpload":"../src/chat/Dialog/FileUpload.js"}],"../src/chat/Dialog/Message.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js","emoji-mart/css/emoji-mart.css":"../node_modules/emoji-mart/css/emoji-mart.css","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","./FileUpload":"../src/chat/Dialog/FileUpload.js","./UserNamesList":"../src/chat/Dialog/UserNamesList.js"}],"../src/chat/Dialog/Message.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -80634,17 +80773,64 @@ function (_Component) {
   }
 
   _createClass(Message, [{
+    key: "userMarker",
+    value: function userMarker(txt, _result) {
+      var result = _result ? _result : [txt];
+      var markers = this.state.message.markers;
+
+      for (var j = result.length; j >= 0; j--) {
+        var token = result[j];
+
+        if (typeof token !== 'string') {
+          continue;
+        }
+
+        for (var i = markers.length - 1; i >= 0; i--) {
+          var mark = markers[i];
+          var start_at = token.indexOf("@".concat(mark));
+          var ends_at = start_at + mark.length + 1;
+
+          var rjxMark = _react.default.createElement("span", {
+            className: "btn-link"
+          }, "@".concat(mark));
+
+          if (start_at !== -1) {
+            result[j] = undefined;
+
+            if (start_at !== 0) {
+              result.push(token.substring(0, start_at));
+            } // end if
+
+
+            result.push(rjxMark);
+            ends_at !== token.length && result.push(token.substring(ends_at, token.length));
+            return this.userMarker(null, result);
+          } // end if
+
+        } // end for
+
+      } // end for
+
+
+      return result;
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var message = this.state.message;
       var showUser = this.state.showUser;
       var author = this.state.author;
       var message_content = (0, _utils.placeEmoji)(message.message).map(function (c) {
-        return typeof c === 'string' ? (0, _utils.urlify)(c) : c;
+        return typeof c === 'string' ? (0, _utils.urlify)(c).map(function (txt) {
+          return _this2.userMarker(txt);
+        }) : c;
       });
       return _react.default.createElement("div", {
         className: "chat-message"
       }, showUser ? _react.default.createElement(MessageUserAva, {
+        key: message.id,
         data: message
       }) : _react.default.createElement("div", {
         style: {
@@ -80653,6 +80839,7 @@ function (_Component) {
       }), _react.default.createElement("div", {
         className: "message"
       }, showUser ? _react.default.createElement(MessageUserInfo, {
+        key: message.id,
         data: message
       }) : null, _react.default.createElement("div", {
         className: "message-content"
@@ -80667,10 +80854,13 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "message-footer"
       }, _react.default.createElement("span", {
+        key: 'message-text',
         className: "message-text"
       }, message_content), author ? message.readed ? _react.default.createElement("span", {
+        key: 'message-read',
         className: "message-status readed"
       }) : _react.default.createElement("span", {
+        key: 'message-not-read',
         className: "message-status"
       }) : null))));
     }
@@ -85307,7 +85497,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         className: "dialog"
       }, _react.default.createElement(_DialogHead.default, {
-        members: this.props.chat.members,
+        members: chat.members,
         closeChat: this.closeChat.bind(this),
         me: this.props.messenger.username,
         chat: chat
@@ -85324,6 +85514,7 @@ function (_Component) {
           messages: _this7.state.messagesList
         }));
       })), _react.default.createElement(_Input.default, {
+        members: chat.members,
         onMessage: this.onMessage.bind(this)
       }));
     }
@@ -88462,9 +88653,7 @@ function (_Component) {
         style: {
           backgroundImage: "url(".concat(poster, ")")
         }
-      }, _react.default.createElement("div", {
-        className: "triangle-right"
-      }), _react.default.createElement(_Profile.default, {
+      }, _react.default.createElement(_Profile.default, {
         data: this.props,
         editor: editor
       })), _react.default.createElement("div", {
@@ -88787,7 +88976,10 @@ var Ava = function Ava(_ref) {
     className: "ava-wrapper"
   }, _react.default.createElement("div", {
     className: "ava",
-    id: "ava"
+    id: "ava",
+    style: {
+      top: '15px'
+    }
   }, _react.default.createElement("div", {
     className: "ava-holder"
   }, _react.default.createElement("div", {
@@ -88839,7 +89031,10 @@ function (_Component) {
       }), _react.default.createElement("span", {
         className: "wote-filler"
       })))), _react.default.createElement("div", {
-        className: "row"
+        className: "row",
+        style: {
+          height: '150px'
+        }
       }, _react.default.createElement("div", {
         className: "col-auto"
       }, _react.default.createElement(Ava, {
@@ -90087,9 +90282,7 @@ function (_Component) {
         style: {
           backgroundImage: "url(".concat(poster, ")")
         }
-      }, _react.default.createElement("div", {
-        className: "triangle-right"
-      }), _react.default.createElement(_Profile.default, {
+      }, _react.default.createElement(_Profile.default, {
         init: function init() {
           return _this.props.init(data.id);
         },
@@ -90583,9 +90776,7 @@ function _default(_ref) {
     style: {
       backgroundImage: "url(".concat(poster, ")")
     }
-  }, _react.default.createElement("div", {
-    className: "triangle-right"
-  }), _react.default.createElement(_Profile.default, {
+  }, _react.default.createElement(_Profile.default, {
     data: data,
     knocked: knock,
     setKnock: setKnock
@@ -90920,9 +91111,7 @@ function (_Component) {
         style: {
           backgroundImage: "url(".concat(poster, ")")
         }
-      }, _react.default.createElement("div", {
-        className: "triangle-right"
-      }), _react.default.createElement(_Profile.default, {
+      }, _react.default.createElement(_Profile.default, {
         init: function init() {
           return _this.props.init(data.id);
         },
@@ -91670,7 +91859,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41888" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34095" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

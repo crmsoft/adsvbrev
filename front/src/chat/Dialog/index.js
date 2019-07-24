@@ -204,7 +204,7 @@ class DialogComponent extends Component{
         const {chat} = this.props;
         return (
             <div className="dialog">
-                <Header members={this.props.chat.members} 
+                <Header members={chat.members} 
                         closeChat={this.closeChat.bind(this)}
                         me={this.props.messenger.username}
                         chat={chat}
@@ -228,6 +228,7 @@ class DialogComponent extends Component{
                     </StateContext.Consumer>
                 </ScrollToBottom>
                 <Input 
+                    members={chat.members}
                     onMessage={this.onMessage.bind(this)} 
                 />
             </div>

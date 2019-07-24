@@ -21,8 +21,6 @@ export default function({
             <nav className="user-profile game-profile"
                 style={{backgroundImage: `url(${poster})`}}
             >
-                
-                <div className="triangle-right"></div>
 
                 <Profile 
                     data={data}

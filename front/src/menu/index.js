@@ -61,7 +61,6 @@ export default class Menu extends Component {
 
                                     <div className="left-banner">
                                         <div className="banner-header">
-                                            <div className="banner-triangle-right"></div>
                                             <h3>Game Groups </h3>
                                             <p>Lol Gamer Community</p>
                                         </div>
