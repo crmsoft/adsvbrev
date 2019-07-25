@@ -9330,7 +9330,7 @@ nav.user-profile {
     .user-uploads .user-content.active {
       display: flex; }
 
-.dd-block-shadow, .profile-aside .block {
+.dd-block-shadow, .user-uploads, .profile-aside .block, .profile-about, .post {
   -webkit-box-shadow: 0px 0px 2px 0px white;
   -moz-box-shadow: 0px 0px 2px 0px white;
   box-shadow: 0px 0px 2px 0px white; }
