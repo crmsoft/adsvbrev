@@ -178,60 +178,6 @@
                     margin-top: 2px;
                 }
             }
-            .input{
-                border-radius: 5px;
-                margin: 0 5px;
-                display: flex;
-                background-color: $lightGray;
-                textarea{
-                    &:focus{
-                        outline: none;
-                    }
-                }
-                .emoji{
-                    display: flex;
-                    align-items: center;
-                    padding-left: 5px;
-                    cursor: pointer;
-                    &:after{
-                        content: '|';
-                        height: 85%;
-                        background: $mainGray;
-                        width: 1px;
-                        height: 24px;
-                        margin-left: 5px;
-                    }
-                }
-                .attach{
-                    display: flex;
-                    align-items: center;
-                    font-size: 17px;
-                    width: 27px;
-                    span{
-                        text-align: center;
-                        vertical-align: middle;
-                        cursor: pointer;
-                        &.icon-cross{
-                            font-size: 9px;
-                            padding-left: 5px;
-                            color: $mainColor;
-                        }
-                    }
-                }
-                .emoji-container{
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    display: none;
-                    &.show{
-                        display: block;
-                        +.emoji{
-                            color: $mainColor;
-                        }
-                    }
-                }
-            }
             .dialog-head{
                 border-bottom: 1px solid gray;
                 display: flex;
@@ -303,6 +249,61 @@
                         list-style: none;
                     }
                 }
+            }
+        }
+    }
+}
+
+.message-input{
+    border-radius: 5px;
+    margin: 0 5px;
+    display: flex;
+    background-color: $lightGray;
+    textarea{
+        &:focus{
+            outline: none;
+        }
+    }
+    .emoji{
+        display: flex;
+        align-items: center;
+        padding-left: 5px;
+        cursor: pointer;
+        &:after{
+            content: '|';
+            height: 85%;
+            background: $mainGray;
+            width: 1px;
+            height: 24px;
+            margin-left: 5px;
+        }
+    }
+    .attach{
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+        width: 27px;
+        span{
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            &.icon-cross{
+                font-size: 9px;
+                padding-left: 5px;
+                color: $mainColor;
+            }
+        }
+    }
+    .emoji-container{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        display: none;
+        &.show{
+            display: block;
+            +.emoji{
+                color: $mainColor;
             }
         }
     }

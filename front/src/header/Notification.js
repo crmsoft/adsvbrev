@@ -24,7 +24,7 @@ export default class Notification extends Component{
         this.socketSubscription = socketStore.subscribe(() => {
             const state = socketStore.getState();
 
-            if (state.recieved === NOTIFICATION)
+            if (state.received === NOTIFICATION)
             {
                 NewNotification.play();
                 this.props.onNotificationReceived();   

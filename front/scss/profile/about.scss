@@ -1,5 +1,6 @@
 .profile-about{
     @include section-default;
+    @extend .dd-block-shadow;
     .profile-about-header{
         span{
             color: $mainColor;

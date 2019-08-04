@@ -1,13 +1,13 @@
 
 import {
     MESSAGE_SENDED,
-    MESSAGE_RECIEVED,
-    MARK_MESSAGES_AS_READED,
+    MESSAGE_RECEIVED,
+    MARK_MESSAGES_AS_READ,
     CHATS_LOADED,
     CLOSE_CHAT,
     CHAT_CLOSED,
     INC_CHAT_UNREAD,
-    CHAT_READED,
+    CHAT_READ,
     CHAT_PUSH,
     CHAT_UPDATE,
     CHAT_REMOVE,
@@ -16,7 +16,9 @@ import {
     STATUS_ONLINE,
     STATUS_OFFLINE,
     SOUND_OFF,
-    SOUND_ON
+    SOUND_ON,
+    USER_STATUS_OFFLINE,
+    USER_STATUS_ONLINE
 } from './events';
 
 const initialState = {
@@ -110,7 +112,7 @@ const reducer = (state = initialState, action) => {
             }
         }
 
-        case MARK_MESSAGES_AS_READED : {
+        case MARK_MESSAGES_AS_READ : {
             const chat_id = action.data;
             return {
                 ...state,
@@ -155,7 +157,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case CHAT_READED : {
+        case CHAT_READ : {
             const newChat = action.data;
             const added = state.messenger.chat.filter(
                 function( chat )
@@ -191,9 +193,9 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case MESSAGE_RECIEVED : {
+        case MESSAGE_RECEIVED : {
             return {
-                action: MESSAGE_RECIEVED,
+                action: MESSAGE_RECEIVED,
                 target: action.data,
                 messenger: {
                     ...state.messenger
@@ -229,6 +231,34 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 chatToClose: null,
                 action: null
+            }
+        }
+        case USER_STATUS_OFFLINE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    friend: state.messenger.friend.map(user => {
+                        if (user.username === action.data) {
+                            user.status = 'offline';
+                        }
+                        return user;
+                    })
+                }
+            }
+        }
+        case USER_STATUS_ONLINE : {
+            return {
+                ...state,
+                messenger: {
+                    ...state.messenger,
+                    friend: state.messenger.friend.map(user => {
+                        if (user.username === action.data) {
+                            user.status = 'online';
+                        }
+                        return user;
+                    })
+                }
             }
         }
         default: return {

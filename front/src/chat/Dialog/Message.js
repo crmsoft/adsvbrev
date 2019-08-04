@@ -47,9 +47,9 @@ export default class Message extends Component{
 
             for (let i = markers.length - 1; i >= 0; i--) {
                 const mark = markers[i];
-                const start_at = token.indexOf(`@${mark}`);
+                const start_at = token.indexOf(mark);
                 const ends_at = start_at + mark.length + 1;
-                const rjxMark = <span className="btn-link">{`@${mark}`}</span>;
+                const rjxMark = <span key={`${ends_at}_${mark}`} className="btn-link">{`${mark} `}</span>;
 
                 if (start_at !== -1) {
                     result[j] = undefined;

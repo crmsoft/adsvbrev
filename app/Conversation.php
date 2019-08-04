@@ -69,13 +69,13 @@ class Conversation extends Model
         return '...';
     }
 
-    public function markReaded()
+    public function markRead()
     {
         $conversation = $this->id;
         $user_id = auth()->user()->id;
 
         // find messages that user view for the first time
-        $readed_messages = DB::select("SELECT 
+        $read_messages = DB::select("SELECT DISTINCT m.id, m.user_id as involved,
                         m.id as id, uc.user_id as user_id
                     FROM
                         user_conversations uc
@@ -91,7 +91,7 @@ class Conversation extends Model
         $insert_to_reads = [];
         $now = now();
         // mark messages as viewed
-        foreach($readed_messages as $message)
+        foreach($read_messages as $message)
         {
             $insert_to_reads[] = [
                 'message_id' => $message->id,
@@ -103,15 +103,17 @@ class Conversation extends Model
 
         if (!empty($insert_to_reads))
         {
+            $involved = collect($read_messages)->pluck('involved');
             \DB::table('message_reads')->insert($insert_to_reads);
+            
             // notify users about view event
-            Redis::publish(config('app.pub-sub-channel'), json_encode([
-                'header' => 'message-readed',
-                'chat' => $this->hash_id,
-                'users' => $this->members->pluck('id')->filter(function($user) use($user_id) {
-                    return $user != $user_id;
-                })->values()
-            ]));
+            if (!empty($involved)) {
+                Redis::publish(config('app.pub-sub-channel'), json_encode([
+                    'action' => 'message-read',
+                    'target' => $this->hash_id,
+                    'involved' => $involved
+                ]));
+            } // end if
         } // end if
     }
 

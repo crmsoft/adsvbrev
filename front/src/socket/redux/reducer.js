@@ -2,35 +2,49 @@ import {
     MESSAGE,
     SEND_MESSAGE,
     NOTIFICATION,
-    CHAT_MESSAGES_READED
+    CHAT_MESSAGES_READ,
+    USER_WENT_ONLINE,
+    USER_WENT_OFFLINE
 } from './events';
 
 
 const reducer = (state = {
-    recieved: null
+    received: null
 }, action) => {
     switch(action.type)
     {
         case NOTIFICATION : {
             return {
-                recieved: NOTIFICATION
+                received: NOTIFICATION
             }
         }
         case MESSAGE : {
             return {
-                recieved: MESSAGE,
+                received: MESSAGE,
                 data: action.data
             }
         }
         case SEND_MESSAGE : {
             return {
-                recieved: SEND_MESSAGE,
+                received: SEND_MESSAGE,
                 data: action.data
             }            
         }
-        case CHAT_MESSAGES_READED : {
+        case CHAT_MESSAGES_READ : {
             return {
-                recieved: CHAT_MESSAGES_READED,
+                received: CHAT_MESSAGES_READ,
+                data: action.data
+            }
+        }
+        case USER_WENT_ONLINE : {
+            return {
+                received: USER_WENT_ONLINE,
+                data: action.data
+            }
+        }
+        case USER_WENT_OFFLINE : {
+            return {
+                received: USER_WENT_OFFLINE,
                 data: action.data
             }
         }

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import Input from './Input';
 import {
-    MESSAGE_RECIEVED,
+    MESSAGE_RECEIVED,
     m_notified,
     close_chat
 } from '../redux/events';
@@ -76,11 +76,11 @@ class DialogComponent extends Component{
             .then(({data}) => this.setState(state => {
 
                 const parent = this.containerRef.current.parentNode;
-                const childs = Array.prototype.slice.call(
+                const child = Array.prototype.slice.call(
                                     parent.querySelectorAll('div.chat-message')
                                 );
                 return {
-                    beforePull: childs.length,
+                    beforePull: child.length,
                     pullingPrev: !data.more,
                     messagesList: [
                         ...data.data.reverse(),
@@ -89,11 +89,11 @@ class DialogComponent extends Component{
                 }
             }, () => {
                 const parent = this.containerRef.current.parentNode;
-                const childs = Array.prototype.slice.call(
+                const child = Array.prototype.slice.call(
                                     parent.querySelectorAll('div.chat-message')
                                 ).reverse();
                 
-                childs[this.state.beforePull] && childs[this.state.beforePull].scrollIntoView();
+                child[this.state.beforePull] && child[this.state.beforePull].scrollIntoView();
             }))
         });
     }

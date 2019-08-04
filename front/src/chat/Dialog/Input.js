@@ -143,6 +143,10 @@ export default class Input extends Component{
         const list = members.filter(m => (m.username.indexOf(usernamePattern) !== -1 || (usernamePattern && (usernamePattern.length === 0))));
         const member = list[getSelection()];
 
+        if (!member) {
+            return;
+        }
+
         for (let i = cursor; i >= 0; i--){
             if (message[i] === '@') {
                 return this.setState(() => ({
@@ -158,7 +162,7 @@ export default class Input extends Component{
         const {gallery, usernamePattern, userSelectMoveSelection} = this.state;
         
         return (
-            <div className="input has-emoji">
+            <div className="message-input has-emoji">
                 <FileUpload 
                     onFileChosen={this.onFileSelected.bind(this)}
                     open={gallery}

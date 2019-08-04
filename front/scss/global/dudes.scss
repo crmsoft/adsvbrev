@@ -1,9 +1,5 @@
 $backcolor:#14191c;
-$whitecolor:#fff;
-$greycolor05opacity:#bab7be69;
 
-$groupcolor05opacity:#f05a2480;
-$groupcolor02opacity:#f15a2452;
 $dudescolor:#6DB100;
 $dudescolor05opacity:#6db10070;
 $mecolor:#662D91;
@@ -128,9 +124,11 @@ $minheight:50%;
 
         .my-games-section
         {
-
+            max-height: 50vh;
             .my-games-box
             {
+                cursor: pointer;
+                padding-right: 10px;
                 height: 50px;
                 padding: 10px 0px;
                 border-bottom: 1px solid $findyourdudesbordercolor;
@@ -143,6 +141,7 @@ $minheight:50%;
                 }
                 img
                 {
+                    min-width: 35px;
                     height: 35px;
                     float: left;
                     margin: 0px 0.5rem;
@@ -152,6 +151,9 @@ $minheight:50%;
 
                     h3
                     {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                         font-size:14px;
                         color:$mainColor;
                         margin-bottom:3px;
@@ -280,14 +282,18 @@ $minheight:50%;
         }
         .my-games-banner
         {
-            img
-            {
-
-            }
+            min-height: 90px;
         }
         .my-games-messages
         {
+            .message-list{
+                height: 350px;
+                overflow: hidden;
+            }
 
+            .message-input{
+                margin-bottom: 9px;
+            }
         }
     }
 

@@ -9,6 +9,7 @@ use App\Conversation;
 use App\Message;
 
 use \App\Http\Resources\Chat\Dialog\MessageCollection;
+use App\Jobs\NotifyNotification;
 
 class MessageController extends Controller{
 
@@ -30,7 +31,7 @@ class MessageController extends Controller{
                         $query->limit(self::$limit_per_pull);
                     }, 'members'])->first();
 
-        $conversation->markReaded();
+        $conversation->markRead();
 
         return new MessageCollection($latest->messages);
     }

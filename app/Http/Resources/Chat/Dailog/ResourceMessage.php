@@ -16,6 +16,8 @@ class ResourceMessage extends JsonResource
      */
     public function toArray($request)
     {
+        preg_match('/\s@\w+\s/', " $this->message ", $markers);
+
         return [
             'id' => $this->hash,
             'message' => $this->message,
@@ -23,7 +25,7 @@ class ResourceMessage extends JsonResource
             'user' => new User($this->user),
             'readed' => $this->readed,
             'media' => new MediaCollection($this->mediable),
-            'markers' => ['willy81', 'zlittle']
+            'markers' => array_map('trim', $markers)
         ];
     }
 }

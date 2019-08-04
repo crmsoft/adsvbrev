@@ -3,6 +3,7 @@
     background-color: $postBack;
     border: 1px solid $strokeColor;
     @include section-border-radius();
+    @extend .dd-block-shadow;
     
     .user-content{
         

@@ -6,15 +6,19 @@ import store from './redux/store';
 import socketStore from '../socket/redux/store';
 import {
     MESSAGE,
-    CHAT_MESSAGES_READED
+    CHAT_MESSAGES_READ,
+    USER_WENT_ONLINE,
+    USER_WENT_OFFLINE
 } from '../socket/redux/events';
 import {
     load_chats, 
     CHAT_CLOSED, 
-    MARK_MESSAGES_AS_READED, 
+    MARK_MESSAGES_AS_READ, 
     INC_CHAT_UNREAD, 
-    CLOSE_CHAT, 
-    CHAT_READED
+    CLOSE_CHAT,
+    CHAT_READ,
+    USER_STATUS_OFFLINE,
+    USER_STATUS_ONLINE
 } from './redux/events';
 import newMessageSound from './sounds/NewMessage';
 
@@ -24,7 +28,7 @@ export default class Chat extends Component{
     }
 
     componentDidMount(){
-        this.unsubscrubeFromMainStore = store.subscribe(() => {
+        this.unsubscribeFromMainStore = store.subscribe(() => {
 
             const {action, chatToClose} = store.getState();  
             
@@ -44,13 +48,13 @@ export default class Chat extends Component{
             });
         });
 
-        this.unsubscrubeFromSocketStore = socketStore.subscribe(() => {
-            const {recieved, data} = socketStore.getState();  
+        this.unsubscribeFromSocketStore = socketStore.subscribe(() => {
+            const {received, data} = socketStore.getState();  
             const {messenger} = store.getState();
             
             newMessageSound.toggle( messenger.m_sound === 'off' );
             
-            if( recieved === MESSAGE )
+            if( received === MESSAGE )
             {
                 const is_chat_open = this.state.activeChats.filter(chat => chat.hash_id === data);
                 
@@ -87,10 +91,18 @@ export default class Chat extends Component{
                 
             } // end if
 
-            if (recieved === CHAT_MESSAGES_READED)
+            if (received === CHAT_MESSAGES_READ)
             {
                 store.dispatch({
-                    type: MARK_MESSAGES_AS_READED,
+                    type: MARK_MESSAGES_AS_READ,
+                    data: data
+                })
+            } // end if
+
+            if (received === USER_WENT_ONLINE || received === USER_WENT_OFFLINE)
+            {
+                store.dispatch({
+                    type: received === USER_WENT_ONLINE ? USER_STATUS_ONLINE : USER_STATUS_OFFLINE,
                     data: data
                 })
             } // end if
@@ -98,14 +110,14 @@ export default class Chat extends Component{
     }
 
     componentWillUnmount(){
-        if(this.unsubscrubeFromMainStore)
+        if(this.unsubscribeFromMainStore)
         {
-            this.unsubscrubeFromMainStore();
+            this.unsubscribeFromMainStore();
         } //end if 
 
-        if (this.unsubscrubeFromSocketStore)
+        if (this.unsubscribeFromSocketStore)
         {
-            this.unsubscrubeFromSocketStore();
+            this.unsubscribeFromSocketStore();
         } // end if
     }
 
@@ -124,7 +136,7 @@ export default class Chat extends Component{
                 newChat
             ]
         }, () => {
-            store.dispatch({type: CHAT_READED, data: newChat})
+            store.dispatch({type: CHAT_READ, data: newChat})
         });
     }
 

@@ -3,24 +3,13 @@ import {
     MESSAGE,
     NOTIFICATION,
     SEND_MESSAGE,
-    CHAT_MESSAGES_READED
+    CHAT_MESSAGES_READ,
+    USER_WENT_OFFLINE,
+    USER_WENT_ONLINE
 } from './redux/events';
-const socket = new WebSocket('wss://divdudes.com/yraMgipTBPDo42aK/?token=' + window.gg.wsc());
-//const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
+import SocketWrapper from './SocketWrapper';
 
-socket.onclose = function(){
-    //document.location.reload();
-
-    (function() {
-        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        link.href = '/img/overflow.ico';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    })();
-}
-
-socket.onmessage = ({data}) => {
+const onMessage = ({data}) => {
     
     const response = JSON.parse(data);
     
@@ -36,16 +25,28 @@ socket.onmessage = ({data}) => {
 
     if (response.action === 'messages-viewed')
     {
-        store.dispatch({type: CHAT_MESSAGES_READED, data: response.target});
+        store.dispatch({type: CHAT_MESSAGES_READ, data: response.target});
+    } // end if 
+
+    if (response.action === 'online')
+    {
+        store.dispatch({type: USER_WENT_ONLINE, data: response.target});
+    } // end if 
+
+    if (response.action === 'offline')
+    {
+        store.dispatch({type: USER_WENT_OFFLINE, data: response.target});
     } // end if 
 }
 
+const wrapper = new SocketWrapper(true);
+wrapper.bind(onMessage);
+
 store.subscribe(() => {
     const state = store.getState();
-
-    if (state.recieved === SEND_MESSAGE)
+    if (state.received === SEND_MESSAGE)
     {
-        socket.send(JSON.stringify({action:'message', data: state.data}));
+        wrapper.send(JSON.stringify({action:'message', data: state.data}));
     } // end if
 });
 

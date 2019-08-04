@@ -104,7 +104,7 @@ class MessageController extends Controller
                     $notification_recipients = [];
                     foreach ($user_conversations as $user_conversation) {
                         if($user_conversation->user_communication_id)
-                            $notification_recipients[] = $user_conversation->user_communication_id;
+                            $notification_recipients[] = $user_conversation->id;
 
                         UnreadMessage::create([
                             'user_id' => $user_conversation->id,
@@ -118,7 +118,11 @@ class MessageController extends Controller
                     if(!empty($notification_recipients)) {
                         Redis::publish(
                             config('database.redis.message_channel'),
-                            json_encode($notification_recipients)
+                            json_encode([
+                                'action' => 'message-viewed',
+                                'involved' => $notification_recipients,
+                                'target' => $conversation->hash_id
+                            ])
                         );
                     }
 

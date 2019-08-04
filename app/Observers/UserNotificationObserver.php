@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Entities\UserNotification;
+use Illuminate\Support\Facades\Redis;
 
 class UserNotificationObserver
 {
@@ -14,7 +15,13 @@ class UserNotificationObserver
      */
     public function created(UserNotification $notification)
     {
-        file_put_contents('/tmp/.notreciever', $notification->user_id);
+        // in app notification trigger
+        if ($notification->user->user_communication_id > 0) {
+            Redis::publish(config('app.pub-sub-channel'), json_encode([
+                'action' => 'notification',
+                'target' => $notification->user->id
+            ]));
+        } // end if
     }
 
     /**

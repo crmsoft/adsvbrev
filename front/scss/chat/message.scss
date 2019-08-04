@@ -63,10 +63,15 @@
                 padding: 2px 3px;
                 background-color: aliceblue;
                 display: inline-block;
+                max-width: 97%;
                 .btn-link{
                     color: inherit;
                     font-weight: 700;
                     cursor: pointer;
+                }
+
+                a{
+                    word-wrap: break-all;
                 }
             }
 

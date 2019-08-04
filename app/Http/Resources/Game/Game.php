@@ -17,10 +17,11 @@ class Game extends JsonResource
     {
         return [
             'id' => \Hashids::encode($this->id),
-            'username' => '',
+            'username' => $this->slug,
             'participant_count' => $this->participants->count(),
             'full_name' => $this->name,
             'ava' => url(\Storage::url($this->ava)),
+            'poster' => url(\Storage::url($this->poster)),
             'path' => isset($this->additional['path']) ? $this->additional['path'] : null
         ];
     }
