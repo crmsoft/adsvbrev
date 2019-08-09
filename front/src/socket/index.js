@@ -3,6 +3,9 @@ import {
     MESSAGE,
     NOTIFICATION,
     SEND_MESSAGE,
+    SEND_DUDE_MESSAGE,
+    DUDE_CHANNEL_UPDATE,
+    AUTH_SUCCESS,
     CHAT_MESSAGES_READ,
     USER_WENT_OFFLINE,
     USER_WENT_ONLINE
@@ -30,13 +33,21 @@ const onMessage = ({data}) => {
 
     if (response.action === 'online')
     {
-        store.dispatch({type: USER_WENT_ONLINE, data: response.target});
+        store.dispatch({type: USER_WENT_ONLINE, data: response});
     } // end if 
 
     if (response.action === 'offline')
     {
-        store.dispatch({type: USER_WENT_OFFLINE, data: response.target});
+        store.dispatch({type: USER_WENT_OFFLINE, data: response});
     } // end if 
+
+    if (response.action === 'channel-update') {
+        store.dispatch({type: DUDE_CHANNEL_UPDATE, data: response.target})
+    } // end if
+
+    if (response.action === 'auth') {
+        store.dispatch({type: AUTH_SUCCESS, data: response.token})
+    } // end if
 }
 
 const wrapper = new SocketWrapper(true);
@@ -47,6 +58,11 @@ store.subscribe(() => {
     if (state.received === SEND_MESSAGE)
     {
         wrapper.send(JSON.stringify({action:'message', data: state.data}));
-    } // end if
+    } else if (state.received === SEND_DUDE_MESSAGE) {
+        wrapper.send(JSON.stringify({
+            action: 'find-dudes-message',
+            data: state.data
+        }));
+    }// end if
 });
 

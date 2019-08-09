@@ -239,7 +239,7 @@ const reducer = (state = initialState, action) => {
                 messenger: {
                     ...state.messenger,
                     friend: state.messenger.friend.map(user => {
-                        if (user.username === action.data) {
+                        if (user.username === action.data.target) {
                             user.status = 'offline';
                         }
                         return user;
@@ -253,8 +253,8 @@ const reducer = (state = initialState, action) => {
                 messenger: {
                     ...state.messenger,
                     friend: state.messenger.friend.map(user => {
-                        if (user.username === action.data) {
-                            user.status = 'online';
+                        if (user.username === action.data.target) {
+                            user.status = action.data.status;
                         }
                         return user;
                     })

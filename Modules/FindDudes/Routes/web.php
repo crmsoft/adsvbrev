@@ -17,8 +17,10 @@ Route::group([
 ], function(){
 
     Route::name('games.index')->get('/games', 'FindDudesController@index');
+    Route::name('games.subscribe')->post('/{game}/subscribe', 'FindDudesController@subscribe');
+    Route::name('games.unsubscribe')->post('/{game}/unsubscribe', 'FindDudesController@unsubscribe');
 
 
-    Route::name('messages.index')->get('messages/{game}', 'MessageController@index');
     Route::name('messages.store')->post('messages/store', 'MessageController@store');
+    Route::name('messages.index')->post('messages/{game}/{last?}', 'MessageController@index');
 });

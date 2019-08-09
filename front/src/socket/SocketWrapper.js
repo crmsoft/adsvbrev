@@ -2,6 +2,8 @@ const url = 'wss://divdudes.com/yraMgipTBPDo42aK/?token=' + window.gg.wsc();
 const queue = [];
 const subscribers = [];
 
+export let connectionIdentifier;
+
 export default class SocketWrapper {
     
     constructor(locale) {

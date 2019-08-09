@@ -6,7 +6,7 @@ import {DateTime} from 'luxon';
 /**
  * helper to show message user once 
  */
-const getStore = () => {
+export const getStore = () => {
     
     let data = {
         isChanged: true,

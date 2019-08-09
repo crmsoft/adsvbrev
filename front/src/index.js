@@ -19,6 +19,7 @@ import EventProfile from './event/EventProfile';
 import EventProfileStore from './event/redux/store';
 
 import FDudes from './find-dude';
+import socketStore from './socket/redux/store';
 
 import GamePage from './games/index';
 import gameStore from './games/store';
@@ -51,7 +52,9 @@ const App = () => {
                     <Provider store={EventProfileStore}>
                         <Route path="/event/:id" component={EventProfile} />
                     </Provider>
-                    <Route path="/dudes" component={FDudes} />
+                    <Provider store={socketStore}>
+                        <Route path="/dudes" component={FDudes} />
+                    </Provider>
                     <Route path="/feed" component={Feed} />
                     <Provider store={gameStore}>
                         <Route path="/g/:id" component={GamePage} />

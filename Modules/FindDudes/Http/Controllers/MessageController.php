@@ -6,27 +6,68 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 use Modules\FindDudes\Entities\Message;
+use Modules\FindDudes\Entities\Subscription;
 use App\Http\Resources\Chat\Dialog\ResourceMessage;
 use App\Http\Resources\Chat\Dialog\MessageCollection;
 use App\Entities\Game;
+use Illuminate\Support\Facades\Redis;
 
 class MessageController extends Controller {
+
+    static $PER_PAGE = 15;
 
     /**
      * Get last messages
      * 
      * @return Response
      */
-    public function index(Request $request, Game $game)
+    public function index(Request $request, Game $game, ?string $last_id = null)
     {
         $user = auth()->user();
 
         // make sure user gamer
         $user->games()->where('groups.id', $game->id)->firstOrFail();
 
-        return new MessageCollection(
-            Message::where('game_id', $game->id)->get()
-        );
+        if ($request->has('page-id')) {
+            Redis::publish(config('app.pub-sub-channel'), json_encode([
+                'action' => 'sub-find-dudes',
+                'target' => $game->slug,
+                'user' => $user->id,
+                'page' => $request->get('page-id')
+            ]));
+
+            Subscription::where([
+                'user_id' => $user->id,
+                'token' => $request->get('page-id')
+            ])->delete();  
+
+            $subscription = Subscription::firstOrNew([
+                'user_id' => $user->id,
+                'game_id' => $game->id,
+                'token' => $request->get('page-id')
+            ]);
+
+            $subscription->touch();
+        } // end if 
+
+        $query = Message::where('game_id', $game->id)
+        ->orderBy('id', 'desc')    
+        ->take(self::$PER_PAGE);
+
+        if ($last_id) {
+            $last_id = \Hashids::decode($last_id);
+            if (!empty($last_id)) {
+                $query->where('id', '<', end($last_id));
+            } // end if
+        } // end if
+
+        $messages = $query->get();
+
+        return (new MessageCollection(
+            $messages
+        ))->additional([
+            'more' => $messages->count() === self::$PER_PAGE
+        ]);
     }
 
     /**

@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 
 import Menu from '../menu'
@@ -7,6 +8,8 @@ import Game from './Game';
 import {Loading} from '../general/Loading';
 import Input from '../chat/Dialog/Input';
 import MessageList from './MessageList';
+import socketStore from '../socket/redux/store';
+import { send_dude_message } from '../socket/redux/events';
 
 export const DudeContext = React.createContext();
 
@@ -24,13 +27,13 @@ const GameList = ({games}) => (
     </div>
 )
 
-export default class FDudes extends Component{
+class FDudesComponent extends Component{
 
     state = {
         loading: true,
         games: [],
         active_index: 0,
-        messageSend: null
+        messageSend: null,
     }
 
     componentDidMount() {
@@ -38,8 +41,17 @@ export default class FDudes extends Component{
         .then(response => this.setState(({games:response.data, loading:false})))
     }
 
+    componentWillUnmount() {
+        const {games, active_index} = this.state;
+        const channel = games[active_index].username;
+
+        axios.post(`/find-dudes/${channel}/unsubscribe`, {
+            "page-id": socketStore.getState().token
+        });
+    }
+
     setActive(index) {
-        this.setState(({active_index:index}))
+        this.setState(({active_index:index}));
     }
 
     onMessage(message, attachment) {
@@ -52,7 +64,13 @@ export default class FDudes extends Component{
         attachment && frm.append('file', attachment);
 
         axios.post('/find-dudes/messages/store', frm)
-        .then(({data}) => this.setState(({messageSend:data.data}), () => this.setState(({messageSend:null}))))
+        .then(({data}) => {
+            this.props.send_dude_message(games[active_index].username);
+            this.setState(
+                ({messageSend:data.data}), 
+                () => this.setState(({messageSend:null}))
+            );
+        })
     }
     
     render()
@@ -63,6 +81,8 @@ export default class FDudes extends Component{
         return (
             <div className="d-flex">
             
+                <Menu />
+
                 <div className="user-middle">
                     <div className="find-your-dudes-title">
                         <img src="img/binoculars.svg" alt="" />
@@ -164,3 +184,18 @@ export default class FDudes extends Component{
         )
     }
 }
+
+const FDudes = connect(
+    state => {
+        return {
+            ...state
+        }
+    },
+    dispatch => {
+        return {
+            send_dude_message: channel => dispatch(send_dude_message(channel))
+        }
+    }
+)(FDudesComponent);
+
+export default FDudes;
