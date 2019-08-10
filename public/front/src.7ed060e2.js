@@ -92352,7 +92352,7 @@ var onMessage = function onMessage(_ref) {
 
 };
 
-var wrapper = new _SocketWrapper.default(true);
+var wrapper = new _SocketWrapper.default(window.location.href.indexOf('//game') !== -1);
 wrapper.bind(onMessage);
 
 _store.default.subscribe(function () {
@@ -92509,7 +92509,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35061" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43134" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
