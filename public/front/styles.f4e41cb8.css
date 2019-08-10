@@ -10998,7 +10998,8 @@ nav.user-profile {
         padding: 2px 3px;
         background-color: aliceblue;
         display: inline-block;
-        max-width: 97%; }
+        max-width: 97%;
+        overflow: hidden; }
         .chat-message .message .message-content .message-text .btn-link {
           color: inherit;
           font-weight: 700;
