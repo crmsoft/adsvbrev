@@ -79135,7 +79135,7 @@ exports.default = Chat;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.m_notified = exports.close_chat = exports.load_chats = exports.m_recieved = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READED = exports.INC_CHAT_UNREAD = exports.CHAT_REMOVE = exports.CHAT_UPDATE = exports.CHAT_PUSH = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MARK_MESSAGES_AS_READED = exports.MESSAGE_RECIEVED = exports.MESSAGE_SENDED = void 0;
+exports.USER_STATUS_ONLINE = exports.USER_STATUS_OFFLINE = exports.m_notified = exports.close_chat = exports.load_chats = exports.m_received = exports.m_sended = exports.SOUND_ON = exports.SOUND_OFF = exports.STATUS_ONLINE = exports.STATUS_OFFLINE = exports.STATUS_BUSY = exports.MESSAGE_NOTIFIED = exports.CHAT_READ = exports.INC_CHAT_UNREAD = exports.CHAT_REMOVE = exports.CHAT_UPDATE = exports.CHAT_PUSH = exports.CLOSE_CHAT = exports.CHAT_CLOSED = exports.CHATS_LOADED = exports.MARK_MESSAGES_AS_READ = exports.MESSAGE_RECEIVED = exports.MESSAGE_SENDED = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -79143,12 +79143,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var MESSAGE_SENDED = 'MESSAGE_SENDED';
 exports.MESSAGE_SENDED = MESSAGE_SENDED;
-var MESSAGE_RECIEVED = 'MESSAGE_RECIEVED';
-exports.MESSAGE_RECIEVED = MESSAGE_RECIEVED;
+var MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
+exports.MESSAGE_RECEIVED = MESSAGE_RECEIVED;
 var MESSAGE_NOTIFIED = 'MESSAGE_NOTIFIED';
 exports.MESSAGE_NOTIFIED = MESSAGE_NOTIFIED;
-var MARK_MESSAGES_AS_READED = 'MARK_MESSAGES_AS_READED';
-exports.MARK_MESSAGES_AS_READED = MARK_MESSAGES_AS_READED;
+var MARK_MESSAGES_AS_READ = 'MARK_MESSAGES_AS_READ';
+exports.MARK_MESSAGES_AS_READ = MARK_MESSAGES_AS_READ;
 var CHATS_LOADED = 'CHATS_LOADED';
 exports.CHATS_LOADED = CHATS_LOADED;
 var CLOSE_CHAT = 'CLOSE_CHAT';
@@ -79157,8 +79157,8 @@ var CHAT_CLOSED = 'CHAT_CLOSED';
 exports.CHAT_CLOSED = CHAT_CLOSED;
 var INC_CHAT_UNREAD = 'INC_CHAT_UNREAD';
 exports.INC_CHAT_UNREAD = INC_CHAT_UNREAD;
-var CHAT_READED = 'CHAT_READED';
-exports.CHAT_READED = CHAT_READED;
+var CHAT_READ = 'CHAT_READ';
+exports.CHAT_READ = CHAT_READ;
 var CHAT_PUSH = 'CHAT_PUSH';
 exports.CHAT_PUSH = CHAT_PUSH;
 var CHAT_UPDATE = 'CHAT_UPDATE';
@@ -79175,6 +79175,10 @@ var SOUND_ON = 'SOUND_ON';
 exports.SOUND_ON = SOUND_ON;
 var SOUND_OFF = 'SOUND_OFF';
 exports.SOUND_OFF = SOUND_OFF;
+var USER_STATUS_ONLINE = 'USER_STATUS_ONLINE';
+exports.USER_STATUS_ONLINE = USER_STATUS_ONLINE;
+var USER_STATUS_OFFLINE = 'USER_STATUS_OFFLINE';
+exports.USER_STATUS_OFFLINE = USER_STATUS_OFFLINE;
 
 var m_sended = function m_sended(chat) {
   return {
@@ -79194,14 +79198,14 @@ var m_notified = function m_notified(chat) {
 
 exports.m_notified = m_notified;
 
-var m_recieved = function m_recieved(chat) {
+var m_received = function m_received(chat) {
   return {
-    type: MESSAGE_RECIEVED,
+    type: MESSAGE_RECEIVED,
     data: chat
   };
 };
 
-exports.m_recieved = m_recieved;
+exports.m_received = m_received;
 
 var load_chats = function load_chats() {
   return function (dispatch) {
@@ -79334,7 +79338,7 @@ var reducer = function reducer() {
         });
       }
 
-    case _events.MARK_MESSAGES_AS_READED:
+    case _events.MARK_MESSAGES_AS_READ:
       {
         var chat_id = action.data;
         return Object.assign({}, state, {
@@ -79381,7 +79385,7 @@ var reducer = function reducer() {
         });
       }
 
-    case _events.CHAT_READED:
+    case _events.CHAT_READ:
       {
         var newChat = action.data;
         var added = state.messenger.chat.filter(function (chat) {
@@ -79408,10 +79412,10 @@ var reducer = function reducer() {
         });
       }
 
-    case _events.MESSAGE_RECIEVED:
+    case _events.MESSAGE_RECEIVED:
       {
         return {
-          action: _events.MESSAGE_RECIEVED,
+          action: _events.MESSAGE_RECEIVED,
           target: action.data,
           messenger: Object.assign({}, state.messenger)
         };
@@ -79448,6 +79452,36 @@ var reducer = function reducer() {
         return Object.assign({}, state, {
           chatToClose: null,
           action: null
+        });
+      }
+
+    case _events.USER_STATUS_OFFLINE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            friend: state.messenger.friend.map(function (user) {
+              if (user.username === action.data.target) {
+                user.status = 'offline';
+              }
+
+              return user;
+            })
+          })
+        });
+      }
+
+    case _events.USER_STATUS_ONLINE:
+      {
+        return Object.assign({}, state, {
+          messenger: Object.assign({}, state.messenger, {
+            friend: state.messenger.friend.map(function (user) {
+              if (user.username === action.data.target) {
+                user.status = action.data.status;
+              }
+
+              return user;
+            })
+          })
         });
       }
 
@@ -80621,6 +80655,10 @@ function (_Component) {
       });
       var member = list[(0, _UserNamesList.getSelection)()];
 
+      if (!member) {
+        return;
+      }
+
       var _loop = function _loop(i) {
         if (message[i] === '@') {
           return {
@@ -80652,7 +80690,7 @@ function (_Component) {
           usernamePattern = _this$state3.usernamePattern,
           userSelectMoveSelection = _this$state3.userSelectMoveSelection;
       return _react.default.createElement("div", {
-        className: "input has-emoji"
+        className: "message-input has-emoji"
       }, _react.default.createElement(_FileUpload.default, {
         onFileChosen: this.onFileSelected.bind(this),
         open: gallery
@@ -80787,12 +80825,13 @@ function (_Component) {
 
         for (var i = markers.length - 1; i >= 0; i--) {
           var mark = markers[i];
-          var start_at = token.indexOf("@".concat(mark));
+          var start_at = token.indexOf(mark);
           var ends_at = start_at + mark.length + 1;
 
           var rjxMark = _react.default.createElement("span", {
+            key: "".concat(ends_at, "_").concat(mark),
             className: "btn-link"
-          }, "@".concat(mark));
+          }, "".concat(mark, " "));
 
           if (start_at !== -1) {
             result[j] = undefined;
@@ -80898,7 +80937,7 @@ exports.DateDelimiter = DateDelimiter;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.getStore = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -80954,6 +80993,8 @@ var getStore = function getStore() {
     };
   }.bind(data);
 };
+
+exports.getStore = getStore;
 
 var MessageList =
 /*#__PURE__*/
@@ -85169,15 +85210,25 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.send_message = exports.CHAT_MESSAGES_READED = exports.NOTIFICATION = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
+exports.send_dude_message = exports.send_message = exports.USER_WENT_OFFLINE = exports.USER_WENT_ONLINE = exports.AUTH_SUCCESS = exports.CHAT_MESSAGES_READ = exports.NOTIFICATION = exports.DUDE_CHANNEL_UPDATE = exports.SEND_DUDE_MESSAGE = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
 var MESSAGE = 'MESSAGE';
 exports.MESSAGE = MESSAGE;
 var SEND_MESSAGE = 'SEND_MESSAGE';
 exports.SEND_MESSAGE = SEND_MESSAGE;
+var SEND_DUDE_MESSAGE = 'SEND_DUDE_MESSAGE';
+exports.SEND_DUDE_MESSAGE = SEND_DUDE_MESSAGE;
+var DUDE_CHANNEL_UPDATE = 'DUDE_CHANNEL_UPDATE';
+exports.DUDE_CHANNEL_UPDATE = DUDE_CHANNEL_UPDATE;
 var NOTIFICATION = 'NOTIFICATION';
 exports.NOTIFICATION = NOTIFICATION;
-var CHAT_MESSAGES_READED = 'CHAT_MESSAGES_READED';
-exports.CHAT_MESSAGES_READED = CHAT_MESSAGES_READED;
+var CHAT_MESSAGES_READ = 'CHAT_MESSAGES_READ';
+exports.CHAT_MESSAGES_READ = CHAT_MESSAGES_READ;
+var AUTH_SUCCESS = 'AUTH_SUCCESS';
+exports.AUTH_SUCCESS = AUTH_SUCCESS;
+var USER_WENT_ONLINE = 'USER_WENT_ONLINE';
+exports.USER_WENT_ONLINE = USER_WENT_ONLINE;
+var USER_WENT_OFFLINE = 'USER_WENT_OFFLINE';
+exports.USER_WENT_OFFLINE = USER_WENT_OFFLINE;
 
 var send_message = function send_message(chat) {
   return function (dispatch) {
@@ -85189,6 +85240,17 @@ var send_message = function send_message(chat) {
 };
 
 exports.send_message = send_message;
+
+var send_dude_message = function send_dude_message(channel) {
+  return function (dispatch) {
+    return dispatch({
+      type: SEND_DUDE_MESSAGE,
+      data: channel
+    });
+  };
+};
+
+exports.send_dude_message = send_dude_message;
 },{}],"../src/socket/redux/reducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -85201,42 +85263,84 @@ var _events = require("./events");
 
 var reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    recieved: null
+    received: null
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case _events.NOTIFICATION:
       {
-        return {
-          recieved: _events.NOTIFICATION
-        };
+        return Object.assign({}, state, {
+          received: _events.NOTIFICATION
+        });
       }
 
     case _events.MESSAGE:
       {
-        return {
-          recieved: _events.MESSAGE,
+        return Object.assign({}, state, {
+          received: _events.MESSAGE,
           data: action.data
-        };
+        });
       }
 
     case _events.SEND_MESSAGE:
       {
-        return {
-          recieved: _events.SEND_MESSAGE,
+        return Object.assign({}, state, {
+          received: _events.SEND_MESSAGE,
           data: action.data
-        };
+        });
       }
 
-    case _events.CHAT_MESSAGES_READED:
+    case _events.CHAT_MESSAGES_READ:
       {
-        return {
-          recieved: _events.CHAT_MESSAGES_READED,
+        return Object.assign({}, state, {
+          received: _events.CHAT_MESSAGES_READ,
           data: action.data
-        };
+        });
+      }
+
+    case _events.USER_WENT_ONLINE:
+      {
+        return Object.assign({}, state, {
+          received: _events.USER_WENT_ONLINE,
+          data: action.data
+        });
+      }
+
+    case _events.USER_WENT_OFFLINE:
+      {
+        return Object.assign({}, state, {
+          received: _events.USER_WENT_OFFLINE,
+          data: action.data
+        });
+      }
+
+    case _events.SEND_DUDE_MESSAGE:
+      {
+        return Object.assign({}, state, {
+          received: _events.SEND_DUDE_MESSAGE,
+          data: action.data
+        });
+      }
+
+    case _events.DUDE_CHANNEL_UPDATE:
+      {
+        return Object.assign({}, state, {
+          received: _events.DUDE_CHANNEL_UPDATE,
+          data: action.data
+        });
+      }
+
+    case _events.AUTH_SUCCESS:
+      {
+        return Object.assign({}, state, {
+          received: _events.AUTH_SUCCESS,
+          token: action.data
+        });
       }
   }
+
+  return state;
 };
 
 var _default = reducer;
@@ -85397,16 +85501,16 @@ function (_Component) {
           var data = _ref.data;
           return _this3.setState(function (state) {
             var parent = _this3.containerRef.current.parentNode;
-            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message'));
+            var child = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message'));
             return {
-              beforePull: childs.length,
+              beforePull: child.length,
               pullingPrev: !data.more,
               messagesList: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.messagesList))
             };
           }, function () {
             var parent = _this3.containerRef.current.parentNode;
-            var childs = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message')).reverse();
-            childs[_this3.state.beforePull] && childs[_this3.state.beforePull].scrollIntoView();
+            var child = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message')).reverse();
+            child[_this3.state.beforePull] && child[_this3.state.beforePull].scrollIntoView();
           });
         });
       });
@@ -85785,7 +85889,7 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.unsubscrubeFromMainStore = _store.default.subscribe(function () {
+      this.unsubscribeFromMainStore = _store.default.subscribe(function () {
         var _store$getState = _store.default.getState(),
             action = _store$getState.action,
             chatToClose = _store$getState.chatToClose;
@@ -85807,9 +85911,9 @@ function (_Component) {
           });
         });
       });
-      this.unsubscrubeFromSocketStore = _store2.default.subscribe(function () {
+      this.unsubscribeFromSocketStore = _store2.default.subscribe(function () {
         var _socketStore$getState = _store2.default.getState(),
-            recieved = _socketStore$getState.recieved,
+            received = _socketStore$getState.received,
             data = _socketStore$getState.data;
 
         var _store$getState2 = _store.default.getState(),
@@ -85817,7 +85921,7 @@ function (_Component) {
 
         _NewMessage.default.toggle(messenger.m_sound === 'off');
 
-        if (recieved === _events.MESSAGE) {
+        if (received === _events.MESSAGE) {
           var is_chat_open = _this2.state.activeChats.filter(function (chat) {
             return chat.hash_id === data;
           });
@@ -85855,9 +85959,17 @@ function (_Component) {
         } // end if
 
 
-        if (recieved === _events.CHAT_MESSAGES_READED) {
+        if (received === _events.CHAT_MESSAGES_READ) {
           _store.default.dispatch({
-            type: _events2.MARK_MESSAGES_AS_READED,
+            type: _events2.MARK_MESSAGES_AS_READ,
+            data: data
+          });
+        } // end if
+
+
+        if (received === _events.USER_WENT_ONLINE || received === _events.USER_WENT_OFFLINE) {
+          _store.default.dispatch({
+            type: received === _events.USER_WENT_ONLINE ? _events2.USER_STATUS_ONLINE : _events2.USER_STATUS_OFFLINE,
             data: data
           });
         } // end if
@@ -85867,13 +85979,13 @@ function (_Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      if (this.unsubscrubeFromMainStore) {
-        this.unsubscrubeFromMainStore();
+      if (this.unsubscribeFromMainStore) {
+        this.unsubscribeFromMainStore();
       } //end if 
 
 
-      if (this.unsubscrubeFromSocketStore) {
-        this.unsubscrubeFromSocketStore();
+      if (this.unsubscribeFromSocketStore) {
+        this.unsubscribeFromSocketStore();
       } // end if
 
     }
@@ -85893,7 +86005,7 @@ function (_Component) {
         activeChats: [].concat(_toConsumableArray(this.state.activeChats), [newChat])
       }, function () {
         _store.default.dispatch({
-          type: _events2.CHAT_READED,
+          type: _events2.CHAT_READ,
           data: newChat
         });
       });
@@ -86562,7 +86674,7 @@ function (_Component) {
       this.socketSubscription = _store2.default.subscribe(function () {
         var state = _store2.default.getState();
 
-        if (state.recieved === _events.NOTIFICATION) {
+        if (state.received === _events.NOTIFICATION) {
           _NewNotification.default.play();
 
           _this2.props.onNotificationReceived();
@@ -88774,7 +88886,44 @@ var EventProfile = (0, _reactRedux.connect)(function (state) {
 })(EventProfileComponent);
 var _default = EventProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/find-dude/Game.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _index = require("./index");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = function _default(_ref) {
+  var game = _ref.game,
+      index = _ref.index;
+  return _react.default.createElement(_index.DudeContext.Consumer, null, function (_ref2) {
+    var activeIndex = _ref2.activeIndex,
+        setActive = _ref2.setActive;
+    return _react.default.createElement("div", {
+      onClick: function onClick(e) {
+        return setActive(index);
+      },
+      className: activeIndex === index ? 'my-games-box active' : 'my-games-box'
+    }, _react.default.createElement("img", {
+      src: game.ava,
+      alt: ""
+    }), _react.default.createElement("div", {
+      className: "my-games-content"
+    }, _react.default.createElement("h3", null, game.full_name), _react.default.createElement("div", {
+      className: "my-games-desc"
+    }, _react.default.createElement("small", null, game.participant_count), _react.default.createElement("p", null, "Gamers Inside"))));
+  });
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./index":"../src/find-dude/index.js"}],"../src/find-dude/MessageList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -88784,7 +88933,275 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactScrollToBottom = _interopRequireDefault(require("react-scroll-to-bottom"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Message = _interopRequireDefault(require("../chat/Dialog/Message"));
+
+var _store = _interopRequireDefault(require("../socket/redux/store"));
+
+var _events = require("../socket/redux/events");
+
+var _DateDelimiter = require("../chat/Dialog/DateDelimiter");
+
+var _MessageList = require("../chat/Dialog/MessageList");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MessageList =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(MessageList, _PureComponent);
+
+  function MessageList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, MessageList);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MessageList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      items: [],
+      game: null,
+      pullPrev: false
+    });
+
+    return _this;
+  }
+
+  _createClass(MessageList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.socketStoreSubscription = _store.default.subscribe(function () {
+        var state = _store.default.getState();
+
+        var game = _this2.state.game;
+
+        if (state.received === _events.DUDE_CHANNEL_UPDATE && game === state.data) {
+          _this2.loadLast().then(function (_ref) {
+            var data = _ref.data;
+            var unreads = data.data.reverse();
+
+            _this2.setState(function (state) {
+              var items = state.items;
+              return {
+                items: [].concat(_toConsumableArray(items), _toConsumableArray(unreads.filter(function (message) {
+                  return items.filter(function (read) {
+                    return message.id === read.id;
+                  }).length === 0;
+                })))
+              };
+            });
+          });
+        } // end if
+
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(props, state) {
+      var _this3 = this;
+
+      var game = this.state.game; // init chat
+
+      if (game && game !== state.game) {
+        var frm = new FormData();
+        frm.append('page-id', _store.default.getState().token);
+        this.loadLast(frm).then(function (_ref2) {
+          var data = _ref2.data;
+          return _this3.setState({
+            items: data.data.reverse(),
+            pullingPrev: false
+          }, function () {
+            _this3.containerRef.parentNode.addEventListener('scroll', _this3.containerScrollListener.bind(_this3), true);
+          });
+        });
+      } // end if
+
+    }
+  }, {
+    key: "loadLast",
+    value: function loadLast(frm) {
+      return _axios.default.post("/find-dudes/messages/".concat(this.state.game), frm);
+    }
+  }, {
+    key: "containerScrollListener",
+    value: function containerScrollListener(e) {
+      var container = e.target;
+
+      if (container.scrollTop < 10) {
+        this.pullPrev();
+      }
+    }
+  }, {
+    key: "pullPrev",
+    value: function pullPrev() {
+      var _this4 = this;
+
+      if (this.state.pullingPrev || this.state.items.length === 0) {
+        return false;
+      }
+
+      this.setState(function (state) {
+        return {
+          pullingPrev: true
+        };
+      }, function () {
+        var _this4$state = _this4.state,
+            game = _this4$state.game,
+            items = _this4$state.items;
+
+        _axios.default.post("/find-dudes/messages/".concat(game, "/").concat(items[0].id)).then(function (_ref3) {
+          var data = _ref3.data;
+          return _this4.setState(function (state) {
+            var parent = _this4.containerRef.parentNode;
+            var child = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message'));
+            return {
+              beforePull: child.length,
+              pullingPrev: !data.more,
+              items: [].concat(_toConsumableArray(data.data.reverse()), _toConsumableArray(state.items))
+            };
+          }, function () {
+            var parent = _this4.containerRef.parentNode;
+            var child = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message')).reverse();
+            child[_this4.state.beforePull] && child[_this4.state.beforePull].scrollIntoView();
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.containerRef.parentNode.removeEventListener('scroll', this.containerScrollListener);
+      this.socketStoreSubscription && this.socketStoreSubscription();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var items = this.state.items;
+      return _react.default.createElement(_reactScrollToBottom.default, {
+        animating: false,
+        className: "message-list",
+        followButtonClassName: "message-list-show-last"
+      }, _react.default.createElement("div", {
+        ref: function ref(_ref4) {
+          _this5.containerRef = _ref4;
+        }
+      }, items.map(function (message) {
+        var user = message.user;
+
+        var diff = _this5.state.localeStore(user.username, message.created_at);
+
+        var UserMessage = _react.default.createElement(_Message.default, {
+          author: message.user.username === _this5.props.me,
+          key: message.id,
+          showUser: diff.user,
+          message: message
+        });
+
+        return diff.day ? [_react.default.createElement(_DateDelimiter.DateDelimiter, {
+          key: diff.day,
+          date: diff.day
+        }), UserMessage] : UserMessage;
+      })));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      var push = props.push,
+          game = props.game;
+      var items = state.items; // append message to list
+
+      if (push && !items.filter(function (m) {
+        return m.id === push.id;
+      }).length) {
+        return {
+          items: [].concat(_toConsumableArray(items), [push]),
+          game: game,
+          localeStore: (0, _MessageList.getStore)()
+        };
+      } // end if
+
+
+      return {
+        game: game,
+        localeStore: (0, _MessageList.getStore)()
+      };
+    }
+  }]);
+
+  return MessageList;
+}(_react.PureComponent);
+
+exports.default = MessageList;
+},{"react":"../node_modules/react/index.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","axios":"../../node_modules/axios/index.js","../chat/Dialog/Message":"../src/chat/Dialog/Message.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/Dialog/DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","../chat/Dialog/MessageList":"../src/chat/Dialog/MessageList.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.DudeContext = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _reactRedux = require("react-redux");
+
 var _menu = _interopRequireDefault(require("../menu"));
+
+var _Game = _interopRequireDefault(require("./Game"));
+
+var _Loading = require("../general/Loading");
+
+var _Input = _interopRequireDefault(require("../chat/Dialog/Input"));
+
+var _MessageList = _interopRequireDefault(require("./MessageList"));
+
+var _store = _interopRequireDefault(require("../socket/redux/store"));
+
+var _events = require("../socket/redux/events");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88800,28 +89217,128 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var FDudes =
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DudeContext = _react.default.createContext();
+
+exports.DudeContext = DudeContext;
+
+var GameList = function GameList(_ref) {
+  var games = _ref.games;
+  return _react.default.createElement("div", {
+    className: "my-games-section list-scroll"
+  }, games.map(function (game, index) {
+    return _react.default.createElement(_Game.default, {
+      key: game.id,
+      index: index,
+      game: game
+    });
+  }));
+};
+
+var FDudesComponent =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(FDudes, _Component);
+  _inherits(FDudesComponent, _Component);
 
-  function FDudes() {
-    _classCallCheck(this, FDudes);
+  function FDudesComponent() {
+    var _getPrototypeOf2;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(FDudes).apply(this, arguments));
+    var _this;
+
+    _classCallCheck(this, FDudesComponent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FDudesComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      loading: true,
+      games: [],
+      active_index: 0,
+      messageSend: null
+    });
+
+    return _this;
   }
 
-  _createClass(FDudes, [{
+  _createClass(FDudesComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios.default.get('/find-dudes/games').then(function (response) {
+        return _this2.setState({
+          games: response.data,
+          loading: false
+        });
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var _this$state = this.state,
+          games = _this$state.games,
+          active_index = _this$state.active_index;
+      var channel = games[active_index].username;
+
+      _axios.default.post("/find-dudes/".concat(channel, "/unsubscribe"), {
+        "page-id": _store.default.getState().token
+      });
+    }
+  }, {
+    key: "setActive",
+    value: function setActive(index) {
+      this.setState({
+        active_index: index
+      });
+    }
+  }, {
+    key: "onMessage",
+    value: function onMessage(message, attachment) {
+      var _this3 = this;
+
+      var _this$state2 = this.state,
+          active_index = _this$state2.active_index,
+          games = _this$state2.games;
+      var frm = new FormData();
+      frm.append('message', message);
+      frm.append('channel', games[active_index].username);
+      attachment && frm.append('file', attachment);
+
+      _axios.default.post('/find-dudes/messages/store', frm).then(function (_ref2) {
+        var data = _ref2.data;
+
+        _this3.props.send_dude_message(games[active_index].username);
+
+        _this3.setState({
+          messageSend: data.data
+        }, function () {
+          return _this3.setState({
+            messageSend: null
+          });
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this$state3 = this.state,
+          loading = _this$state3.loading,
+          games = _this$state3.games,
+          active_index = _this$state3.active_index,
+          messageSend = _this$state3.messageSend;
+      var activeGame = games[active_index];
       return _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
@@ -88844,27 +89361,14 @@ function (_Component) {
       }, _react.default.createElement("img", {
         src: "img/gamepad.svg",
         alt: ""
-      }), _react.default.createElement("h3", null, "My Games")), _react.default.createElement("div", {
-        className: "my-games-section"
-      }, _react.default.createElement("div", {
-        className: "my-games-box active"
-      }, _react.default.createElement("img", {
-        src: "img/wow.svg",
-        alt: ""
-      }), _react.default.createElement("div", {
-        className: "my-games-content"
-      }, _react.default.createElement("h3", null, "Word Of Warcraft"), _react.default.createElement("div", {
-        className: "my-games-desc"
-      }, _react.default.createElement("small", null, "21.312"), _react.default.createElement("p", null, "Gamers Inside")))), _react.default.createElement("div", {
-        className: "my-games-box"
-      }, _react.default.createElement("img", {
-        src: "img/minecraft.svg",
-        alt: ""
-      }), _react.default.createElement("div", {
-        className: "my-games-content"
-      }, _react.default.createElement("h3", null, "Minecraft"), _react.default.createElement("div", {
-        className: "my-games-desc"
-      }, _react.default.createElement("small", null, "21.312"), _react.default.createElement("p", null, "Gamers Inside"))))), _react.default.createElement("div", {
+      }), _react.default.createElement("h3", null, "My Games")), _react.default.createElement(DudeContext.Provider, {
+        value: {
+          activeIndex: active_index,
+          setActive: this.setActive.bind(this)
+        }
+      }, loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(GameList, {
+        games: games
+      })), _react.default.createElement("div", {
         className: "my-games-bottom"
       }, _react.default.createElement("div", {
         className: "my-games-notifications"
@@ -88890,17 +89394,23 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "my-games-inside"
       }, _react.default.createElement("div", {
-        className: "my-games-inside-title"
-      }, _react.default.createElement("h3", null, " ", _react.default.createElement("span", {
-        className: "fa fa-users"
-      }), " WORLD OF WARCRAFTS GAME CHANNEL")), _react.default.createElement("div", {
+        className: "my-games-inside-title font-bold"
+      }, _react.default.createElement("h3", null, _react.default.createElement("span", {
+        className: "icon icon-friends"
+      }), activeGame ? activeGame.full_name : 'Find Your Dudes')), _react.default.createElement("div", {
         className: "my-games-banner"
-      }, _react.default.createElement("img", {
-        src: "img/wow-banner.svg",
-        alt: ""
-      })), _react.default.createElement("div", {
+      }, activeGame ? _react.default.createElement("img", {
+        src: activeGame.poster,
+        className: "img-fluid"
+      }) : null), _react.default.createElement("div", {
         className: "my-games-messages"
-      }))), _react.default.createElement("div", {
+      }, _react.default.createElement(_MessageList.default, {
+        game: activeGame ? activeGame.username : null,
+        push: messageSend
+      }), _react.default.createElement(_Input.default, {
+        members: [],
+        onMessage: this.onMessage.bind(this)
+      })))), _react.default.createElement("div", {
         className: "col-md-3"
       }, _react.default.createElement("div", {
         className: "dudes-on-channels"
@@ -88934,11 +89444,21 @@ function (_Component) {
     }
   }]);
 
-  return FDudes;
+  return FDudesComponent;
 }(_react.Component);
 
-exports.default = FDudes;
-},{"react":"../node_modules/react/index.js","../menu":"../src/menu/index.js"}],"../src/games/Profile.js":[function(require,module,exports) {
+var FDudes = (0, _reactRedux.connect)(function (state) {
+  return Object.assign({}, state);
+}, function (dispatch) {
+  return {
+    send_dude_message: function send_dude_message(channel) {
+      return dispatch((0, _events.send_dude_message)(channel));
+    }
+  };
+})(FDudesComponent);
+var _default = FDudes;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu":"../src/menu/index.js","./Game":"../src/find-dude/Game.js","../general/Loading":"../src/general/Loading.js","../chat/Dialog/Input":"../src/chat/Dialog/Input.js","./MessageList":"../src/find-dude/MessageList.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js"}],"../src/games/Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91663,29 +92183,115 @@ var TheRouteIsChanged = function TheRouteIsChanged() {
 
   return null;
 };
-},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","./ShowPost":"../src/detached/route-listeners/ShowPost.js"}],"../src/socket/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../utils":"../src/utils.js","./ShowPost":"../src/detached/route-listeners/ShowPost.js"}],"../src/socket/SocketWrapper.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.connectionIdentifier = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var url = 'wss://divdudes.com/yraMgipTBPDo42aK/?token=' + window.gg.wsc();
+var queue = [];
+var subscribers = [];
+var connectionIdentifier;
+exports.connectionIdentifier = connectionIdentifier;
+
+var SocketWrapper =
+/*#__PURE__*/
+function () {
+  function SocketWrapper(locale) {
+    _classCallCheck(this, SocketWrapper);
+
+    this.url = url;
+    this.reconnectTimeout;
+    this.active = false;
+
+    if (locale) {
+      this.url = 'ws://127.0.0.1:8181/?token=' + window.gg.wsc();
+    }
+
+    this.connect();
+  }
+
+  _createClass(SocketWrapper, [{
+    key: "connect",
+    value: function connect() {
+      if (this.active) {
+        return;
+      }
+
+      this.reconnectTimeout = null;
+
+      try {
+        this.transport = new WebSocket(this.url);
+        this.connected();
+      } catch (e) {
+        this.reconnect();
+      }
+    }
+  }, {
+    key: "reconnect",
+    value: function reconnect() {
+      this.active = false;
+
+      if (!this.reconnectTimeout) {
+        this.reconnectTimeout = setTimeout(this.connect.bind(this), 1500);
+      }
+    }
+  }, {
+    key: "connected",
+    value: function connected() {
+      this.active = true;
+      this.transport.onmessage = this.message.bind(this);
+      this.transport.onclose = this.reconnect.bind(this);
+    }
+  }, {
+    key: "bind",
+    value: function bind(fn) {
+      subscribers.push(fn);
+    }
+  }, {
+    key: "message",
+    value: function message(data) {
+      subscribers.map(function (sub) {
+        return sub(data);
+      });
+    }
+  }, {
+    key: "send",
+    value: function send(data) {
+      if (this.active) {
+        return this.transport.send(data);
+      } // end if
+
+
+      queue.push(data);
+    }
+  }]);
+
+  return SocketWrapper;
+}();
+
+exports.default = SocketWrapper;
+},{}],"../src/socket/index.js":[function(require,module,exports) {
 "use strict";
 
 var _store = _interopRequireDefault(require("./redux/store"));
 
 var _events = require("./redux/events");
 
+var _SocketWrapper = _interopRequireDefault(require("./SocketWrapper"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var socket = new WebSocket('wss://divdudes.com/yraMgipTBPDo42aK/?token=' + window.gg.wsc()); //const socket = new WebSocket('ws://127.0.0.1:8181/?token=' + window.gg.wsc());
-
-socket.onclose = function () {
-  //document.location.reload();
-  (function () {
-    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = '/img/overflow.ico';
-    document.getElementsByTagName('head')[0].appendChild(link);
-  })();
-};
-
-socket.onmessage = function (_ref) {
+var onMessage = function onMessage(_ref) {
   var data = _ref.data;
   var response = JSON.parse(data);
 
@@ -91707,25 +92313,65 @@ socket.onmessage = function (_ref) {
 
   if (response.action === 'messages-viewed') {
     _store.default.dispatch({
-      type: _events.CHAT_MESSAGES_READED,
+      type: _events.CHAT_MESSAGES_READ,
       data: response.target
     });
   } // end if 
 
+
+  if (response.action === 'online') {
+    _store.default.dispatch({
+      type: _events.USER_WENT_ONLINE,
+      data: response
+    });
+  } // end if 
+
+
+  if (response.action === 'offline') {
+    _store.default.dispatch({
+      type: _events.USER_WENT_OFFLINE,
+      data: response
+    });
+  } // end if 
+
+
+  if (response.action === 'channel-update') {
+    _store.default.dispatch({
+      type: _events.DUDE_CHANNEL_UPDATE,
+      data: response.target
+    });
+  } // end if
+
+
+  if (response.action === 'auth') {
+    _store.default.dispatch({
+      type: _events.AUTH_SUCCESS,
+      data: response.token
+    });
+  } // end if
+
 };
+
+var wrapper = new _SocketWrapper.default(true);
+wrapper.bind(onMessage);
 
 _store.default.subscribe(function () {
   var state = _store.default.getState();
 
-  if (state.recieved === _events.SEND_MESSAGE) {
-    socket.send(JSON.stringify({
+  if (state.received === _events.SEND_MESSAGE) {
+    wrapper.send(JSON.stringify({
       action: 'message',
+      data: state.data
+    }));
+  } else if (state.received === _events.SEND_DUDE_MESSAGE) {
+    wrapper.send(JSON.stringify({
+      action: 'find-dudes-message',
       data: state.data
     }));
   } // end if
 
 });
-},{"./redux/store":"../src/socket/redux/store.js","./redux/events":"../src/socket/redux/events.js"}],"../src/index.js":[function(require,module,exports) {
+},{"./redux/store":"../src/socket/redux/store.js","./redux/events":"../src/socket/redux/events.js","./SocketWrapper":"../src/socket/SocketWrapper.js"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -91760,13 +92406,15 @@ var _store3 = _interopRequireDefault(require("./event/redux/store"));
 
 var _findDude = _interopRequireDefault(require("./find-dude"));
 
+var _store4 = _interopRequireDefault(require("./socket/redux/store"));
+
 var _index2 = _interopRequireDefault(require("./games/index"));
 
-var _store4 = _interopRequireDefault(require("./games/store"));
+var _store5 = _interopRequireDefault(require("./games/store"));
 
 var _index3 = _interopRequireDefault(require("./groups/index"));
 
-var _store5 = _interopRequireDefault(require("./groups/store"));
+var _store6 = _interopRequireDefault(require("./groups/store"));
 
 var _feed = _interopRequireDefault(require("./feed"));
 
@@ -91812,19 +92460,21 @@ var App = function App() {
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/event/:id",
     component: _EventProfile.default
-  })), _react.default.createElement(_reactRouterDom.Route, {
+  })), _react.default.createElement(_reactRedux.Provider, {
+    store: _store4.default
+  }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/dudes",
     component: _findDude.default
-  }), _react.default.createElement(_reactRouterDom.Route, {
+  })), _react.default.createElement(_reactRouterDom.Route, {
     path: "/feed",
     component: _feed.default
   }), _react.default.createElement(_reactRedux.Provider, {
-    store: _store4.default
+    store: _store5.default
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/g/:id",
     component: _index2.default
   })), _react.default.createElement(_reactRedux.Provider, {
-    store: _store5.default
+    store: _store6.default
   }, _react.default.createElement(_reactRouterDom.Route, {
     path: "/gr/:id",
     component: _index3.default
@@ -91832,7 +92482,7 @@ var App = function App() {
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./groups/index":"../src/groups/index.js","./groups/store":"../src/groups/store/index.js","./feed":"../src/feed/index.js","./detached/route-listeners":"../src/detached/route-listeners/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./socket/redux/store":"../src/socket/redux/store.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./groups/index":"../src/groups/index.js","./groups/store":"../src/groups/store/index.js","./feed":"../src/feed/index.js","./detached/route-listeners":"../src/detached/route-listeners/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -91859,7 +92509,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38948" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35061" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

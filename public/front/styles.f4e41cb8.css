@@ -6344,7 +6344,7 @@ a.text-dark:hover, a.text-dark:focus {
 .icon-add-dude:before {
   content: "\e902"; }
 
-.icon-arrow-down:before, .chat .dialog-wrapper .dialog .message-list-show-last:before {
+.icon-arrow-down:before, .message-list-show-last:before {
   content: "\e903"; }
 
 .icon-basket:before {
@@ -8274,6 +8274,7 @@ span.flatpickr-weekday {
     font-size: 24px; }
 
 .find-your-dudes {
+  margin-bottom: 55px;
   border: 1px solid #354247;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -8324,26 +8325,34 @@ span.flatpickr-weekday {
         margin: 0px;
         height: 40px;
         line-height: 40px; }
-    .find-your-dudes .my-games .my-games-section .my-games-box {
-      height: 50px;
-      padding: 10px 0px;
-      border-bottom: 1px solid #354247; }
-      .find-your-dudes .my-games .my-games-section .my-games-box.active {
-        background-color: #3D4444; }
-      .find-your-dudes .my-games .my-games-section .my-games-box img {
-        height: 35px;
-        float: left;
-        margin: 0px 0.5rem; }
-      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content h3 {
-        font-size: 14px;
-        color: #ff4800;
-        margin-bottom: 3px; }
-      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc small {
-        font-size: 12px;
-        float: left;
-        margin-right: 5px; }
-      .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc p {
-        font-size: 12px; }
+    .find-your-dudes .my-games .my-games-section {
+      max-height: 50vh; }
+      .find-your-dudes .my-games .my-games-section .my-games-box {
+        cursor: pointer;
+        padding-right: 10px;
+        height: 50px;
+        padding: 10px 0px;
+        border-bottom: 1px solid #354247; }
+        .find-your-dudes .my-games .my-games-section .my-games-box.active {
+          background-color: #3D4444; }
+        .find-your-dudes .my-games .my-games-section .my-games-box img {
+          min-width: 35px;
+          height: 35px;
+          float: left;
+          margin: 0px 0.5rem; }
+        .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content h3 {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-size: 14px;
+          color: #ff4800;
+          margin-bottom: 3px; }
+        .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc small {
+          font-size: 12px;
+          float: left;
+          margin-right: 5px; }
+        .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc p {
+          font-size: 12px; }
     .find-your-dudes .my-games .my-games-bottom {
       position: absolute;
       bottom: 0px; }
@@ -8407,6 +8416,15 @@ span.flatpickr-weekday {
           line-height: 40px;
           margin-right: 0.5rem;
           color: #D1D1D1; }
+    .find-your-dudes .my-games-inside .my-games-banner {
+      min-height: 90px; }
+    .find-your-dudes .my-games-inside .my-games-messages .message-list {
+      padding-left: 10px;
+      padding-bottom: 10px;
+      height: 350px;
+      overflow: hidden; }
+    .find-your-dudes .my-games-inside .my-games-messages .message-input {
+      margin-bottom: 9px; }
   .find-your-dudes .dudes-on-channels {
     min-height: 50%;
     overflow-y: hidden;
@@ -9831,9 +9849,6 @@ nav.user-profile {
         box-shadow: 0px 0px #ffffff; }
 
 /** Post View */
-.hiddenbox {
-  display: none !important; }
-
 .posts {
   width: 100%;
   position: relative;
@@ -10460,10 +10475,6 @@ nav.user-profile {
       flex-direction: column;
       background-color: #2F3136;
       margin-right: 3px; }
-      .chat .dialog-wrapper .dialog .message-list-show-last {
-        font-family: icomoon;
-        font-size: 5px;
-        color: #ff4800; }
       .chat .dialog-wrapper .dialog .message-container {
         background-image: url("messenger_background.96fff20e.png");
         flex: 1;
@@ -10473,48 +10484,6 @@ nav.user-profile {
         padding: 5px; }
       .chat .dialog-wrapper .dialog .messages-wrapper .message-date-start:first-child {
         margin-top: 2px; }
-      .chat .dialog-wrapper .dialog .input {
-        border-radius: 5px;
-        margin: 0 5px;
-        display: flex;
-        background-color: #484B52; }
-        .chat .dialog-wrapper .dialog .input textarea:focus {
-          outline: none; }
-        .chat .dialog-wrapper .dialog .input .emoji {
-          display: flex;
-          align-items: center;
-          padding-left: 5px;
-          cursor: pointer; }
-          .chat .dialog-wrapper .dialog .input .emoji:after {
-            content: '|';
-            height: 85%;
-            background: #CBCBCB;
-            width: 1px;
-            height: 24px;
-            margin-left: 5px; }
-        .chat .dialog-wrapper .dialog .input .attach {
-          display: flex;
-          align-items: center;
-          font-size: 17px;
-          width: 27px; }
-          .chat .dialog-wrapper .dialog .input .attach span {
-            text-align: center;
-            vertical-align: middle;
-            cursor: pointer; }
-            .chat .dialog-wrapper .dialog .input .attach span.icon-cross {
-              font-size: 9px;
-              padding-left: 5px;
-              color: #ff4800; }
-        .chat .dialog-wrapper .dialog .input .emoji-container {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          display: none; }
-          .chat .dialog-wrapper .dialog .input .emoji-container.show {
-            display: block; }
-            .chat .dialog-wrapper .dialog .input .emoji-container.show + .emoji {
-              color: #ff4800; }
       .chat .dialog-wrapper .dialog .dialog-head {
         border-bottom: 1px solid gray;
         display: flex;
@@ -10573,6 +10542,54 @@ nav.user-profile {
           margin: 0; }
           .chat .dialog-wrapper .dialog .dialog-username-helper ul li {
             list-style: none; }
+
+.message-list-show-last {
+  font-family: icomoon;
+  font-size: 5px;
+  color: #ff4800; }
+
+.message-input {
+  border-radius: 5px;
+  margin: 0 5px;
+  display: flex;
+  background-color: #484B52; }
+  .message-input textarea:focus {
+    outline: none; }
+  .message-input .emoji {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    cursor: pointer; }
+    .message-input .emoji:after {
+      content: '|';
+      height: 85%;
+      background: #CBCBCB;
+      width: 1px;
+      height: 24px;
+      margin-left: 5px; }
+  .message-input .attach {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    width: 27px; }
+    .message-input .attach span {
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer; }
+      .message-input .attach span.icon-cross {
+        font-size: 9px;
+        padding-left: 5px;
+        color: #ff4800; }
+  .message-input .emoji-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: none; }
+    .message-input .emoji-container.show {
+      display: block; }
+      .message-input .emoji-container.show + .emoji {
+        color: #ff4800; }
 
 .emoji-mart,
 .emoji-mart * {
@@ -10980,11 +10997,14 @@ nav.user-profile {
         border-radius: 3px;
         padding: 2px 3px;
         background-color: aliceblue;
-        display: inline-block; }
+        display: inline-block;
+        max-width: 97%; }
         .chat-message .message .message-content .message-text .btn-link {
           color: inherit;
           font-weight: 700;
           cursor: pointer; }
+        .chat-message .message .message-content .message-text a {
+          word-wrap: break-all; }
       .chat-message .message .message-content .message-status {
         align-self: flex-end; }
         .chat-message .message .message-content .message-status:before {

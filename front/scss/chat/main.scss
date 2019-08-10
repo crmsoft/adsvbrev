@@ -159,12 +159,6 @@
             flex-direction: column;
             background-color: $halfGray;
             margin-right: 3px;
-            .message-list-show-last{
-                @extend .icon-arrow-down;
-                font-family: icomoon;
-                font-size: 5px;
-                color: $mainColor;
-            }
             .message-container{
                 background-image: url('../img/messenger_background.png');
                 flex: 1;
@@ -252,6 +246,13 @@
             }
         }
     }
+}
+
+.message-list-show-last{
+    @extend .icon-arrow-down;
+    font-family: icomoon;
+    font-size: 5px;
+    color: $mainColor;
 }
 
 .message-input{

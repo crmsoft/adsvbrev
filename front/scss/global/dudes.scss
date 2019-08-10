@@ -45,6 +45,7 @@ $minheight:50%;
 
 .find-your-dudes
 {
+    margin-bottom: 55px;
     border: 1px solid $findyourdudesbordercolor;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -287,6 +288,8 @@ $minheight:50%;
         .my-games-messages
         {
             .message-list{
+                padding-left: 10px;
+                padding-bottom: 10px;
                 height: 350px;
                 overflow: hidden;
             }
