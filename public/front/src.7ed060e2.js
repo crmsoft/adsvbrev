@@ -61325,6 +61325,8 @@ var _AboutTab = _interopRequireDefault(require("./AboutTab"));
 
 var _MyDevice = _interopRequireDefault(require("./MyDevice"));
 
+var _imageContent = _interopRequireDefault(require("../media-tabs/image-content"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -61361,12 +61363,22 @@ function (_Component) {
   _createClass(About, [{
     key: "render",
     value: function render() {
-      var user = this.props.user;
+      var _this$props = this.props,
+          user = _this$props.user,
+          totalImage = _this$props.totalImage;
       return _react.default.createElement("div", {
         className: "profile-about"
       }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
         className: "nav nav-tabs"
       }, _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-picture"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " Images"))), _react.default.createElement(_reactTabs.Tab, {
         selectedClassName: "active"
       }, _react.default.createElement("a", {
         href: "javascript:void(0);"
@@ -61383,8 +61395,12 @@ function (_Component) {
       }), _react.default.createElement("span", {
         className: "tab-title"
       }, " My Devices")))), _react.default.createElement("div", {
-        className: "content"
-      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
+        className: "content user-uploads"
+      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_imageContent.default, {
+        media: user.media,
+        user: user.profile.user,
+        totalImage: totalImage
+      })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
         profile: user.profile
       })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_MyDevice.default, {
         guest: this.props.isGuest,
@@ -61397,7 +61413,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = About;
-},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/profile/about/AboutTab.js","./MyDevice":"../src/profile/about/MyDevice.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/profile/about/AboutTab.js","./MyDevice":"../src/profile/about/MyDevice.js","../media-tabs/image-content":"../src/profile/media-tabs/image-content.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /* flatpickr v4.5.2, @license MIT */
@@ -64349,15 +64365,9 @@ function (_Component) {
       }, _react.default.createElement(_index6.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
+        totalImage: totals.media,
         user: this.props.data
       }), _react.default.createElement("section", {
-        className: "user-uploads w-100",
-        id: "media-container"
-      }, _react.default.createElement(_index5.default, {
-        media: this.props.data.media,
-        totalImage: totals.media,
-        user: profile.user
-      })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_index7.default, {
         type: "feed"
@@ -92509,7 +92519,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33463" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42970" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

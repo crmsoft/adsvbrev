@@ -11,6 +11,9 @@ use App\Http\Resources\Chat\Dialog\ResourceMessage;
 use App\Http\Resources\Chat\Dialog\MessageCollection;
 use App\Entities\Game;
 use Illuminate\Support\Facades\Redis;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Media;
 
 class MessageController extends Controller {
 
