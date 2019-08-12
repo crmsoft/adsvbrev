@@ -64535,16 +64535,10 @@ function (_Component) {
       }, _react.default.createElement(_index3.default, null), _react.default.createElement("section", {
         className: "user-middle"
       }, _react.default.createElement(_about.default, {
+        totalImage: totals.media,
         user: this.props.data,
         isGuest: true
       }), _react.default.createElement("section", {
-        className: "user-uploads w-100",
-        id: "media-container"
-      }, _react.default.createElement(_index2.default, {
-        media: this.props.data.media,
-        totalImage: totals.media,
-        user: profile.user
-      })), _react.default.createElement("section", {
         className: "user-add-post"
       }, _react.default.createElement(_postAdd.default, {
         type: "user-feed",
@@ -92519,7 +92513,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42970" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44968" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
