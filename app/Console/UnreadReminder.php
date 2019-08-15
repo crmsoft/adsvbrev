@@ -15,30 +15,29 @@ class UnreadReminder
      */
     public function __invoke()
     {
-        $recievers = DB::select("SELECT 
-                    u.email, first_name, last_name
-                FROM
-                    user_conversations c
-                        JOIN
-                    (SELECT 
-                        m.conversation_id AS c_id, m.id, m.message
-                    FROM
-                        messages m
-                    WHERE
-                        UNIX_TIMESTAMP(created_at) > (UNIX_TIMESTAMP() - 600)
-                    GROUP BY conversation_id) AS t ON t.c_id = c.conversation_id
-                        JOIN
-                    message_reads mr ON mr.message_id = t.id
-                        AND mr.user_id <> c.user_id
-                        join users u on u.id = c.user_id
-                WHERE
-                    u.user_communication_id = 0
-                GROUP BY c.user_id");
+        $receivers = DB::select("SELECT 
+                                    u.email, u.first_name, u.last_name
+                                FROM
+                                    messages m
+                                        JOIN
+                                    user_conversations c ON c.conversation_id = m.conversation_id
+                                        JOIN
+                                    users u ON u.id = c.user_id
+                                        AND u.user_communication_id IS NULL
+                                WHERE
+                                    NOT EXISTS( SELECT 
+                                            *
+                                        FROM
+                                            message_reads mr
+                                        WHERE
+                                            mr.user_id = c.user_id
+                                                AND m.id = mr.message_id)
+                                        AND UNIX_TIMESTAMP(m.created_at) > (UNIX_TIMESTAMP() - 600)");
 
-        foreach ($recievers as $reciever)
+        foreach ($receivers as $receiver)
         {
-            Mail::to($reciever)
-            ->send(new UnreadMessagesEmail($reciever));
+            Mail::to($receiver)
+            ->send(new UnreadMessagesEmail($receiver));
         } // end foreach
     }
 }

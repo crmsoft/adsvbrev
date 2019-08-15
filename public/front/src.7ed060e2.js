@@ -88909,8 +88909,11 @@ var _default = function _default(_ref) {
       index = _ref.index;
   return _react.default.createElement(_index.DudeContext.Consumer, null, function (_ref2) {
     var activeIndex = _ref2.activeIndex,
+        openRooms = _ref2.openRooms,
         setActive = _ref2.setActive;
     return _react.default.createElement("div", {
+      className: "my-games-wrapper"
+    }, _react.default.createElement("div", {
       onClick: function onClick(e) {
         return setActive(index);
       },
@@ -88920,9 +88923,20 @@ var _default = function _default(_ref) {
       alt: ""
     }), _react.default.createElement("div", {
       className: "my-games-content"
-    }, _react.default.createElement("h3", null, game.full_name), _react.default.createElement("div", {
+    }, _react.default.createElement("h3", null, game.name), _react.default.createElement("div", {
       className: "my-games-desc"
-    }, _react.default.createElement("small", null, game.participant_count), _react.default.createElement("p", null, "Gamers Inside"))));
+    }, _react.default.createElement("small", null, game.participant_count), _react.default.createElement("p", null, "Gamers Inside")))), _react.default.createElement("div", {
+      className: "sub-channels-total"
+    }, _react.default.createElement("div", {
+      className: "row"
+    }, _react.default.createElement("div", {
+      className: "col-auto p-0 pl-2 mt-1"
+    }, _react.default.createElement("div", {
+      className: "sub-channel-arrow"
+    })), _react.default.createElement("div", {
+      onClick: openRooms,
+      className: "col p-0 pt-2 pl-2 sub-channels-btn"
+    }, game.total_sub_channel ? "#".concat(game.total_sub_channel, " Open Rooms") : "+ Create Room"))));
   });
 };
 
@@ -89179,7 +89193,39 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 exports.default = MessageList;
-},{"react":"../node_modules/react/index.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","axios":"../../node_modules/axios/index.js","../chat/Dialog/Message":"../src/chat/Dialog/Message.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/Dialog/DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","../chat/Dialog/MessageList":"../src/chat/Dialog/MessageList.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","axios":"../../node_modules/axios/index.js","../chat/Dialog/Message":"../src/chat/Dialog/Message.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/Dialog/DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","../chat/Dialog/MessageList":"../src/chat/Dialog/MessageList.js"}],"../src/find-dude/User.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.User = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var User = function User(_ref) {
+  var user = _ref.user;
+  return _react.default.createElement("div", {
+    className: "user-list-item justify-content-start"
+  }, _react.default.createElement("div", {
+    className: "d-flex"
+  }, _react.default.createElement("div", {
+    className: "user-list-ava"
+  }, _react.default.createElement("img", {
+    src: user.ava
+  }))), _react.default.createElement("div", {
+    className: "user-list-user"
+  }, _react.default.createElement("span", {
+    className: "user-list-user-name"
+  }, user.full_name), _react.default.createElement("span", {
+    className: "user-list-username"
+  }, user.username)));
+};
+
+exports.User = User;
+},{"react":"../node_modules/react/index.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89206,6 +89252,8 @@ var _MessageList = _interopRequireDefault(require("./MessageList"));
 var _store = _interopRequireDefault(require("../socket/redux/store"));
 
 var _events = require("../socket/redux/events");
+
+var _User = require("./User");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89235,8 +89283,20 @@ var DudeContext = _react.default.createContext();
 
 exports.DudeContext = DudeContext;
 
-var GameList = function GameList(_ref) {
-  var games = _ref.games;
+var UserList = function UserList(_ref) {
+  var users = _ref.users;
+  return _react.default.createElement("div", {
+    className: "on-channels-messages list-scroll"
+  }, users.map(function (user, index) {
+    return _react.default.createElement(_User.User, {
+      kye: index,
+      user: user
+    });
+  }));
+};
+
+var GameList = function GameList(_ref2) {
+  var games = _ref2.games;
   return _react.default.createElement("div", {
     className: "my-games-section list-scroll"
   }, games.map(function (game, index) {
@@ -89269,6 +89329,7 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       loading: true,
       games: [],
+      users: [],
       active_index: 0,
       messageSend: null
     });
@@ -89294,7 +89355,7 @@ function (_Component) {
       var _this$state = this.state,
           games = _this$state.games,
           active_index = _this$state.active_index;
-      var channel = games[active_index].username;
+      var channel = games[active_index].channel;
 
       _axios.default.post("/find-dudes/".concat(channel, "/unsubscribe"), {
         "page-id": _store.default.getState().token
@@ -89303,32 +89364,57 @@ function (_Component) {
   }, {
     key: "setActive",
     value: function setActive(index) {
+      var _this3 = this;
+
       this.setState({
         active_index: index
+      }, function () {
+        _this3.loadUsers();
       });
     }
   }, {
-    key: "onMessage",
-    value: function onMessage(message, attachment) {
-      var _this3 = this;
+    key: "loadUsers",
+    value: function loadUsers() {
+      var _this4 = this;
 
       var _this$state2 = this.state,
-          active_index = _this$state2.active_index,
-          games = _this$state2.games;
+          games = _this$state2.games,
+          active_index = _this$state2.active_index;
+      var channel = games[active_index].channel;
+
+      _axios.default.get("/find-dudes/".concat(channel, "/subscribers")).then(function (_ref3) {
+        var data = _ref3.data;
+
+        _this4.setState({
+          users: data.data
+        });
+      });
+    }
+  }, {
+    key: "onOpenRoom",
+    value: function onOpenRoom() {}
+  }, {
+    key: "onMessage",
+    value: function onMessage(message, attachment) {
+      var _this5 = this;
+
+      var _this$state3 = this.state,
+          active_index = _this$state3.active_index,
+          games = _this$state3.games;
       var frm = new FormData();
       frm.append('message', message);
-      frm.append('channel', games[active_index].username);
+      frm.append('channel', games[active_index].channel);
       attachment && frm.append('file', attachment);
 
-      _axios.default.post('/find-dudes/messages/store', frm).then(function (_ref2) {
-        var data = _ref2.data;
+      _axios.default.post('/find-dudes/messages/store', frm).then(function (_ref4) {
+        var data = _ref4.data;
 
-        _this3.props.send_dude_message(games[active_index].username);
+        _this5.props.send_dude_message(games[active_index].channel);
 
-        _this3.setState({
+        _this5.setState({
           messageSend: data.data
         }, function () {
-          return _this3.setState({
+          return _this5.setState({
             messageSend: null
           });
         });
@@ -89337,11 +89423,12 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state3 = this.state,
-          loading = _this$state3.loading,
-          games = _this$state3.games,
-          active_index = _this$state3.active_index,
-          messageSend = _this$state3.messageSend;
+      var _this$state4 = this.state,
+          loading = _this$state4.loading,
+          games = _this$state4.games,
+          users = _this$state4.users,
+          active_index = _this$state4.active_index,
+          messageSend = _this$state4.messageSend;
       var activeGame = games[active_index];
       return _react.default.createElement("div", {
         className: "d-flex"
@@ -89368,7 +89455,8 @@ function (_Component) {
       }), _react.default.createElement("h3", null, "My Games")), _react.default.createElement(DudeContext.Provider, {
         value: {
           activeIndex: active_index,
-          setActive: this.setActive.bind(this)
+          setActive: this.setActive.bind(this),
+          openRooms: this.onOpenRoom.bind(this)
         }
       }, loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(GameList, {
         games: games
@@ -89390,7 +89478,7 @@ function (_Component) {
       }))), _react.default.createElement("input", {
         type: "text",
         className: "form-control",
-        placeholder: "Search My games..",
+        placeholder: "Search game",
         "aria-label": "Search My games",
         "aria-describedby": "addon-wrapping"
       })))))), _react.default.createElement("div", {
@@ -89401,7 +89489,7 @@ function (_Component) {
         className: "my-games-inside-title font-bold"
       }, _react.default.createElement("h3", null, _react.default.createElement("span", {
         className: "icon icon-friends"
-      }), activeGame ? activeGame.full_name : 'Find Your Dudes')), _react.default.createElement("div", {
+      }), activeGame ? activeGame.name : 'Find Your Dudes')), _react.default.createElement("div", {
         className: "my-games-banner"
       }, activeGame ? _react.default.createElement("img", {
         src: activeGame.poster,
@@ -89409,7 +89497,7 @@ function (_Component) {
       }) : null), _react.default.createElement("div", {
         className: "my-games-messages"
       }, _react.default.createElement(_MessageList.default, {
-        game: activeGame ? activeGame.username : null,
+        game: activeGame ? activeGame.channel : null,
         push: messageSend
       }), _react.default.createElement(_Input.default, {
         members: [],
@@ -89423,8 +89511,8 @@ function (_Component) {
       }, _react.default.createElement("img", {
         src: "img/on-channels.svg",
         alt: ""
-      }), _react.default.createElement("h3", null, "On Channels")), _react.default.createElement("div", {
-        className: "on-channels-messages"
+      }), _react.default.createElement("h3", null, "On Channels")), _react.default.createElement(UserList, {
+        users: users
       }), _react.default.createElement("div", {
         className: "my-games-bottom"
       }, _react.default.createElement("div", {
@@ -89441,7 +89529,7 @@ function (_Component) {
       }))), _react.default.createElement("input", {
         type: "text",
         className: "form-control",
-        placeholder: "Search My games..",
+        placeholder: "Search user",
         "aria-label": "Search My games",
         "aria-describedby": "addon-wrapping"
       }))))))))));
@@ -89462,7 +89550,7 @@ var FDudes = (0, _reactRedux.connect)(function (state) {
 })(FDudesComponent);
 var _default = FDudes;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu":"../src/menu/index.js","./Game":"../src/find-dude/Game.js","../general/Loading":"../src/general/Loading.js","../chat/Dialog/Input":"../src/chat/Dialog/Input.js","./MessageList":"../src/find-dude/MessageList.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js"}],"../src/games/Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu":"../src/menu/index.js","./Game":"../src/find-dude/Game.js","../general/Loading":"../src/general/Loading.js","../chat/Dialog/Input":"../src/chat/Dialog/Input.js","./MessageList":"../src/find-dude/MessageList.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./User":"../src/find-dude/User.js"}],"../src/games/Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92513,7 +92601,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44968" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42702" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

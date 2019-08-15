@@ -6105,7 +6105,7 @@ button.bg-dark:focus {
   .mx-xl-auto {
     margin-left: auto !important; } }
 
-.text-monospace {
+.text-monospace, .find-your-dudes .my-games .my-games-section .my-games-box + .sub-channels-total {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 .text-justify {
@@ -8281,8 +8281,7 @@ span.flatpickr-weekday {
   border-radius: 5px;
   background: #14191C; }
   .find-your-dudes .row {
-    margin: 0px;
-    min-height: 450px; }
+    margin: 0px; }
     .find-your-dudes .row .col-md-3 {
       padding: 0px;
       overflow-y: hidden; }
@@ -8333,8 +8332,25 @@ span.flatpickr-weekday {
         height: 50px;
         padding: 10px 0px;
         border-bottom: 1px solid #354247; }
+        .find-your-dudes .my-games .my-games-section .my-games-box + .sub-channels-total {
+          display: none;
+          border-bottom: 1px solid #ff4800;
+          padding-bottom: 5px; }
+          .find-your-dudes .my-games .my-games-section .my-games-box + .sub-channels-total .sub-channel-arrow {
+            height: 15px;
+            width: 30px;
+            float: left;
+            border-left: 1px solid #32393e;
+            border-bottom: 1px solid #32393e; }
+          .find-your-dudes .my-games .my-games-section .my-games-box + .sub-channels-total .sub-channels-btn {
+            cursor: pointer;
+            user-select: none; }
+            .find-your-dudes .my-games .my-games-section .my-games-box + .sub-channels-total .sub-channels-btn:hover {
+              color: #ddd; }
         .find-your-dudes .my-games .my-games-section .my-games-box.active {
           background-color: #3D4444; }
+          .find-your-dudes .my-games .my-games-section .my-games-box.active + .sub-channels-total {
+            display: block; }
         .find-your-dudes .my-games .my-games-section .my-games-box img {
           min-width: 35px;
           height: 35px;
@@ -8474,6 +8490,19 @@ span.flatpickr-weekday {
         color: #D1D1D1;
         font-size: 16px;
         margin: 0px; }
+    .find-your-dudes .dudes-on-channels .on-channels-messages .user-list-user-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      color: #fff;
+      max-width: 125px; }
+    .find-your-dudes .dudes-on-channels .on-channels-messages .user-list-username {
+      font-size: 10px;
+      color: #ddd; }
+    .find-your-dudes .dudes-on-channels .on-channels-messages .user-list-ava {
+      margin-right: 10px;
+      margin-left: 5px; }
     .find-your-dudes .dudes-on-channels .my-games-bottom {
       position: absolute;
       bottom: 0px;

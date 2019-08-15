@@ -5,6 +5,7 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\FindDudes\Entities\GameChannel;
 
 class Game extends Group
 {
@@ -51,5 +52,10 @@ class Game extends Group
     public function reviews()
     {
         return $this->hasMany(GameReview::class, 'group_id');
+    }
+
+    public function subChannels()
+    {
+        return $this->hasMany(GameChannel::class);
     }
 }

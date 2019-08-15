@@ -18,6 +18,7 @@ Route::group([
 
     Route::name('games.index')->get('/games', 'FindDudesController@index');
     Route::name('games.subscribe')->post('/{game}/subscribe', 'FindDudesController@subscribe');
+    Route::name('games.subscribers')->get('/{game}/subscribers', 'FindDudesController@subscribers');
     Route::name('games.unsubscribe')->post('/{game}/unsubscribe', 'FindDudesController@unsubscribe');
 
 

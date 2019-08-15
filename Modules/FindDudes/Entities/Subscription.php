@@ -37,6 +37,16 @@ class Subscription extends Model
     }
 
     /**
+     * Relation with User model
+     * 
+     * @return Relation\BelongsTo
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
      * Relationship with a Game Model
      * 
      * @return Relation\BelongsTo

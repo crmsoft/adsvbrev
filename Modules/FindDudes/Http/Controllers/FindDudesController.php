@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-use App\Http\Resources\Game\Game as ResourceGame;
 use App\Http\Resources\UserList\UserCollection;
 use App\Entities\Game;
 use Illuminate\Support\Facades\Redis;
 use Modules\FindDudes\Entities\Subscription;
+use Modules\FindDudes\Http\Requests\ResourceGame;
 
 class FindDudesController extends Controller
 {
@@ -32,18 +32,21 @@ class FindDudesController extends Controller
      * 
      * @return Response
      */
-    public function participants(Request $request)
+    public function subscribers(Game $game)
     {
-        $request->validate([
-            'channel' => ['required']
-        ]);
-
+        // authenticated user
         $user = auth()->user();
-
-        $game = $user->games()->where('slug', $request->channel)->firstOrFail();
+        // request game
+        $game = $user->games()->where('id', $game->id)->firstOrFail();
 
         return new UserCollection(
-            $game->participants
+            Subscription::where('game_id', $game->id)
+                ->join('users', 'users.id', '=', 'user_id')
+                ->where('users.id', '<>', $user->id)
+                ->whereRaw('datediff(find_dudes_subscriptions.updated_at, now()) = 0')
+                ->groupBy('users.id')
+                ->select('users.*')
+                ->get()
         );
     }
 
