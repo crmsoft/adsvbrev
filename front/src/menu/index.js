@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import {NavLink} from 'react-router-dom';
+import Schedule from '../schedule/Schedule';
+import Provider from "react-redux/es/components/Provider";
+import scheduleStore from "../profile/schedule/store";
+import ProfileSchedule from "../profile/schedule";
+
+//import ProfileSchedule from './schedule';
+//import scheduleStore from './schedule/store';
 //import React from 'react';
 
 export default class Menu extends Component {
@@ -66,6 +73,7 @@ export default class Menu extends Component {
                     }
 
                 </Sticky>
+
                 <div className="left-banner">
                     <div className="banner-header">
                         <h3>Game Groups </h3>
@@ -75,6 +83,7 @@ export default class Menu extends Component {
 
 
                 </div>
+
             </StickyContainer>
 
         )

@@ -87,7 +87,7 @@ class ProfileScheduleComponent extends Component{
                     schedule
                 </div>
 
-                <div className="block-content">
+                <div className="">
 
                     <Flatpickr 
                         ref={ref => { this.calendar = ref; }}

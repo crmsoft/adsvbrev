@@ -64288,7 +64288,11 @@ function (_Component) {
         className: "friend"
       }, _react.default.createElement("span", {
         className: "search-more"
-      })))));
+      })), _react.default.createElement("img", {
+        className: 'group-back',
+        src: "img/groups-back.svg",
+        alt: ""
+      }))));
     }
   }]);
   return Groups;
@@ -64588,9 +64592,17 @@ function (_Component) {
         className: "icon-gamepad"
       }), _react.default.createElement("h3", null, "My Games"), _react.default.createElement("span", {
         className: "items-count"
-      }, " (", total, ")"))), _react.default.createElement("div", {
+      }, " (", total, ")")), _react.default.createElement("div", {
+        className: 'game-star'
+      }, _react.default.createElement("img", {
+        src: "img/game-star.svg",
+        alt: ""
+      }))), _react.default.createElement("div", {
         className: "block-content"
-      }, _react.default.createElement("div", {
+      }, _react.default.createElement("img", {
+        src: "img/rainbowsix.svg",
+        alt: ""
+      }), _react.default.createElement("div", {
         className: "row"
       }, _react.default.createElement("div", {
         className: "col"
@@ -74004,1192 +74016,7 @@ var UserProfile = function UserProfile(data) {
 
 var _default = UserProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","./ava":"../src/profile/ava/index.js","./profile-actions":"../src/profile/profile-actions/index.js"}],"../src/menu/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactSticky = require("react-sticky");
-
-var _reactRouterDom = require("react-router-dom");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import React from 'react';
-var Menu =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Menu, _Component);
-
-  function Menu() {
-    (0, _classCallCheck2.default)(this, Menu);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Menu).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(Menu, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement(_reactSticky.StickyContainer, {
-        className: "menu",
-        style: this.props.style
-      }, _react.default.createElement(_reactSticky.Sticky, {
-        topOffset: 55
-      }, function (_ref) {
-        var style = _ref.style;
-
-        var _style = style.position ? Object.assign({}, style, {
-          top: 15
-        }) : style;
-
-        return _react.default.createElement("ul", {
-          style: _style
-        }, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-          exact: true,
-          activeClassName: "active",
-          to: "/",
-          isActive: function isActive(match, location) {
-            return match || location.pathname === '/schedule' || location.pathname === '/settings';
-          }
-        }, _react.default.createElement("span", {
-          className: "icon icon-info"
-        }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-          activeClassName: "active",
-          to: "/feed"
-        }, _react.default.createElement("span", {
-          className: "icon icon-schedule"
-        }), " ", " my feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-          activeClassName: "active",
-          to: "/dudes"
-        }, _react.default.createElement("span", {
-          className: "icon icon-binocolo"
-        }), " ", " Find Your Dudes")), _react.default.createElement("li", null, _react.default.createElement("a", {
-          href: "javascript:void(0)"
-        }, _react.default.createElement("span", {
-          className: "icon icon-group"
-        }), " ", " Groups")), _react.default.createElement("li", null, _react.default.createElement("a", {
-          href: "javascript:void(0)"
-        }, _react.default.createElement("span", {
-          className: "icon icon-basket"
-        }), " ", " Trade")), _react.default.createElement("li", null, _react.default.createElement("a", {
-          href: "javascript:void(0)"
-        }, _react.default.createElement("span", {
-          className: "icon icon-fist"
-        }), " ", " Clans")));
-      }), _react.default.createElement("div", {
-        className: "left-banner"
-      }, _react.default.createElement("div", {
-        className: "banner-header"
-      }, _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
-        src: "../img/reklam-banner.jpg",
-        alt: "The Last of us"
-      })));
-    }
-  }]);
-  return Menu;
-}(_react.Component);
-
-exports.default = Menu;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactTextareaAutosize = _interopRequireDefault(require("react-textarea-autosize"));
-
-var _emojiMart = require("emoji-mart");
-
-var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Input =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Input, _Component);
-
-  function Input() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, Input);
-
-    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-      props[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Input)).call.apply(_getPrototypeOf2, [this].concat(props)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
-      emoji: false
-    });
-    _this.ref = _react.default.createRef();
-    return _this;
-  }
-
-  (0, _createClass2.default)(Input, [{
-    key: "onChange",
-    value: function onChange(e) {
-      var value = e.target.value;
-      this.props.onType(value);
-    }
-  }, {
-    key: "insertEmoji",
-    value: function insertEmoji(emoji) {
-      this.props.onType(this.props.value + ' ' + emoji.colons + ' ');
-      this.ref.focus();
-    }
-  }, {
-    key: "toggleEmoji",
-    value: function toggleEmoji() {
-      var _this2 = this;
-
-      this.setState(function () {
-        return {
-          emoji: !_this2.state.emoji
-        };
-      });
-    }
-    /**
-     * user clicks on emoji icon, Popup onOpen event !
-     */
-
-  }, {
-    key: "onEmoji",
-    value: function onEmoji() {
-      this.setState(function () {
-        return {
-          emoji: true
-        };
-      });
-    }
-    /**
-     * user close emoji popup, Popup onClose event !
-     */
-
-  }, {
-    key: "onCloseEmoji",
-    value: function onCloseEmoji() {
-      this.setState(function () {
-        return {
-          emoji: false
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      return _react.default.createElement("div", {
-        className: "textarea has-emoji"
-      }, _react.default.createElement(_reactjsPopup.default, {
-        open: this.state.emoji,
-        closeOnDocumentClick: true,
-        overlayStyle: {
-          display: 'none'
-        },
-        lockScroll: false,
-        closeOnEscape: true,
-        modal: false,
-        onOpen: this.onEmoji.bind(this),
-        onClose: this.onCloseEmoji.bind(this),
-        trigger: _react.default.createElement("button", {
-          className: this.state.emoji ? "emoji active" : "emoji"
-        })
-      }, _react.default.createElement(_emojiMart.Picker, {
-        onSelect: this.insertEmoji.bind(this),
-        tooltip: false,
-        set: "google",
-        sheetSize: "16"
-      })), _react.default.createElement(_reactTextareaAutosize.default, {
-        maxRows: 15,
-        inputRef: function inputRef(ref) {
-          _this3.ref = ref;
-        },
-        onFocus: this.props.onFocus,
-        onChange: this.onChange.bind(this),
-        value: this.props.value,
-        placeholder: this.props.placeholder
-      }));
-    }
-  }], [{
-    key: "getDerivedStateFromProps",
-    value: function getDerivedStateFromProps(nextProps, state) {
-      if (nextProps.emoji) {
-        return {
-          emoji: false
-        };
-      } // end if
-
-
-      return null;
-    }
-  }]);
-  return Input;
-}(_react.Component);
-
-exports.default = Input;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"../src/post-add/Footer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Footer =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Footer, _Component);
-
-  function Footer() {
-    (0, _classCallCheck2.default)(this, Footer);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Footer).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(Footer, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        className: "footer"
-      }, _react.default.createElement("div", {
-        className: "actions"
-      }, _react.default.createElement("div", {
-        className: "add-media"
-      }, _react.default.createElement("a", {
-        onClick: this.props.onSelect,
-        href: "javascript:void(0)",
-        className: "icon-photo-cam"
-      })), _react.default.createElement("button", {
-        className: "btn btn-sm btn-full",
-        disabled: this.props.enabled,
-        onClick: this.props.submitPost
-      }, "Post")));
-    }
-  }]);
-  return Footer;
-}(_react.Component);
-
-exports.default = Footer;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js"}],"../src/post-add/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _store = _interopRequireDefault(require("./redux/store"));
-
-var _actions = require("./redux/actions");
-
-var _Input = _interopRequireDefault(require("./Input"));
-
-var _Media = _interopRequireDefault(require("./Media"));
-
-var _Footer = _interopRequireDefault(require("./Footer"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CreatePostComponent =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(CreatePostComponent, _Component);
-
-  function CreatePostComponent() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, CreatePostComponent);
-
-    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-      props[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(CreatePostComponent)).call.apply(_getPrototypeOf2, [this].concat(props)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
-      post: '',
-      saving: false,
-      active: false,
-      saved: false,
-      select: false,
-      files: []
-    });
-    _this.submitPost = _this.submitPost.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
-    _this.onFiles = _this.onFiles.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
-    _this.onFileRemove = _this.onFileRemove.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
-    _this.onEnter = _this.onEnter.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
-    return _this;
-  }
-
-  (0, _createClass2.default)(CreatePostComponent, [{
-    key: "onEnter",
-    value: function onEnter() {
-      this.setState(function (state) {
-        return {
-          active: true,
-          saved: false
-        };
-      });
-    }
-  }, {
-    key: "submitPost",
-    value: function submitPost() {
-      var _this2 = this;
-
-      this.setState({
-        saving: true,
-        saved: false
-      });
-      var data = new FormData();
-      data.append('post', this.state.post);
-      this.state.files.map(function (file) {
-        return data.append('media[]', file);
-      });
-
-      if (this.props.type) {
-        data.append('type', this.props.type);
-        data.append('id', this.props.id);
-      }
-
-      _axios.default.post("/post/store", data).then(function (_ref) {
-        var data = _ref.data;
-        return _this2.setState(function (state) {
-          return {
-            active: false,
-            post: '',
-            saving: false,
-            saved: true,
-            files: []
-          };
-        }, function () {
-          _store.default.dispatch({
-            type: _actions.POST_ADDED,
-            data: data.data
-          });
-        });
-      }).catch(function (err) {
-        return _this2.setState({
-          saving: false,
-          saved: false
-        });
-      });
-    }
-  }, {
-    key: "onFiles",
-    value: function onFiles(file) {
-      // handle user cancel file select.
-      if (!file) {
-        return this.setState(function (state) {
-          return {
-            select: false
-          };
-        });
-      }
-
-      this.setState(function (state) {
-        return Object.assign({}, state, {
-          select: false,
-          files: [].concat((0, _toConsumableArray2.default)(state.files), [file])
-        });
-      });
-    }
-  }, {
-    key: "onFileRemove",
-    value: function onFileRemove(index) {
-      if (this.state.files[index]) {
-        this.setState(function (state) {
-          return {
-            files: state.files.filter(function (f, i) {
-              return i !== index;
-            })
-          };
-        });
-      } // end if
-
-    }
-  }, {
-    key: "onSelect",
-    value: function onSelect() {
-      this.setState({
-        select: true
-      });
-    }
-  }, {
-    key: "onText",
-    value: function onText(text) {
-      this.setState(function () {
-        return {
-          post: text
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      return _react.default.createElement("div", {
-        className: "wrapper " + (this.state.active ? "active" : "")
-      }, _react.default.createElement(_Input.default, {
-        emoji: this.state.saved,
-        placeholder: "Tell about your adventure in favorite game...",
-        onFocus: this.onEnter.bind(this),
-        onType: this.onText.bind(this),
-        value: this.state.post
-      }), _react.default.createElement(_Media.default, {
-        reset: this.state.saved,
-        select: this.state.select,
-        onFiles: this.onFiles,
-        onRemove: this.onFileRemove
-      }), _react.default.createElement(_Footer.default, {
-        onSelect: this.onSelect.bind(this),
-        enabled: this.state.saving || this.state.post.length <= 0,
-        saved: this.state.saved,
-        submitPost: this.submitPost
-      }), _react.default.createElement("div", {
-        className: "user-actions",
-        onClick: function onClick() {
-          _this3.onEnter();
-        }
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0)",
-        className: "icon-v-cam"
-      }), _react.default.createElement("a", {
-        href: "javascript:void(0)",
-        className: "icon-photo-cam"
-      })));
-    }
-  }]);
-  return CreatePostComponent;
-}(_react.Component);
-
-exports.default = CreatePostComponent;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","./redux/store":"../src/post-add/redux/store.js","./redux/actions":"../src/post-add/redux/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/AboutTab.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var OtherContent = function OtherContent(_ref) {
-  var profile = _ref.profile;
-  return _react.default.createElement("div", null, _react.default.createElement("div", {
-    className: "profile-about-row"
-  }, _react.default.createElement("div", {
-    className: "profile-about-label"
-  }, "Timezone"), _react.default.createElement("div", {
-    className: "profile-about-value"
-  }, profile.timezone)), _react.default.createElement("div", {
-    className: "profile-about-row"
-  }, _react.default.createElement("div", {
-    className: "profile-about-label"
-  }, "Date of Birth"), _react.default.createElement("div", {
-    className: "profile-about-value"
-  }, profile.dob)), _react.default.createElement("div", {
-    className: "profile-about-row"
-  }, _react.default.createElement("div", {
-    className: "profile-about-label"
-  }, "Phone"), _react.default.createElement("div", {
-    className: "profile-about-value"
-  }, profile.phone)));
-};
-
-var AboutTab =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(AboutTab, _Component);
-
-  function AboutTab(props) {
-    var _this;
-
-    (0, _classCallCheck2.default)(this, AboutTab);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(AboutTab).call(this, props));
-    _this.toggle = _this.toggle.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
-    _this.state = {
-      open: false
-    };
-    return _this;
-  }
-
-  (0, _createClass2.default)(AboutTab, [{
-    key: "toggle",
-    value: function toggle() {
-      this.setState({
-        open: !this.state.open
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var profile = this.props.profile;
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
-        className: "profile-about-content"
-      }, _react.default.createElement("div", {
-        className: "profile-about-row"
-      }, _react.default.createElement("div", {
-        className: "profile-about-label"
-      }, "About Me"), _react.default.createElement("div", {
-        className: "profile-about-value"
-      }, profile.about)), this.state.open ? _react.default.createElement(OtherContent, {
-        profile: profile
-      }) : null), _react.default.createElement("div", {
-        className: "profile-about-footer"
-      }, _react.default.createElement("span", {
-        onClick: this.toggle,
-        className: "profile-about-more"
-      }, this.state.open ? 'Show Less' : 'Show More')));
-    }
-  }]);
-  return AboutTab;
-}(_react.Component);
-
-exports.default = AboutTab;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","react":"../node_modules/react/index.js"}],"../src/profile/about/DevicePopup.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _store = _interopRequireDefault(require("../fetch/store"));
-
-var _actions = require("../fetch/actions");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var DevicesPopup =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(DevicesPopup, _Component);
-
-  function DevicesPopup() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, DevicesPopup);
-
-    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-      props[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(DevicesPopup)).call.apply(_getPrototypeOf2, [this].concat(props)));
-
-    var pc = _this.props.selected.filter(function (d) {
-      return d.key === 'pc';
-    });
-
-    _this.state = {
-      open: undefined,
-      text: pc.length ? pc.pop().description : ''
-    };
-    return _this;
-  }
-
-  (0, _createClass2.default)(DevicesPopup, [{
-    key: "toggle",
-    value: function toggle(key) {
-      this.setState(function (state) {
-        return {
-          innerCall: true,
-          devices: state.devices.map(function (device) {
-            key === device.key && (device.selected = !device.selected);
-            return device;
-          })
-        };
-      });
-    }
-  }, {
-    key: "notePcSpecs",
-    value: function notePcSpecs(e) {
-      var text = e.target.value;
-      this.setState(function () {
-        return {
-          text: text
-        };
-      });
-    }
-  }, {
-    key: "close",
-    value: function close() {
-      this.props.close();
-    }
-  }, {
-    key: "onSave",
-    value: function onSave() {
-      var _this2 = this;
-
-      var user_devices = [];
-      var frm = new FormData();
-      this.state.devices.map(function (device) {
-        if (!device.selected) {
-          return;
-        }
-
-        frm.append('device[]', device.key);
-
-        if (device.key === 'pc') {
-          frm.append('pc_description', _this2.state.text);
-          device.description = _this2.state.text;
-        }
-
-        user_devices.push(device);
-      });
-
-      _axios.default.post("/setting/devices", frm).then(function (response) {});
-
-      _store.default.dispatch({
-        type: _actions.DEVICE_SETTINGS,
-        data: user_devices
-      });
-
-      this.props.close();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      var _this$state = this.state,
-          devices = _this$state.devices,
-          open = _this$state.open;
-      var can_save = devices.filter(function (d) {
-        return d.selected;
-      }).length;
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactjsPopup.default, {
-        open: open,
-        onClose: this.close.bind(this),
-        modal: true
-      }, _react.default.createElement("div", {
-        className: "device-selection"
-      }, _react.default.createElement("div", {
-        className: "device-select-header"
-      }, _react.default.createElement("h3", null, "Add Device"), _react.default.createElement("button", {
-        onClick: this.close.bind(this)
-      }, "\xD7")), _react.default.createElement("div", {
-        className: "device-options"
-      }, devices.map(function (device) {
-        return _react.default.createElement(_react.Fragment, {
-          key: device.key
-        }, device.key === 'pc' && device.selected ? _react.default.createElement("textarea", {
-          defaultValue: _this3.state.text,
-          onChange: _this3.notePcSpecs.bind(_this3),
-          placeholder: "Your pc specifications"
-        }) : '', _react.default.createElement("button", {
-          onClick: function onClick(e) {
-            _this3.toggle.call(_this3, device.key);
-          },
-          className: "btn dd-btn " + (device.selected ? "btn-full" : "")
-        }, device.title));
-      })), _react.default.createElement("div", {
-        className: "device-actions text-right"
-      }, _react.default.createElement("button", {
-        className: "btn dd-btn btn-gray btn-sm",
-        onClick: this.close.bind(this)
-      }, "Cancel"), _react.default.createElement("button", {
-        disabled: !can_save,
-        className: "btn dd-btn btn-full btn-sm",
-        onClick: this.onSave.bind(this)
-      }, "Save")))));
-    }
-  }], [{
-    key: "getDerivedStateFromProps",
-    value: function getDerivedStateFromProps(props, state) {
-      if (state.innerCall) {
-        return {
-          innerCall: false
-        };
-      } // end if
-
-
-      return {
-        open: props.isOpen,
-        devices: [].concat((0, _toConsumableArray2.default)(props.devices.filter(function (d) {
-          return props.selected.filter(function (dev) {
-            return dev.key !== d.key;
-          }).length === props.selected.length;
-        })), (0, _toConsumableArray2.default)(props.selected))
-      };
-    }
-  }]);
-  return DevicesPopup;
-}(_react.Component);
-
-exports.default = DevicesPopup;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../node_modules/axios/index.js","../fetch/store":"../src/profile/fetch/store.js","../fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/about/SelectDevice.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SelectDevice =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(SelectDevice, _Component);
-
-  function SelectDevice() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, SelectDevice);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(SelectDevice)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
-      popup: false
-    });
-    return _this;
-  }
-
-  (0, _createClass2.default)(SelectDevice, [{
-    key: "open",
-    value: function open() {
-      this.setState(function () {
-        return {
-          popup: true
-        };
-      });
-    }
-  }, {
-    key: "close",
-    value: function close() {
-      this.setState(function () {
-        return {
-          popup: false
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var devices = this.props.profile.devices;
-      return _react.default.createElement("div", {
-        className: "profile-devices device-advice"
-      }, _react.default.createElement(_DevicePopup.default, {
-        isOpen: this.state.popup,
-        close: this.close.bind(this),
-        devices: devices,
-        selected: []
-      }), _react.default.createElement("button", {
-        onClick: this.open.bind(this),
-        className: "btn dd-btn"
-      }, "Click to add gaming devices that your are using!"));
-    }
-  }]);
-  return SelectDevice;
-}(_react.Component);
-
-exports.default = SelectDevice;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/DeviceList.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var DeviceList =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(DeviceList, _Component);
-
-  function DeviceList() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, DeviceList);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(DeviceList)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
-      popup: false
-    });
-    return _this;
-  }
-
-  (0, _createClass2.default)(DeviceList, [{
-    key: "close",
-    value: function close() {
-      this.setState(function () {
-        return {
-          popup: false
-        };
-      });
-    }
-  }, {
-    key: "open",
-    value: function open() {
-      this.setState(function () {
-        return {
-          popup: true
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          list = _this$props.list,
-          devices = _this$props.devices,
-          guest = _this$props.guest;
-      var hasPc = list.filter(function (d) {
-        return d.key === 'pc';
-      });
-      return _react.default.createElement("div", {
-        className: "pr-2 pl-2"
-      }, _react.default.createElement("div", {
-        className: "row pt-2"
-      }, _react.default.createElement("div", {
-        className: "col-sm-4 main-color"
-      }, "My preffered devices"), _react.default.createElement("div", {
-        className: "col-sm-8"
-      }, list.filter(function (d) {
-        return d.key !== 'pc';
-      }).map(function (d) {
-        return d.title;
-      }).join(', '))), hasPc.length ? _react.default.createElement("div", {
-        className: "row pt-2"
-      }, _react.default.createElement("div", {
-        className: "col-sm-4 main-color"
-      }, "My computer properties"), _react.default.createElement("div", {
-        className: "col-sm-8"
-      }, hasPc[0].description)) : null, !guest ? _react.default.createElement("div", {
-        className: "row pt-2"
-      }, _react.default.createElement("div", {
-        className: "col-sm-12 device-advice"
-      }, _react.default.createElement(_DevicePopup.default, {
-        close: this.close.bind(this),
-        isOpen: this.state.popup,
-        devices: devices,
-        selected: list
-      }), _react.default.createElement("div", {
-        className: "text-right"
-      }, _react.default.createElement("button", {
-        onClick: this.open.bind(this),
-        className: "dd-btn btn-sm"
-      }, "Device Settings")))) : null);
-    }
-  }]);
-  return DeviceList;
-}(_react.Component);
-
-exports.default = DeviceList;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/MyDevice.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _SelectDevice = _interopRequireDefault(require("./SelectDevice"));
-
-var _DeviceList = _interopRequireDefault(require("./DeviceList"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var MyDevice =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(MyDevice, _Component);
-
-  function MyDevice() {
-    (0, _classCallCheck2.default)(this, MyDevice);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(MyDevice).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(MyDevice, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          profile = _this$props.profile,
-          guest = _this$props.guest;
-      return guest ? _react.default.createElement(_react.Fragment, null, profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
-        guest: guest,
-        devices: profile.devices,
-        list: profile.user_devices
-      }) : _react.default.createElement("div", {
-        className: "d-flex justify-content-center p-3"
-      }, _react.default.createElement("h5", {
-        className: "main-color"
-      }, "No devices added yet"))) : profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
-        guest: guest,
-        devices: profile.devices,
-        list: profile.user_devices
-      }) : _react.default.createElement(_SelectDevice.default, {
-        profile: profile
-      });
-    }
-  }]);
-  return MyDevice;
-}(_react.Component);
-
-exports.default = MyDevice;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./SelectDevice":"../src/profile/about/SelectDevice.js","./DeviceList":"../src/profile/about/DeviceList.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactTabs = require("react-tabs");
-
-var _AboutTab = _interopRequireDefault(require("./AboutTab"));
-
-var _MyDevice = _interopRequireDefault(require("./MyDevice"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var About =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(About, _Component);
-
-  function About() {
-    (0, _classCallCheck2.default)(this, About);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(About).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(About, [{
-    key: "render",
-    value: function render() {
-      var user = this.props.user;
-      return _react.default.createElement("div", {
-        className: "profile-about"
-      }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
-        className: "nav nav-tabs"
-      }, _react.default.createElement(_reactTabs.Tab, {
-        selectedClassName: "active"
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0);"
-      }, _react.default.createElement("span", {
-        className: "icon-info"
-      }), _react.default.createElement("span", {
-        className: "tab-title"
-      }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
-        selectedClassName: "active"
-      }, _react.default.createElement("a", {
-        href: "javascript:void(0);"
-      }, _react.default.createElement("span", {
-        className: "icon-pc"
-      }), _react.default.createElement("span", {
-        className: "tab-title"
-      }, " My Devices")))), _react.default.createElement("div", {
-        className: "content"
-      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
-        profile: user.profile
-      })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_MyDevice.default, {
-        guest: this.props.isGuest,
-        profile: user.profile
-      })))));
-    }
-  }]);
-  return About;
-}(_react.Component);
-
-exports.default = About;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/profile/about/AboutTab.js","./MyDevice":"../src/profile/about/MyDevice.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js","./ava":"../src/profile/ava/index.js","./profile-actions":"../src/profile/profile-actions/index.js"}],"../node_modules/flatpickr/dist/flatpickr.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /* flatpickr v4.6.1, @license MIT */
@@ -77977,7 +76804,768 @@ var setDay = function setDay(timestamp) {
 };
 
 exports.setDay = setDay;
-},{"axios":"../node_modules/axios/index.js"}],"../src/profile/schedule/index.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js"}],"../src/profile/schedule/store/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _events = require("./events");
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    data: [],
+    ready: false
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _events.EVENTS_LOADED:
+      return Object.assign({}, action.data, {
+        ready: true
+      });
+
+    case _events.EVENT_DAY_SELECTED:
+      {
+        return Object.assign({}, state, {
+          describe: action.data
+        });
+      }
+
+    default:
+      return Object.assign({}, state);
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
+},{"./events":"../src/profile/schedule/store/events.js"}],"../src/profile/schedule/store/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _reducer = _interopRequireDefault(require("./reducer"));
+
+var _reduxLogger = require("redux-logger");
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = (0, _reduxLogger.createLogger)({
+  collapsed: true
+});
+var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
+var _default = store;
+exports.default = _default;
+},{"./reducer":"../src/profile/schedule/store/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","redux":"../node_modules/redux/es/redux.js","redux-thunk":"../node_modules/redux-thunk/es/index.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _luxon = require("luxon");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Form =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Form, _Component);
+
+  function Form() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Form);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Form)).call.apply(_getPrototypeOf2, [this].concat(props)));
+    _this.avaFileInput = _react.default.createRef();
+    _this.coverFileInput = _react.default.createRef();
+    _this.state = {
+      form: new FormData(),
+      srcAva: '',
+      srcCover: '',
+      name: '',
+      description: '',
+      date: _luxon.DateTime.fromMillis(+new Date())
+    };
+
+    _this.state.form.append('start', _luxon.DateTime.fromMillis(+new Date()).toISODate());
+
+    return _this;
+  }
+
+  (0, _createClass2.default)(Form, [{
+    key: "setValue",
+    value: function setValue(name, value) {
+      var _this2 = this;
+
+      this.setState(function () {
+        return name === 'start' ? (0, _defineProperty2.default)({
+          date: _luxon.DateTime.fromISO(value)
+        }, name, value) : (0, _defineProperty2.default)({}, name, value);
+      }, function () {
+        _this2.state.form.delete(name);
+
+        _this2.state.form.append(name, value);
+
+        _this2.props.onForm(_this2.state.form);
+      });
+    }
+  }, {
+    key: "onAvaSelect",
+    value: function onAvaSelect() {
+      this.avaFileInput.current.click();
+    }
+  }, {
+    key: "onCoverSelect",
+    value: function onCoverSelect() {
+      this.coverFileInput.current.click();
+    }
+  }, {
+    key: "avaSelected",
+    value: function avaSelected(e) {
+      var _this3 = this;
+
+      var files = e.target.files;
+
+      if (files[0]) {
+        this.setValue("ava", files[0]);
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+          return _this3.setState({
+            srcAva: reader.result
+          });
+        });
+        reader.readAsDataURL(files[0]);
+      } // end if
+
+    }
+  }, {
+    key: "coverSelected",
+    value: function coverSelected(e) {
+      var _this4 = this;
+
+      var files = e.target.files;
+
+      if (files[0]) {
+        this.setValue("poster", files[0]);
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+          return _this4.setState({
+            srcCover: reader.result
+          });
+        });
+        reader.readAsDataURL(files[0]);
+      } // end if
+
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var _this$state = this.state,
+          srcAva = _this$state.srcAva,
+          srcCover = _this$state.srcCover,
+          name = _this$state.name,
+          description = _this$state.description,
+          date = _this$state.date;
+      var errors = this.props.errors;
+      return _react.default.createElement("div", {
+        className: "schedule-create-form"
+      }, _react.default.createElement("input", {
+        onChange: this.avaSelected.bind(this),
+        className: "d-none",
+        type: "file",
+        ref: this.avaFileInput
+      }), _react.default.createElement("input", {
+        onChange: this.coverSelected.bind(this),
+        className: "d-none",
+        type: "file",
+        ref: this.coverFileInput
+      }), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "Images for Event")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-auto"
+      }, _react.default.createElement("div", {
+        style: srcAva.length ? {
+          backgroundImage: "url(".concat(srcAva, ")")
+        } : {},
+        onClick: this.onAvaSelect.bind(this),
+        className: "event-ava back-img " + (errors.ava ? ' has-error ' : '') + (srcAva.length ? ' selected ' : '')
+      }, _react.default.createElement("span", null, "Click to Upload"))), _react.default.createElement("div", {
+        className: "col"
+      }, _react.default.createElement("div", {
+        style: srcCover.length ? {
+          backgroundImage: "url(".concat(srcCover, ")")
+        } : {},
+        onClick: this.onCoverSelect.bind(this),
+        className: "event-cover back-img " + (errors.poster ? ' has-error ' : '') + (srcCover.length ? ' selected ' : '')
+      }, _react.default.createElement("span", null, "Click to Upload")))))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "Event Name")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("input", {
+        value: name,
+        onChange: function onChange(e) {
+          return _this5.setValue('name', e.target.value);
+        },
+        name: "event-name",
+        type: "text",
+        className: errors.name ? 'has-error' : null
+      }))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "Event Date")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("input", {
+        min: _luxon.DateTime.fromMillis(+new Date()).toISODate(),
+        onChange: function onChange(e) {
+          return _this5.setValue.call(_this5, 'start', e.target.value);
+        },
+        value: date.toISODate(),
+        type: "date",
+        name: "event-date"
+      }))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "About Event")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("textarea", {
+        value: description,
+        className: errors.description ? 'has-error' : null,
+        onChange: function onChange(e) {
+          return _this5.setValue('description', e.target.value);
+        }
+      }))), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-4"
+      }, _react.default.createElement("label", null, "This is private Event")), _react.default.createElement("div", {
+        className: "col-8"
+      }, _react.default.createElement("label", {
+        className: "form-input-container"
+      }, _react.default.createElement("input", {
+        value: name,
+        onChange: function onChange(e) {
+          return _this5.setValue('is_private', e.target.checked);
+        },
+        name: "event-is-private",
+        type: "checkbox"
+      }), _react.default.createElement("span", {
+        className: "checkmark"
+      })))));
+    }
+  }]);
+  return Form;
+}(_react.Component);
+
+exports.default = Form;
+},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/schedule/CreateEvent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Modal = require("../Modal");
+
+var _Form = _interopRequireDefault(require("./Form"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CreateEvent =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(CreateEvent, _Component);
+
+  function CreateEvent() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, CreateEvent);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(CreateEvent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
+      open: false,
+      processing: false,
+      errors: {}
+    });
+    return _this;
+  }
+
+  (0, _createClass2.default)(CreateEvent, [{
+    key: "doOpen",
+    value: function doOpen() {
+      this.setState(function () {
+        return {
+          open: true,
+          processing: false,
+          errors: {}
+        };
+      });
+    }
+  }, {
+    key: "doClose",
+    value: function doClose() {
+      this.setState(function () {
+        return {
+          open: false
+        };
+      });
+    }
+  }, {
+    key: "onSave",
+    value: function onSave() {
+      var _this2 = this;
+
+      this.setState(function () {
+        return {
+          processing: true
+        };
+      });
+
+      _axios.default.post("/event/store", this.contentRef).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.props.onEvent(data.data);
+
+        _this2.setState({
+          open: false,
+          processing: false
+        });
+      }).catch(function (_ref2) {
+        var response = _ref2.response;
+
+        _this2.setState(function () {
+          return {
+            processing: false,
+            errors: response.data.errors
+          };
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var actions = [{
+        title: "Close",
+        onAction: this.doClose.bind(this),
+        class: "btn-empty"
+      }, {
+        title: "Create",
+        onAction: this.onSave.bind(this),
+        class: "btn-full"
+      }];
+      var errors = this.state.errors;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
+        processing: this.state.processing,
+        open: this.state.open,
+        onClose: this.doClose.bind(this),
+        title: 'Create an event',
+        actions: actions
+      }, _react.default.createElement(_Form.default, {
+        errors: errors,
+        onForm: function onForm(form) {
+          _this3.contentRef = form;
+        }
+      })), _react.default.createElement("button", {
+        onClick: this.doOpen.bind(this),
+        className: "dd-btn btn-sm btn-full"
+      }, "Create Event"));
+    }
+  }]);
+  return CreateEvent;
+}(_react.Component);
+
+exports.default = CreateEvent;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js","./Form":"../src/schedule/Form.js","axios":"../node_modules/axios/index.js"}],"../src/schedule/Event.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Event =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Event, _Component);
+
+  function Event() {
+    (0, _classCallCheck2.default)(this, Event);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Event).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(Event, [{
+    key: "render",
+    value: function render() {
+      var data = this.props.data;
+      return _react.default.createElement("div", {
+        className: "schedule-content with".concat(data.type)
+      }, _react.default.createElement("h3", null, data.start_human), _react.default.createElement("div", {
+        className: "schedule-content-line"
+      }, _react.default.createElement("div", {
+        className: "title"
+      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "content"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/gg/".concat(data.owner.username)
+      }, data.owner.full_name)), _react.default.createElement("div", {
+        className: "title"
+      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "content"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/event/".concat(data.id)
+      }, data.name)), _react.default.createElement("div", {
+        className: "title"
+      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "content"
+      }, "www.dudes.com"), _react.default.createElement("div", {
+        className: "title"
+      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
+        className: "icon-remove",
+        "aria-hidden": "true"
+      }), " Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
+        className: "long-content"
+      }, data.description)));
+    }
+  }]);
+  return Event;
+}(_react.Component);
+
+exports.default = Event;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _menu = _interopRequireDefault(require("../menu"));
+
+var _reactFlatpickr = _interopRequireDefault(require("react-flatpickr"));
+
+var _store = _interopRequireDefault(require("../profile/schedule/store"));
+
+var _events = require("../profile/schedule/store/events");
+
+var _CreateEvent = _interopRequireDefault(require("./CreateEvent"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Event = _interopRequireDefault(require("./Event"));
+
+var _luxon = require("luxon");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Schedule =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Schedule, _Component);
+
+  function Schedule() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Schedule);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Schedule)).call.apply(_getPrototypeOf2, [this].concat(props)));
+    _this.state = {
+      date: new Date(),
+      schedule: _store.default.getState(),
+      events: []
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(Schedule, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      document.title = "Schedule";
+
+      _store.default.dispatch((0, _events.setDay)(null));
+
+      var describe = this.state.schedule.describe;
+      this.describe(describe = describe ? describe : new Date().getTime());
+    }
+  }, {
+    key: "describe",
+    value: function describe(_describe) {
+      var _this2 = this;
+
+      _axios.default.get("/event/list/".concat(_describe)).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.setState(function () {
+          return {
+            events: data.data,
+            date: _luxon.DateTime.fromMillis(_describe).toJSDate()
+          };
+        });
+      });
+    }
+    /**
+     * to retrieve the Date object => dayElem.dateObj.getTime()
+     * function to mark the dates
+     * 
+     * @param {array} m 
+     * @param {string} n 
+     * @param {object} fp 
+     * @param {NodeElement} dayElem 
+     */
+
+  }, {
+    key: "onDayCreated",
+    value: function onDayCreated(m, n, fp, dayElem) {
+      var data = this.state.schedule.data;
+
+      var date = _luxon.DateTime.fromJSDate(dayElem.dateObj);
+
+      var t = date.toISODate();
+      var found = data.filter(function (item) {
+        return item.start === t;
+      });
+
+      if (found.length) {
+        var marks = document.createElement("div");
+        marks.className = 'marks';
+        var dudes;
+        found.map(function (event) {
+          if (!dudes) {
+            var withDudes = document.createElement('span');
+            withDudes.className = "mark with-".concat(event.type);
+            marks.appendChild(withDudes);
+            dudes = true;
+          } // end if
+
+        });
+        dayElem.innerHTML = "<span>".concat(dayElem.textContent, "</span>").concat(marks.outerHTML);
+      } // end if
+
+    }
+  }, {
+    key: "describeChanged",
+    value: function describeChanged(dates) {
+      var date = dates.pop();
+      this.describe(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    }
+  }, {
+    key: "getTitle",
+    value: function getTitle() {
+      var date = this.state.date;
+      return _luxon.DateTime.fromJSDate(date).toLocaleString({
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+  }, {
+    key: "nextMonth",
+    value: function nextMonth() {
+      var _this3 = this;
+
+      this.setState(function (state) {
+        return {
+          date: _luxon.DateTime.fromJSDate(_this3.state.date).plus({
+            months: 1
+          }).toJSDate()
+        };
+      });
+    }
+  }, {
+    key: "prevMonth",
+    value: function prevMonth() {
+      var _this4 = this;
+
+      this.setState(function (state) {
+        return {
+          date: _luxon.DateTime.fromJSDate(_this4.state.date).minus({
+            months: 1
+          }).toJSDate()
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var _this$state = this.state,
+          date = _this$state.date,
+          events = _this$state.events;
+      return _react.default.createElement("div", {
+        className: "d-flex"
+      }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
+        className: "user-middle"
+      }, _react.default.createElement("section", {
+        className: "schedule"
+      }, _react.default.createElement("div", {
+        className: "schedule-header"
+      }, _react.default.createElement("div", {
+        className: "schedula-title"
+      }, _react.default.createElement("h3", null, this.getTitle.call(this))), _react.default.createElement("div", {
+        className: "schedule-change"
+      }, _react.default.createElement("span", {
+        onClick: this.nextMonth.bind(this),
+        className: "fa fa-angle-right",
+        "aria-hidden": "true"
+      }, ">"), _react.default.createElement("span", {
+        onClick: this.prevMonth.bind(this),
+        className: "fa fa-angle-left",
+        "aria-hidden": "true"
+      }, " ", "<", " "))), _react.default.createElement("div", {
+        className: "schedule-canlendar"
+      }, _react.default.createElement(_reactFlatpickr.default, {
+        onChange: this.describeChanged.bind(this),
+        onDayCreate: this.onDayCreated.bind(this),
+        "data-inline": true,
+        value: date
+      })), _react.default.createElement("div", {
+        className: "schedule-event"
+      }, _react.default.createElement("div", {
+        className: "create-event"
+      }, _react.default.createElement("div", {
+        className: "schedule-group"
+      }, _react.default.createElement("span", null), "Group"), _react.default.createElement("div", {
+        className: "schedule-dudes"
+      }, _react.default.createElement("span", null), "Dudes"), _react.default.createElement("div", {
+        className: "schedule-me"
+      }, _react.default.createElement("span", null), "Me"), _react.default.createElement(_CreateEvent.default, {
+        onEvent: function onEvent(event) {
+          if (_luxon.DateTime.fromJSDate(date).toISODate() === event.start) {
+            _this5.setState(function () {
+              return {
+                events: [event].concat((0, _toConsumableArray2.default)(events))
+              };
+            });
+          }
+        }
+      })), _react.default.createElement("div", {
+        className: "schedule-contents"
+      }, events.map(function (event) {
+        return _react.default.createElement(_Event.default, {
+          key: event.id,
+          data: event
+        });
+      }))))));
+    }
+  }]);
+  return Schedule;
+}(_react.Component);
+
+exports.default = Schedule;
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/profile/schedule/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -78105,7 +77693,7 @@ function (_Component) {
       }) : null, _react.default.createElement("div", {
         className: "header"
       }, "schedule"), _react.default.createElement("div", {
-        className: "block-content"
+        className: ""
       }, _react.default.createElement(_reactFlatpickr.default, {
         ref: function ref(_ref) {
           _this3.calendar = _ref;
@@ -78145,7 +77733,7 @@ var ProfileSchedule = (0, _reactRedux.connect)(function (state) {
 })(ProfileScheduleComponent);
 var _default = ProfileSchedule;
 exports.default = _default;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","react-redux":"../node_modules/react-redux/es/index.js","./store/events":"../src/profile/schedule/store/events.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/profile/schedule/store/reducer.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","react-redux":"../node_modules/react-redux/es/index.js","./store/events":"../src/profile/schedule/store/events.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/menu/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -78153,60 +77741,1194 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _events = require("./events");
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    data: [],
-    ready: false
-  };
-  var action = arguments.length > 1 ? arguments[1] : undefined;
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-  switch (action.type) {
-    case _events.EVENTS_LOADED:
-      return Object.assign({}, action.data, {
-        ready: true
-      });
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
-    case _events.EVENT_DAY_SELECTED:
-      {
-        return Object.assign({}, state, {
-          describe: action.data
-        });
-      }
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-    default:
-      return Object.assign({}, state);
-  }
-};
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
-var _default = reducer;
-exports.default = _default;
-},{"./events":"../src/profile/schedule/store/events.js"}],"../src/profile/schedule/store/index.js":[function(require,module,exports) {
-"use strict";
+var _react = _interopRequireWildcard(require("react"));
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+var _reactSticky = require("react-sticky");
 
-var _reducer = _interopRequireDefault(require("./reducer"));
+var _reactRouterDom = require("react-router-dom");
 
-var _reduxLogger = require("redux-logger");
+var _Schedule = _interopRequireDefault(require("../schedule/Schedule"));
 
-var _redux = require("redux");
+var _Provider = _interopRequireDefault(require("react-redux/es/components/Provider"));
 
-var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+var _store = _interopRequireDefault(require("../profile/schedule/store"));
+
+var _schedule = _interopRequireDefault(require("../profile/schedule"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var logger = (0, _reduxLogger.createLogger)({
-  collapsed: true
+//import ProfileSchedule from './schedule';
+//import scheduleStore from './schedule/store';
+//import React from 'react';
+var Menu =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Menu, _Component);
+
+  function Menu() {
+    (0, _classCallCheck2.default)(this, Menu);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Menu).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(Menu, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(_reactSticky.StickyContainer, {
+        className: "menu",
+        style: this.props.style
+      }, _react.default.createElement(_reactSticky.Sticky, {
+        topOffset: 55
+      }, function (_ref) {
+        var style = _ref.style;
+
+        var _style = style.position ? Object.assign({}, style, {
+          top: 15
+        }) : style;
+
+        return _react.default.createElement("ul", {
+          style: _style
+        }, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          exact: true,
+          activeClassName: "active",
+          to: "/",
+          isActive: function isActive(match, location) {
+            return match || location.pathname === '/schedule' || location.pathname === '/settings';
+          }
+        }, _react.default.createElement("span", {
+          className: "icon icon-info"
+        }), " ", " my profile")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          activeClassName: "active",
+          to: "/feed"
+        }, _react.default.createElement("span", {
+          className: "icon icon-schedule"
+        }), " ", " my feed")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+          activeClassName: "active",
+          to: "/dudes"
+        }, _react.default.createElement("span", {
+          className: "icon icon-binocolo"
+        }), " ", " Find Your Dudes")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-group"
+        }), " ", " Groups")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-basket"
+        }), " ", " Trade")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "javascript:void(0)"
+        }, _react.default.createElement("span", {
+          className: "icon icon-fist"
+        }), " ", " Clans")));
+      }), _react.default.createElement("div", {
+        className: "left-banner"
+      }, _react.default.createElement("div", {
+        className: "banner-header"
+      }, _react.default.createElement("h3", null, "Game Groups "), _react.default.createElement("p", null, "Lol Gamer Community")), _react.default.createElement("img", {
+        src: "../img/reklam-banner.jpg",
+        alt: "The Last of us"
+      })));
+    }
+  }]);
+  return Menu;
+}(_react.Component);
+
+exports.default = Menu;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-sticky":"../node_modules/react-sticky/lib/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../schedule/Schedule":"../src/schedule/Schedule.js","react-redux/es/components/Provider":"../node_modules/react-redux/es/components/Provider.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule":"../src/profile/schedule/index.js"}],"../src/post-add/Input.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, logger));
-var _default = store;
-exports.default = _default;
-},{"./reducer":"../src/profile/schedule/store/reducer.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","redux":"../node_modules/redux/es/redux.js","redux-thunk":"../node_modules/redux-thunk/es/index.js"}],"../src/profile/ava/Poster.js":[function(require,module,exports) {
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactTextareaAutosize = _interopRequireDefault(require("react-textarea-autosize"));
+
+var _emojiMart = require("emoji-mart");
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Input =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Input, _Component);
+
+  function Input() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Input);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Input)).call.apply(_getPrototypeOf2, [this].concat(props)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
+      emoji: false
+    });
+    _this.ref = _react.default.createRef();
+    return _this;
+  }
+
+  (0, _createClass2.default)(Input, [{
+    key: "onChange",
+    value: function onChange(e) {
+      var value = e.target.value;
+      this.props.onType(value);
+    }
+  }, {
+    key: "insertEmoji",
+    value: function insertEmoji(emoji) {
+      this.props.onType(this.props.value + ' ' + emoji.colons + ' ');
+      this.ref.focus();
+    }
+  }, {
+    key: "toggleEmoji",
+    value: function toggleEmoji() {
+      var _this2 = this;
+
+      this.setState(function () {
+        return {
+          emoji: !_this2.state.emoji
+        };
+      });
+    }
+    /**
+     * user clicks on emoji icon, Popup onOpen event !
+     */
+
+  }, {
+    key: "onEmoji",
+    value: function onEmoji() {
+      this.setState(function () {
+        return {
+          emoji: true
+        };
+      });
+    }
+    /**
+     * user close emoji popup, Popup onClose event !
+     */
+
+  }, {
+    key: "onCloseEmoji",
+    value: function onCloseEmoji() {
+      this.setState(function () {
+        return {
+          emoji: false
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return _react.default.createElement("div", {
+        className: "textarea has-emoji"
+      }, _react.default.createElement(_reactjsPopup.default, {
+        open: this.state.emoji,
+        closeOnDocumentClick: true,
+        overlayStyle: {
+          display: 'none'
+        },
+        lockScroll: false,
+        closeOnEscape: true,
+        modal: false,
+        onOpen: this.onEmoji.bind(this),
+        onClose: this.onCloseEmoji.bind(this),
+        trigger: _react.default.createElement("button", {
+          className: this.state.emoji ? "emoji active" : "emoji"
+        })
+      }, _react.default.createElement(_emojiMart.Picker, {
+        onSelect: this.insertEmoji.bind(this),
+        tooltip: false,
+        set: "google",
+        sheetSize: "16"
+      })), _react.default.createElement(_reactTextareaAutosize.default, {
+        maxRows: 15,
+        inputRef: function inputRef(ref) {
+          _this3.ref = ref;
+        },
+        onFocus: this.props.onFocus,
+        onChange: this.onChange.bind(this),
+        value: this.props.value,
+        placeholder: this.props.placeholder
+      }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, state) {
+      if (nextProps.emoji) {
+        return {
+          emoji: false
+        };
+      } // end if
+
+
+      return null;
+    }
+  }]);
+  return Input;
+}(_react.Component);
+
+exports.default = Input;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-textarea-autosize":"../node_modules/react-textarea-autosize/dist/react-textarea-autosize.esm.js","emoji-mart":"../node_modules/emoji-mart/dist-es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"../src/post-add/Footer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Footer =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(Footer, _Component);
+
+  function Footer() {
+    (0, _classCallCheck2.default)(this, Footer);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Footer).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(Footer, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "footer"
+      }, _react.default.createElement("div", {
+        className: "actions"
+      }, _react.default.createElement("div", {
+        className: "add-media"
+      }, _react.default.createElement("a", {
+        onClick: this.props.onSelect,
+        href: "javascript:void(0)",
+        className: "icon-photo-cam"
+      })), _react.default.createElement("button", {
+        className: "btn btn-sm btn-full",
+        disabled: this.props.enabled,
+        onClick: this.props.submitPost
+      }, "Post")));
+    }
+  }]);
+  return Footer;
+}(_react.Component);
+
+exports.default = Footer;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js"}],"../src/post-add/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("./redux/store"));
+
+var _actions = require("./redux/actions");
+
+var _Input = _interopRequireDefault(require("./Input"));
+
+var _Media = _interopRequireDefault(require("./Media"));
+
+var _Footer = _interopRequireDefault(require("./Footer"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CreatePostComponent =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(CreatePostComponent, _Component);
+
+  function CreatePostComponent() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, CreatePostComponent);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(CreatePostComponent)).call.apply(_getPrototypeOf2, [this].concat(props)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
+      post: '',
+      saving: false,
+      active: false,
+      saved: false,
+      select: false,
+      files: []
+    });
+    _this.submitPost = _this.submitPost.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+    _this.onFiles = _this.onFiles.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+    _this.onFileRemove = _this.onFileRemove.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+    _this.onEnter = _this.onEnter.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+    return _this;
+  }
+
+  (0, _createClass2.default)(CreatePostComponent, [{
+    key: "onEnter",
+    value: function onEnter() {
+      this.setState(function (state) {
+        return {
+          active: true,
+          saved: false
+        };
+      });
+    }
+  }, {
+    key: "submitPost",
+    value: function submitPost() {
+      var _this2 = this;
+
+      this.setState({
+        saving: true,
+        saved: false
+      });
+      var data = new FormData();
+      data.append('post', this.state.post);
+      this.state.files.map(function (file) {
+        return data.append('media[]', file);
+      });
+
+      if (this.props.type) {
+        data.append('type', this.props.type);
+        data.append('id', this.props.id);
+      }
+
+      _axios.default.post("/post/store", data).then(function (_ref) {
+        var data = _ref.data;
+        return _this2.setState(function (state) {
+          return {
+            active: false,
+            post: '',
+            saving: false,
+            saved: true,
+            files: []
+          };
+        }, function () {
+          _store.default.dispatch({
+            type: _actions.POST_ADDED,
+            data: data.data
+          });
+        });
+      }).catch(function (err) {
+        return _this2.setState({
+          saving: false,
+          saved: false
+        });
+      });
+    }
+  }, {
+    key: "onFiles",
+    value: function onFiles(file) {
+      // handle user cancel file select.
+      if (!file) {
+        return this.setState(function (state) {
+          return {
+            select: false
+          };
+        });
+      }
+
+      this.setState(function (state) {
+        return Object.assign({}, state, {
+          select: false,
+          files: [].concat((0, _toConsumableArray2.default)(state.files), [file])
+        });
+      });
+    }
+  }, {
+    key: "onFileRemove",
+    value: function onFileRemove(index) {
+      if (this.state.files[index]) {
+        this.setState(function (state) {
+          return {
+            files: state.files.filter(function (f, i) {
+              return i !== index;
+            })
+          };
+        });
+      } // end if
+
+    }
+  }, {
+    key: "onSelect",
+    value: function onSelect() {
+      this.setState({
+        select: true
+      });
+    }
+  }, {
+    key: "onText",
+    value: function onText(text) {
+      this.setState(function () {
+        return {
+          post: text
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return _react.default.createElement("div", {
+        className: "wrapper " + (this.state.active ? "active" : "")
+      }, _react.default.createElement(_Input.default, {
+        emoji: this.state.saved,
+        placeholder: "Tell about your adventure in favorite game...",
+        onFocus: this.onEnter.bind(this),
+        onType: this.onText.bind(this),
+        value: this.state.post
+      }), _react.default.createElement(_Media.default, {
+        reset: this.state.saved,
+        select: this.state.select,
+        onFiles: this.onFiles,
+        onRemove: this.onFileRemove
+      }), _react.default.createElement(_Footer.default, {
+        onSelect: this.onSelect.bind(this),
+        enabled: this.state.saving || this.state.post.length <= 0,
+        saved: this.state.saved,
+        submitPost: this.submitPost
+      }), _react.default.createElement("div", {
+        className: "user-actions",
+        onClick: function onClick() {
+          _this3.onEnter();
+        }
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0)",
+        className: "icon-v-cam"
+      }), _react.default.createElement("a", {
+        href: "javascript:void(0)",
+        className: "icon-photo-cam"
+      })));
+    }
+  }]);
+  return CreatePostComponent;
+}(_react.Component);
+
+exports.default = CreatePostComponent;
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","./redux/store":"../src/post-add/redux/store.js","./redux/actions":"../src/post-add/redux/actions.js","./Input":"../src/post-add/Input.js","./Media":"../src/post-add/Media.js","./Footer":"../src/post-add/Footer.js"}],"../src/profile/about/AboutTab.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var OtherContent = function OtherContent(_ref) {
+  var profile = _ref.profile;
+  return _react.default.createElement("div", null, _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Timezone"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, profile.timezone)), _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Date of Birth"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, profile.dob)), _react.default.createElement("div", {
+    className: "profile-about-row"
+  }, _react.default.createElement("div", {
+    className: "profile-about-label"
+  }, "Phone"), _react.default.createElement("div", {
+    className: "profile-about-value"
+  }, profile.phone)));
+};
+
+var AboutTab =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(AboutTab, _Component);
+
+  function AboutTab(props) {
+    var _this;
+
+    (0, _classCallCheck2.default)(this, AboutTab);
+    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(AboutTab).call(this, props));
+    _this.toggle = _this.toggle.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+    _this.state = {
+      open: false
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(AboutTab, [{
+    key: "toggle",
+    value: function toggle() {
+      this.setState({
+        open: !this.state.open
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var profile = this.props.profile;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+        className: "profile-about-content"
+      }, _react.default.createElement("div", {
+        className: "profile-about-row"
+      }, _react.default.createElement("div", {
+        className: "profile-about-label"
+      }, "About Me"), _react.default.createElement("div", {
+        className: "profile-about-value"
+      }, profile.about)), this.state.open ? _react.default.createElement(OtherContent, {
+        profile: profile
+      }) : null), _react.default.createElement("div", {
+        className: "profile-about-footer"
+      }, _react.default.createElement("span", {
+        onClick: this.toggle,
+        className: "profile-about-more"
+      }, this.state.open ? 'Show Less' : 'Show More')));
+    }
+  }]);
+  return AboutTab;
+}(_react.Component);
+
+exports.default = AboutTab;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","react":"../node_modules/react/index.js"}],"../src/profile/about/DevicePopup.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../fetch/store"));
+
+var _actions = require("../fetch/actions");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DevicesPopup =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(DevicesPopup, _Component);
+
+  function DevicesPopup() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, DevicesPopup);
+
+    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
+      props[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(DevicesPopup)).call.apply(_getPrototypeOf2, [this].concat(props)));
+
+    var pc = _this.props.selected.filter(function (d) {
+      return d.key === 'pc';
+    });
+
+    _this.state = {
+      open: undefined,
+      text: pc.length ? pc.pop().description : ''
+    };
+    return _this;
+  }
+
+  (0, _createClass2.default)(DevicesPopup, [{
+    key: "toggle",
+    value: function toggle(key) {
+      this.setState(function (state) {
+        return {
+          innerCall: true,
+          devices: state.devices.map(function (device) {
+            key === device.key && (device.selected = !device.selected);
+            return device;
+          })
+        };
+      });
+    }
+  }, {
+    key: "notePcSpecs",
+    value: function notePcSpecs(e) {
+      var text = e.target.value;
+      this.setState(function () {
+        return {
+          text: text
+        };
+      });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.props.close();
+    }
+  }, {
+    key: "onSave",
+    value: function onSave() {
+      var _this2 = this;
+
+      var user_devices = [];
+      var frm = new FormData();
+      this.state.devices.map(function (device) {
+        if (!device.selected) {
+          return;
+        }
+
+        frm.append('device[]', device.key);
+
+        if (device.key === 'pc') {
+          frm.append('pc_description', _this2.state.text);
+          device.description = _this2.state.text;
+        }
+
+        user_devices.push(device);
+      });
+
+      _axios.default.post("/setting/devices", frm).then(function (response) {});
+
+      _store.default.dispatch({
+        type: _actions.DEVICE_SETTINGS,
+        data: user_devices
+      });
+
+      this.props.close();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _this$state = this.state,
+          devices = _this$state.devices,
+          open = _this$state.open;
+      var can_save = devices.filter(function (d) {
+        return d.selected;
+      }).length;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactjsPopup.default, {
+        open: open,
+        onClose: this.close.bind(this),
+        modal: true
+      }, _react.default.createElement("div", {
+        className: "device-selection"
+      }, _react.default.createElement("div", {
+        className: "device-select-header"
+      }, _react.default.createElement("h3", null, "Add Device"), _react.default.createElement("button", {
+        onClick: this.close.bind(this)
+      }, "\xD7")), _react.default.createElement("div", {
+        className: "device-options"
+      }, devices.map(function (device) {
+        return _react.default.createElement(_react.Fragment, {
+          key: device.key
+        }, device.key === 'pc' && device.selected ? _react.default.createElement("textarea", {
+          defaultValue: _this3.state.text,
+          onChange: _this3.notePcSpecs.bind(_this3),
+          placeholder: "Your pc specifications"
+        }) : '', _react.default.createElement("button", {
+          onClick: function onClick(e) {
+            _this3.toggle.call(_this3, device.key);
+          },
+          className: "btn dd-btn " + (device.selected ? "btn-full" : "")
+        }, device.title));
+      })), _react.default.createElement("div", {
+        className: "device-actions text-right"
+      }, _react.default.createElement("button", {
+        className: "btn dd-btn btn-gray btn-sm",
+        onClick: this.close.bind(this)
+      }, "Cancel"), _react.default.createElement("button", {
+        disabled: !can_save,
+        className: "btn dd-btn btn-full btn-sm",
+        onClick: this.onSave.bind(this)
+      }, "Save")))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.innerCall) {
+        return {
+          innerCall: false
+        };
+      } // end if
+
+
+      return {
+        open: props.isOpen,
+        devices: [].concat((0, _toConsumableArray2.default)(props.devices.filter(function (d) {
+          return props.selected.filter(function (dev) {
+            return dev.key !== d.key;
+          }).length === props.selected.length;
+        })), (0, _toConsumableArray2.default)(props.selected))
+      };
+    }
+  }]);
+  return DevicesPopup;
+}(_react.Component);
+
+exports.default = DevicesPopup;
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../node_modules/axios/index.js","../fetch/store":"../src/profile/fetch/store.js","../fetch/actions":"../src/profile/fetch/actions.js"}],"../src/profile/about/SelectDevice.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectDevice =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(SelectDevice, _Component);
+
+  function SelectDevice() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, SelectDevice);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(SelectDevice)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
+      popup: false
+    });
+    return _this;
+  }
+
+  (0, _createClass2.default)(SelectDevice, [{
+    key: "open",
+    value: function open() {
+      this.setState(function () {
+        return {
+          popup: true
+        };
+      });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.setState(function () {
+        return {
+          popup: false
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var devices = this.props.profile.devices;
+      return _react.default.createElement("div", {
+        className: "profile-devices device-advice"
+      }, _react.default.createElement(_DevicePopup.default, {
+        isOpen: this.state.popup,
+        close: this.close.bind(this),
+        devices: devices,
+        selected: []
+      }), _react.default.createElement("button", {
+        onClick: this.open.bind(this),
+        className: "btn dd-btn"
+      }, "Click to add gaming devices that your are using!"));
+    }
+  }]);
+  return SelectDevice;
+}(_react.Component);
+
+exports.default = SelectDevice;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/DeviceList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DevicePopup = _interopRequireDefault(require("./DevicePopup"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DeviceList =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(DeviceList, _Component);
+
+  function DeviceList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, DeviceList);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(DeviceList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
+      popup: false
+    });
+    return _this;
+  }
+
+  (0, _createClass2.default)(DeviceList, [{
+    key: "close",
+    value: function close() {
+      this.setState(function () {
+        return {
+          popup: false
+        };
+      });
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      this.setState(function () {
+        return {
+          popup: true
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          list = _this$props.list,
+          devices = _this$props.devices,
+          guest = _this$props.guest;
+      var hasPc = list.filter(function (d) {
+        return d.key === 'pc';
+      });
+      return _react.default.createElement("div", {
+        className: "pr-2 pl-2"
+      }, _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-4 main-color"
+      }, "My preffered devices"), _react.default.createElement("div", {
+        className: "col-sm-8"
+      }, list.filter(function (d) {
+        return d.key !== 'pc';
+      }).map(function (d) {
+        return d.title;
+      }).join(', '))), hasPc.length ? _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-4 main-color"
+      }, "My computer properties"), _react.default.createElement("div", {
+        className: "col-sm-8"
+      }, hasPc[0].description)) : null, !guest ? _react.default.createElement("div", {
+        className: "row pt-2"
+      }, _react.default.createElement("div", {
+        className: "col-sm-12 device-advice"
+      }, _react.default.createElement(_DevicePopup.default, {
+        close: this.close.bind(this),
+        isOpen: this.state.popup,
+        devices: devices,
+        selected: list
+      }), _react.default.createElement("div", {
+        className: "text-right"
+      }, _react.default.createElement("button", {
+        onClick: this.open.bind(this),
+        className: "dd-btn btn-sm"
+      }, "Device Settings")))) : null);
+    }
+  }]);
+  return DeviceList;
+}(_react.Component);
+
+exports.default = DeviceList;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","./DevicePopup":"../src/profile/about/DevicePopup.js"}],"../src/profile/about/MyDevice.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _SelectDevice = _interopRequireDefault(require("./SelectDevice"));
+
+var _DeviceList = _interopRequireDefault(require("./DeviceList"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MyDevice =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(MyDevice, _Component);
+
+  function MyDevice() {
+    (0, _classCallCheck2.default)(this, MyDevice);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(MyDevice).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(MyDevice, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          profile = _this$props.profile,
+          guest = _this$props.guest;
+      return guest ? _react.default.createElement(_react.Fragment, null, profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
+        guest: guest,
+        devices: profile.devices,
+        list: profile.user_devices
+      }) : _react.default.createElement("div", {
+        className: "d-flex justify-content-center p-3"
+      }, _react.default.createElement("h5", {
+        className: "main-color"
+      }, "No devices added yet"))) : profile.user_devices.length ? _react.default.createElement(_DeviceList.default, {
+        guest: guest,
+        devices: profile.devices,
+        list: profile.user_devices
+      }) : _react.default.createElement(_SelectDevice.default, {
+        profile: profile
+      });
+    }
+  }]);
+  return MyDevice;
+}(_react.Component);
+
+exports.default = MyDevice;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","./SelectDevice":"../src/profile/about/SelectDevice.js","./DeviceList":"../src/profile/about/DeviceList.js"}],"../src/profile/about/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactTabs = require("react-tabs");
+
+var _AboutTab = _interopRequireDefault(require("./AboutTab"));
+
+var _MyDevice = _interopRequireDefault(require("./MyDevice"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var About =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2.default)(About, _Component);
+
+  function About() {
+    (0, _classCallCheck2.default)(this, About);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(About).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(About, [{
+    key: "render",
+    value: function render() {
+      var user = this.props.user;
+      return _react.default.createElement("div", {
+        className: "profile-about"
+      }, _react.default.createElement(_reactTabs.Tabs, null, _react.default.createElement(_reactTabs.TabList, {
+        className: "nav nav-tabs"
+      }, _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-info"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " About Me"))), _react.default.createElement(_reactTabs.Tab, {
+        selectedClassName: "active"
+      }, _react.default.createElement("a", {
+        href: "javascript:void(0);"
+      }, _react.default.createElement("span", {
+        className: "icon-pc"
+      }), _react.default.createElement("span", {
+        className: "tab-title"
+      }, " My Devices")))), _react.default.createElement("div", {
+        className: "content"
+      }, _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_AboutTab.default, {
+        profile: user.profile
+      })), _react.default.createElement(_reactTabs.TabPanel, null, _react.default.createElement(_MyDevice.default, {
+        guest: this.props.isGuest,
+        profile: user.profile
+      })))));
+    }
+  }]);
+  return About;
+}(_react.Component);
+
+exports.default = About;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-tabs":"../node_modules/react-tabs/esm/index.js","./AboutTab":"../src/profile/about/AboutTab.js","./MyDevice":"../src/profile/about/MyDevice.js"}],"../src/profile/ava/Poster.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -96879,707 +97601,7 @@ var Header = (0, _reactRedux.connect)(function (state) {
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../node_modules/react-redux/es/index.js","axios":"../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/schedule/Form.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _luxon = require("luxon");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Form =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Form, _Component);
-
-  function Form() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, Form);
-
-    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-      props[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Form)).call.apply(_getPrototypeOf2, [this].concat(props)));
-    _this.avaFileInput = _react.default.createRef();
-    _this.coverFileInput = _react.default.createRef();
-    _this.state = {
-      form: new FormData(),
-      srcAva: '',
-      srcCover: '',
-      name: '',
-      description: '',
-      date: _luxon.DateTime.fromMillis(+new Date())
-    };
-
-    _this.state.form.append('start', _luxon.DateTime.fromMillis(+new Date()).toISODate());
-
-    return _this;
-  }
-
-  (0, _createClass2.default)(Form, [{
-    key: "setValue",
-    value: function setValue(name, value) {
-      var _this2 = this;
-
-      this.setState(function () {
-        return name === 'start' ? (0, _defineProperty2.default)({
-          date: _luxon.DateTime.fromISO(value)
-        }, name, value) : (0, _defineProperty2.default)({}, name, value);
-      }, function () {
-        _this2.state.form.delete(name);
-
-        _this2.state.form.append(name, value);
-
-        _this2.props.onForm(_this2.state.form);
-      });
-    }
-  }, {
-    key: "onAvaSelect",
-    value: function onAvaSelect() {
-      this.avaFileInput.current.click();
-    }
-  }, {
-    key: "onCoverSelect",
-    value: function onCoverSelect() {
-      this.coverFileInput.current.click();
-    }
-  }, {
-    key: "avaSelected",
-    value: function avaSelected(e) {
-      var _this3 = this;
-
-      var files = e.target.files;
-
-      if (files[0]) {
-        this.setValue("ava", files[0]);
-        var reader = new FileReader();
-        reader.addEventListener('load', function () {
-          return _this3.setState({
-            srcAva: reader.result
-          });
-        });
-        reader.readAsDataURL(files[0]);
-      } // end if
-
-    }
-  }, {
-    key: "coverSelected",
-    value: function coverSelected(e) {
-      var _this4 = this;
-
-      var files = e.target.files;
-
-      if (files[0]) {
-        this.setValue("poster", files[0]);
-        var reader = new FileReader();
-        reader.addEventListener('load', function () {
-          return _this4.setState({
-            srcCover: reader.result
-          });
-        });
-        reader.readAsDataURL(files[0]);
-      } // end if
-
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      var _this$state = this.state,
-          srcAva = _this$state.srcAva,
-          srcCover = _this$state.srcCover,
-          name = _this$state.name,
-          description = _this$state.description,
-          date = _this$state.date;
-      var errors = this.props.errors;
-      return _react.default.createElement("div", {
-        className: "schedule-create-form"
-      }, _react.default.createElement("input", {
-        onChange: this.avaSelected.bind(this),
-        className: "d-none",
-        type: "file",
-        ref: this.avaFileInput
-      }), _react.default.createElement("input", {
-        onChange: this.coverSelected.bind(this),
-        className: "d-none",
-        type: "file",
-        ref: this.coverFileInput
-      }), _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("label", null, "Images for Event")), _react.default.createElement("div", {
-        className: "col-8"
-      }, _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-auto"
-      }, _react.default.createElement("div", {
-        style: srcAva.length ? {
-          backgroundImage: "url(".concat(srcAva, ")")
-        } : {},
-        onClick: this.onAvaSelect.bind(this),
-        className: "event-ava back-img " + (errors.ava ? ' has-error ' : '') + (srcAva.length ? ' selected ' : '')
-      }, _react.default.createElement("span", null, "Click to Upload"))), _react.default.createElement("div", {
-        className: "col"
-      }, _react.default.createElement("div", {
-        style: srcCover.length ? {
-          backgroundImage: "url(".concat(srcCover, ")")
-        } : {},
-        onClick: this.onCoverSelect.bind(this),
-        className: "event-cover back-img " + (errors.poster ? ' has-error ' : '') + (srcCover.length ? ' selected ' : '')
-      }, _react.default.createElement("span", null, "Click to Upload")))))), _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("label", null, "Event Name")), _react.default.createElement("div", {
-        className: "col-8"
-      }, _react.default.createElement("input", {
-        value: name,
-        onChange: function onChange(e) {
-          return _this5.setValue('name', e.target.value);
-        },
-        name: "event-name",
-        type: "text",
-        className: errors.name ? 'has-error' : null
-      }))), _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("label", null, "Event Date")), _react.default.createElement("div", {
-        className: "col-8"
-      }, _react.default.createElement("input", {
-        min: _luxon.DateTime.fromMillis(+new Date()).toISODate(),
-        onChange: function onChange(e) {
-          return _this5.setValue.call(_this5, 'start', e.target.value);
-        },
-        value: date.toISODate(),
-        type: "date",
-        name: "event-date"
-      }))), _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("label", null, "About Event")), _react.default.createElement("div", {
-        className: "col-8"
-      }, _react.default.createElement("textarea", {
-        value: description,
-        className: errors.description ? 'has-error' : null,
-        onChange: function onChange(e) {
-          return _this5.setValue('description', e.target.value);
-        }
-      }))), _react.default.createElement("div", {
-        className: "row"
-      }, _react.default.createElement("div", {
-        className: "col-4"
-      }, _react.default.createElement("label", null, "This is private Event")), _react.default.createElement("div", {
-        className: "col-8"
-      }, _react.default.createElement("label", {
-        className: "form-input-container"
-      }, _react.default.createElement("input", {
-        value: name,
-        onChange: function onChange(e) {
-          return _this5.setValue('is_private', e.target.checked);
-        },
-        name: "event-is-private",
-        type: "checkbox"
-      }), _react.default.createElement("span", {
-        className: "checkmark"
-      })))));
-    }
-  }]);
-  return Form;
-}(_react.Component);
-
-exports.default = Form;
-},{"@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/schedule/CreateEvent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _Modal = require("../Modal");
-
-var _Form = _interopRequireDefault(require("./Form"));
-
-var _axios = _interopRequireDefault(require("axios"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CreateEvent =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(CreateEvent, _Component);
-
-  function CreateEvent() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, CreateEvent);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(CreateEvent)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), "state", {
-      open: false,
-      processing: false,
-      errors: {}
-    });
-    return _this;
-  }
-
-  (0, _createClass2.default)(CreateEvent, [{
-    key: "doOpen",
-    value: function doOpen() {
-      this.setState(function () {
-        return {
-          open: true,
-          processing: false,
-          errors: {}
-        };
-      });
-    }
-  }, {
-    key: "doClose",
-    value: function doClose() {
-      this.setState(function () {
-        return {
-          open: false
-        };
-      });
-    }
-  }, {
-    key: "onSave",
-    value: function onSave() {
-      var _this2 = this;
-
-      this.setState(function () {
-        return {
-          processing: true
-        };
-      });
-
-      _axios.default.post("/event/store", this.contentRef).then(function (_ref) {
-        var data = _ref.data;
-
-        _this2.props.onEvent(data.data);
-
-        _this2.setState({
-          open: false,
-          processing: false
-        });
-      }).catch(function (_ref2) {
-        var response = _ref2.response;
-
-        _this2.setState(function () {
-          return {
-            processing: false,
-            errors: response.data.errors
-          };
-        });
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      var actions = [{
-        title: "Close",
-        onAction: this.doClose.bind(this),
-        class: "btn-empty"
-      }, {
-        title: "Create",
-        onAction: this.onSave.bind(this),
-        class: "btn-full"
-      }];
-      var errors = this.state.errors;
-      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Modal.Modal, {
-        processing: this.state.processing,
-        open: this.state.open,
-        onClose: this.doClose.bind(this),
-        title: 'Create an event',
-        actions: actions
-      }, _react.default.createElement(_Form.default, {
-        errors: errors,
-        onForm: function onForm(form) {
-          _this3.contentRef = form;
-        }
-      })), _react.default.createElement("button", {
-        onClick: this.doOpen.bind(this),
-        className: "dd-btn btn-sm btn-full"
-      }, "Create Event"));
-    }
-  }]);
-  return CreateEvent;
-}(_react.Component);
-
-exports.default = CreateEvent;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","../Modal":"../src/Modal/index.js","./Form":"../src/schedule/Form.js","axios":"../node_modules/axios/index.js"}],"../src/schedule/Event.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Event =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Event, _Component);
-
-  function Event() {
-    (0, _classCallCheck2.default)(this, Event);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Event).apply(this, arguments));
-  }
-
-  (0, _createClass2.default)(Event, [{
-    key: "render",
-    value: function render() {
-      var data = this.props.data;
-      return _react.default.createElement("div", {
-        className: "schedule-content with".concat(data.type)
-      }, _react.default.createElement("h3", null, data.start_human), _react.default.createElement("div", {
-        className: "schedule-content-line"
-      }, _react.default.createElement("div", {
-        className: "title"
-      }, "Event Owner "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
-        className: "content"
-      }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/gg/".concat(data.owner.username)
-      }, data.owner.full_name)), _react.default.createElement("div", {
-        className: "title"
-      }, "Event Title "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
-        className: "content"
-      }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/event/".concat(data.id)
-      }, data.name)), _react.default.createElement("div", {
-        className: "title"
-      }, "Web Site "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
-        className: "content"
-      }, "www.dudes.com"), _react.default.createElement("div", {
-        className: "title"
-      }, "Description ", _react.default.createElement("br", null), "  ", _react.default.createElement("small", null, _react.default.createElement("span", {
-        className: "icon-remove",
-        "aria-hidden": "true"
-      }), " Leave Event"), " "), " ", _react.default.createElement("span", null, ":"), _react.default.createElement("div", {
-        className: "long-content"
-      }, data.description)));
-    }
-  }]);
-  return Event;
-}(_react.Component);
-
-exports.default = Event;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js"}],"../src/schedule/Schedule.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _menu = _interopRequireDefault(require("../menu"));
-
-var _reactFlatpickr = _interopRequireDefault(require("react-flatpickr"));
-
-var _store = _interopRequireDefault(require("../profile/schedule/store"));
-
-var _events = require("../profile/schedule/store/events");
-
-var _CreateEvent = _interopRequireDefault(require("./CreateEvent"));
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _Event = _interopRequireDefault(require("./Event"));
-
-var _luxon = require("luxon");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Schedule =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(Schedule, _Component);
-
-  function Schedule() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    (0, _classCallCheck2.default)(this, Schedule);
-
-    for (var _len = arguments.length, props = new Array(_len), _key = 0; _key < _len; _key++) {
-      props[_key] = arguments[_key];
-    }
-
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Schedule)).call.apply(_getPrototypeOf2, [this].concat(props)));
-    _this.state = {
-      date: new Date(),
-      schedule: _store.default.getState(),
-      events: []
-    };
-    return _this;
-  }
-
-  (0, _createClass2.default)(Schedule, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      document.title = "Schedule";
-
-      _store.default.dispatch((0, _events.setDay)(null));
-
-      var describe = this.state.schedule.describe;
-      this.describe(describe = describe ? describe : new Date().getTime());
-    }
-  }, {
-    key: "describe",
-    value: function describe(_describe) {
-      var _this2 = this;
-
-      _axios.default.get("/event/list/".concat(_describe)).then(function (_ref) {
-        var data = _ref.data;
-
-        _this2.setState(function () {
-          return {
-            events: data.data,
-            date: _luxon.DateTime.fromMillis(_describe).toJSDate()
-          };
-        });
-      });
-    }
-    /**
-     * to retrieve the Date object => dayElem.dateObj.getTime()
-     * function to mark the dates
-     * 
-     * @param {array} m 
-     * @param {string} n 
-     * @param {object} fp 
-     * @param {NodeElement} dayElem 
-     */
-
-  }, {
-    key: "onDayCreated",
-    value: function onDayCreated(m, n, fp, dayElem) {
-      var data = this.state.schedule.data;
-
-      var date = _luxon.DateTime.fromJSDate(dayElem.dateObj);
-
-      var t = date.toISODate();
-      var found = data.filter(function (item) {
-        return item.start === t;
-      });
-
-      if (found.length) {
-        var marks = document.createElement("div");
-        marks.className = 'marks';
-        var dudes;
-        found.map(function (event) {
-          if (!dudes) {
-            var withDudes = document.createElement('span');
-            withDudes.className = "mark with-".concat(event.type);
-            marks.appendChild(withDudes);
-            dudes = true;
-          } // end if
-
-        });
-        dayElem.innerHTML = "<span>".concat(dayElem.textContent, "</span>").concat(marks.outerHTML);
-      } // end if
-
-    }
-  }, {
-    key: "describeChanged",
-    value: function describeChanged(dates) {
-      var date = dates.pop();
-      this.describe(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    }
-  }, {
-    key: "getTitle",
-    value: function getTitle() {
-      var date = this.state.date;
-      return _luxon.DateTime.fromJSDate(date).toLocaleString({
-        month: 'long',
-        year: 'numeric'
-      });
-    }
-  }, {
-    key: "nextMonth",
-    value: function nextMonth() {
-      var _this3 = this;
-
-      this.setState(function (state) {
-        return {
-          date: _luxon.DateTime.fromJSDate(_this3.state.date).plus({
-            months: 1
-          }).toJSDate()
-        };
-      });
-    }
-  }, {
-    key: "prevMonth",
-    value: function prevMonth() {
-      var _this4 = this;
-
-      this.setState(function (state) {
-        return {
-          date: _luxon.DateTime.fromJSDate(_this4.state.date).minus({
-            months: 1
-          }).toJSDate()
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      var _this$state = this.state,
-          date = _this$state.date,
-          events = _this$state.events;
-      return _react.default.createElement("div", {
-        className: "d-flex"
-      }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
-        className: "user-middle"
-      }, _react.default.createElement("section", {
-        className: "schedule"
-      }, _react.default.createElement("div", {
-        className: "schedule-header"
-      }, _react.default.createElement("div", {
-        className: "schedula-title"
-      }, _react.default.createElement("h3", null, this.getTitle.call(this))), _react.default.createElement("div", {
-        className: "schedule-change"
-      }, _react.default.createElement("span", {
-        onClick: this.nextMonth.bind(this),
-        className: "fa fa-angle-right",
-        "aria-hidden": "true"
-      }, ">"), _react.default.createElement("span", {
-        onClick: this.prevMonth.bind(this),
-        className: "fa fa-angle-left",
-        "aria-hidden": "true"
-      }, " ", "<", " "))), _react.default.createElement("div", {
-        className: "schedule-canlendar"
-      }, _react.default.createElement(_reactFlatpickr.default, {
-        onChange: this.describeChanged.bind(this),
-        onDayCreate: this.onDayCreated.bind(this),
-        "data-inline": true,
-        value: date
-      })), _react.default.createElement("div", {
-        className: "schedule-event"
-      }, _react.default.createElement("div", {
-        className: "create-event"
-      }, _react.default.createElement("div", {
-        className: "schedule-group"
-      }, _react.default.createElement("span", null), "Group"), _react.default.createElement("div", {
-        className: "schedule-dudes"
-      }, _react.default.createElement("span", null), "Dudes"), _react.default.createElement("div", {
-        className: "schedule-me"
-      }, _react.default.createElement("span", null), "Me"), _react.default.createElement(_CreateEvent.default, {
-        onEvent: function onEvent(event) {
-          if (_luxon.DateTime.fromJSDate(date).toISODate() === event.start) {
-            _this5.setState(function () {
-              return {
-                events: [event].concat((0, _toConsumableArray2.default)(events))
-              };
-            });
-          }
-        }
-      })), _react.default.createElement("div", {
-        className: "schedule-contents"
-      }, events.map(function (event) {
-        return _react.default.createElement(_Event.default, {
-          key: event.id,
-          data: event
-        });
-      }))))));
-    }
-  }]);
-  return Schedule;
-}(_react.Component);
-
-exports.default = Schedule;
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","react":"../node_modules/react/index.js","../menu":"../src/menu/index.js","react-flatpickr":"../node_modules/react-flatpickr/build/index.js","../profile/schedule/store":"../src/profile/schedule/store/index.js","../profile/schedule/store/events":"../src/profile/schedule/store/events.js","./CreateEvent":"../src/schedule/CreateEvent.js","axios":"../node_modules/axios/index.js","./Event":"../src/schedule/Event.js","luxon":"../node_modules/luxon/build/cjs-browser/luxon.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/inherits":"../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/assertThisInitialized":"../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../node_modules/react-redux/es/index.js","axios":"../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -101170,7 +101192,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64910" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50653" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

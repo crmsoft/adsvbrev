@@ -65,7 +65,7 @@ export default class Groups extends Component{
                                 </Link>
                             )
                         }
-
+                        <img className={'group-back'} src="img/groups-back.svg" alt=""/>
                     </div>
 
                 </div>

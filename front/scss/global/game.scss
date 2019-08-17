@@ -329,14 +329,15 @@
                 cursor: pointer;
                 &:hover
                 {
-                    background: #ff4800;
+                    background: $mainColor;
                     color:$mainGray;
                     border:1px solid $mainGray;
                 }
             }
             .right-button
             {
-                background: #ff4800;
+
+                background: $mainColor;
                 margin-top: 10px;
                 border-radius: 5px;
                 border:1px solid $mainGray;
@@ -578,7 +579,7 @@
     {
         position: absolute;
         width: 80%;
-        background-color: #ff4800 !important;
+        background-color: $mainColor !important;
         padding: 1rem 1rem 0 1rem;
         text-align: right;
         margin-top: 60%;
@@ -627,7 +628,7 @@
 }
 .fa-heart, fa-users
 {
-    color:#ff4800;
+    color:$mainColor;
 }
 
 .block-content

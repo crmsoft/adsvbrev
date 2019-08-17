@@ -176,7 +176,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./icomoon\\fonts\\icomoon.eot":[["icomoon.d20398a5.eot","../scss/icomoon/fonts/icomoon.eot"],"../scss/icomoon/fonts/icomoon.eot"],"./icomoon\\fonts\\icomoon.ttf":[["icomoon.a131a1b3.ttf","../scss/icomoon/fonts/icomoon.ttf"],"../scss/icomoon/fonts/icomoon.ttf"],"./icomoon\\fonts\\icomoon.woff":[["icomoon.9cf68eed.woff","../scss/icomoon/fonts/icomoon.woff"],"../scss/icomoon/fonts/icomoon.woff"],"./icomoon\\fonts\\icomoon.svg":[["icomoon.2c812770.svg","../scss/icomoon/fonts/icomoon.svg"],"../scss/icomoon/fonts/icomoon.svg"],"./..\\img\\schedule-event-img.svg":[["schedule-event-img.e315bbb6.svg","../img/schedule-event-img.svg"],"../img/schedule-event-img.svg"],"./..\\img\\login-bg-100.jpg":[["login-bg-100.af12b54f.jpg","../img/login-bg-100.jpg"],"../img/login-bg-100.jpg"],"./..\\img\\user-default-bg-80.jpg":[["user-default-bg-80.edf85c92.jpg","../img/user-default-bg-80.jpg"],"../img/user-default-bg-80.jpg"],"./..\\img\\my_games_back.png":[["my_games_back.3d5de867.png","../img/my_games_back.png"],"../img/my_games_back.png"],"./..\\img\\messenger_background.png":[["messenger_background.96fff20e.png","../img/messenger_background.png"],"../img/messenger_background.png"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./icomoon\\fonts\\icomoon.eot":[["icomoon.d20398a5.eot","../scss/icomoon/fonts/icomoon.eot"],"../scss/icomoon/fonts/icomoon.eot"],"./icomoon\\fonts\\icomoon.ttf":[["icomoon.a131a1b3.ttf","../scss/icomoon/fonts/icomoon.ttf"],"../scss/icomoon/fonts/icomoon.ttf"],"./icomoon\\fonts\\icomoon.woff":[["icomoon.9cf68eed.woff","../scss/icomoon/fonts/icomoon.woff"],"../scss/icomoon/fonts/icomoon.woff"],"./icomoon\\fonts\\icomoon.svg":[["icomoon.2c812770.svg","../scss/icomoon/fonts/icomoon.svg"],"../scss/icomoon/fonts/icomoon.svg"],"./..\\img\\schedule-event-img.svg":[["schedule-event-img.e315bbb6.svg","../img/schedule-event-img.svg"],"../img/schedule-event-img.svg"],"./..\\img\\login-bg-100.jpg":[["login-bg-100.af12b54f.jpg","../img/login-bg-100.jpg"],"../img/login-bg-100.jpg"],"./..\\img\\user-default-bg-80.jpg":[["user-default-bg-80.edf85c92.jpg","../img/user-default-bg-80.jpg"],"../img/user-default-bg-80.jpg"],"./..\\img\\messenger_background.png":[["messenger_background.96fff20e.png","../img/messenger_background.png"],"../img/messenger_background.png"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -203,7 +203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64910" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50653" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

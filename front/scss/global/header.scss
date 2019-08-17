@@ -6,7 +6,18 @@ header{
         position: relative;
         height: 45px;
     }
+    nav{
+        a {
+            &.navbar-brand
+            {
+                img
+                {
+                    height: 44px;
+                }
+            }
 
+        }
+    }
     .navbar-nav{
         .nav-item{
             .nav-link{
@@ -81,6 +92,7 @@ header{
             border: 0;
             border-radius: 0.6rem;
             padding-left: 40px;
+            height: 44px;
             &:focus{
                 border: 0;
                 outline: 0;

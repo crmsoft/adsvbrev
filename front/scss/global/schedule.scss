@@ -166,7 +166,8 @@ $schedulebordercolor:#354247;
             {
                 .flatpickr-weekdays
                 {
-                    background: $backcolor;
+                    //background: $backcolor;
+                    background: $scheduleweekdaysback;
                     .flatpickr-weekdaycontainer
                     {
                         span.flatpickr-weekday

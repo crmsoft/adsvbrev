@@ -9979,7 +9979,7 @@ input[type=email]:focus,
 input[type=date]:focus,
 input[type=password]:focus,
 input[type=text]:focus {
-  outline-color: #ff4800;
+  outline-color: #46A29F;
 }
 
 .has-error {
@@ -9987,7 +9987,7 @@ input[type=text]:focus {
 }
 
 option:checked {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 
 .form-input-container {
@@ -10014,7 +10014,7 @@ option:checked {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid #ff4800;
+  border: solid #46A29F;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -10026,7 +10026,7 @@ option:checked {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ff4800;
+  background: #46A29F;
 }
 .form-input-container input:checked ~ .checkmark {
   background-color: #ccc;
@@ -10067,9 +10067,9 @@ button:focus {
   -webkit-border-radius: 4px;
   padding: 10px 30px;
   font-size: 14px;
-  color: #ff4800;
+  color: #46A29F;
   background: transparent;
-  border-color: #ff4800;
+  border-color: #46A29F;
   border-style: solid;
   border-width: 1px;
   cursor: pointer;
@@ -10082,7 +10082,7 @@ button:focus {
 }
 .dd-btn:hover:not([disabled]) {
   text-decoration: none;
-  background-color: #ff4800;
+  background-color: #46A29F;
   color: #202225;
 }
 .dd-btn:disabled {
@@ -10113,7 +10113,7 @@ button:focus {
 }
 
 .btn-full {
-  background-color: #ff4800;
+  background-color: #46A29F;
   color: #ffffff;
 }
 
@@ -10142,7 +10142,7 @@ button:focus {
   color: #ffffff;
 }
 .btn-empty:hover {
-  border-color: #ff4800;
+  border-color: #46A29F;
   color: white;
   background-color: transparent;
 }
@@ -10164,7 +10164,7 @@ button:focus {
 }
 
 body {
-  background-color: #020205;
+  background-color: #202833;
   color: #fff;
 }
 
@@ -10182,7 +10182,7 @@ p strong {
 }
 
 .main-color {
-  color: #ff4800 !important;
+  color: #46A29F !important;
 }
 
 .light-gray {
@@ -10234,10 +10234,10 @@ p strong {
   height: 0;
 }
 .switch input:checked + .slider {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .switch input:focus + .slider {
-  box-shadow: 0 0 1px #ff4800;
+  box-shadow: 0 0 1px #46A29F;
 }
 .switch input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -10322,7 +10322,7 @@ p strong {
 .flatpickr-calendar.inline {
   display: block;
   position: relative;
-  top: 2px;
+  top: 0px;
 }
 
 .flatpickr-calendar.static {
@@ -10734,7 +10734,7 @@ p strong {
 span.flatpickr-weekday {
   cursor: default;
   font-size: 90%;
-  background: #1bbc9b;
+  background: #495766 !important;
   color: rgba(0, 0, 0, 0.54);
   line-height: 1;
   margin: 0;
@@ -10805,7 +10805,7 @@ span.flatpickr-weekday {
 .flatpickr-day {
   background: none;
   border: 1px solid transparent;
-  border-radius: 150px;
+  border-bottom: 1px solid #fff !important;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   color: #484848;
@@ -11261,7 +11261,7 @@ span.flatpickr-weekday {
   width: 100%;
 }
 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays {
-  background: #14191c;
+  background: #495766;
 }
 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday {
   color: #BAB7BE;
@@ -11320,7 +11320,7 @@ span.flatpickr-weekday {
   padding: 0;
 }
 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-dudes {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer .flatpickr-day .marks .with-group {
   background-color: gray;
@@ -11413,7 +11413,7 @@ span.flatpickr-weekday {
 .schedule .schedule-event .schedule-contents .schedule-content span.icon-remove, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content span.icon-remove {
   float: none;
   width: auto;
-  color: #ff4800;
+  color: #46A29F;
 }
 .schedule .schedule-event .schedule-contents .schedule-content .content, .user-settings .content .form-create-group .schedule-event .schedule-contents .schedule-content .content, .search-results .content .form-create-group .schedule-event .schedule-contents .schedule-content .content {
   width: 70%;
@@ -11540,7 +11540,7 @@ span.flatpickr-weekday {
   height: 75px;
   width: 75px;
   border-radius: 50%;
-  border-color: #ff4800;
+  border-color: #46A29F;
   border-width: 1px;
   border-style: solid;
   text-align: center;
@@ -11549,7 +11549,7 @@ span.flatpickr-weekday {
 .schedule .schedule-create-form .event-cover, .user-settings .content .form-create-group .schedule-create-form .event-cover, .search-results .content .form-create-group .schedule-create-form .event-cover {
   background-color: #484B52;
   height: 75px;
-  border-color: #ff4800;
+  border-color: #46A29F;
   border-width: 1px;
   border-style: solid;
   cursor: pointer;
@@ -11561,7 +11561,7 @@ span.flatpickr-weekday {
   height: 1100%;
   top: 10px;
   right: -500%;
-  background: #ff4800;
+  background: #46A29F;
   transform-origin: 54% 0;
   transform: rotate(45deg);
   z-index: -1;
@@ -11589,7 +11589,7 @@ span.flatpickr-weekday {
   width: auto !important;
 }
 .dd-modal .dd-modal-header {
-  background-color: #ff4800;
+  background-color: #46A29F;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -11656,7 +11656,7 @@ span.flatpickr-weekday {
   top: 65px;
 }
 .event-profile h1, .game-profile h1 {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 22px;
   align-self: flex-end;
   margin-bottom: 0;
@@ -11679,7 +11679,7 @@ span.flatpickr-weekday {
   margin-right: 0.5rem;
 }
 .find-your-dudes-title h3 {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 24px;
 }
 
@@ -11761,7 +11761,7 @@ span.flatpickr-weekday {
 }
 .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content h3 {
   font-size: 14px;
-  color: #ff4800;
+  color: #46A29F;
   margin-bottom: 3px;
 }
 .find-your-dudes .my-games .my-games-section .my-games-box .my-games-content .my-games-desc small {
@@ -11970,7 +11970,7 @@ span.flatpickr-weekday {
   left: 0;
   top: -13px;
   padding: 12px;
-  background-color: #ff4800;
+  background-color: #46A29F;
   border-radius: 50%;
   z-index: 1;
 }
@@ -11998,7 +11998,7 @@ span.flatpickr-weekday {
   top: 1px;
   left: 0;
   bottom: 0;
-  background: #ff4800;
+  background: #46A29F;
   max-width: 95%;
 }
 .game-profile .wotes .wotes-stars .wote-filler {
@@ -12066,7 +12066,7 @@ span.flatpickr-weekday {
   margin-top: -15px;
 }
 .review-feed hr {
-  background-color: #ff4800;
+  background-color: #46A29F;
   height: 3px;
 }
 .review-feed .filter {
@@ -12086,7 +12086,7 @@ span.flatpickr-weekday {
   background-color: rgba(241, 90, 36, 0.1);
 }
 .review-feed .filter td {
-  border-right: 1px solid #ff4800;
+  border-right: 1px solid #46A29F;
 }
 .review-feed .filter td:last-child {
   border-right: none;
@@ -12142,7 +12142,7 @@ span.flatpickr-weekday {
 }
 .event-schedule .event-schedule-left h3 {
   font-weight: 100;
-  color: #ff4800;
+  color: #46A29F;
   font-size: 2vw;
   margin: 0px;
 }
@@ -12157,7 +12157,7 @@ span.flatpickr-weekday {
 }
 .event-schedule .event-schedule-left h4 {
   font-size: 0.8vw;
-  color: #ff4800;
+  color: #46A29F;
   margin: 0px;
 }
 .event-schedule .event-schedule-left h5 {
@@ -12175,7 +12175,7 @@ span.flatpickr-weekday {
   margin-right: 10px;
 }
 .event-schedule .event-schedule-right .event-schedule-date a {
-  color: #ff4800;
+  color: #46A29F;
   margin: 0px;
 }
 .event-schedule .event-schedule-right .event-schedule-buttons {
@@ -12194,12 +12194,12 @@ span.flatpickr-weekday {
   cursor: pointer;
 }
 .event-schedule .event-schedule-right .event-schedule-buttons .left-button:hover {
-  background: #ff4800;
+  background: #46A29F;
   color: #CBCBCB;
   border: 1px solid #CBCBCB;
 }
 .event-schedule .event-schedule-right .event-schedule-buttons .right-button {
-  background: #ff4800;
+  background: #46A29F;
   margin-top: 10px;
   border-radius: 5px;
   border: 1px solid #CBCBCB;
@@ -12247,7 +12247,7 @@ span.flatpickr-weekday {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   border-radius: 100%;
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .event-sugested-friend .event-sugested-friend-content .event-sugested-friend-box .sugested-friend-img-content .sugested-friend-img img {
   object-fit: cover;
@@ -12276,8 +12276,8 @@ span.flatpickr-weekday {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: #ff4800;
-  border: 1px solid #ff4800;
+  background: #46A29F;
+  border: 1px solid #46A29F;
   color: #fff;
   font-size: 11px;
   cursor: pointer;
@@ -12289,7 +12289,7 @@ span.flatpickr-weekday {
   text-align: center;
 }
 .event-sugested-friend .event-sugested-all a {
-  color: #ff4800 !important;
+  color: #46A29F !important;
   font-size: 10px;
   font-weight: 100;
 }
@@ -12326,7 +12326,7 @@ span.flatpickr-weekday {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   border-radius: 100%;
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .related-events .related-events-content .related-events-box .related-events-img-content .related-events-img img {
   object-fit: cover;
@@ -12349,7 +12349,7 @@ span.flatpickr-weekday {
   line-height: normal;
 }
 .related-events .related-events-content .related-events-box .related-events-name small a {
-  color: #ff4800;
+  color: #46A29F;
 }
 .related-events .related-events-content .related-events-box .related-events-name small.name {
   font-size: 10px;
@@ -12363,8 +12363,8 @@ span.flatpickr-weekday {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: #ff4800;
-  border: 1px solid #ff4800;
+  background: #46A29F;
+  border: 1px solid #46A29F;
   color: #fff;
   font-size: 11px;
   cursor: pointer;
@@ -12376,7 +12376,7 @@ span.flatpickr-weekday {
   text-align: center;
 }
 .related-events .related-events-seemore a {
-  color: #ff4800 !important;
+  color: #46A29F !important;
   font-size: 10px;
   font-weight: 100;
 }
@@ -12388,7 +12388,7 @@ span.flatpickr-weekday {
 .left-banner .banner-header {
   position: absolute;
   width: 80%;
-  background-color: #ff4800 !important;
+  background-color: #46A29F !important;
   padding: 1rem 1rem 0 1rem;
   text-align: right;
   margin-top: 60%;
@@ -12427,7 +12427,7 @@ span.flatpickr-weekday {
 }
 
 .fa-heart, fa-users {
-  color: #ff4800;
+  color: #46A29F;
 }
 
 .block-content {
@@ -12469,7 +12469,7 @@ span.flatpickr-weekday {
   padding: 10px 0px;
 }
 .menu ul li a span {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 15.5px;
   margin-right: 16px;
   transition: all 0.2s ease-in;
@@ -12484,7 +12484,7 @@ span.flatpickr-weekday {
   display: flex;
 }
 .about-event .about-event-title {
-  color: #ff4800;
+  color: #46A29F;
   flex-shrink: 1;
   padding: 0px 2rem;
   text-align: center;
@@ -12520,7 +12520,7 @@ span.flatpickr-weekday {
   -ms-transition: all 0.2s ease-in;
 }
 .about-event .about-event-button .about-event-pencil:hover span {
-  color: #ff4800;
+  color: #46A29F;
 }
 
 /* about animation finish   */
@@ -12804,7 +12804,7 @@ span.flatpickr-weekday {
   font-size: 12px;
 }
 .popup .popup-header .close {
-  color: #ff4800;
+  color: #46A29F;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12889,7 +12889,7 @@ span.flatpickr-weekday {
   position: absolute;
   left: 0;
   right: 0;
-  border-bottom: 1px solid #ff4800;
+  border-bottom: 1px solid #46A29F;
   bottom: 0;
   margin-left: -10px;
   margin-right: -10px;
@@ -12919,7 +12919,7 @@ span.flatpickr-weekday {
 }
 .login-register form div.form-group button {
   width: 100%;
-  background-color: #ff4800;
+  background-color: #46A29F;
   border: 0;
   padding: 10px 10px;
   border-radius: 10px;
@@ -12946,6 +12946,9 @@ header {
 header ul li {
   position: relative;
   height: 45px;
+}
+header nav a.navbar-brand img {
+  height: 44px;
 }
 header .navbar-nav .nav-item .nav-link {
   color: #CBCBCB;
@@ -12976,7 +12979,7 @@ header .navbar-nav .nav-item .nav-item-count {
   padding: 4px 5px;
   line-height: 0.75;
   border-radius: 12px;
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 header .navbar-nav .nav-item .header-ava {
   margin-left: 12px;
@@ -13012,6 +13015,7 @@ header .nav-search input {
   border: 0;
   border-radius: 0.6rem;
   padding-left: 40px;
+  height: 44px;
 }
 header .nav-search input:focus {
   border: 0;
@@ -13096,7 +13100,7 @@ header .nav-search .icon-search + input::focus {
   color: #438600;
 }
 .followers-popup .popup-content .notification-list .user.liked .icon-liked {
-  color: #ff4800;
+  color: #46A29F;
 }
 .followers-popup .popup-content .notification-list .user.shared .icon-shared {
   color: #dfef11;
@@ -13118,7 +13122,7 @@ header .nav-search .icon-search + input::focus {
   width: 49px;
   top: -26px;
   background-color: #000;
-  border-bottom: 1px solid #ff4800;
+  border-bottom: 1px solid #46A29F;
   transform: rotateZ(45deg);
   border-top-left-radius: 60px;
 }
@@ -13131,7 +13135,7 @@ nav.user-profile {
   height: 200px;
   position: relative;
   margin: 25px 0;
-  border: 1px solid #ff4800;
+  border: 1px solid #46A29F;
 }
 nav.user-profile .profile {
   padding: 0 25px;
@@ -13157,10 +13161,10 @@ nav.user-profile .profile.editable .edit {
 }
 nav.user-profile .profile.editable .edit:hover {
   text-decoration: underline;
-  text-decoration-color: #ff4800;
+  text-decoration-color: #46A29F;
 }
 nav.user-profile .profile .user {
-  color: #ff4800;
+  color: #46A29F;
 }
 nav.user-profile .profile .user .user-level {
   width: 180px;
@@ -13174,7 +13178,7 @@ nav.user-profile .profile .user .user-level .user-level-progress {
   font-size: 11px;
   color: #fff;
   text-align: right;
-  background: #ff4800;
+  background: #46A29F;
 }
 nav.user-profile .profile .user .user-level-value {
   color: #ffffff;
@@ -13189,7 +13193,7 @@ nav.user-profile .user-about-wrapper .user-about {
   align-self: flex-end;
 }
 nav.user-profile .user-about-wrapper .user-about .text > span:first-child {
-  color: #ff4800;
+  color: #46A29F;
   margin: 0 5px;
 }
 nav.user-profile .user-pc {
@@ -13198,7 +13202,7 @@ nav.user-profile .user-pc {
 }
 nav.user-profile .user-pc .icon-location {
   padding-top: 5px;
-  color: #ff4800;
+  color: #46A29F;
   margin: 0 5px;
 }
 nav.user-profile .user-pc .text {
@@ -13280,7 +13284,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 
 .profile-upload-cover .btn-select-picture {
   margin: 2px;
-  color: #ff4800;
+  color: #46A29F;
   cursor: pointer;
   background-color: #293235;
   outline: none;
@@ -13307,7 +13311,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   width: 200px;
   border-radius: 100px;
   overflow: hidden;
-  border-color: #ff4800;
+  border-color: #46A29F;
   border-width: 2px;
   border-style: solid;
   position: absolute;
@@ -13333,7 +13337,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   border-radius: 14px;
   background-color: #ffffff;
   position: absolute;
-  color: #ff4800;
+  color: #46A29F;
   right: 5px;
   top: -15px;
   text-decoration: none;
@@ -13353,7 +13357,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 .user-uploads .user-content .user-content-all {
   position: absolute;
   right: 5px;
-  color: #ff4800;
+  color: #46A29F;
   text-decoration: none;
   bottom: 0;
   font-size: 10px;
@@ -13374,7 +13378,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   cursor: pointer;
 }
 .user-uploads .user-content .row .col-4:hover {
-  border: 3px solid #ff4800;
+  border: 3px solid #46A29F;
 }
 .user-uploads .user-content.active {
   display: flex;
@@ -13400,8 +13404,16 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   height: 55px;
   width: auto !important;
   position: absolute;
-  right: -9px;
-  bottom: -7px;
+  right: -28px;
+  bottom: 0px;
+  opacity: 0.5;
+}
+.profile-aside .friends .group-back {
+  height: 100%;
+  width: auto !important;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
 }
 .profile-aside .block {
   border-radius: 3px;
@@ -13418,15 +13430,40 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   text-decoration: none;
 }
 .profile-aside .block.my-games {
-  background-image: url("my_games_back.3d5de867.png");
   background-repeat: no-repeat;
   background-position: 2px 0px;
+  padding: 0px;
+}
+.profile-aside .block.my-games .header {
+  position: relative;
+  padding: 5px 0 0 5px;
 }
 .profile-aside .block.my-games .header a {
   color: #ffffff;
 }
 .profile-aside .block.my-games .header a .items-count {
   color: #ffffff !important;
+}
+.profile-aside .block.my-games .header .game-star {
+  position: absolute;
+  height: 15px;
+  text-align: center;
+  width: 40%;
+  top: 0;
+  transform: rotate(70deg);
+  right: -12%;
+  background: #46A29F;
+}
+.profile-aside .block.my-games .header .game-star img {
+  height: 12px;
+  width: 12px;
+  margin-left: 19%;
+  margin-bottom: 11px;
+}
+.profile-aside .block.my-games .block-content {
+  padding: 0 0 15px 0;
+  border: 0;
+  border-radius: 0;
 }
 .profile-aside .block .header h3 {
   text-transform: uppercase;
@@ -13465,7 +13502,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   font-size: 11px;
 }
 .profile-aside .block .block-content time {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 10px;
 }
 .profile-aside .block .block-content .friends .friend {
@@ -13499,7 +13536,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   border-radius: 50%;
 }
 .profile-aside .block .block-content .friends .friend .search-more:before {
-  color: #ff4800;
+  color: #46A29F;
   position: absolute;
   margin: -16px 0 0 14px;
   font-size: 22px;
@@ -13524,7 +13561,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   padding: 0 10px;
 }
 .profile-about .profile-about-header span {
-  color: #ff4800;
+  color: #46A29F;
 }
 .profile-about .profile-about-header .profile-header-text {
   display: inline;
@@ -13541,13 +13578,13 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 }
 .profile-about .profile-about-row .profile-about-label {
   min-width: 150px;
-  color: #ff4800;
+  color: #46A29F;
 }
 .profile-about .profile-about-footer {
   text-align: right;
 }
 .profile-about .profile-about-footer .profile-about-more {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 9px;
 }
 .profile-about .profile-about-footer .profile-about-more:hover {
@@ -13564,7 +13601,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin: 15px 25px;
 }
 .profile-about .device-advice .popup-content .device-select-header {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .profile-about .device-advice .popup-content .device-select-header * {
   line-height: 1;
@@ -13589,10 +13626,10 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 }
 
 .profile-schedule {
-  margin-left: -9px;
-  margin-right: -9px;
-  margin-bottom: -9px;
-  margin-top: -9px;
+  /* margin-left: -9px;
+   margin-right: -9px;
+   margin-bottom: -9px;
+   margin-top: -9px; */
   padding: 0 !important;
   position: relative;
   overflow: hidden;
@@ -13607,7 +13644,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-top: -4px;
 }
 .profile-schedule .header {
-  background-color: #3d4444;
+  background-color: #46A29F;
   text-transform: uppercase;
   text-align: center;
   border-top-left-radius: 3px;
@@ -13624,7 +13661,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   min-width: auto !important;
 }
 .profile-schedule .flatpickr-weekdays {
-  background-color: #202225;
+  background: #495766;
 }
 .profile-schedule .flatpickr-weekdays .flatpickr-weekdaycontainer {
   background-color: transparent;
@@ -13637,7 +13674,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   border: 0;
 }
 .profile-schedule .dayContainer, .profile-schedule .flatpickr-day {
-  background-color: #14191C;
+  background-color: #202833;
   color: white;
 }
 .profile-schedule .flatpickr-day {
@@ -13664,7 +13701,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   padding: 0;
 }
 .profile-schedule .flatpickr-day .marks .with-dudes {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .profile-schedule .flatpickr-day .marks .with-group {
   background-color: gray;
@@ -13673,7 +13710,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   opacity: 0.3;
 }
 .profile-schedule .flatpickr-months {
-  background-color: #3d4444;
+  background-color: #46A29F;
   justify-content: center;
 }
 .profile-schedule .flatpickr-months .flatpickr-prev-month, .profile-schedule .flatpickr-months .flatpickr-next-month {
@@ -13705,6 +13742,13 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 .menu {
   padding-top: 60px;
   width: 225px;
+  margin: 0px 15px 15px 0px;
+  -webkit-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .menu ul {
   padding: 0;
@@ -13724,7 +13768,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   text-transform: uppercase;
 }
 .menu ul li a .icon {
-  color: #ff4800;
+  color: #46A29F;
 }
 .menu ul li a .icon-schedule {
   font-size: 15.5px;
@@ -13745,7 +13789,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   height: 1100%;
   top: 0;
   right: -500%;
-  background: #ff480020;
+  background: #495766;
   transform-origin: 54% 0;
   transform: rotate(45deg);
   z-index: -1;
@@ -13793,7 +13837,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   color: #ffffff;
 }
 .textarea .emoji.active {
-  color: #ff4800;
+  color: #46A29F;
 }
 .textarea .emoji:before {
   content: "";
@@ -13804,7 +13848,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-top: 15px;
   border-radius: 3px;
   background-color: #293235;
-  border: 1px solid #ff4800;
+  border: 1px solid #46A29F;
   position: relative;
 }
 .user-add-post .wrapper {
@@ -13894,7 +13938,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-right: 5px;
 }
 .previews .preview:hover {
-  border-color: #ff4800;
+  border-color: #46A29F;
 }
 .previews .preview:hover .hover {
   display: flex;
@@ -13979,7 +14023,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   font-weight: 400;
 }
 .post .post-header .post-main-info .post-time {
-  color: #ff4800;
+  color: #46A29F;
   font-size: 12px;
 }
 .post .post-header .post-options {
@@ -14132,7 +14176,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 }
 .post .post-content .post-actions .icon {
   display: inline-block;
-  color: #ff4800;
+  color: #46A29F;
 }
 .post .post-content .post-actions .icon.like span:first-child {
   display: none;
@@ -14157,7 +14201,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   right: 2rem;
   position: absolute;
   top: 1rem;
-  border: 1px solid #ff4800;
+  border: 1px solid #46A29F;
   color: #ffffff;
   padding: 0 1rem;
   height: 20px;
@@ -14169,7 +14213,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   cursor: pointer;
 }
 .post .post-content .post-shared .post-header .right-shared-menu .right-shared-btn i {
-  color: #ff4800;
+  color: #46A29F;
 }
 .post .post-content .post-shared .post-content {
   margin: 0px;
@@ -14180,7 +14224,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   white-space: pre-wrap;
 }
 .post .post-content a {
-  color: #ff4800;
+  color: #46A29F;
 }
 .post .post-content a.more {
   margin: 0px 10px;
@@ -14207,7 +14251,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 }
 .post .post-content .post-like-section span.fa {
   float: left;
-  color: #ff4800;
+  color: #46A29F;
   font-size: 20px;
   cursor: pointer;
   font-weight: 100;
@@ -14228,7 +14272,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 }
 .comments .all-comments a {
   display: inline-block;
-  color: #ff4800;
+  color: #46A29F;
   text-decoration: none;
 }
 .comments .comment {
@@ -14272,7 +14316,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   padding-right: 5px;
 }
 .comments .comment .comment-time {
-  color: #ff4800;
+  color: #46A29F;
 }
 .comments .comment .comment-dot {
   padding-top: 5px;
@@ -14309,7 +14353,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-right: 5px;
 }
 .comments .comment .comment-actions > span:first-child > span {
-  color: #ff4800;
+  color: #46A29F;
 }
 .comments .comment .comment-actions > span:first-child > span:first-child {
   display: none;
@@ -14397,7 +14441,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-left: 5px;
 }
 .add-comment .actions span:hover {
-  color: #ff4800;
+  color: #46A29F;
 }
 .add-comment .actions button {
   color: #ffffff;
@@ -14410,7 +14454,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   background-color: transparent;
 }
 .add-comment .actions button.active {
-  color: #ff4800;
+  color: #46A29F;
 }
 
 .has-emoji .popup-content {
@@ -14535,7 +14579,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   margin-bottom: 30px;
 }
 .search-field .search-icon {
-  color: #ff4800;
+  color: #46A29F;
   padding-top: 9px;
   padding-right: 0;
 }
@@ -14675,7 +14719,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   display: inline-block;
   position: absolute;
   right: 0;
-  background: #ff4800;
+  background: #46A29F;
   border-radius: 15px;
   height: 20px;
   width: 20px;
@@ -14684,7 +14728,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   line-height: 180%;
 }
 .chat .chat-wrapper .unread-chat-counter {
-  background-color: #ff4800;
+  background-color: #46A29F;
   width: 18px;
   height: 18px;
   color: white;
@@ -14712,7 +14756,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 .chat .dialog-wrapper .dialog .message-list-show-last {
   font-family: icomoon;
   font-size: 5px;
-  color: #ff4800;
+  color: #46A29F;
 }
 .chat .dialog-wrapper .dialog .message-container {
   background-image: url("messenger_background.96fff20e.png");
@@ -14762,7 +14806,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
 .chat .dialog-wrapper .dialog .input .attach span.icon-cross {
   font-size: 9px;
   padding-left: 5px;
-  color: #ff4800;
+  color: #46A29F;
 }
 .chat .dialog-wrapper .dialog .input .emoji-container {
   position: absolute;
@@ -14775,7 +14819,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   display: block;
 }
 .chat .dialog-wrapper .dialog .input .emoji-container.show + .emoji {
-  color: #ff4800;
+  color: #46A29F;
 }
 .chat .dialog-wrapper .dialog .dialog-head {
   border-bottom: 1px solid gray;
@@ -15331,7 +15375,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   color: #3E3F42;
 }
 .chat-message .message .message-content .message-status.readed:before {
-  color: #ff4800;
+  color: #46A29F;
 }
 
 .user .user-list-item {
@@ -15418,7 +15462,7 @@ nav.user-profile .right-block-wrapper .social-list li a.icon-steam::before {
   align-self: center;
 }
 .messenger-options .messenger-options-statuses .status.active {
-  background-color: #ff4800;
+  background-color: #46A29F;
 }
 .messenger-options .messenger-options-statuses .status.online:before {
   content: " ";
