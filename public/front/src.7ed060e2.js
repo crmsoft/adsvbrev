@@ -85214,7 +85214,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.send_dude_message = exports.send_message = exports.USER_WENT_OFFLINE = exports.USER_WENT_ONLINE = exports.AUTH_SUCCESS = exports.CHAT_MESSAGES_READ = exports.NOTIFICATION = exports.DUDE_CHANNEL_UPDATE = exports.SEND_DUDE_MESSAGE = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
+exports.send_dude_message = exports.send_message = exports.USER_WENT_OFFLINE = exports.USER_WENT_ONLINE = exports.CHANNEL_ON_CHANNEL_UPDATE = exports.AUTH_SUCCESS = exports.CHAT_MESSAGES_READ = exports.NOTIFICATION = exports.DUDE_CHANNEL_UPDATE = exports.SEND_DUDE_MESSAGE = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
 var MESSAGE = 'MESSAGE';
 exports.MESSAGE = MESSAGE;
 var SEND_MESSAGE = 'SEND_MESSAGE';
@@ -85229,6 +85229,8 @@ var CHAT_MESSAGES_READ = 'CHAT_MESSAGES_READ';
 exports.CHAT_MESSAGES_READ = CHAT_MESSAGES_READ;
 var AUTH_SUCCESS = 'AUTH_SUCCESS';
 exports.AUTH_SUCCESS = AUTH_SUCCESS;
+var CHANNEL_ON_CHANNEL_UPDATE = 'CHANNEL_ON_CHANNEL_UPDATE';
+exports.CHANNEL_ON_CHANNEL_UPDATE = CHANNEL_ON_CHANNEL_UPDATE;
 var USER_WENT_ONLINE = 'USER_WENT_ONLINE';
 exports.USER_WENT_ONLINE = USER_WENT_ONLINE;
 var USER_WENT_OFFLINE = 'USER_WENT_OFFLINE';
@@ -85267,7 +85269,8 @@ var _events = require("./events");
 
 var reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    received: null
+    received: null,
+    channel_timestamp: +new Date()
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
@@ -85340,6 +85343,15 @@ var reducer = function reducer() {
         return Object.assign({}, state, {
           received: _events.AUTH_SUCCESS,
           token: action.data
+        });
+      }
+
+    case _events.CHANNEL_ON_CHANNEL_UPDATE:
+      {
+        return Object.assign({}, state, {
+          received: _events.CHANNEL_ON_CHANNEL_UPDATE,
+          data: action.data,
+          channel_timestamp: +new Date()
         });
       }
   }
@@ -88890,58 +88902,7 @@ var EventProfile = (0, _reactRedux.connect)(function (state) {
 })(EventProfileComponent);
 var _default = EventProfile;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/find-dude/Game.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _index = require("./index");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = function _default(_ref) {
-  var game = _ref.game,
-      index = _ref.index;
-  return _react.default.createElement(_index.DudeContext.Consumer, null, function (_ref2) {
-    var activeIndex = _ref2.activeIndex,
-        openRooms = _ref2.openRooms,
-        setActive = _ref2.setActive;
-    return _react.default.createElement("div", {
-      className: "my-games-wrapper"
-    }, _react.default.createElement("div", {
-      onClick: function onClick(e) {
-        return setActive(index);
-      },
-      className: activeIndex === index ? 'my-games-box active' : 'my-games-box'
-    }, _react.default.createElement("img", {
-      src: game.ava,
-      alt: ""
-    }), _react.default.createElement("div", {
-      className: "my-games-content"
-    }, _react.default.createElement("h3", null, game.name), _react.default.createElement("div", {
-      className: "my-games-desc"
-    }, _react.default.createElement("small", null, game.participant_count), _react.default.createElement("p", null, "Gamers Inside")))), _react.default.createElement("div", {
-      className: "sub-channels-total"
-    }, _react.default.createElement("div", {
-      className: "row"
-    }, _react.default.createElement("div", {
-      className: "col-auto p-0 pl-2 mt-1"
-    }, _react.default.createElement("div", {
-      className: "sub-channel-arrow"
-    })), _react.default.createElement("div", {
-      onClick: openRooms,
-      className: "col p-0 pt-2 pl-2 sub-channels-btn"
-    }, game.total_sub_channel ? "#".concat(game.total_sub_channel, " Open Rooms") : "+ Create Room"))));
-  });
-};
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","./index":"../src/find-dude/index.js"}],"../src/find-dude/MessageList.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","../menu/index":"../src/menu/index.js","./redux/event":"../src/event/redux/event.js","../post-add":"../src/post-add/index.js","./About":"../src/event/About.js","./Profile":"../src/event/Profile.js","./Participants":"../src/event/Participants.js","../header/store":"../src/header/store.js","../profile/feed":"../src/profile/feed/index.js","./Actions":"../src/event/Actions.js","./SuggestedParticipants":"../src/event/SuggestedParticipants.js"}],"../src/find-dude/MessageList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -88999,8 +88960,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var MessageList =
 /*#__PURE__*/
-function (_PureComponent) {
-  _inherits(MessageList, _PureComponent);
+function (_Component) {
+  _inherits(MessageList, _Component);
 
   function MessageList() {
     var _getPrototypeOf2;
@@ -89018,7 +88979,8 @@ function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       items: [],
       game: null,
-      pullPrev: false
+      pullPrev: false,
+      room: undefined
     });
 
     return _this;
@@ -89032,10 +88994,21 @@ function (_PureComponent) {
       this.socketStoreSubscription = _store.default.subscribe(function () {
         var state = _store.default.getState();
 
-        var game = _this2.state.game;
+        var _this2$state = _this2.state,
+            game = _this2$state.game,
+            room = _this2$state.room;
 
-        if (state.received === _events.DUDE_CHANNEL_UPDATE && game === state.data) {
-          _this2.loadLast().then(function (_ref) {
+        if (state.received === _events.DUDE_CHANNEL_UPDATE) {
+          var frm = null;
+
+          if (room) {
+            frm = new FormData();
+            frm.append('room', room.id);
+          } else if (game !== state.data) {
+            return;
+          }
+
+          _this2.loadLast(frm).then(function (_ref) {
             var data = _ref.data;
             var unreads = data.data.reverse();
 
@@ -89059,13 +89032,32 @@ function (_PureComponent) {
     value: function componentDidUpdate(props, state) {
       var _this3 = this;
 
-      var game = this.state.game; // init chat
+      var _this$state = this.state,
+          game = _this$state.game,
+          room = _this$state.room;
+      this.containerRef.parentNode.removeEventListener('scroll', this.containerScrollListener); // init chat
 
       if (game && game !== state.game) {
         var frm = new FormData();
         frm.append('page-id', _store.default.getState().token);
         this.loadLast(frm).then(function (_ref2) {
           var data = _ref2.data;
+          return _this3.setState({
+            items: data.data.reverse(),
+            pullingPrev: false
+          }, function () {
+            _this3.containerRef.parentNode.addEventListener('scroll', _this3.containerScrollListener.bind(_this3), true);
+          });
+        });
+      } else if (room && (!state.room || room.id !== state.room.id)) {
+        var _frm = new FormData();
+
+        _frm.append('page-id', _store.default.getState().token);
+
+        _frm.append('room', room.id);
+
+        this.loadLast(_frm).then(function (_ref3) {
+          var data = _ref3.data;
           return _this3.setState({
             items: data.data.reverse(),
             pullingPrev: false
@@ -89106,10 +89098,14 @@ function (_PureComponent) {
       }, function () {
         var _this4$state = _this4.state,
             game = _this4$state.game,
-            items = _this4$state.items;
+            items = _this4$state.items,
+            room = _this4$state.room;
+        var frm = new FormData();
+        frm.append('page-id', _store.default.getState().token);
+        room && frm.append('room', room.id);
 
-        _axios.default.post("/find-dudes/messages/".concat(game, "/").concat(items[0].id)).then(function (_ref3) {
-          var data = _ref3.data;
+        _axios.default.post("/find-dudes/messages/".concat(game, "/").concat(items[0].id), frm).then(function (_ref4) {
+          var data = _ref4.data;
           return _this4.setState(function (state) {
             var parent = _this4.containerRef.parentNode;
             var child = Array.prototype.slice.call(parent.querySelectorAll('div.chat-message'));
@@ -89143,8 +89139,8 @@ function (_PureComponent) {
         className: "message-list",
         followButtonClassName: "message-list-show-last"
       }, _react.default.createElement("div", {
-        ref: function ref(_ref4) {
-          _this5.containerRef = _ref4;
+        ref: function ref(_ref5) {
+          _this5.containerRef = _ref5;
         }
       }, items.map(function (message) {
         var user = message.user;
@@ -89168,7 +89164,8 @@ function (_PureComponent) {
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
       var push = props.push,
-          game = props.game;
+          game = props.game,
+          room = props.room;
       var items = state.items; // append message to list
 
       if (push && !items.filter(function (m) {
@@ -89184,13 +89181,14 @@ function (_PureComponent) {
 
       return {
         game: game,
-        localeStore: (0, _MessageList.getStore)()
+        localeStore: (0, _MessageList.getStore)(),
+        room: room
       };
     }
   }]);
 
   return MessageList;
-}(_react.PureComponent);
+}(_react.Component);
 
 exports.default = MessageList;
 },{"react":"../node_modules/react/index.js","react-scroll-to-bottom":"../node_modules/react-scroll-to-bottom/lib/index.js","axios":"../../node_modules/axios/index.js","../chat/Dialog/Message":"../src/chat/Dialog/Message.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/Dialog/DateDelimiter":"../src/chat/Dialog/DateDelimiter.js","../chat/Dialog/MessageList":"../src/chat/Dialog/MessageList.js"}],"../src/find-dude/User.js":[function(require,module,exports) {
@@ -89225,7 +89223,492 @@ var User = function User(_ref) {
 };
 
 exports.User = User;
-},{"react":"../node_modules/react/index.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"../src/find-dude/Game.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _index = require("./index");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = function _default(_ref) {
+  var game = _ref.game,
+      index = _ref.index;
+  return _react.default.createElement(_index.DudeContext.Consumer, null, function (_ref2) {
+    var activeIndex = _ref2.activeIndex,
+        openRooms = _ref2.openRooms,
+        setActive = _ref2.setActive;
+    return _react.default.createElement("div", {
+      className: "my-games-wrapper"
+    }, _react.default.createElement("div", {
+      onClick: function onClick(e) {
+        return setActive(index);
+      },
+      className: activeIndex === index ? 'my-games-box active' : 'my-games-box'
+    }, _react.default.createElement("img", {
+      src: game.ava,
+      alt: ""
+    }), _react.default.createElement("div", {
+      className: "my-games-content"
+    }, _react.default.createElement("h3", null, game.name), _react.default.createElement("div", {
+      className: "my-games-desc"
+    }, _react.default.createElement("small", null, game.participant_count), _react.default.createElement("p", null, "Gamers Inside")))), _react.default.createElement("div", {
+      className: "sub-channels-total"
+    }, _react.default.createElement("div", {
+      className: "row"
+    }, _react.default.createElement("div", {
+      className: "col-auto p-0 pl-2 mt-1"
+    }, _react.default.createElement("div", {
+      className: "sub-channel-arrow"
+    })), _react.default.createElement("div", {
+      onClick: function onClick(e) {
+        return openRooms(true);
+      },
+      className: "col p-0 pt-2 pl-2 sub-channels-btn"
+    }, game.total_sub_channel ? "#".concat(game.total_sub_channel, " ") + (game.total_sub_channel == 1 ? "Room" : "Open Rooms") : "+ Create Room"))));
+  });
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./index":"../src/find-dude/index.js"}],"../src/find-dude/Games.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Game = _interopRequireDefault(require("./Game"));
+
+var _Loading = require("../general/Loading");
+
+var _index = require("./index");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var GameList = function GameList(_ref) {
+  var games = _ref.games;
+  return _react.default.createElement("div", {
+    className: "my-games-section list-scroll"
+  }, games.map(function (game, index) {
+    return _react.default.createElement(_Game.default, {
+      key: game.id,
+      index: index,
+      game: game
+    });
+  }));
+};
+
+var Games = function Games() {
+  return _react.default.createElement(_index.DudeContext.Consumer, null, function (_ref2) {
+    var games = _ref2.games,
+        loading = _ref2.loading;
+    return _react.default.createElement(MyGames, {
+      loading: loading,
+      games: games
+    });
+  });
+};
+
+var MyGames =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(MyGames, _Component);
+
+  function MyGames() {
+    _classCallCheck(this, MyGames);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MyGames).apply(this, arguments));
+  }
+
+  _createClass(MyGames, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          loading = _this$props.loading,
+          games = _this$props.games;
+      return _react.default.createElement("div", {
+        className: "my-games"
+      }, _react.default.createElement("div", {
+        className: "my-games-title"
+      }, _react.default.createElement("img", {
+        src: "img/gamepad.svg",
+        alt: ""
+      }), _react.default.createElement("h3", null, "My Games")), loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(GameList, {
+        games: games
+      }), _react.default.createElement("div", {
+        className: "my-games-bottom"
+      }, _react.default.createElement("div", {
+        className: "my-games-notifications"
+      }, _react.default.createElement("p", null, "* You can only access the rooms of your chosen games. ", _react.default.createElement("b", null, " Click "), "to select a game!")), _react.default.createElement("div", {
+        className: "my-games-search"
+      }, _react.default.createElement("div", {
+        className: "input-group flex-nowrap"
+      }, _react.default.createElement("div", {
+        className: "input-group-prepend"
+      }, _react.default.createElement("span", {
+        className: "input-group-text",
+        id: "addon-wrapping"
+      }, _react.default.createElement("i", {
+        className: "fa fa-search"
+      }))), _react.default.createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search game",
+        "aria-label": "Search My games",
+        "aria-describedby": "addon-wrapping"
+      })))));
+    }
+  }]);
+
+  return MyGames;
+}(_react.Component);
+
+var _default = Games;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./Game":"../src/find-dude/Game.js","../general/Loading":"../src/general/Loading.js","./index":"../src/find-dude/index.js"}],"../src/find-dude/GameChannels/ChannelList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ = require("..");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Channel = function Channel(_ref) {
+  var channel = _ref.channel,
+      index = _ref.index,
+      setActiveRoom = _ref.setActiveRoom,
+      active_index = _ref.active_index;
+  var cls = 'game-channel';
+
+  if (channel.full) {
+    cls += ' full';
+  } // end if
+
+
+  if (index === active_index) {
+    cls += ' active';
+  } // end if
+
+
+  return _react.default.createElement("div", {
+    onClick: function onClick(e) {
+      return setActiveRoom(index);
+    },
+    className: cls
+  }, _react.default.createElement("div", {
+    className: "channel-name"
+  }, "# ", channel.channel), _react.default.createElement("span", {
+    className: "channel-users"
+  }, channel.users_in, " dude on channel"), _react.default.createElement("span", {
+    className: "channel-full icon-remove",
+    title: "The room is full."
+  }));
+};
+
+var _default = function _default() {
+  return _react.default.createElement(_.DudeContext.Consumer, null, function (_ref2) {
+    var setActiveRoom = _ref2.setActiveRoom,
+        subChannels = _ref2.subChannels,
+        active_room_index = _ref2.active_room_index;
+    return _react.default.createElement("div", {
+      className: "game-channel-list"
+    }, subChannels.map(function (channel, index) {
+      return _react.default.createElement(Channel, {
+        setActiveRoom: setActiveRoom,
+        index: index,
+        active_index: active_room_index,
+        key: channel.channel,
+        channel: channel
+      });
+    }));
+  });
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","..":"../src/find-dude/index.js"}],"../src/find-dude/GameChannels/CreateChannel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Modal = require("../../Modal");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var _default = function _default(_ref) {
+  var open = _ref.open,
+      onClose = _ref.onClose,
+      onSubmit = _ref.onSubmit,
+      errors = _ref.errors,
+      processing = _ref.processing;
+
+  var _useState = (0, _react.useState)({
+    name: '',
+    number: ''
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      frm = _useState2[0],
+      setFrm = _useState2[1];
+
+  var onChange = function onChange(e) {
+    var input = e.target;
+    var value = input.value;
+    var name = input.name; // validate number input
+
+    if (name === 'number') {
+      var reg = new RegExp('^[0-9]+$');
+
+      if (value.length && (value.search(reg) === -1 || parseInt(value) > 100)) {
+        return;
+      }
+    } // end if
+
+
+    setFrm(Object.assign({}, frm, _defineProperty({}, name, value)));
+  };
+
+  return _react.default.createElement(_Modal.Modal, {
+    processing: processing,
+    title: "New chat room",
+    onClose: onClose,
+    open: open,
+    actions: (0, _Modal.actions)(onClose, function () {
+      return onSubmit(frm);
+    })
+  }, _react.default.createElement("div", {
+    className: "p-4"
+  }, _react.default.createElement("div", {
+    className: "form-group row"
+  }, _react.default.createElement("label", {
+    htmlFor: "name",
+    className: "col-sm-3 col-form-label"
+  }, "Room name"), _react.default.createElement("div", {
+    className: "col-sm-9"
+  }, _react.default.createElement("input", {
+    id: "name",
+    name: "name",
+    type: "text",
+    onChange: onChange,
+    className: errors.name ? 'has-error' : '',
+    value: frm.name
+  }), errors.name ? _react.default.createElement("small", {
+    className: "form-text text-danger"
+  }, errors.name) : null, _react.default.createElement("small", {
+    className: "form-text text-muted"
+  }, "The room name should only include characters and numbers without space."))), _react.default.createElement("div", {
+    className: "form-group row mt-3"
+  }, _react.default.createElement("label", {
+    htmlFor: "roomSize",
+    className: "col-sm-3 col-form-label"
+  }, "Room Size"), _react.default.createElement("div", {
+    className: "col-sm-9"
+  }, _react.default.createElement("input", {
+    type: "text",
+    onChange: onChange,
+    className: errors.number ? 'has-error' : '',
+    id: "roomSize",
+    name: "number",
+    value: frm.number
+  }), _react.default.createElement("small", {
+    className: "form-text text-muted"
+  }, "How many gamers can join the room, the max value is 100")))));
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../../Modal":"../src/Modal/index.js"}],"../src/find-dude/GameChannels/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Loading = require("../../general/Loading");
+
+var _ChannelList = _interopRequireDefault(require("./ChannelList"));
+
+var _index = require("../index");
+
+var _CreateChannel = _interopRequireDefault(require("./CreateChannel"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var GameChannels = function GameChannels() {
+  return _react.default.createElement(_index.DudeContext.Consumer, null, function (props) {
+    return _react.default.createElement(GameChannelsComponent, props);
+  });
+};
+
+var GameChannelsComponent = function GameChannelsComponent(_ref) {
+  var activeGame = _ref.activeGame,
+      openRooms = _ref.openRooms,
+      loading = _ref.loading,
+      onRoomCreated = _ref.onRoomCreated;
+  var channel = activeGame.channel;
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      createOpen = _useState2[0],
+      setCreateOpen = _useState2[1];
+
+  var _useState3 = (0, _react.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      processing = _useState6[0],
+      setProcessing = _useState6[1];
+
+  var createChannelAction = function createChannelAction(data) {
+    setProcessing(true);
+    var frm = new FormData();
+
+    for (var k in data) {
+      frm.append(k, data[k]);
+    }
+
+    _axios.default.post("/find-dudes/sub-channels/".concat(channel, "/store"), frm).then(function (_ref2) {
+      var data = _ref2.data;
+      setProcessing(false);
+      setCreateOpen(false);
+      onRoomCreated(data.data);
+    }).catch(function (_ref3) {
+      var response = _ref3.response;
+
+      if (response.status == 422) {
+        setProcessing(false);
+        setErrors(response.data.errors);
+      } // end if
+
+    });
+  };
+
+  return _react.default.createElement("div", {
+    className: "my-games"
+  }, _react.default.createElement(_CreateChannel.default, {
+    processing: processing,
+    errors: errors,
+    open: createOpen,
+    onClose: function onClose(e) {
+      return setCreateOpen(false);
+    },
+    onSubmit: createChannelAction
+  }), _react.default.createElement("div", {
+    className: "my-games-title"
+  }, _react.default.createElement("div", {
+    className: "row sub-channel-title"
+  }, _react.default.createElement("div", {
+    className: "col-auto pr-0"
+  }, _react.default.createElement("span", {
+    onClick: function onClick(e) {
+      return openRooms(false);
+    },
+    className: "icon icon-arrow-down"
+  })), _react.default.createElement("div", {
+    className: "col pl-0"
+  }, _react.default.createElement("span", {
+    className: "title"
+  }, "Rooms"), _react.default.createElement("small", {
+    className: "selected-game"
+  }, activeGame.name)), _react.default.createElement("div", {
+    onClick: function onClick(e) {
+      return setCreateOpen(true);
+    },
+    className: "col-auto"
+  }, _react.default.createElement("span", {
+    className: "icon icon-plus"
+  })))), loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(_ChannelList.default, null), _react.default.createElement("div", {
+    className: "my-games-bottom"
+  }, _react.default.createElement("div", {
+    className: "my-games-notifications"
+  }, _react.default.createElement("p", null, "* You can only access the rooms of your chosen games. ", _react.default.createElement("b", null, " Click "), "to select a game!")), _react.default.createElement("div", {
+    className: "my-games-search"
+  }, _react.default.createElement("div", {
+    className: "input-group flex-nowrap"
+  }, _react.default.createElement("div", {
+    className: "input-group-prepend"
+  }, _react.default.createElement("span", {
+    className: "input-group-text",
+    id: "addon-wrapping"
+  }, _react.default.createElement("i", {
+    className: "fa fa-search"
+  }))), _react.default.createElement("input", {
+    type: "text",
+    className: "form-control",
+    placeholder: "Search game",
+    "aria-label": "Search My games",
+    "aria-describedby": "addon-wrapping"
+  })))));
+};
+
+var _default = GameChannels;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../../general/Loading":"../src/general/Loading.js","./ChannelList":"../src/find-dude/GameChannels/ChannelList.js","../index":"../src/find-dude/index.js","./CreateChannel":"../src/find-dude/GameChannels/CreateChannel.js","axios":"../../node_modules/axios/index.js"}],"../src/find-dude/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89241,10 +89724,6 @@ var _reactRedux = require("react-redux");
 
 var _menu = _interopRequireDefault(require("../menu"));
 
-var _Game = _interopRequireDefault(require("./Game"));
-
-var _Loading = require("../general/Loading");
-
 var _Input = _interopRequireDefault(require("../chat/Dialog/Input"));
 
 var _MessageList = _interopRequireDefault(require("./MessageList"));
@@ -89255,11 +89734,23 @@ var _events = require("../socket/redux/events");
 
 var _User = require("./User");
 
+var _Games = _interopRequireDefault(require("./Games"));
+
+var _GameChannels = _interopRequireDefault(require("./GameChannels"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -89279,31 +89770,55 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var DudeContext = _react.default.createContext();
 
 exports.DudeContext = DudeContext;
 
 var UserList = function UserList(_ref) {
-  var users = _ref.users;
+  var activeGame = _ref.activeGame,
+      activeRoom = _ref.activeRoom;
+
+  var _useState = (0, _react.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      users = _useState2[0],
+      setUsers = _useState2[1];
+
+  var loadUsers = function loadUsers(isSubscribed) {
+    var channel = activeGame.channel;
+    var activeRoomId = activeRoom ? activeRoom.id : undefined;
+
+    _axios.default.get(activeRoomId ? "/find-dudes/".concat(channel, "/subscribers/").concat(activeRoomId) : "/find-dudes/".concat(channel, "/subscribers")).then(function (_ref2) {
+      var data = _ref2.data;
+      isSubscribed && setUsers(data.data);
+    });
+  };
+
+  (0, _react.useEffect)(function () {
+    var isSubscribed = true;
+
+    if (activeGame && isSubscribed) {
+      loadUsers(isSubscribed);
+    } // end if
+
+
+    return function () {
+      return isSubscribed = false;
+    };
+  }, [activeGame, activeRoom]);
   return _react.default.createElement("div", {
     className: "on-channels-messages list-scroll"
   }, users.map(function (user, index) {
     return _react.default.createElement(_User.User, {
-      kye: index,
+      key: index,
       user: user
-    });
-  }));
-};
-
-var GameList = function GameList(_ref2) {
-  var games = _ref2.games;
-  return _react.default.createElement("div", {
-    className: "my-games-section list-scroll"
-  }, games.map(function (game, index) {
-    return _react.default.createElement(_Game.default, {
-      key: game.id,
-      index: index,
-      game: game
     });
   }));
 };
@@ -89329,9 +89844,11 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       loading: true,
       games: [],
-      users: [],
       active_index: 0,
-      messageSend: null
+      messageSend: null,
+      subChannels: [],
+      active_room_index: -1,
+      roomsActive: false
     });
 
     return _this;
@@ -89364,52 +89881,153 @@ function (_Component) {
   }, {
     key: "setActive",
     value: function setActive(index) {
-      var _this3 = this;
-
       this.setState({
         active_index: index
-      }, function () {
-        _this3.loadUsers();
       });
     }
   }, {
-    key: "loadUsers",
-    value: function loadUsers() {
-      var _this4 = this;
+    key: "setActiveRoom",
+    value: function setActiveRoom(index) {
+      var _this3 = this;
 
       var _this$state2 = this.state,
           games = _this$state2.games,
-          active_index = _this$state2.active_index;
+          active_index = _this$state2.active_index,
+          subChannels = _this$state2.subChannels,
+          active_room_index = _this$state2.active_room_index;
       var channel = games[active_index].channel;
+      var subChannel = subChannels[index].id;
 
-      _axios.default.get("/find-dudes/".concat(channel, "/subscribers")).then(function (_ref3) {
+      if (active_room_index === index) {
+        return;
+      }
+
+      _axios.default.put("/find-dudes/sub-channels/".concat(channel, "/").concat(subChannel, "/update"), {
+        "page-id": _store.default.getState().token
+      }).then(function (_ref3) {
         var data = _ref3.data;
 
-        _this4.setState({
-          users: data.data
+        _this3.setState({
+          active_room_index: index,
+          subChannels: subChannels.map(function (ch, i) {
+            if (i === index) {
+              return data.data;
+            } // end if
+
+
+            return ch;
+          })
         });
+      }).catch(function (_ref4) {
+        var response = _ref4.response;
+
+        if (response.status === 303) {
+          _this3.setState({
+            subChannels: subChannels.map(function (ch, i) {
+              if (i === index) {
+                ch.full = true;
+              } // end if
+
+
+              return ch;
+            })
+          });
+
+          alert(response.data.message);
+        } else {
+          alert('Error...');
+        } // end if
+
       });
     }
   }, {
-    key: "onOpenRoom",
-    value: function onOpenRoom() {}
+    key: "onRoomCreated",
+    value: function onRoomCreated(room) {
+      this.setState(function (state) {
+        return {
+          subChannels: [room].concat(_toConsumableArray(state.subChannels))
+        };
+      });
+    }
+  }, {
+    key: "onRoom",
+    value: function onRoom(state) {
+      var _this4 = this;
+
+      var _this$state3 = this.state,
+          games = _this$state3.games,
+          active_index = _this$state3.active_index,
+          subChannels = _this$state3.subChannels,
+          active_room_index = _this$state3.active_room_index;
+      var channel = games[active_index].channel;
+      var activeRoom = subChannels[active_room_index];
+
+      if (!state) {
+        if (activeRoom) {
+          var _this$setState;
+
+          this.setState((_this$setState = {
+            roomsActive: state,
+            loading: state,
+            active_room_index: -1
+          }, _defineProperty(_this$setState, "loading", true), _defineProperty(_this$setState, "active_index", -1), _this$setState));
+
+          _axios.default.post("/find-dudes/sub-channels/".concat(channel, "/").concat(activeRoom.id, "/destroy"), {
+            "page-id": _store.default.getState().token
+          }).then(function () {
+            _this4.setState({
+              loading: false,
+              active_index: active_index
+            });
+          });
+        } else {
+          this.setState({
+            roomsActive: state,
+            loading: state,
+            active_room_index: -1
+          });
+        } // end if
+
+
+        return;
+      }
+
+      this.setState({
+        roomsActive: state,
+        loading: state,
+        active_room_index: -1
+      });
+
+      _axios.default.get("/find-dudes/sub-channels/".concat(channel)).then(function (_ref5) {
+        var data = _ref5.data;
+
+        _this4.setState({
+          subChannels: data.data,
+          loading: false
+        });
+      });
+    }
   }, {
     key: "onMessage",
     value: function onMessage(message, attachment) {
       var _this5 = this;
 
-      var _this$state3 = this.state,
-          active_index = _this$state3.active_index,
-          games = _this$state3.games;
+      var _this$state4 = this.state,
+          active_index = _this$state4.active_index,
+          games = _this$state4.games,
+          subChannels = _this$state4.subChannels,
+          active_room_index = _this$state4.active_room_index;
       var frm = new FormData();
       frm.append('message', message);
       frm.append('channel', games[active_index].channel);
       attachment && frm.append('file', attachment);
+      subChannels[active_room_index] && frm.append('room', subChannels[active_room_index].id);
 
-      _axios.default.post('/find-dudes/messages/store', frm).then(function (_ref4) {
-        var data = _ref4.data;
+      _axios.default.post('/find-dudes/messages/store', frm).then(function (_ref6) {
+        var data = _ref6.data;
+        var channel = games[active_index].channel + (subChannels[active_room_index] ? '_' + subChannels[active_room_index].channel : '');
 
-        _this5.props.send_dude_message(games[active_index].channel);
+        _this5.props.send_dude_message(channel);
 
         _this5.setState({
           messageSend: data.data
@@ -89423,13 +90041,16 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state4 = this.state,
-          loading = _this$state4.loading,
-          games = _this$state4.games,
-          users = _this$state4.users,
-          active_index = _this$state4.active_index,
-          messageSend = _this$state4.messageSend;
+      var _this$state5 = this.state,
+          loading = _this$state5.loading,
+          active_room_index = _this$state5.active_room_index,
+          games = _this$state5.games,
+          subChannels = _this$state5.subChannels,
+          roomsActive = _this$state5.roomsActive,
+          active_index = _this$state5.active_index,
+          messageSend = _this$state5.messageSend;
       var activeGame = games[active_index];
+      var activeRoom = subChannels[active_room_index];
       return _react.default.createElement("div", {
         className: "d-flex"
       }, _react.default.createElement(_menu.default, null), _react.default.createElement("div", {
@@ -89445,43 +90066,20 @@ function (_Component) {
         className: "row"
       }, _react.default.createElement("div", {
         className: "col-md-3"
-      }, _react.default.createElement("div", {
-        className: "my-games"
-      }, _react.default.createElement("div", {
-        className: "my-games-title"
-      }, _react.default.createElement("img", {
-        src: "img/gamepad.svg",
-        alt: ""
-      }), _react.default.createElement("h3", null, "My Games")), _react.default.createElement(DudeContext.Provider, {
+      }, _react.default.createElement(DudeContext.Provider, {
         value: {
           activeIndex: active_index,
           setActive: this.setActive.bind(this),
-          openRooms: this.onOpenRoom.bind(this)
+          openRooms: this.onRoom.bind(this),
+          activeGame: activeGame,
+          loading: loading,
+          games: games,
+          subChannels: subChannels,
+          onRoomCreated: this.onRoomCreated.bind(this),
+          setActiveRoom: this.setActiveRoom.bind(this),
+          active_room_index: active_room_index
         }
-      }, loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(GameList, {
-        games: games
-      })), _react.default.createElement("div", {
-        className: "my-games-bottom"
-      }, _react.default.createElement("div", {
-        className: "my-games-notifications"
-      }, _react.default.createElement("p", null, "* You can only access the rooms of your chosen games. ", _react.default.createElement("b", null, " Click "), "to select a game!")), _react.default.createElement("div", {
-        className: "my-games-search"
-      }, _react.default.createElement("div", {
-        className: "input-group flex-nowrap"
-      }, _react.default.createElement("div", {
-        className: "input-group-prepend"
-      }, _react.default.createElement("span", {
-        className: "input-group-text",
-        id: "addon-wrapping"
-      }, _react.default.createElement("i", {
-        className: "fa fa-search"
-      }))), _react.default.createElement("input", {
-        type: "text",
-        className: "form-control",
-        placeholder: "Search game",
-        "aria-label": "Search My games",
-        "aria-describedby": "addon-wrapping"
-      })))))), _react.default.createElement("div", {
+      }, roomsActive ? _react.default.createElement(_GameChannels.default, null) : _react.default.createElement(_Games.default, null))), _react.default.createElement("div", {
         className: "col-md-6"
       }, _react.default.createElement("div", {
         className: "my-games-inside"
@@ -89498,7 +90096,8 @@ function (_Component) {
         className: "my-games-messages"
       }, _react.default.createElement(_MessageList.default, {
         game: activeGame ? activeGame.channel : null,
-        push: messageSend
+        push: messageSend,
+        room: activeRoom ? activeRoom : null
       }), _react.default.createElement(_Input.default, {
         members: [],
         onMessage: this.onMessage.bind(this)
@@ -89512,7 +90111,9 @@ function (_Component) {
         src: "img/on-channels.svg",
         alt: ""
       }), _react.default.createElement("h3", null, "On Channels")), _react.default.createElement(UserList, {
-        users: users
+        key: this.props.channel_timestamp,
+        activeGame: activeGame,
+        activeRoom: activeRoom
       }), _react.default.createElement("div", {
         className: "my-games-bottom"
       }, _react.default.createElement("div", {
@@ -89550,7 +90151,7 @@ var FDudes = (0, _reactRedux.connect)(function (state) {
 })(FDudesComponent);
 var _default = FDudes;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu":"../src/menu/index.js","./Game":"../src/find-dude/Game.js","../general/Loading":"../src/general/Loading.js","../chat/Dialog/Input":"../src/chat/Dialog/Input.js","./MessageList":"../src/find-dude/MessageList.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./User":"../src/find-dude/User.js"}],"../src/games/Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../menu":"../src/menu/index.js","../chat/Dialog/Input":"../src/chat/Dialog/Input.js","./MessageList":"../src/find-dude/MessageList.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./User":"../src/find-dude/User.js","./Games":"../src/find-dude/Games.js","./GameChannels":"../src/find-dude/GameChannels/index.js"}],"../src/games/Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91080,7 +91681,7 @@ var reducer = function reducer() {
     case _action.INIT:
       {
         return {
-          data: Object.assign({}, state.data, action.data.data, {
+          data: Object.assign({}, state.data, {}, action.data.data, {
             reviews_open: false
           })
         };
@@ -91824,14 +92425,14 @@ var reducer = function reducer() {
       {
         return {
           forbidden: true,
-          data: Object.assign({}, state.data, action.data.data)
+          data: Object.assign({}, state.data, {}, action.data.data)
         };
       }
 
     case _action.INIT:
       {
         return {
-          data: Object.assign({}, state.data, action.data.data)
+          data: Object.assign({}, state.data, {}, action.data.data)
         };
       }
 
@@ -92442,6 +93043,22 @@ var onMessage = function onMessage(_ref) {
     });
   } // end if
 
+
+  if (response.action === 'new-participant') {
+    _store.default.dispatch({
+      type: _events.CHANNEL_ON_CHANNEL_UPDATE,
+      data: response.channel
+    });
+  } // end if
+
+
+  if (response.action === 'pop-participant') {
+    _store.default.dispatch({
+      type: _events.CHANNEL_ON_CHANNEL_UPDATE,
+      data: response.channel
+    });
+  } // end if
+
 };
 
 var wrapper = new _SocketWrapper.default(window.location.href.indexOf('//game') !== -1);
@@ -92518,8 +93135,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-//import $ from '../node_modules/jquery/dist/jquery.min';
-//import '../node_modules/bootstrap/dist/js/bootstrap';
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 var App = function App() {
   return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactRedux.Provider, {
     store: _store2.default
@@ -92573,7 +93206,53 @@ var App = function App() {
   })), _react.default.createElement(_routeListeners.default, null)), _react.default.createElement(_chat.default, null)));
 };
 
-_reactDom.default.render(_react.default.createElement(App, null), document.getElementById('app'));
+var ErrorBoundary =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ErrorBoundary, _React$Component);
+
+  function ErrorBoundary(props) {
+    var _this;
+
+    _classCallCheck(this, ErrorBoundary);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ErrorBoundary).call(this, props));
+    _this.state = {
+      hasError: false
+    };
+    return _this;
+  }
+
+  _createClass(ErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, errorInfo) {
+      // You can also log the error to an error reporting service
+      console.log(error, errorInfo);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.hasError) {
+        // You can render any custom fallback UI
+        return _react.default.createElement("h1", null, "Something went wrong.");
+      }
+
+      return this.props.children;
+    }
+  }], [{
+    key: "getDerivedStateFromError",
+    value: function getDerivedStateFromError(error) {
+      // Update state so the next render will show the fallback UI.
+      return {
+        hasError: true
+      };
+    }
+  }]);
+
+  return ErrorBoundary;
+}(_react.default.Component);
+
+_reactDom.default.render(_react.default.createElement(ErrorBoundary, null, _react.default.createElement(App, null)), document.getElementById('app'));
 },{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","./profile/profile":"../src/profile/profile.js","./profile/guest/GuestComponent":"../src/profile/guest/GuestComponent.js","./profile/fetch/store":"../src/profile/fetch/store.js","./settings/settings":"../src/settings/settings.js","./search":"../src/search/index.js","./chat":"../src/chat/index.js","./header/index":"../src/header/index.js","./header/store":"../src/header/store.js","./schedule/Schedule":"../src/schedule/Schedule.js","./event/EventProfile":"../src/event/EventProfile.js","./event/redux/store":"../src/event/redux/store.js","./find-dude":"../src/find-dude/index.js","./socket/redux/store":"../src/socket/redux/store.js","./games/index":"../src/games/index.js","./games/store":"../src/games/store/index.js","./groups/index":"../src/groups/index.js","./groups/store":"../src/groups/store/index.js","./feed":"../src/feed/index.js","./detached/route-listeners":"../src/detached/route-listeners/index.js","./socket":"../src/socket/index.js"}],"../../../../../../home/ahtem/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -92601,7 +93280,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42702" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33927" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

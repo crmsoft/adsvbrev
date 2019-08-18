@@ -7560,7 +7560,7 @@ span.flatpickr-weekday {
   border: 1px solid #354247;
   /* hide unnecessary elements of fp */
   /* main class of event cell */
-  background: #14191c;
+  background: #14191C;
   border-radius: 6px;
   margin: 20px 0px; }
   .schedule .schedule-canlendar, .user-settings .content .form-create-group .schedule-canlendar, .search-results .content .form-create-group .schedule-canlendar {
@@ -7647,17 +7647,17 @@ span.flatpickr-weekday {
   .schedule .flatpickr-calendar.animate.inline, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline, .search-results .content .form-create-group .flatpickr-calendar.animate.inline {
     width: 100%; }
     .schedule .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-months .flatpickr-month {
-      background: #14191c; }
+      background: #14191C; }
     .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer {
       border: 0px;
       background: none; }
       .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer {
         width: 100%; }
         .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays {
-          background: #14191c; }
+          background: #14191C; }
           .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-weekdays .flatpickr-weekdaycontainer span.flatpickr-weekday {
             color: #BAB7BE;
-            background: #14191c;
+            background: #14191C;
             font-size: 14px;
             text-transform: uppercase;
             font-weight: 400;
@@ -7670,7 +7670,7 @@ span.flatpickr-weekday {
           .schedule .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer, .user-settings .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer, .search-results .content .form-create-group .flatpickr-calendar.animate.inline .flatpickr-innerContainer .flatpickr-rContainer .flatpickr-days .dayContainer {
             width: 100%;
             max-width: none;
-            background: #14191c;
+            background: #14191C;
             color: #BAB7BE;
             border: 0px;
             border-bottom-left-radius: 10px;
@@ -8280,6 +8280,30 @@ span.flatpickr-weekday {
   -moz-border-radius: 5px;
   border-radius: 5px;
   background: #14191C; }
+  .find-your-dudes .game-channel-list .game-channel {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #354247; }
+    .find-your-dudes .game-channel-list .game-channel .channel-full {
+      display: none; }
+    .find-your-dudes .game-channel-list .game-channel .channel-name {
+      color: #ff4800;
+      line-height: 1;
+      font-size: 14px; }
+    .find-your-dudes .game-channel-list .game-channel .channel-users {
+      font-size: 11px;
+      display: block; }
+    .find-your-dudes .game-channel-list .game-channel.active {
+      background-color: #3D4444; }
+    .find-your-dudes .game-channel-list .game-channel.full {
+      opacity: 0.8; }
+      .find-your-dudes .game-channel-list .game-channel.full .channel-full {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: orange; }
   .find-your-dudes .row {
     margin: 0px; }
     .find-your-dudes .row .col-md-3 {
@@ -8313,6 +8337,30 @@ span.flatpickr-weekday {
       height: 40px;
       line-height: 40px;
       border-bottom: 1px solid #354247; }
+      .find-your-dudes .my-games .my-games-title .sub-channel-title .icon-arrow-down, .find-your-dudes .my-games .my-games-title .sub-channel-title .message-list-show-last {
+        transform: rotateZ(90deg);
+        display: block;
+        padding-top: 23px;
+        font-size: 12px;
+        cursor: pointer; }
+      .find-your-dudes .my-games .my-games-title .sub-channel-title .title {
+        margin-top: -9px;
+        display: block; }
+      .find-your-dudes .my-games .my-games-title .sub-channel-title .selected-game {
+        display: block;
+        line-height: 1.1;
+        white-space: nowrap;
+        max-width: 115px;
+        overflow: hidden;
+        word-wrap: normal;
+        margin-top: -10px;
+        text-overflow: ellipsis;
+        color: #ff4800; }
+      .find-your-dudes .my-games .my-games-title .sub-channel-title .icon-plus, .find-your-dudes .my-games .my-games-title .sub-channel-title .profile-aside .block .block-content .friends .friend .search-more:before, .profile-aside .block .block-content .friends .friend .find-your-dudes .my-games .my-games-title .sub-channel-title .search-more:before {
+        cursor: pointer;
+        background-color: #ff4800;
+        border: 2.5px solid #ff4800;
+        border-radius: 50%; }
       .find-your-dudes .my-games .my-games-title img {
         height: 16px;
         margin: 12px;
