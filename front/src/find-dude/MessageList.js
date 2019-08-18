@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import axios from 'axios';
 
@@ -8,17 +8,18 @@ import { DUDE_CHANNEL_UPDATE } from '../socket/redux/events';
 import {DateDelimiter} from '../chat/Dialog/DateDelimiter';
 import {getStore} from '../chat/Dialog/MessageList';
 
-export default class MessageList extends PureComponent {
+export default class MessageList extends Component {
 
     state = {
         items: [],
         game: null,
-        pullPrev: false
+        pullPrev: false,
+        room: undefined
     }
 
     static getDerivedStateFromProps(props, state) {
         
-        const {push, game} = props;
+        const {push, game, room} = props;
         const {items} = state;
 
         // append message to list
@@ -32,17 +33,28 @@ export default class MessageList extends PureComponent {
 
         return {
             game: game,
-            localeStore: getStore()
+            localeStore: getStore(),
+            room: room
         };
     }
 
     componentDidMount() {
         this.socketStoreSubscription = socketStore.subscribe(() => {
             const state = socketStore.getState();
-            const {game} = this.state;
+            const {game, room} = this.state;
+            
+            if (state.received === DUDE_CHANNEL_UPDATE) {
 
-            if (state.received === DUDE_CHANNEL_UPDATE && game === state.data) {
-                this.loadLast()
+                let frm = null;
+
+                if (room) {
+                    frm = new FormData();
+                    frm.append('room', room.id);
+                } else if (game !== state.data) {
+                    return;
+                }
+
+                this.loadLast(frm)
                 .then(({data}) => {
                     const unreads = data.data.reverse();
 
@@ -65,12 +77,21 @@ export default class MessageList extends PureComponent {
     }
 
     componentDidUpdate(props, state) {
-        const {game} = this.state;
+        const {game, room} = this.state;
         
+        this.containerRef.parentNode.removeEventListener('scroll', this.containerScrollListener);
         // init chat
         if (game && (game !== state.game)) {
             const frm = new FormData();
             frm.append('page-id', socketStore.getState().token);
+            this.loadLast(frm)
+            .then(({data}) => this.setState(({items: data.data.reverse(), pullingPrev:false}), () => {
+                this.containerRef.parentNode.addEventListener('scroll', this.containerScrollListener.bind(this), true);
+            }))
+        } else if (room && (!state.room || (room.id !== state.room.id))) {
+            const frm = new FormData();
+            frm.append('page-id', socketStore.getState().token);
+            frm.append('room', room.id);
             this.loadLast(frm)
             .then(({data}) => this.setState(({items: data.data.reverse(), pullingPrev:false}), () => {
                 this.containerRef.parentNode.addEventListener('scroll', this.containerScrollListener.bind(this), true);
@@ -105,8 +126,12 @@ export default class MessageList extends PureComponent {
                 pullingPrev: true,
             }
         }, () => {
-            const {game, items} = this.state;
-            axios.post(`/find-dudes/messages/${game}/${items[0].id}`)
+            const {game, items, room} = this.state;
+            const frm = new FormData();
+            frm.append('page-id', socketStore.getState().token);
+            room && frm.append('room', room.id);
+
+            axios.post(`/find-dudes/messages/${game}/${items[0].id}`, frm)
             .then(({data}) => this.setState(state => {
 
                 const parent = this.containerRef.parentNode;

@@ -35,6 +35,8 @@ class CreateFindDudesGameChannelsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('find_dudes_game_channels');
+        Schema::enableForeignKeyConstraints();
     }
 }

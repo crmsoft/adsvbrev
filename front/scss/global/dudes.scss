@@ -1,11 +1,7 @@
-$backcolor:#14191c;
-
 $dudescolor:#6DB100;
 $dudescolor05opacity:#6db10070;
 $mecolor:#662D91;
 $mecolor05opacity:#662d9170;
-$findyourdudesbordercolor:#354247;
-
 
 
 $searchcolor:#989898;
@@ -15,11 +11,7 @@ $greycolor:#D1D1D1;
 $mygamesactivecolor:#3D4444;
 $titleheight:40px;
 $titlefontsize:16px;
-$findyourdudesback:#14191C;
 $minheight:50%;
-
-
-
 
 
 
@@ -46,16 +38,52 @@ $minheight:50%;
 .find-your-dudes
 {
     margin-bottom: 55px;
-    border: 1px solid $findyourdudesbordercolor;
+    border: 1px solid $strokeColor;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background: $findyourdudesback;
+    background: $postBack;
+
+    .game-channel-list{
+        .game-channel {
+            position: relative;
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid $strokeColor;
+
+            .channel-full{
+                display: none;
+            }
+            .channel-name{
+                color: $mainColor;
+                line-height: 1;
+                font-size: 14px;
+            }
+            .channel-users{
+                font-size: 11px;
+                display: block;
+            }
+
+            &.active{
+                background-color: $mygamesactivecolor;
+            }
+
+            &.full{
+                opacity: 0.8;
+                .channel-full{
+                    display: block;
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    color: orange;
+                }
+            }
+        }
+    }
 
     .row
     {
         margin:0px;
-        min-height: 450px;
         .col-md-3
         {
             padding: 0px;
@@ -64,8 +92,8 @@ $minheight:50%;
         .col-md-6
         {
             padding: 0px;
-            border-left:1px solid $findyourdudesbordercolor;
-            border-right:1px solid $findyourdudesbordercolor;
+            border-left:1px solid $strokeColor;
+            border-right:1px solid $strokeColor;
             overflow-y: hidden;
 
 
@@ -92,7 +120,7 @@ $minheight:50%;
 
         /* Handle */
         &::-webkit-scrollbar-thumb {
-            background: $findyourdudesbordercolor;
+            background: $strokeColor;
             border-radius: 10px;
         }
 
@@ -105,7 +133,40 @@ $minheight:50%;
             height:$titleheight;
             line-height: $titleheight;
 
-            border-bottom: 1px solid $findyourdudesbordercolor;
+            border-bottom: 1px solid $strokeColor;
+            
+            .sub-channel-title{
+                .icon-arrow-down{
+                    transform: rotateZ(90deg);
+                    display: block;
+                    padding-top: 23px;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+                .title{
+                    margin-top: -9px;
+                    display: block;
+                }
+                .selected-game{
+                    display: block;
+                    line-height: 1.1;
+                    white-space: nowrap;
+                    max-width: 115px;
+                    overflow: hidden;
+                    word-wrap: normal;
+                    margin-top: -10px;
+                    text-overflow: ellipsis;
+                    color: $mainColor;
+                }
+
+                .icon-plus{
+                    cursor: pointer;
+                    background-color: $mainColor;
+                    border: 2.5px solid $mainColor;
+                    border-radius: 50%;
+                }
+            }
+
             img
             {
                 height: 16px;
@@ -132,13 +193,37 @@ $minheight:50%;
                 padding-right: 10px;
                 height: 50px;
                 padding: 10px 0px;
-                border-bottom: 1px solid $findyourdudesbordercolor;
+                border-bottom: 1px solid $strokeColor;
+                
+                + .sub-channels-total{
+                    display: none;
+                    border-bottom: 1px solid $mainColor;
+                    padding-bottom: 5px;
+                    @extend .text-monospace;
 
+                    .sub-channel-arrow{
+                        height: 15px;
+                        width: 30px; 
+                        float: left; 
+                        border-left: 1px solid #32393e; 
+                        border-bottom: 1px solid #32393e;
+                    }
+                    .sub-channels-btn{
+                        cursor: pointer;
+                        user-select: none;
+                        &:hover{
+                            color: #ddd;
+                        }
+                    }
+                }
 
 
                 &.active
                 {
                     background-color: $mygamesactivecolor;
+                    +.sub-channels-total{
+                        display: block;                        
+                    }
                 }
                 img
                 {
@@ -204,7 +289,7 @@ $minheight:50%;
                         span
                         {
                             background: none;
-                            border: 1px solid $findyourdudesbordercolor;
+                            border: 1px solid $strokeColor;
                             cursor:pointer;
                             color:$searchcolor;
                         }
@@ -212,7 +297,7 @@ $minheight:50%;
                     input
                     {
                         background: none;
-                        border: 1px solid $findyourdudesbordercolor;
+                        border: 1px solid $strokeColor;
                         border-top-right-radius: 5px;
                         border-bottom-right-radius: 5px;
                         color:$searchcolor;
@@ -250,7 +335,7 @@ $minheight:50%;
 
         /* Handle */
         &::-webkit-scrollbar-thumb {
-            background: $findyourdudesbordercolor;
+            background: $strokeColor;
             border-radius: 10px;
         }
 
@@ -263,7 +348,7 @@ $minheight:50%;
             height: $titleheight;
             line-height: $titleheight;
             text-align: center;
-            border-bottom: 1px solid $findyourdudesbordercolor;
+            border-bottom: 1px solid $strokeColor;
             h3
             {
                 font-size:$titlefontsize;
@@ -297,6 +382,27 @@ $minheight:50%;
             .message-input{
                 margin-bottom: 9px;
             }
+
+            .file-upload {
+                position: absolute;
+                background: rgba(32, 34, 37, 0.75);
+                top: 20px;
+                bottom: 50px;
+                right: 0;
+                left: 0;
+                overflow: hidden;
+                input{
+                    display: none;
+                }
+                .preview{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .container{
+                    padding-top: 15px;
+                }
+            }
         }
     }
 
@@ -320,7 +426,7 @@ $minheight:50%;
 
         /* Handle */
         &::-webkit-scrollbar-thumb {
-            background: $findyourdudesbordercolor;
+            background: $strokeColor;
             border-radius: 10px;
         }
 
@@ -332,7 +438,7 @@ $minheight:50%;
         {
             height: $titleheight;
             line-height: $titleheight;
-            border-bottom: 1px solid $findyourdudesbordercolor;
+            border-bottom: 1px solid $strokeColor;
             img
             {
                 height: 24px;
@@ -351,7 +457,23 @@ $minheight:50%;
         }
         .on-channels-messages
         {
+            .user-list-user-name {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: 14px;
+                color: #fff;
+                max-width: 125px;
+            }
+            .user-list-username{
+                font-size: 10px;
+                color: #ddd;
+            }
 
+            .user-list-ava{
+                margin-right: 10px;
+                margin-left: 5px;
+            }
         }
 
 
@@ -371,7 +493,7 @@ $minheight:50%;
                         span
                         {
                             background: none;
-                            border: 1px solid $findyourdudesbordercolor;
+                            border: 1px solid $strokeColor;
                             cursor:pointer;
                             color:$searchcolor;
                         }
@@ -379,7 +501,7 @@ $minheight:50%;
                     input
                     {
                         background: none;
-                        border: 1px solid $findyourdudesbordercolor;
+                        border: 1px solid $strokeColor;
                         border-top-right-radius: 5px;
                         border-bottom-right-radius: 5px;
                         color:$searchcolor;

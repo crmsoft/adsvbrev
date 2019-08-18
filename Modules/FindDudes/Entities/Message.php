@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
 use App\Entities\Game;
 use App\Media;
+use Modules\FindDudes\Entities\GameChannel;
 
 class Message extends Model
 {
@@ -56,5 +57,15 @@ class Message extends Model
      */
     public function mediable(){
         return $this->morphMany(Media::class, 'mediable');
+    }
+
+    /**
+     * message might belong to GameChannel
+     * 
+     * @return Relation\GameChannel
+     */
+    public function gameChannel()
+    {
+        return $this->belongsTo(GameChannel::class, 'sub_channel_id');
     }
 }

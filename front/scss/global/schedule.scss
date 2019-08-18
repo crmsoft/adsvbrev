@@ -1,6 +1,5 @@
 @import './flatpickr.scss';
 
-$backcolor:#14191c;
 $whitecolor:#fff;
 $greycolor:#BAB7BE;
 $greycolor05opacity:#bab7be69;
@@ -138,7 +137,7 @@ $schedulebordercolor:#354247;
     }
 
 
-    background: $backcolor;
+    background: $postBack;
     border-radius: 6px;
     margin: 20px 0px;
     .flatpickr-input{
@@ -155,7 +154,7 @@ $schedulebordercolor:#354247;
 
             .flatpickr-month
             {
-                background: $backcolor;
+                background: $postBack;
             }
         }
         .flatpickr-innerContainer
@@ -166,13 +165,13 @@ $schedulebordercolor:#354247;
             {
                 .flatpickr-weekdays
                 {
-                    background: $backcolor;
+                    background: $postBack;
                     .flatpickr-weekdaycontainer
                     {
                         span.flatpickr-weekday
                         {
                             color:$greycolor;
-                            background: $backcolor;
+                            background: $postBack;
                             font-size: 14px;
                             text-transform: uppercase;
                             font-weight: 400;
@@ -194,7 +193,7 @@ $schedulebordercolor:#354247;
                     {
                         width: 100%;
                         max-width: none;
-                        background: $backcolor;
+                        background: $postBack;
                         color:$greycolor;
                         border: 0px;
                         border-bottom-left-radius: 10px;

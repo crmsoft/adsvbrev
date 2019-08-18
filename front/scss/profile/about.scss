@@ -1,6 +1,14 @@
 .profile-about{
     @include section-default;
     @extend .dd-block-shadow;
+
+    .user-uploads{
+        border: none;
+        padding: 0;
+        background-color: none;
+        box-shadow: none;
+    }
+
     .profile-about-header{
         span{
             color: $mainColor;

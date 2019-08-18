@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Media;
+use Modules\FindDudes\Entities\GameChannel;
 
 class MessageController extends Controller {
 
@@ -31,7 +32,14 @@ class MessageController extends Controller {
         // make sure user gamer
         $user->games()->where('groups.id', $game->id)->firstOrFail();
 
-        if ($request->has('page-id')) {
+        // is request from game channel
+        $gameChannel = $request->has('room') ? GameChannel::whereHas('participants', function($query) use ($user) {
+            $query->where('users.id', $user->id);
+        })->where('id', \Hashids::decode(   
+            $request->get('room')
+        ))->firstOrFail() : false;
+
+        if ($request->has('page-id') && !$request->has('room')) {
             Redis::publish(config('app.pub-sub-channel'), json_encode([
                 'action' => 'sub-find-dudes',
                 'target' => $game->slug,
@@ -42,8 +50,8 @@ class MessageController extends Controller {
             Subscription::where([
                 'user_id' => $user->id,
                 'token' => $request->get('page-id')
-            ])->delete();  
-
+            ])->orderBy('id', 'desc')->delete();    
+                
             $subscription = Subscription::firstOrNew([
                 'user_id' => $user->id,
                 'game_id' => $game->id,
@@ -56,6 +64,8 @@ class MessageController extends Controller {
         $query = Message::where('game_id', $game->id)
         ->orderBy('id', 'desc')    
         ->take(self::$PER_PAGE);
+
+        $query->where('sub_channel_id', $gameChannel ? $gameChannel->id : NULL);
 
         if ($last_id) {
             $last_id = \Hashids::decode($last_id);
@@ -92,11 +102,22 @@ class MessageController extends Controller {
 
         if($game = $user->games()->where('slug', $request->channel)->first())
         {
+            // check for game channel
+            $gameChannel = $request->has('room') ? GameChannel::whereHas('participants', function($query) use ($user) {
+                $query->where('users.id', $user->id);
+            })->where('id', \Hashids::decode(   
+                $request->get('room')
+            )[0])->firstOrFail() : false;
 
             $message = new Message;
             $message->message = $request->message;
             $message->user()->associate($user);
             $message->game()->associate($game);
+
+            if ($gameChannel) {
+                $message->gameChannel()->associate($gameChannel);
+            } // end if
+
             $message->save();
 
             if ($request->hasFile('file')) {

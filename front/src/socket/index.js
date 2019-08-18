@@ -8,7 +8,8 @@ import {
     AUTH_SUCCESS,
     CHAT_MESSAGES_READ,
     USER_WENT_OFFLINE,
-    USER_WENT_ONLINE
+    USER_WENT_ONLINE,
+    CHANNEL_ON_CHANNEL_UPDATE
 } from './redux/events';
 import SocketWrapper from './SocketWrapper';
 
@@ -48,9 +49,17 @@ const onMessage = ({data}) => {
     if (response.action === 'auth') {
         store.dispatch({type: AUTH_SUCCESS, data: response.token})
     } // end if
+
+    if (response.action === 'new-participant') {
+        store.dispatch({type: CHANNEL_ON_CHANNEL_UPDATE, data: response.channel})
+    } // end if
+
+    if (response.action === 'pop-participant') {
+        store.dispatch({type: CHANNEL_ON_CHANNEL_UPDATE, data: response.channel})
+    } // end if
 }
 
-const wrapper = new SocketWrapper(true);
+const wrapper = new SocketWrapper(window.location.href.indexOf('//game') !== -1);
 wrapper.bind(onMessage);
 
 store.subscribe(() => {

@@ -56,17 +56,10 @@ class ProfileComponent extends Component{
 
                     <section className="user-middle">
 
-                        <About user={this.props.data} />
-
-                        <section className="user-uploads w-100" id="media-container">
-                            
-                            <MediaTabs 
-                                media={this.props.data.media}
-                                totalImage={totals.media}
-                                user={profile.user}
-                            />
-
-                        </section>
+                        <About 
+                            totalImage={totals.media}
+                            user={this.props.data} 
+                        />
 
                         <section className="user-add-post">
                             <CreatePostComponent 

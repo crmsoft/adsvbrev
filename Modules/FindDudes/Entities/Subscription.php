@@ -23,7 +23,7 @@ class Subscription extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'game_id', 'token'
+        'user_id', 'game_id', 'token', 'sub_channel_id'
     ];
 
     /**

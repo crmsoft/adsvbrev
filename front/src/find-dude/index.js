@@ -1,31 +1,56 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
 
 import Menu from '../menu'
-import Game from './Game';
-import {Loading} from '../general/Loading';
 import Input from '../chat/Dialog/Input';
 import MessageList from './MessageList';
 import socketStore from '../socket/redux/store';
 import { send_dude_message } from '../socket/redux/events';
+import {User} from './User';
+import Games from './Games';
+import GameChannels from './GameChannels';
 
 export const DudeContext = React.createContext();
 
-const GameList = ({games}) => (
-    <div className="my-games-section list-scroll">
-        {
-            games.map((game, index) => {
-                return <Game 
-                            key={game.id} 
-                            index={index} 
-                            game={game} 
-                        />
-            })
-        }
-    </div>
-)
+const UserList = ({activeGame,activeRoom}) => {
+    
+    const [users, setUsers] = useState([]);
+
+    const loadUsers = (isSubscribed) => {
+        const channel = activeGame.channel;
+        const activeRoomId = activeRoom ? activeRoom.id : undefined;
+
+        axios.get(activeRoomId ? `/find-dudes/${channel}/subscribers/${activeRoomId}`:`/find-dudes/${channel}/subscribers`)
+        .then(({data}) => {
+            isSubscribed && setUsers(data.data);
+        })
+    }
+
+    useEffect(() => {
+        let isSubscribed = true
+
+        if (activeGame && isSubscribed) {
+            loadUsers(isSubscribed);
+        } // end if
+
+        return () => (isSubscribed = false)
+    }, [activeGame, activeRoom])
+
+    return (
+        <div className="on-channels-messages list-scroll">
+            {
+                users.map((user, index) => {
+                    return <User 
+                        key={index}
+                        user={user}
+                    />
+                })
+            }
+        </div>
+    )
+}
 
 class FDudesComponent extends Component{
 
@@ -34,6 +59,9 @@ class FDudesComponent extends Component{
         games: [],
         active_index: 0,
         messageSend: null,
+        subChannels: [],
+        active_room_index: -1,
+        roomsActive: false
     }
 
     componentDidMount() {
@@ -43,7 +71,7 @@ class FDudesComponent extends Component{
 
     componentWillUnmount() {
         const {games, active_index} = this.state;
-        const channel = games[active_index].username;
+        const channel = games[active_index].channel;
 
         axios.post(`/find-dudes/${channel}/unsubscribe`, {
             "page-id": socketStore.getState().token
@@ -54,18 +82,124 @@ class FDudesComponent extends Component{
         this.setState(({active_index:index}));
     }
 
+    setActiveRoom(index) {
+        
+        const {games, active_index, subChannels, active_room_index} = this.state;
+        const channel = games[active_index].channel;
+        const subChannel = subChannels[index].id;
+        
+        if (active_room_index === index) {
+            return;
+        }
+
+        axios.put(`/find-dudes/sub-channels/${channel}/${subChannel}/update`, {
+            "page-id": socketStore.getState().token
+        })
+        .then(({data}) => {
+            this.setState(({
+                active_room_index: index,
+                subChannels: subChannels.map((ch, i) => {
+                    if (i === index) {
+                        return data.data;
+                    } // end if
+
+                    return ch;
+                })
+            }));
+        })
+        .catch(({response}) => {
+            if (response.status === 303) {
+                this.setState(({
+                    subChannels: subChannels.map((ch, i) => {
+                        if (i === index) {
+                            ch.full = true;
+                        } // end if
+
+                        return ch;
+                    })
+                }))
+                alert(response.data.message);
+            } else {
+                alert('Error...')
+            } // end if
+        })
+    }
+
+    onRoomCreated(room) {
+        this.setState(state => {
+            return {
+                subChannels: [
+                    room,
+                    ...state.subChannels
+                ]
+            }
+        })
+    }
+
+    onRoom(state) {
+
+        const {games, active_index, subChannels, active_room_index} = this.state;
+        const channel = games[active_index].channel;
+        const activeRoom = subChannels[active_room_index];
+
+
+        if (!state){
+            if (activeRoom) {
+                this.setState(({
+                    roomsActive:state, 
+                    loading:state,
+                    active_room_index: -1,
+                    loading: true,
+                    active_index: -1
+                }));
+
+                axios.post(`/find-dudes/sub-channels/${channel}/${activeRoom.id}/destroy`, {
+                    "page-id": socketStore.getState().token
+                }).then(() => {
+                    this.setState(({
+                        loading: false,
+                        active_index: active_index
+                    }));
+                });
+
+            } else {
+                this.setState(({
+                    roomsActive:state, 
+                    loading:state,
+                    active_room_index: -1
+                }));
+            } // end if
+            return;
+        }
+
+        this.setState(({
+            roomsActive:state, 
+            loading:state,
+            active_room_index: -1
+        }));
+
+        axios.get(`/find-dudes/sub-channels/${channel}`)
+        .then(({data}) => {
+            this.setState(({subChannels:data.data, loading: false}))
+        });
+    }
+
     onMessage(message, attachment) {
 
-        const {active_index, games} = this.state;
+        const {active_index, games, subChannels, active_room_index} = this.state;
 
         let frm = new FormData();
         frm.append('message', message);
-        frm.append('channel', games[active_index].username);
+        frm.append('channel', games[active_index].channel);
         attachment && frm.append('file', attachment);
+        subChannels[active_room_index] && frm.append('room', subChannels[active_room_index].id);
 
         axios.post('/find-dudes/messages/store', frm)
         .then(({data}) => {
-            this.props.send_dude_message(games[active_index].username);
+            const channel = games[active_index].channel + (
+                subChannels[active_room_index] ? ('_' + subChannels[active_room_index].channel) : ''
+            )
+            this.props.send_dude_message(channel);
             this.setState(
                 ({messageSend:data.data}), 
                 () => this.setState(({messageSend:null}))
@@ -75,8 +209,15 @@ class FDudesComponent extends Component{
     
     render()
     {
-        const {loading, games, active_index, messageSend} = this.state;
+        const {
+            loading, 
+            active_room_index,
+            games, subChannels, 
+            roomsActive, active_index, 
+            messageSend
+        } = this.state;
         const activeGame = games[active_index];
+        const activeRoom = subChannels[active_room_index];
 
         return (
             <div className="d-flex">
@@ -92,39 +233,22 @@ class FDudesComponent extends Component{
                             
                         <div className="row">
                             <div className="col-md-3">
-                                <div className="my-games" >
-                                    <div className="my-games-title">
-                                        <img src="img/gamepad.svg" alt="" />
-                                        <h3>My Games</h3>
-                                    </div>
-                                    <DudeContext.Provider
-                                        value={{
-                                            activeIndex:active_index,
-                                            setActive:this.setActive.bind(this)
-                                        }}
-                                    >
-                                    {
-                                        loading ? <Loading /> : <GameList games={games} />
-                                    }
-                                    </DudeContext.Provider>
-
-                                    <div className="my-games-bottom">
-                                    <div className="my-games-notifications">
-                                        <p>* You can only access
-                                            the rooms of your chosen
-                                            games. <b> Click </b>to select a game!</p>
-                                    </div>
-
-                                    <div className="my-games-search">
-                                        <div className="input-group flex-nowrap">
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text" id="addon-wrapping"><i className="fa fa-search"></i></span>
-                                            </div>
-                                            <input type="text" className="form-control" placeholder="Search My games.." aria-label="Search My games" aria-describedby="addon-wrapping" />
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
+                                <DudeContext.Provider
+                                    value={{
+                                        activeIndex:active_index,
+                                        setActive:this.setActive.bind(this),
+                                        openRooms: this.onRoom.bind(this),
+                                        activeGame: activeGame,
+                                        loading: loading,
+                                        games: games,
+                                        subChannels: subChannels,
+                                        onRoomCreated: this.onRoomCreated.bind(this),
+                                        setActiveRoom: this.setActiveRoom.bind(this),
+                                        active_room_index: active_room_index
+                                    }}
+                                >
+                                    {roomsActive ? <GameChannels /> : <Games />}
+                                </DudeContext.Provider>
                             </div>
                             <div className="col-md-6">
                                 <div className="my-games-inside">
@@ -133,7 +257,7 @@ class FDudesComponent extends Component{
                                         <h3> 
                                             <span className="icon icon-friends"></span> 
                                             {
-                                                activeGame ? activeGame.full_name : 'Find Your Dudes'
+                                                activeGame ? activeGame.name : 'Find Your Dudes'
                                             }
                                         </h3>
                                     </div>
@@ -143,9 +267,10 @@ class FDudesComponent extends Component{
                                         }
                                     </div>
                                     <div className="my-games-messages">
-                                        <MessageList 
-                                            game={activeGame ? activeGame.username : null}
+                                        <MessageList
+                                            game={activeGame ? activeGame.channel : null}
                                             push={messageSend}
+                                            room={activeRoom ? activeRoom : null}
                                         />
                                         <Input 
                                             members={[]}
@@ -160,10 +285,12 @@ class FDudesComponent extends Component{
                                         <img src="img/on-channels.svg" alt="" />
                                         <h3>On Channels</h3>
                                     </div>
-                                    <div className="on-channels-messages">
 
-                                    </div>
-
+                                    <UserList 
+                                        key={this.props.channel_timestamp}
+                                        activeGame={activeGame}
+                                        activeRoom={activeRoom}
+                                    />
 
                                     <div className="my-games-bottom">
                                         <div className="my-games-search">
@@ -171,7 +298,7 @@ class FDudesComponent extends Component{
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text" id="addon-wrapping"><i className="fa fa-search"></i></span>
                                                 </div>
-                                                <input type="text" className="form-control" placeholder="Search My games.." aria-label="Search My games" aria-describedby="addon-wrapping" />
+                                                <input type="text" className="form-control" placeholder="Search user" aria-label="Search My games" aria-describedby="addon-wrapping" />
                                             </div>
                                         </div>
                                     </div>

@@ -7,12 +7,14 @@ import {
     USER_WENT_ONLINE,
     AUTH_SUCCESS,
     USER_WENT_OFFLINE,
-    SEND_DUDE_MESSAGE
+    SEND_DUDE_MESSAGE,
+    CHANNEL_ON_CHANNEL_UPDATE
 } from './events';
 
 
 const reducer = (state = {
-    received: null
+    received: null,
+    channel_timestamp: +(new Date)
 }, action) => {
     switch(action.type)
     {
@@ -76,6 +78,14 @@ const reducer = (state = {
                 ...state,
                 received: AUTH_SUCCESS,
                 token: action.data
+            }
+        }
+        case CHANNEL_ON_CHANNEL_UPDATE : {
+            return {
+                ...state,
+                received: CHANNEL_ON_CHANNEL_UPDATE,
+                data: action.data,
+                channel_timestamp: +(new Date)
             }
         }
     }

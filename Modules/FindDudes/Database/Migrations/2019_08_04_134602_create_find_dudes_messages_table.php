@@ -18,6 +18,7 @@ class CreateFindDudesMessagesTable extends Migration
 
             $table->unsignedInteger('game_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('sub_channel_id')->nullable();
             $table->text('message');
 
             $table->timestamps();

@@ -204,27 +204,7 @@
                     }
                 }
             }
-            .file-upload {
-                position: absolute;
-                background: rgba(32, 34, 37, 0.75);
-                top: 20px;
-                bottom: 50px;
-                right: 0;
-                left: 0;
-                overflow: hidden;
-                input{
-                    display: none;
-                }
-                .preview{
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-                .container{
-                    padding-top: 15px;
-                }
-            }
-
+            
             .dialog-username-helper{
                 position: absolute;
                 background: rgba(32, 34, 37, 0.75);
@@ -244,6 +224,27 @@
                     }
                 }
             }
+        }
+    }
+
+    .file-upload {
+        position: absolute;
+        background: rgba(32, 34, 37, 0.75);
+        top: 20px;
+        bottom: 50px;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        input{
+            display: none;
+        }
+        .preview{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .container{
+            padding-top: 15px;
         }
     }
 }

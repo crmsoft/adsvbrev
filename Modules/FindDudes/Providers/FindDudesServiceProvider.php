@@ -4,6 +4,9 @@ namespace Modules\FindDudes\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Routing\Router;
+
+use Modules\FindDudes\Http\Middleware\UserGamePlayer;
 
 class FindDudesServiceProvider extends ServiceProvider
 {
@@ -12,13 +15,15 @@ class FindDudesServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router)
     {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        $router->aliasMiddleware('user-plays', UserGamePlayer::class);
     }
 
     /**
