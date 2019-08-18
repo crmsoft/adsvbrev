@@ -1,5 +1,5 @@
 import React, {Component, useCallback, useState} from 'react';
-import {Modal} from '../../Modal/index';
+import {Modal, actions} from '../../Modal/index';
 
 const TwitchPlayer = ({username, onClose, title}) => {
     const [loaded, setLoaded] = useState(false);
@@ -27,10 +27,56 @@ const TwitchPlayer = ({username, onClose, title}) => {
     </Modal>
 }
 
+const ListAll = ({
+    list,
+    onClose,
+    open,
+    watch
+}) => {
+    
+    return (
+        <Modal
+            actions={[
+                {
+                    title: 'Close',
+                    onAction: onClose
+                }
+            ]}
+            onClose={onClose}
+            open={open}
+            title="Trending streams"
+        >
+            <div className="row p-md-4 list-scroll">
+            {
+                list.map((stream, index) => {
+                    return (
+                        <div 
+                            onClick={e => watch(index)}
+                            key={index}
+                            className="col-4"
+                        >   
+                            <div>
+                                <img src={stream.thumb} className="img-fluid" alt="" />
+                            </div>
+                            <div>
+                                <small>
+                                    watching: {stream.watching} | <span className="main-color">by {stream.username}</span>
+                                </small>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+            </div>
+        </Modal>
+    )
+}
+
 export class StreamList extends Component {
 
     state = {
-        watching: null
+        watching: null,
+        showingAll: false
     }
 
     watch( index )
@@ -42,10 +88,14 @@ export class StreamList extends Component {
         });
     }
 
+    closeAll() {
+        this.setState(({showingAll: false}))
+    }
+
     render()
     {
         const {streams} = this.props;
-        const {watching} = this.state;
+        const {watching, showingAll} = this.state;
 
         let Player = () => <span></span>;
 
@@ -67,11 +117,19 @@ export class StreamList extends Component {
         return (
             <div className="user-content active">
             {
+                <ListAll 
+                    watch={this.watch.bind(this)}
+                    onClose={this.closeAll.bind(this)}
+                    open={showingAll}
+                    list={streams}
+                />
+            }
+            {
                 <Player />
             }
                 <div className="row">
                     {
-                        streams.map((stream, index) => {
+                        streams.slice(0, 3).map((stream, index) => {
                             return (
                                 <div 
                                     onClick={e => this.watch.call(this, index)}
@@ -91,7 +149,10 @@ export class StreamList extends Component {
                         })
                     }
                 </div>
-                <a href="#" className="user-content-all">All (14)</a>
+                <span 
+                    onClick={e => this.setState(({showingAll:true}))}
+                    className="user-content-all"
+                >All ({streams.length})</span>
             </div>
         )
     }

@@ -51510,7 +51510,7 @@ function (_Component) {
           });
         },
         className: "user-content-all"
-      }, "All (14)"));
+      }, "All (", streams.length, ")"));
     }
   }]);
 

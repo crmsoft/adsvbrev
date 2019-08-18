@@ -50,7 +50,7 @@ class ResourceProfile extends JsonResource
                         })->where('is_game', 0)->get()),
             'feed' => $feed,
             'profile' => new ProfileConfig($profile),
-            'games' => new GroupCollection( $this->games(function($q){ $q->with('gamers'); })->limit(5)->inRandomOrder()->where('is_game', 1)->get() ),
+            'games' => new GroupCollection( $this->games(function($q){ $q->with('gamers'); })->inRandomOrder()->where('is_game', 1)->get() ),
             'media' => new MediaCollection($this->media()->orderBy('id', 'desc')->take(3)->get()),
             'totals' => [
                 'friends' => $this->friend->count(),
