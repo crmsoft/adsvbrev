@@ -9418,6 +9418,7 @@ nav.user-profile {
     padding: 10px 0 20px 0px;
     position: relative; }
     .user-uploads .user-content .user-content-all {
+      cursor: pointer;
       position: absolute;
       right: 5px;
       color: #ff4800;

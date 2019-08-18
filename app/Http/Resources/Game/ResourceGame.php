@@ -107,7 +107,7 @@ class ResourceGame extends JsonResource
             if (empty($streams['data']))
                 return collect([]);
 
-            $game_streams = collect(array_slice($streams['data'], 0, 3));
+            $game_streams = collect(array_slice($streams['data'], 0, 25));
 
             $userApi = $newTwitchApi->getUsersApi()->getUsers(
                 $game_streams->map(function( $user ) {

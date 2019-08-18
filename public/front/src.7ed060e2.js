@@ -51378,6 +51378,38 @@ var TwitchPlayer = function TwitchPlayer(_ref) {
   }));
 };
 
+var ListAll = function ListAll(_ref2) {
+  var list = _ref2.list,
+      onClose = _ref2.onClose,
+      open = _ref2.open,
+      watch = _ref2.watch;
+  return _react.default.createElement(_index.Modal, {
+    actions: [{
+      title: 'Close',
+      onAction: onClose
+    }],
+    onClose: onClose,
+    open: open,
+    title: "Trending streams"
+  }, _react.default.createElement("div", {
+    className: "row p-md-4 list-scroll"
+  }, list.map(function (stream, index) {
+    return _react.default.createElement("div", {
+      onClick: function onClick(e) {
+        return watch(index);
+      },
+      key: index,
+      className: "col-4"
+    }, _react.default.createElement("div", null, _react.default.createElement("img", {
+      src: stream.thumb,
+      className: "img-fluid",
+      alt: ""
+    })), _react.default.createElement("div", null, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
+      className: "main-color"
+    }, "by ", stream.username))));
+  })));
+};
+
 var StreamList =
 /*#__PURE__*/
 function (_Component) {
@@ -51397,7 +51429,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(StreamList)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      watching: null
+      watching: null,
+      showingAll: false
     });
 
     return _this;
@@ -51413,12 +51446,21 @@ function (_Component) {
       });
     }
   }, {
+    key: "closeAll",
+    value: function closeAll() {
+      this.setState({
+        showingAll: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       var streams = this.props.streams;
-      var watching = this.state.watching;
+      var _this$state = this.state,
+          watching = _this$state.watching,
+          showingAll = _this$state.showingAll;
 
       var Player = function Player() {
         return _react.default.createElement("span", null);
@@ -51441,9 +51483,14 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         className: "user-content active"
-      }, _react.default.createElement(Player, null), _react.default.createElement("div", {
+      }, _react.default.createElement(ListAll, {
+        watch: this.watch.bind(this),
+        onClose: this.closeAll.bind(this),
+        open: showingAll,
+        list: streams
+      }), _react.default.createElement(Player, null), _react.default.createElement("div", {
         className: "row"
-      }, streams.map(function (stream, index) {
+      }, streams.slice(0, 3).map(function (stream, index) {
         return _react.default.createElement("div", {
           onClick: function onClick(e) {
             return _this2.watch.call(_this2, index);
@@ -51456,8 +51503,12 @@ function (_Component) {
         })), _react.default.createElement("div", null, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
           className: "main-color"
         }, "by ", stream.username))));
-      })), _react.default.createElement("a", {
-        href: "#",
+      })), _react.default.createElement("span", {
+        onClick: function onClick(e) {
+          return _this2.setState({
+            showingAll: true
+          });
+        },
         className: "user-content-all"
       }, "All (14)"));
     }
@@ -93280,7 +93331,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33927" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39182" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
