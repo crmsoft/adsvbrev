@@ -60122,7 +60122,7 @@ var UserProfile = function UserProfile(data) {
     className: "w-25 d-flex flex-column-reverse"
   }, _react.default.createElement("div", {
     className: "user"
-  }, _react.default.createElement("h4", null, profile.user.full_name), _react.default.createElement("div", {
+  }, _react.default.createElement("h4", null, profile.user.full_name !== ' ' ? profile.user.full_name : profile.user.username), _react.default.createElement("div", {
     className: "user-level"
   }, _react.default.createElement("div", {
     className: "user-level-progress",
