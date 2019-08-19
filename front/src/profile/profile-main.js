@@ -40,7 +40,7 @@ const UserProfile = (data) => {
                     <div className="w-25 d-flex flex-column-reverse">
                         <div className="user">
                             <h4>
-                                {profile.user.full_name}
+                                {profile.user.full_name !== ' ' ? profile.user.full_name : profile.user.username}
                             </h4>
                             <div className="user-level"><div className="user-level-progress" style={{width: '80%'}}>72%</div></div>
                             <div>
