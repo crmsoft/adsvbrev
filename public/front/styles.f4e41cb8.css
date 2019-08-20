@@ -6759,6 +6759,18 @@ p {
   color: inherit;
   text-decoration: inherit; }
 
+footer {
+  margin: 20px 10px;
+  padding-top: 20px;
+  border-top: 1px solid #fff;
+  font-size: 10px; }
+  footer ul li {
+    display: inline-block; }
+    footer ul li:hover {
+      padding-left: 10px !important; }
+    footer ul li a {
+      padding: 5px !important; }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -9742,13 +9754,14 @@ nav.user-profile {
 .menu {
   padding-top: 60px;
   width: 225px;
-  margin: 0px 15px 15px 0px;
-  -webkit-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px; }
+  margin: 0px 15px 15px 0px; }
+  .menu .menu-wrapper {
+    -webkit-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 32px 5px rgba(0, 0, 0, 0.75);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px; }
   .menu ul {
     padding: 0; }
     .menu ul li {

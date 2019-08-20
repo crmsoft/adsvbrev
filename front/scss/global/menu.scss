@@ -2,8 +2,11 @@
     padding-top: 60px;
     width: 225px;
     margin:0px 15px 15px 0px;
-    @include menu-box-shadow();
-    @include border-radius(3px);
+    
+    .menu-wrapper{
+        @include menu-box-shadow();
+        @include border-radius(3px);
+    }
     
     ul{
         padding: 0;

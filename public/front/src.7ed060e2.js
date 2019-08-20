@@ -62884,6 +62884,8 @@ function (_Component) {
 
         return _react.default.createElement("div", {
           style: _style
+        }, _react.default.createElement("div", {
+          className: "menu-wrapper pt-3"
         }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
           exact: true,
           activeClassName: "active",
@@ -62923,7 +62925,13 @@ function (_Component) {
           isGuest: false,
           list: [],
           total: 0
-        }))));
+        })))), _react.default.createElement("footer", null, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "/"
+        }, "home")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#"
+        }, "privacy policy")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#"
+        }, "terms of use")), _react.default.createElement("li", null, _react.default.createElement("strong", null, "\u2122divdudes")))));
       }));
     }
   }]);
@@ -93351,7 +93359,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34845" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37858" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

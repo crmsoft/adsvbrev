@@ -23,54 +23,81 @@ export default class Menu extends Component {
 
                             return (
                                 <div style={_style}>
-                                    <ul>
-                                        <li>
-                                            <NavLink 
-                                                exact 
-                                                activeClassName="active" 
-                                                to="/"
-                                                isActive={(match, location) => {
-                                                    return match || location.pathname === '/schedule' || location.pathname === '/settings';
-                                                }}
-                                            >
-                                                <span className="icon icon-info"></span> {` my profile`}
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink activeClassName="active" to="/feed">
-                                                <span className="icon icon-schedule"></span> {` my feed`}
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink activeClassName="active" to="/dudes">
-                                                <span className="icon icon-binocolo"></span> {` Find Your Dudes`}
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <span className="icon icon-group"></span> {` Groups`}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <span className="icon icon-basket"></span> {` Trade`}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <span className="icon icon-fist"></span> {` Clans`}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div className="p-2">
-                                        <Provider store={scheduleStore}>
-                                            <ProfileSchedule 
-                                                isGuest={false}
-                                                list={[]}
-                                                total={0}
-                                            />                    
-                                        </Provider>
+                                    <div className="menu-wrapper pt-3">
+                                        <ul>
+                                            <li>
+                                                <NavLink 
+                                                    exact 
+                                                    activeClassName="active" 
+                                                    to="/"
+                                                    isActive={(match, location) => {
+                                                        return match || location.pathname === '/schedule' || location.pathname === '/settings';
+                                                    }}
+                                                >
+                                                    <span className="icon icon-info"></span> {` my profile`}
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink activeClassName="active" to="/feed">
+                                                    <span className="icon icon-schedule"></span> {` my feed`}
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink activeClassName="active" to="/dudes">
+                                                    <span className="icon icon-binocolo"></span> {` Find Your Dudes`}
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <span className="icon icon-group"></span> {` Groups`}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <span className="icon icon-basket"></span> {` Trade`}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    <span className="icon icon-fist"></span> {` Clans`}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div className="p-2">
+                                            <Provider store={scheduleStore}>
+                                                <ProfileSchedule 
+                                                    isGuest={false}
+                                                    list={[]}
+                                                    total={0}
+                                                />                    
+                                            </Provider>
+                                        </div>
+
                                     </div>
+                                    <footer>
+                                        <ul>
+                                            <li>
+                                                <a href="/">
+                                                    home
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    privacy policy
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    terms of use
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <strong>
+                                                    &trade;divdudes
+                                                </strong>
+                                            </li>
+                                        </ul>
+                                    </footer>
                                 </div>
                             )
                         }
