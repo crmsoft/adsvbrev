@@ -21,27 +21,30 @@
         }
     }
     .friends{
-        .header{
-            .aside-firends-icon{
-                font-size: 21px;
-            }
-        }
-        +.dec{
-            height: 55px;
-            width: auto !important;
-            position: absolute;
-            right: -28px;
-            bottom: -7px;
-        }
-
+      position: relative;
         .group-back
         {
             height: 100%;
             width: auto !important;
             position: absolute;
-            left: -10px;
-            bottom: 37px;
+            left: 0px;
+            top: 0;
         }
+        .header{
+            .aside-firends-icon{
+                font-size: 21px;
+            }
+        }
+        .dec{
+            height: 82px;
+            width: auto !important;
+            position: absolute;
+            right: -48px;
+            bottom: -7px;
+            opacity: 0.5;
+        }
+
+
     }
     .block{
         @extend .dd-block-shadow;
@@ -61,18 +64,46 @@
         }
 
         &.my-games{
-            background-image: url('../img/my_games_back.png');
+            //background-image: url('../img/my_games_back.png');
             background-repeat: no-repeat;
             background-position: 2px 0px;
+            padding: 0px;
             .header{
+                position: relative;
+                padding: 5px 0 0 5px;
+                overflow: hidden;
                 a{
                     color: $white;
                     .items-count{
                         color: $white !important;
                     }
                 }
+
+                .game-star
+                {
+                    position: absolute;
+                    height: 15px;
+                    text-align: center;
+                    width: 40%;
+                    top: 0;
+                    transform: rotate(70deg);
+                    right: -12%;
+                    background: $mainColor;
+                    img
+                    {
+                        height: 12px;
+                        width: 12px;
+                        margin-left: 19%;
+                        margin-bottom: 11px;
+                    }
+                }
             }
-            
+            .block-content
+            {
+                padding: 0 0 15px 0;
+                border: 0;
+                border-radius: 0;
+            }
         }
 
         .header{

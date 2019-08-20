@@ -84,9 +84,12 @@ export class Games extends Component {
                         <h3>My Games</h3>
                         <span className="items-count"> ({total})</span>
                     </a>
+                    <div className={'game-star'} ><img src="img/game-star.svg" alt=""/></div>
                 </div>
     
                 <div className="block-content">
+                    <img src="img/rainbowsix.svg" alt=""/>
+
                     <div className="row">
                         <div className="col">
                             {
