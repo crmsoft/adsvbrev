@@ -1,8 +1,4 @@
 .profile-schedule{
-    margin-left: -9px;
-    margin-right: -9px;
-    margin-bottom: -9px;
-    margin-top: -9px;
     padding: 0 !important;
     position: relative;
     overflow: hidden;
@@ -19,7 +15,7 @@
     }
 
     .header{
-        background-color: #3d4444;
+        background-color: $mainColor;
         text-transform: uppercase;
         text-align: center;
         border-top-left-radius: 3px;
@@ -42,7 +38,7 @@
     }
 
     .flatpickr-weekdays{
-        background-color: $darkGray;
+        background-color: $scheduleBgColor;
         .flatpickr-weekdaycontainer{
             background-color: transparent;
             span{
@@ -57,7 +53,7 @@
     }
 
     .dayContainer, .flatpickr-day{
-        background-color: $postBack;
+        background-color: $bodyColor;
         color: white;
     }
 
@@ -97,7 +93,7 @@
     }
 
     .flatpickr-months{
-        background-color: #3d4444;
+        background-color: $mainColor;
         justify-content:  center;
         .flatpickr-prev-month,.flatpickr-next-month{
             position: relative !important;

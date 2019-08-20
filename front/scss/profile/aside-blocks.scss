@@ -30,8 +30,17 @@
             height: 55px;
             width: auto !important;
             position: absolute;
-            right: -9px;
+            right: -28px;
             bottom: -7px;
+        }
+
+        .group-back
+        {
+            height: 100%;
+            width: auto !important;
+            position: absolute;
+            left: -10px;
+            bottom: 37px;
         }
     }
     .block{

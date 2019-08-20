@@ -56,7 +56,7 @@ const ListAll = ({
                             className="col-4"
                         >   
                             <div>
-                                <img src={stream.thumb} className="img-fluid" alt="" />
+                                <img src={stream.thumb} className="img-fluid w-100" alt="" />
                             </div>
                             <div>
                                 <small>

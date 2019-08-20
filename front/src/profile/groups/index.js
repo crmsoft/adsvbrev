@@ -49,8 +49,8 @@ export default class Groups extends Component{
                 </div>
 
                 <div className="block-content">
-
                     <div className="friends">
+                        <img className='group-back' src="/img/groups-back.svg" alt=""/>
 
                         {
                             list.map( (item, index) => {
@@ -67,7 +67,6 @@ export default class Groups extends Component{
                         }
 
                     </div>
-
                 </div>
             </div>
         )

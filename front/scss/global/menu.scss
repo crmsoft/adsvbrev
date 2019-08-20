@@ -1,6 +1,10 @@
 .menu{
     padding-top: 60px;
     width: 225px;
+    margin:0px 15px 15px 0px;
+    @include menu-box-shadow();
+    @include border-radius(3px);
+    
     ul{
         padding: 0;
         li{
@@ -43,7 +47,7 @@
                 &.active{
                     color: #fff;
                     &:after{
-                        @include right-edge-cut(0, rgba(255, 72, 0, 0.2));
+                        @include right-edge-cut(0, #495766);
                     }
                 }
 

@@ -23,6 +23,9 @@
   }
   .flatpickr-calendar.open,
   .flatpickr-calendar.inline {
+    display: block;
+    position: relative;
+    top: 0px;
     opacity: 1;
     max-height: 640px;
     visibility: visible;
@@ -389,7 +392,7 @@
   span.flatpickr-weekday {
     cursor: default;
     font-size: 90%;
-    background: #1bbc9b;
+    background: $scheduleBgColor !important;
     color: rgba(0,0,0,0.54);
     line-height: 1;
     margin: 0;
@@ -454,7 +457,7 @@
   .flatpickr-day {
     background: none;
     border: 1px solid transparent;
-    border-radius: 150px;
+    border-bottom: 1px solid #fff !important; 
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     color: #484848;
