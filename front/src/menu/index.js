@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+import {Provider} from 'react-redux';
 import { StickyContainer, Sticky } from 'react-sticky';
 import {NavLink} from 'react-router-dom';
+import ProfileSchedule from '../profile/schedule';
+import scheduleStore from '../profile/schedule/store';
+
 
 export default class Menu extends Component {
     render()
@@ -58,13 +62,14 @@ export default class Menu extends Component {
                                             </a>
                                         </li>
                                     </ul>
-
-                                    <div className="left-banner">
-                                        <div className="banner-header">
-                                            <h3>Game Groups </h3>
-                                            <p>Lol Gamer Community</p>
-                                        </div>
-                                        <img src="../img/ad-sample.jpg" alt="The Last of us"/>
+                                    <div className="p-2">
+                                        <Provider store={scheduleStore}>
+                                            <ProfileSchedule 
+                                                isGuest={false}
+                                                list={[]}
+                                                total={0}
+                                            />                    
+                                        </Provider>
                                     </div>
                                 </div>
                             )

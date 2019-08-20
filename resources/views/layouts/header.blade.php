@@ -2,7 +2,7 @@
 
     <nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center">
         <a href="/" class="navbar-brand d-flex w-50 mr-auto">
-            <img src="/img/logo/logo-h.png" alt="Logo" />
+            <img src="/img/logo/logo_v3.png" alt="Logo" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
             <span class="navbar-toggler-icon"></span>

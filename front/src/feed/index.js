@@ -5,7 +5,6 @@ import Menu from '../menu';
 import CreatePostComponent from '../post-add';
 import List from './List';
 
-import ProfileSchedule from '../profile/schedule';
 import scheduleStore from '../profile/schedule/store';
 import GameGroups from './GameGroups';
 
@@ -53,11 +52,13 @@ export default class Feed extends Component{
                                                 store={scheduleStore}
                                             />
                                         </section>
-                                        <section className="block">
-                                            <ProfileSchedule 
-                                                store={scheduleStore}
-                                            />
-                                        </section>
+                                        <div className="left-banner p-0 mt-2">
+                                            <div className="banner-header">
+                                                <h3>Game Groups </h3>
+                                                <p>Lol Gamer Community</p>
+                                            </div>
+                                            <img src="../img/ad-sample.jpg" alt="The Last of us"/>
+                                        </div>
                                     </div>
                                 )
                             }

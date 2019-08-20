@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect, Provider  } from "react-redux";
+import { connect  } from "react-redux";
 import { StickyContainer, Sticky } from 'react-sticky';
 
 import FeedList from './feed/index';
@@ -14,8 +14,6 @@ import {
 } from './fetch/events';
 import CreatePostComponent from '../post-add/index';
 import About from './about';
-import ProfileSchedule from './schedule';
-import scheduleStore from './schedule/store';
 
 import Poster from './ava/Poster';
 
@@ -109,16 +107,13 @@ class ProfileComponent extends Component{
 
                                         </section>
 
-                                        <section className="block">
-
-                                            <Provider store={scheduleStore}>
-                                                <ProfileSchedule 
-                                                    isGuest={false}
-                                                    list={groups} 
-                                                    total={totals.groups} 
-                                                />                    
-                                            </Provider>
-                                        </section>   
+                                        <div className="left-banner p-0 mt-2">
+                                            <div className="banner-header">
+                                                <h3>Game Groups </h3>
+                                                <p>Lol Gamer Community</p>
+                                            </div>
+                                            <img src="../img/ad-sample.jpg" alt="The Last of us"/>
+                                        </div>
                                     </div>
                                 )
                             } }

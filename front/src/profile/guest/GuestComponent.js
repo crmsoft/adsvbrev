@@ -92,7 +92,7 @@ class Guest extends Component{
                                 return (
                                     <div style={_style}>
 
-                                        <section className="block">
+                                        <section className="block friends">
 
                                             <Friends 
                                                 isGuest={true}
@@ -117,7 +117,7 @@ class Guest extends Component{
                                         <section className="block my-games">
 
                                             <Games 
-                                                isGuest={false}
+                                                isGuest={true}
                                                 list={games} 
                                                 total={totals.games} 
                                             />                      

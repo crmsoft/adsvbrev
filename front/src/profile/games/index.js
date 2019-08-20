@@ -66,7 +66,7 @@ export class Games extends Component {
 
     render()
     {
-        const {total, list} = this.props;
+        const {total, list, isGuest} = this.props;
         const {index, modal} = this.state;
 
         return (
@@ -84,11 +84,10 @@ export class Games extends Component {
                         <h3>My Games</h3>
                         <span className="items-count"> ({total})</span>
                     </a>
-                    <div className={'game-star'} ><img src="img/game-star.svg" alt=""/></div>
+                    <div className={'game-star'} ><img src="/img/game-star.svg" alt=""/></div>
                 </div>
     
                 <div className="block-content">
-                    <img src="img/rainbowsix.svg" alt=""/>
 
                     <div className="row">
                         <div className="col">
@@ -98,12 +97,23 @@ export class Games extends Component {
                         </div>
                     </div>
                     <div className="text-center pt-3">
-                        <a href="/my-games" className="dd-btn btn-sm">
-                            <small>
-                                <span className="icon-plus"></span>
-                                Add new games
-                            </small>
-                        </a>
+                        {
+                            isGuest ? (
+                                <a href="/my-games" className="dd-btn btn-sm">
+                                    <small>
+                                        <span className="icon-gamepad"></span>
+                                        Game gallery
+                                    </small>
+                                </a>
+                            ) : (
+                                <a href="/my-games" className="dd-btn btn-sm">
+                                    <small>
+                                        <span className="icon-plus"></span>
+                                        Add new games
+                                    </small>
+                                </a>
+                            )
+                        }
                     </div>
                 </div>
             </div>
