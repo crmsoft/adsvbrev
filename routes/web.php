@@ -24,6 +24,10 @@ Route::get('/validate/{token}', 'Auth\RegisterController@validateEmail')
 //---------------------------------------------------------------------------------
 Auth::routes();
 
+Route::name('pages.privacy-policy')->get('pages/privacy-policy', 'PageController@privacyPolicy');
+Route::name('pages.terms')->get('pages/terms', 'PageController@terms');
+Route::name('pages.about')->get('pages/about', 'PageController@about');
+
 // Application main routes that handled by react route, only get req's
 //=================================================================
 Route::group([

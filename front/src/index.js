@@ -77,6 +77,13 @@ class ErrorBoundary extends React.Component {
     }
   
     static getDerivedStateFromError(error) {
+      
+      // redirect to home page in case previous error cached more then 5s ago
+      if ((((+(new Date)) - localStorage.getItem('err')) / 1000) > 5) { 
+        localStorage.getItem('err', +(new Date));
+        window.location.href = '/';
+      } // end if
+
       // Update state so the next render will show the fallback UI.
       return { hasError: true };
     }
@@ -89,7 +96,7 @@ class ErrorBoundary extends React.Component {
     render() {
       if (this.state.hasError) {
         // You can render any custom fallback UI
-        return <h1>Something went wrong.</h1>;
+        return <small>an error. redirecting to home page.</small>;
       }
   
       return this.props.children; 

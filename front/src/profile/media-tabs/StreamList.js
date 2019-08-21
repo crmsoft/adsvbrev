@@ -58,7 +58,7 @@ const ListAll = ({
                             <div>
                                 <img src={stream.thumb} className="img-fluid w-100" alt="" />
                             </div>
-                            <div>
+                            <div className="text-truncate">
                                 <small>
                                     watching: {stream.watching} | <span className="main-color">by {stream.username}</span>
                                 </small>
@@ -137,9 +137,9 @@ export class StreamList extends Component {
                                     className="col-4"
                                 >   
                                     <div>
-                                        <img src={stream.thumb} alt="" />
+                                        <img src={stream.thumb} alt="" className="w-100"/>
                                     </div>
-                                    <div>
+                                    <div className="text-truncate">
                                         <small>
                                             watching: {stream.watching} | <span className="main-color">by {stream.username}</span>
                                         </small>

@@ -18,6 +18,8 @@
         </div>
     </div>
 </div>
+
+@include('auth.footer')
 @endsection
 
 @push('css')

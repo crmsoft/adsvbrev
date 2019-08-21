@@ -1,0 +1,1 @@
+Privacy policy is to use safe

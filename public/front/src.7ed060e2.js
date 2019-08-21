@@ -51419,7 +51419,9 @@ var ListAll = function ListAll(_ref2) {
       src: stream.thumb,
       className: "img-fluid w-100",
       alt: ""
-    })), _react.default.createElement("div", null, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
+    })), _react.default.createElement("div", {
+      className: "text-truncate"
+    }, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
       className: "main-color"
     }, "by ", stream.username))));
   })));
@@ -51514,8 +51516,11 @@ function (_Component) {
           className: "col-4"
         }, _react.default.createElement("div", null, _react.default.createElement("img", {
           src: stream.thumb,
-          alt: ""
-        })), _react.default.createElement("div", null, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
+          alt: "",
+          className: "w-100"
+        })), _react.default.createElement("div", {
+          className: "text-truncate"
+        }, _react.default.createElement("small", null, "watching: ", stream.watching, " | ", _react.default.createElement("span", {
           className: "main-color"
         }, "by ", stream.username))));
       })), _react.default.createElement("span", {
@@ -93313,7 +93318,7 @@ function (_React$Component) {
     value: function render() {
       if (this.state.hasError) {
         // You can render any custom fallback UI
-        return _react.default.createElement("h1", null, "Something went wrong.");
+        return _react.default.createElement("small", null, "an error. redirecting to home page.");
       }
 
       return this.props.children;
@@ -93321,7 +93326,14 @@ function (_React$Component) {
   }], [{
     key: "getDerivedStateFromError",
     value: function getDerivedStateFromError(error) {
+      // redirect to home page in case previous error cached more then 5s ago
+      if ((+new Date() - localStorage.getItem('err')) / 1000 > 5) {
+        localStorage.getItem('err', +new Date());
+        window.location.href = '/';
+      } // end if
       // Update state so the next render will show the fallback UI.
+
+
       return {
         hasError: true
       };
@@ -93359,7 +93371,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37858" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40953" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
