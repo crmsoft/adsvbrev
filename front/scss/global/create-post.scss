@@ -2,7 +2,7 @@
     height: 25px;
     position: relative;
     textarea{
-        background-color: $postDelimiter;
+        background-color: $postBack;
         resize: none;
         outline: 0;
         padding: 0;
@@ -33,7 +33,7 @@
     padding: 10px;
     margin-top: $sectionTop;
     @include section-border-radius();
-    background-color: $postDelimiter;
+    background-color: $postBack;
     border: 1px solid $mainColor;
     position: relative;
     .wrapper{

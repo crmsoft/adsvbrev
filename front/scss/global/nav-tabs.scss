@@ -21,7 +21,7 @@
             &::before{
                 margin-right: 6px;
                 font-size: 12px;
-                @include right-edge-cut(0, $gameReview);
+                @include right-edge-cut(0, #202833);
             }
             span{
                 text-transform: uppercase;
@@ -31,7 +31,7 @@
             a{
                 color: $white;
                 &:before{
-                    background-color:#3D4444;
+                    background-color:#495766;
                 }
             }
         }
