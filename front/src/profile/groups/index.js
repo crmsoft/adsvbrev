@@ -47,7 +47,7 @@ export default class Groups extends Component{
                     <Header showModal={this.showModal} total={total} />
                     <GroupList isGuest={isGuest} user={user} closeModal={this.closeModal} show={show} />
                 </div>
-                <img className={'group-back'} src="img/groups-back.svg" alt=""/>
+                <img className={'group-back'} src="/img/groups-back.svg" alt=""/>
                 <div className="block-content">
                     <div className="friends">
 

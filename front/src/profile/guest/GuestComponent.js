@@ -103,7 +103,7 @@ class Guest extends Component{
 
                                         </section>
 
-                                        <section className="block">
+                                        <section className="block friends">
 
                                             <Groups 
                                                 user={profile.user}
