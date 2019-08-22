@@ -9124,7 +9124,7 @@ header {
     header .navbar-nav .nav-item .nav-link.icon-friend:before, header .navbar-nav .nav-item .nav-link.icon-notification:before {
       font-size: 33px; }
   header .navbar-nav .nav-item .followers-popup:hover {
-    padding: 13px 0;
+    padding: 11px 0;
     margin-top: -15px;
     background-color: #131719; }
   header .navbar-nav .nav-item .nav-item-count {

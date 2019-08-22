@@ -44,7 +44,7 @@ export default class Profile extends Component {
                         <div className="col-auto">
                             <Ava src={`${data.ava}`} />
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto" style={{height:'150px'}}>
                             <div className="content-bottom">
                                 <h1>
                                     <a
@@ -56,7 +56,7 @@ export default class Profile extends Component {
                                 </h1>
                             </div>
                         </div>  
-                        <div className="col-auto flex-grow-1">
+                        <div className="col-auto flex-grow-1" style={{height:'150px'}}>
                             <div className="content-bottom flex-column-reverse">
                                 <ul className="social-list">
                                     <li>

@@ -90389,7 +90389,10 @@ function (_Component) {
       }, _react.default.createElement(Ava, {
         src: "".concat(data.ava)
       })), _react.default.createElement("div", {
-        className: "col-auto"
+        className: "col-auto",
+        style: {
+          height: '150px'
+        }
       }, _react.default.createElement("div", {
         className: "content-bottom"
       }, _react.default.createElement("h1", null, _react.default.createElement("a", {
@@ -90398,7 +90401,10 @@ function (_Component) {
         },
         href: "javascript:void(0)"
       }, data.name)))), _react.default.createElement("div", {
-        className: "col-auto flex-grow-1"
+        className: "col-auto flex-grow-1",
+        style: {
+          height: '150px'
+        }
       }, _react.default.createElement("div", {
         className: "content-bottom flex-column-reverse"
       }, _react.default.createElement("ul", {
@@ -91893,15 +91899,20 @@ var GameCard = function GameCard(_ref) {
   return _react.default.createElement(_reactRouterDom.Link, {
     to: "/g/".concat(game.username),
     className: "game-group row ml-1 mb-2"
-  }, _react.default.createElement("div", null, _react.default.createElement("img", {
+  }, _react.default.createElement("div", {
+    className: "col-auto p-0"
+  }, _react.default.createElement("img", {
     src: game.ava,
     style: {
       width: 50
     }
   })), _react.default.createElement("div", {
-    className: "col"
+    className: "col-auto",
+    style: {
+      width: '150px'
+    }
   }, _react.default.createElement("div", {
-    className: "name main-color"
+    className: "name main-color text-truncate"
   }, _react.default.createElement("small", {
     title: game.full_name
   }, game.full_name)), _react.default.createElement("span", {
@@ -93424,7 +93435,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46840" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46102" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

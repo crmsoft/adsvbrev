@@ -4,11 +4,11 @@ import {Link} from 'react-router-dom';
 const GameCard = ({game}) => {
     return (
         <Link to={`/g/${game.username}`} className="game-group row ml-1 mb-2">
-            <div>
+            <div className="col-auto p-0">
                 <img src={game.ava} style={{width: 50}} />
             </div>
-            <div className="col">
-                <div className="name main-color">
+            <div className="col-auto" style={{width:'150px'}}>
+                <div className="name main-color text-truncate">
                     <small title={game.full_name}>
                         {game.full_name}
                     </small>
