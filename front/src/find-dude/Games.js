@@ -3,10 +3,11 @@ import Game from './Game';
 import { Loading } from '../general/Loading';
 import {DudeContext} from './index';
 
-const GameList = ({games}) => (
+const GameList = ({games, filter}) => (
     <div className="my-games-section list-scroll">
         {
-            games.map((game, index) => {
+            (filter.length ? games.filter(game => game.name.toLocaleLowerCase().indexOf(filter) !== -1) : games)
+            .map((game, index) => {
                 return <Game 
                             key={game.id} 
                             index={index} 
@@ -27,8 +28,14 @@ const Games = () => {
     )
 }
 class MyGames extends Component {
+
+    state = {
+        filterGame: ''
+    }
+
     render () {
         const {loading, games} = this.props;
+        const {filterGame} = this.state;
         
         return (
             <div className="my-games" >
@@ -38,7 +45,7 @@ class MyGames extends Component {
                 </div>
                 
                 {
-                    loading ? <Loading /> : <GameList games={games} />
+                    loading ? <Loading /> : <GameList filter={filterGame.toLocaleLowerCase().trim()} games={games} />
                 }
 
                 <div className="my-games-bottom">
@@ -53,7 +60,13 @@ class MyGames extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="addon-wrapping"><i className="fa fa-search"></i></span>
                         </div>
-                        <input type="text" className="form-control" placeholder="Search game" aria-label="Search My games" aria-describedby="addon-wrapping" />
+                        <input 
+                            value={filterGame}
+                            type="text" 
+                            className="form-control" 
+                            placeholder="Search game" 
+                            onChange={e => this.setState(({filterGame:e.target.value}))}
+                            />
                     </div>
                 </div>
                 </div>

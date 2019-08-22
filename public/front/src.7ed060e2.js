@@ -89389,19 +89389,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var GameList = function GameList(_ref) {
-  var games = _ref.games;
+  var games = _ref.games,
+      filter = _ref.filter;
   return _react.default.createElement("div", {
     className: "my-games-section list-scroll"
-  }, games.map(function (game, index) {
+  }, (filter.length ? games.filter(function (game) {
+    return game.name.toLocaleLowerCase().indexOf(filter) !== -1;
+  }) : games).map(function (game, index) {
     return _react.default.createElement(_Game.default, {
       key: game.id,
       index: index,
@@ -89427,17 +89432,34 @@ function (_Component) {
   _inherits(MyGames, _Component);
 
   function MyGames() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, MyGames);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MyGames).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MyGames)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      filterGame: ''
+    });
+
+    return _this;
   }
 
   _createClass(MyGames, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
           loading = _this$props.loading,
           games = _this$props.games;
+      var filterGame = this.state.filterGame;
       return _react.default.createElement("div", {
         className: "my-games"
       }, _react.default.createElement("div", {
@@ -89446,6 +89468,7 @@ function (_Component) {
         src: "img/gamepad.svg",
         alt: ""
       }), _react.default.createElement("h3", null, "My Games")), loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(GameList, {
+        filter: filterGame.toLocaleLowerCase().trim(),
         games: games
       }), _react.default.createElement("div", {
         className: "my-games-bottom"
@@ -89463,11 +89486,15 @@ function (_Component) {
       }, _react.default.createElement("i", {
         className: "fa fa-search"
       }))), _react.default.createElement("input", {
+        value: filterGame,
         type: "text",
         className: "form-control",
         placeholder: "Search game",
-        "aria-label": "Search My games",
-        "aria-describedby": "addon-wrapping"
+        onChange: function onChange(e) {
+          return _this2.setState({
+            filterGame: e.target.value
+          });
+        }
       })))));
     }
   }]);
@@ -89523,14 +89550,20 @@ var Channel = function Channel(_ref) {
   }));
 };
 
-var _default = function _default() {
-  return _react.default.createElement(_.DudeContext.Consumer, null, function (_ref2) {
-    var setActiveRoom = _ref2.setActiveRoom,
-        subChannels = _ref2.subChannels,
-        active_room_index = _ref2.active_room_index;
+var _default = function _default(_ref2) {
+  var filter = _ref2.filter;
+
+  var _filter = filter.toLocaleLowerCase();
+
+  return _react.default.createElement(_.DudeContext.Consumer, null, function (_ref3) {
+    var setActiveRoom = _ref3.setActiveRoom,
+        subChannels = _ref3.subChannels,
+        active_room_index = _ref3.active_room_index;
     return _react.default.createElement("div", {
       className: "game-channel-list"
-    }, subChannels.map(function (channel, index) {
+    }, (_filter.length ? subChannels.filter(function (ch) {
+      return ch.channel.toLocaleLowerCase().indexOf(_filter) !== -1;
+    }) : subChannels).map(function (channel, index) {
       return _react.default.createElement(Channel, {
         setActiveRoom: setActiveRoom,
         index: index,
@@ -89707,6 +89740,11 @@ var GameChannelsComponent = function GameChannelsComponent(_ref) {
       processing = _useState6[0],
       setProcessing = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      filter = _useState8[0],
+      setFilter = _useState8[1];
+
   var createChannelAction = function createChannelAction(data) {
     setProcessing(true);
     var frm = new FormData();
@@ -89765,7 +89803,9 @@ var GameChannelsComponent = function GameChannelsComponent(_ref) {
     className: "col-auto"
   }, _react.default.createElement("span", {
     className: "icon icon-plus"
-  })))), loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(_ChannelList.default, null), _react.default.createElement("div", {
+  })))), loading ? _react.default.createElement(_Loading.Loading, null) : _react.default.createElement(_ChannelList.default, {
+    filter: filter
+  }), _react.default.createElement("div", {
     className: "my-games-bottom"
   }, _react.default.createElement("div", {
     className: "my-games-notifications"
@@ -89784,8 +89824,9 @@ var GameChannelsComponent = function GameChannelsComponent(_ref) {
     type: "text",
     className: "form-control",
     placeholder: "Search game",
-    "aria-label": "Search My games",
-    "aria-describedby": "addon-wrapping"
+    onChange: function onChange(e) {
+      return setFilter(e.target.value);
+    }
   })))));
 };
 
@@ -89867,7 +89908,8 @@ exports.DudeContext = DudeContext;
 
 var UserList = function UserList(_ref) {
   var activeGame = _ref.activeGame,
-      activeRoom = _ref.activeRoom;
+      activeRoom = _ref.activeRoom,
+      filter = _ref.filter;
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -89898,7 +89940,9 @@ var UserList = function UserList(_ref) {
   }, [activeGame, activeRoom]);
   return _react.default.createElement("div", {
     className: "on-channels-messages list-scroll"
-  }, users.map(function (user, index) {
+  }, (filter.length ? users.filter(function (u) {
+    return u.full_name && u.full_name.toLocaleLowerCase().indexOf(filter) !== -1 || u.username.toLocaleLowerCase().indexOf(filter) !== -1;
+  }) : users).map(function (user, index) {
     return _react.default.createElement(_User.User, {
       key: index,
       user: user
@@ -89931,7 +89975,8 @@ function (_Component) {
       messageSend: null,
       subChannels: [],
       active_room_index: -1,
-      roomsActive: false
+      roomsActive: false,
+      filterUser: ''
     });
 
     return _this;
@@ -90124,6 +90169,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this6 = this;
+
       var _this$state5 = this.state,
           loading = _this$state5.loading,
           active_room_index = _this$state5.active_room_index,
@@ -90131,7 +90178,8 @@ function (_Component) {
           subChannels = _this$state5.subChannels,
           roomsActive = _this$state5.roomsActive,
           active_index = _this$state5.active_index,
-          messageSend = _this$state5.messageSend;
+          messageSend = _this$state5.messageSend,
+          filterUser = _this$state5.filterUser;
       var activeGame = games[active_index];
       var activeRoom = subChannels[active_room_index];
       return _react.default.createElement("div", {
@@ -90196,7 +90244,8 @@ function (_Component) {
       }), _react.default.createElement("h3", null, "On Channels")), _react.default.createElement(UserList, {
         key: this.props.channel_timestamp,
         activeGame: activeGame,
-        activeRoom: activeRoom
+        activeRoom: activeRoom,
+        filter: filterUser.toLocaleLowerCase()
       }), _react.default.createElement("div", {
         className: "my-games-bottom"
       }, _react.default.createElement("div", {
@@ -90211,11 +90260,15 @@ function (_Component) {
       }, _react.default.createElement("i", {
         className: "fa fa-search"
       }))), _react.default.createElement("input", {
+        value: filterUser,
         type: "text",
         className: "form-control",
         placeholder: "Search user",
-        "aria-label": "Search My games",
-        "aria-describedby": "addon-wrapping"
+        onChange: function onChange(e) {
+          return _this6.setState({
+            filterUser: e.target.value
+          });
+        }
       }))))))))));
     }
   }]);
@@ -93371,7 +93424,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40900" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46840" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

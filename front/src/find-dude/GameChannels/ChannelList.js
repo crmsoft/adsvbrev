@@ -34,8 +34,11 @@ const Channel = ({
     )
 }
 
-export default () => {
+export default ({
+    filter
+}) => {
 
+    const _filter = filter.toLocaleLowerCase();
     return (
         <DudeContext.Consumer>
             {
@@ -46,7 +49,9 @@ export default () => {
                 }) => (
                     <div className="game-channel-list">
                         {
-                            subChannels.map((channel, index) => <Channel 
+                            (_filter.length ? subChannels.filter(ch => {
+                                return ch.channel.toLocaleLowerCase().indexOf(_filter) !== -1
+                            }) : subChannels).map((channel, index) => <Channel 
                                                                     setActiveRoom={setActiveRoom}
                                                                     index={index} 
                                                                     active_index={active_room_index}

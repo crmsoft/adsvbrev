@@ -14,7 +14,7 @@ import GameChannels from './GameChannels';
 
 export const DudeContext = React.createContext();
 
-const UserList = ({activeGame,activeRoom}) => {
+const UserList = ({activeGame,activeRoom, filter}) => {
     
     const [users, setUsers] = useState([]);
 
@@ -41,7 +41,11 @@ const UserList = ({activeGame,activeRoom}) => {
     return (
         <div className="on-channels-messages list-scroll">
             {
-                users.map((user, index) => {
+                (filter.length ? users.filter(u => {
+                    return (u.full_name && u.full_name.toLocaleLowerCase().indexOf(filter) !== -1)
+                        || u.username.toLocaleLowerCase().indexOf(filter) !== -1
+                }) : users)
+                .map((user, index) => {
                     return <User 
                         key={index}
                         user={user}
@@ -61,7 +65,8 @@ class FDudesComponent extends Component{
         messageSend: null,
         subChannels: [],
         active_room_index: -1,
-        roomsActive: false
+        roomsActive: false,
+        filterUser: ''
     }
 
     componentDidMount() {
@@ -214,7 +219,7 @@ class FDudesComponent extends Component{
             active_room_index,
             games, subChannels, 
             roomsActive, active_index, 
-            messageSend
+            messageSend, filterUser
         } = this.state;
         const activeGame = games[active_index];
         const activeRoom = subChannels[active_room_index];
@@ -290,6 +295,7 @@ class FDudesComponent extends Component{
                                         key={this.props.channel_timestamp}
                                         activeGame={activeGame}
                                         activeRoom={activeRoom}
+                                        filter={filterUser.toLocaleLowerCase()}
                                     />
 
                                     <div className="my-games-bottom">
@@ -298,7 +304,13 @@ class FDudesComponent extends Component{
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text" id="addon-wrapping"><i className="fa fa-search"></i></span>
                                                 </div>
-                                                <input type="text" className="form-control" placeholder="Search user" aria-label="Search My games" aria-describedby="addon-wrapping" />
+                                                <input 
+                                                    value={filterUser}
+                                                    type="text" 
+                                                    className="form-control" 
+                                                    placeholder="Search user" 
+                                                    onChange={e => this.setState(({filterUser:e.target.value}))}
+                                                    />
                                             </div>
                                         </div>
                                     </div>

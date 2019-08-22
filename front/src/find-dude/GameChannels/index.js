@@ -27,6 +27,7 @@ const GameChannelsComponent = ({
     const [createOpen, setCreateOpen] = useState(false);
     const [errors, setErrors] = useState({});
     const [processing, setProcessing] = useState(false);
+    const [filter, setFilter] = useState('');
 
     const createChannelAction = (data) => {
         setProcessing(true);
@@ -79,7 +80,7 @@ const GameChannelsComponent = ({
             </div>
             
             {
-                loading ? <Loading /> : <ChannelList />
+                loading ? <Loading /> : <ChannelList filter={filter} />
             }
 
             <div className="my-games-bottom">
@@ -94,7 +95,12 @@ const GameChannelsComponent = ({
                     <div className="input-group-prepend">
                         <span className="input-group-text" id="addon-wrapping"><i className="fa fa-search"></i></span>
                     </div>
-                    <input type="text" className="form-control" placeholder="Search game" aria-label="Search My games" aria-describedby="addon-wrapping" />
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Search game"
+                        onChange={e => setFilter(e.target.value)}
+                        />
                 </div>
             </div>
             </div>
