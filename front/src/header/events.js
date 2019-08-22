@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const PROFILE_LOADED = 'PROFILE_LOADED';
 const REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
+const INCREMENT_FOLLOWERS = 'INCREMENT_FOLLOWERS';
 const NOTIFICATIONS_VIEWED = 'NOTIFICATIONS_VIEWED';
 const INCREMENT_NOTIFICATION = 'INCREMENT_NOTIFICATION';
 
@@ -22,6 +23,12 @@ const reduce_followers = () => {
     }
 }
 
+const increment_followers = () => {
+    return dispatch => {
+        dispatch({type: INCREMENT_FOLLOWERS, data: null});
+    }
+}
+
 const increment_notification = () => {
     return dispatch => {
         dispatch({type: INCREMENT_NOTIFICATION, data: null});
@@ -30,11 +37,12 @@ const increment_notification = () => {
 
 export {
     load_profile,
-    reduce_followers,
+    reduce_followers,increment_followers,
     n_viewed,
     increment_notification,
     PROFILE_LOADED,
     REDUCE_FOLLOWERS,
+    INCREMENT_FOLLOWERS,
     NOTIFICATIONS_VIEWED,
     INCREMENT_NOTIFICATION
 };

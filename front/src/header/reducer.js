@@ -2,6 +2,7 @@
 import {
     PROFILE_LOADED,
     REDUCE_FOLLOWERS,
+    INCREMENT_FOLLOWERS,
     NOTIFICATIONS_VIEWED,
     INCREMENT_NOTIFICATION
 } from './events';
@@ -30,6 +31,17 @@ const reducer = (state = {data: {user:{}}}, action) => {
             return {
                 ...state,
                 notifications: state.notifications + 1
+            }
+        }
+        case INCREMENT_FOLLOWERS : {
+            console.log('new state', {
+                ...state,
+                followers: state.followers + 1
+            });
+            
+            return {
+                ...state,
+                followers: state.followers + 1
             }
         }
         default: return {

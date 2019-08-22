@@ -8,7 +8,8 @@ import {
     AUTH_SUCCESS,
     USER_WENT_OFFLINE,
     SEND_DUDE_MESSAGE,
-    CHANNEL_ON_CHANNEL_UPDATE
+    CHANNEL_ON_CHANNEL_UPDATE,
+    USER_HAS_SUBSCRIPTION
 } from './events';
 
 
@@ -78,6 +79,12 @@ const reducer = (state = {
                 ...state,
                 received: AUTH_SUCCESS,
                 token: action.data
+            }
+        }
+        case USER_HAS_SUBSCRIPTION : {
+            return {
+                ...state,
+                received: USER_HAS_SUBSCRIPTION
             }
         }
         case CHANNEL_ON_CHANNEL_UPDATE : {

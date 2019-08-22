@@ -3,11 +3,10 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import { load_profile, reduce_followers, n_viewed, increment_notification } from './events';
+import { load_profile, reduce_followers, n_viewed, increment_notification, increment_followers } from './events';
 import Followers from './Followers';
 import Notification from './Notification';
 import { acceptToFriends, declineFriendship } from '../friendship/event';
-import Tooltip from '../Modal/Tooltip';
 
 const IconFriends = () => <a href="javascript:void(0)" className="nav-link icon-friend"></a>
 
@@ -72,6 +71,9 @@ class HeaderComponent extends Component{
                                 <li className="nav-item">
                                     <span className={`nav-item-count ` + (followers === 0 ? `d-none`:``)}>{followers}</span>
                                     <Followers 
+                                        onNotificationReceived={() => {
+                                            this.props.in_user()
+                                        }}
                                         onDecline={u => {this.props.decline(u);this.props.reduce_followers();}}
                                         onAccept={u => {this.props.accept(u);this.props.reduce_followers();}}
                                         trigger={IconFriends}
@@ -145,7 +147,8 @@ const Header = connect(
             notifications_viewed: () => dispatch(n_viewed()),
             accept: username => dispatch(acceptToFriends(username)),
             decline: username => dispatch(declineFriendship(username)),
-            in_not: () => dispatch(increment_notification())
+            in_not: () => dispatch(increment_notification()),
+            in_user: () => dispatch(increment_followers())
         }
     }
 )(HeaderComponent);

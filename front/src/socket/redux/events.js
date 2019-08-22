@@ -9,6 +9,7 @@ export const CHANNEL_ON_CHANNEL_UPDATE = 'CHANNEL_ON_CHANNEL_UPDATE';
 
 export const USER_WENT_ONLINE = 'USER_WENT_ONLINE';
 export const USER_WENT_OFFLINE = 'USER_WENT_OFFLINE';
+export const USER_HAS_SUBSCRIPTION = 'USER_HAS_SUBSCRIPTION';
 
 
 export const send_message = chat => {

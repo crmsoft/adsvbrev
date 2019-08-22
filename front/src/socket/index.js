@@ -9,7 +9,8 @@ import {
     CHAT_MESSAGES_READ,
     USER_WENT_OFFLINE,
     USER_WENT_ONLINE,
-    CHANNEL_ON_CHANNEL_UPDATE
+    CHANNEL_ON_CHANNEL_UPDATE,
+    USER_HAS_SUBSCRIPTION
 } from './redux/events';
 import SocketWrapper from './SocketWrapper';
 
@@ -56,6 +57,10 @@ const onMessage = ({data}) => {
 
     if (response.action === 'pop-participant') {
         store.dispatch({type: CHANNEL_ON_CHANNEL_UPDATE, data: response.channel})
+    } // end if
+
+    if (response.action === 'subscription') {
+        store.dispatch({type: USER_HAS_SUBSCRIPTION, data: response.channel})
     } // end if
 }
 

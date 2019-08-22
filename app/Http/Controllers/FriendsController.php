@@ -7,6 +7,7 @@ use App\UserFriends;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class FriendsController extends Controller
 {
@@ -27,6 +28,13 @@ class FriendsController extends Controller
                         'friend_id' => $addMe->id,
                         'status' => User::STATUS_SUBSCRIBE
                     ]);
+
+                    // notify user 
+                    Redis::publish(config('app.pub-sub-channel'), json_encode([
+                        'action' => 'user-subscribed',
+                        'target' => $addMe->id,
+                        'user' => $user->id,
+                    ]));
 
                     return [
                         'status' => 'subscribed'

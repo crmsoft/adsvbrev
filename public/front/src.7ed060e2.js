@@ -45474,7 +45474,7 @@ exports.default = Comment;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.INCREMENT_NOTIFICATION = exports.NOTIFICATIONS_VIEWED = exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.increment_notification = exports.n_viewed = exports.reduce_followers = exports.load_profile = void 0;
+exports.INCREMENT_NOTIFICATION = exports.NOTIFICATIONS_VIEWED = exports.INCREMENT_FOLLOWERS = exports.REDUCE_FOLLOWERS = exports.PROFILE_LOADED = exports.increment_notification = exports.n_viewed = exports.increment_followers = exports.reduce_followers = exports.load_profile = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -45484,6 +45484,8 @@ var PROFILE_LOADED = 'PROFILE_LOADED';
 exports.PROFILE_LOADED = PROFILE_LOADED;
 var REDUCE_FOLLOWERS = 'REDUCE_FOLLOWERS';
 exports.REDUCE_FOLLOWERS = REDUCE_FOLLOWERS;
+var INCREMENT_FOLLOWERS = 'INCREMENT_FOLLOWERS';
+exports.INCREMENT_FOLLOWERS = INCREMENT_FOLLOWERS;
 var NOTIFICATIONS_VIEWED = 'NOTIFICATIONS_VIEWED';
 exports.NOTIFICATIONS_VIEWED = NOTIFICATIONS_VIEWED;
 var INCREMENT_NOTIFICATION = 'INCREMENT_NOTIFICATION';
@@ -45523,6 +45525,17 @@ var reduce_followers = function reduce_followers() {
 };
 
 exports.reduce_followers = reduce_followers;
+
+var increment_followers = function increment_followers() {
+  return function (dispatch) {
+    dispatch({
+      type: INCREMENT_FOLLOWERS,
+      data: null
+    });
+  };
+};
+
+exports.increment_followers = increment_followers;
 
 var increment_notification = function increment_notification() {
   return function (dispatch) {
@@ -45576,6 +45589,16 @@ var reducer = function reducer() {
       {
         return Object.assign({}, state, {
           notifications: state.notifications + 1
+        });
+      }
+
+    case _events.INCREMENT_FOLLOWERS:
+      {
+        console.log('new state', Object.assign({}, state, {
+          followers: state.followers + 1
+        }));
+        return Object.assign({}, state, {
+          followers: state.followers + 1
         });
       }
 
@@ -85297,7 +85320,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.send_dude_message = exports.send_message = exports.USER_WENT_OFFLINE = exports.USER_WENT_ONLINE = exports.CHANNEL_ON_CHANNEL_UPDATE = exports.AUTH_SUCCESS = exports.CHAT_MESSAGES_READ = exports.NOTIFICATION = exports.DUDE_CHANNEL_UPDATE = exports.SEND_DUDE_MESSAGE = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
+exports.send_dude_message = exports.send_message = exports.USER_HAS_SUBSCRIPTION = exports.USER_WENT_OFFLINE = exports.USER_WENT_ONLINE = exports.CHANNEL_ON_CHANNEL_UPDATE = exports.AUTH_SUCCESS = exports.CHAT_MESSAGES_READ = exports.NOTIFICATION = exports.DUDE_CHANNEL_UPDATE = exports.SEND_DUDE_MESSAGE = exports.SEND_MESSAGE = exports.MESSAGE = void 0;
 var MESSAGE = 'MESSAGE';
 exports.MESSAGE = MESSAGE;
 var SEND_MESSAGE = 'SEND_MESSAGE';
@@ -85318,6 +85341,8 @@ var USER_WENT_ONLINE = 'USER_WENT_ONLINE';
 exports.USER_WENT_ONLINE = USER_WENT_ONLINE;
 var USER_WENT_OFFLINE = 'USER_WENT_OFFLINE';
 exports.USER_WENT_OFFLINE = USER_WENT_OFFLINE;
+var USER_HAS_SUBSCRIPTION = 'USER_HAS_SUBSCRIPTION';
+exports.USER_HAS_SUBSCRIPTION = USER_HAS_SUBSCRIPTION;
 
 var send_message = function send_message(chat) {
   return function (dispatch) {
@@ -85426,6 +85451,13 @@ var reducer = function reducer() {
         return Object.assign({}, state, {
           received: _events.AUTH_SUCCESS,
           token: action.data
+        });
+      }
+
+    case _events.USER_HAS_SUBSCRIPTION:
+      {
+        return Object.assign({}, state, {
+          received: _events.USER_HAS_SUBSCRIPTION
         });
       }
 
@@ -86129,7 +86161,65 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Chat;
-},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./redux/events":"../src/chat/redux/events.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/header/Followers.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Messenger":"../src/chat/Messenger.js","./Dialogs":"../src/chat/Dialogs.js","react-redux":"../../node_modules/react-redux/es/index.js","./redux/store":"../src/chat/redux/store.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","./redux/events":"../src/chat/redux/events.js","./sounds/NewMessage":"../src/chat/sounds/NewMessage.js"}],"../src/chat/sounds/NewNotification.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var sound = "http://ahandfulof.me/fail/zvuk-soobshcheniya-v-kontakte.mp3";
+
+var NewNotification =
+/*#__PURE__*/
+function () {
+  function NewNotification() {
+    _classCallCheck(this, NewNotification);
+
+    this.playing = false;
+    this.locked = false;
+  }
+
+  _createClass(NewNotification, [{
+    key: "toggle",
+    value: function toggle(state) {
+      this.locked = state === true;
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      var _this = this;
+
+      if (this.locked) {
+        return false;
+      } // end if
+
+
+      if (!this.playing) {
+        var audio = new Audio(sound);
+        audio.play();
+
+        audio.onended = function (e) {
+          _this.playing = false;
+        };
+      }
+    }
+  }]);
+
+  return NewNotification;
+}();
+
+var player = new NewNotification();
+var _default = player;
+exports.default = _default;
+},{}],"../src/header/Followers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86144,6 +86234,12 @@ var _reactRouterDom = require("react-router-dom");
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("../socket/redux/store"));
+
+var _events = require("../socket/redux/events");
+
+var _NewNotification = _interopRequireDefault(require("../chat/sounds/NewNotification"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86196,13 +86292,37 @@ function (_Component) {
   }
 
   _createClass(Followers, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.socketSubscription = _store.default.subscribe(function () {
+        var state = _store.default.getState();
+
+        if (state.received === _events.USER_HAS_SUBSCRIPTION) {
+          _NewNotification.default.play();
+
+          _this2.props.onNotificationReceived();
+        } // end if
+
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.socketSubscription) {
+        this.socketSubscription();
+      } // end if
+
+    }
+  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.load) {
         _axios.default.get("/followers/list").then(function (response) {
-          return _this2.setState(function () {
+          return _this3.setState(function () {
             return {
               load: false,
               list: response.data.data
@@ -86215,22 +86335,6 @@ function (_Component) {
   }, {
     key: "onAccept",
     value: function onAccept(username) {
-      var _this3 = this;
-
-      this.setState(function (state) {
-        return {
-          list: state.list.filter(function (user) {
-            return user.username !== username;
-          }),
-          load: false
-        };
-      }, function () {
-        _this3.props.onAccept(username);
-      });
-    }
-  }, {
-    key: "onDecline",
-    value: function onDecline(username) {
       var _this4 = this;
 
       this.setState(function (state) {
@@ -86241,7 +86345,23 @@ function (_Component) {
           load: false
         };
       }, function () {
-        _this4.props.onDecline(username);
+        _this4.props.onAccept(username);
+      });
+    }
+  }, {
+    key: "onDecline",
+    value: function onDecline(username) {
+      var _this5 = this;
+
+      this.setState(function (state) {
+        return {
+          list: state.list.filter(function (user) {
+            return user.username !== username;
+          }),
+          load: false
+        };
+      }, function () {
+        _this5.props.onDecline(username);
       });
     }
   }, {
@@ -86265,7 +86385,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var list = this.state.list;
 
@@ -86319,7 +86439,7 @@ function (_Component) {
         }, _react.default.createElement("div", {
           className: "ava-wrapper"
         }, _react.default.createElement("div", {
-          className: "status offline"
+          className: "status ".concat(user.status)
         }), _react.default.createElement("div", {
           className: "user-list-ava"
         }, _react.default.createElement("img", {
@@ -86334,14 +86454,14 @@ function (_Component) {
           className: "actions"
         }, _react.default.createElement("button", {
           onClick: function onClick(e) {
-            return _this5.onAccept.call(_this5, user.username);
+            return _this6.onAccept.call(_this6, user.username);
           },
           className: "dd-btn btn-yellow btn-sm m-1"
         }, _react.default.createElement("span", {
           className: "icon-accept-friendship"
         }), "Accept"), _react.default.createElement("button", {
           onClick: function onClick(e) {
-            return _this5.onDecline.call(_this5, user.username);
+            return _this6.onDecline.call(_this6, user.username);
           },
           className: "dd-btn btn-red btn-sm m-1"
         }, _react.default.createElement("span", {
@@ -86355,7 +86475,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Followers;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","axios":"../../node_modules/axios/index.js","../socket/redux/store":"../src/socket/redux/store.js","../socket/redux/events":"../src/socket/redux/events.js","../chat/sounds/NewNotification":"../src/chat/sounds/NewNotification.js"}],"../src/event/redux/event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86538,65 +86658,7 @@ var _logger = new _reduxLogger.createLogger({
 var store = (0, _redux.createStore)(_reducer.default, (0, _redux.applyMiddleware)(_reduxThunk.default, _logger));
 var _default = store;
 exports.default = _default;
-},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/chat/sounds/NewNotification.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var sound = "http://ahandfulof.me/fail/zvuk-soobshcheniya-v-kontakte.mp3";
-
-var NewNotification =
-/*#__PURE__*/
-function () {
-  function NewNotification() {
-    _classCallCheck(this, NewNotification);
-
-    this.playing = false;
-    this.locked = false;
-  }
-
-  _createClass(NewNotification, [{
-    key: "toggle",
-    value: function toggle(state) {
-      this.locked = state === true;
-    }
-  }, {
-    key: "play",
-    value: function play() {
-      var _this = this;
-
-      if (this.locked) {
-        return false;
-      } // end if
-
-
-      if (!this.playing) {
-        var audio = new Audio(sound);
-        audio.play();
-
-        audio.onended = function (e) {
-          _this.playing = false;
-        };
-      }
-    }
-  }]);
-
-  return NewNotification;
-}();
-
-var player = new NewNotification();
-var _default = player;
-exports.default = _default;
-},{}],"../src/header/notifications/Event.js":[function(require,module,exports) {
+},{"redux":"../../node_modules/redux/es/index.js","redux-thunk":"../../node_modules/redux-thunk/es/index.js","redux-logger":"../node_modules/redux-logger/dist/redux-logger.js","./reducer":"../src/event/redux/reducer.js"}],"../src/header/notifications/Event.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86917,8 +86979,6 @@ var _Notification = _interopRequireDefault(require("./Notification"));
 
 var _event = require("../friendship/event");
 
-var _Tooltip = _interopRequireDefault(require("../Modal/Tooltip"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -87054,6 +87114,9 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "nav-item-count " + (followers === 0 ? "d-none" : "")
       }, followers), _react.default.createElement(_Followers.default, {
+        onNotificationReceived: function onNotificationReceived() {
+          _this3.props.in_user();
+        },
         onDecline: function onDecline(u) {
           _this3.props.decline(u);
 
@@ -87135,12 +87198,15 @@ var Header = (0, _reactRedux.connect)(function (state) {
     },
     in_not: function in_not() {
       return dispatch((0, _events.increment_notification)());
+    },
+    in_user: function in_user() {
+      return dispatch((0, _events.increment_followers)());
     }
   };
 })(HeaderComponent);
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js","../Modal/Tooltip":"../src/Modal/Tooltip.js"}],"../src/select/Request/gameSearch.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/es/index.js","react-redux":"../../node_modules/react-redux/es/index.js","axios":"../../node_modules/axios/index.js","./events":"../src/header/events.js","./Followers":"../src/header/Followers.js","./Notification":"../src/header/Notification.js","../friendship/event":"../src/friendship/event.js"}],"../src/select/Request/gameSearch.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -93207,6 +93273,14 @@ var onMessage = function onMessage(_ref) {
     });
   } // end if
 
+
+  if (response.action === 'subscription') {
+    _store.default.dispatch({
+      type: _events.USER_HAS_SUBSCRIPTION,
+      data: response.channel
+    });
+  } // end if
+
 };
 
 var wrapper = new _SocketWrapper.default(window.location.href.indexOf('//game') !== -1);
@@ -93435,7 +93509,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46102" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43219" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

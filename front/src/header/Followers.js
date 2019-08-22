@@ -2,12 +2,38 @@ import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import axios from 'axios';
+import socketStore from '../socket/redux/store';
+import {
+    USER_HAS_SUBSCRIPTION
+} from '../socket/redux/events';
+import NewNotification from '../chat/sounds/NewNotification';
 
 export default class Followers extends Component{
 
     state = {
         list: [],
         open: false
+    }
+
+    componentDidMount() {
+        this.socketSubscription = socketStore.subscribe(() => {
+            const state = socketStore.getState();
+
+            if (state.received === USER_HAS_SUBSCRIPTION)
+            {
+                NewNotification.play();
+                this.props.onNotificationReceived();   
+            } // end if
+
+        });
+    }
+
+    componentWillUnmount()
+    {
+        if (this.socketSubscription)
+        {
+            this.socketSubscription();
+        } // end if
     }
 
     componentDidUpdate()
@@ -113,7 +139,7 @@ export default class Followers extends Component{
                                             <div className="col p-0">
                                                 <Link to={`/gg/${user.username}`} className="user-list-item d-inline-flex">
                                                     <div className="ava-wrapper">
-                                                        <div className="status offline"></div>
+                                                        <div className={`status ${user.status}`}></div>
                                                         <div className="user-list-ava">
                                                             <img src={user.ava} />
                                                         </div>
