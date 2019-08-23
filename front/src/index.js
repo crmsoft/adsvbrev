@@ -4,6 +4,7 @@ import { Provider  } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 //import $ from '../node_modules/jquery/dist/jquery.min';
 //import '../node_modules/bootstrap/dist/js/bootstrap';
+import CookieConsent from "react-cookie-consent";
 
 import Profile from './profile/profile';
 import GuestComponent from './profile/guest/GuestComponent';
@@ -63,6 +64,9 @@ const App = () => {
                         <Route path="/gr/:id" component={GroupPage} />
                     </Provider>
                     <RouteListeners />
+                    <CookieConsent>
+                        This website uses cookies to enhance the user experience.
+                    </CookieConsent>
                 </div>
                 <Chat />
             </Fragment>

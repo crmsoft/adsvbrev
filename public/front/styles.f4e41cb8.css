@@ -1617,12 +1617,12 @@ textarea.form-control {
   .btn:focus, .btn.focus {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-  .btn.disabled, .btn:disabled {
+  .btn.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn.flatpickr-monthDropdown-months, .btn:disabled {
     opacity: 0.65; }
   .btn:not(:disabled):not(.disabled) {
     cursor: pointer; }
 
-a.btn.disabled,
+a.btn.disabled, .profile-schedule .flatpickr-months .flatpickr-month a.btn.flatpickr-monthDropdown-months,
 fieldset:disabled a.btn {
   pointer-events: none; }
 
@@ -1636,7 +1636,7 @@ fieldset:disabled a.btn {
     border-color: #0062cc; }
   .btn-primary:focus, .btn-primary.focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }
-  .btn-primary.disabled, .btn-primary:disabled {
+  .btn-primary.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-primary.flatpickr-monthDropdown-months, .btn-primary:disabled {
     color: #ffffff;
     background-color: #007bff;
     border-color: #007bff; }
@@ -1659,7 +1659,7 @@ fieldset:disabled a.btn {
     border-color: #545b62; }
   .btn-secondary:focus, .btn-secondary.focus {
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5); }
-  .btn-secondary.disabled, .btn-secondary:disabled {
+  .btn-secondary.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-secondary.flatpickr-monthDropdown-months, .btn-secondary:disabled {
     color: #ffffff;
     background-color: #6c757d;
     border-color: #6c757d; }
@@ -1682,7 +1682,7 @@ fieldset:disabled a.btn {
     border-color: #1ad210; }
   .btn-success:focus, .btn-success.focus {
     box-shadow: 0 0 0 0.2rem rgba(49, 239, 38, 0.5); }
-  .btn-success.disabled, .btn-success:disabled {
+  .btn-success.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-success.flatpickr-monthDropdown-months, .btn-success:disabled {
     color: #212529;
     background-color: #31EF26;
     border-color: #31EF26; }
@@ -1705,7 +1705,7 @@ fieldset:disabled a.btn {
     border-color: #117a8b; }
   .btn-info:focus, .btn-info.focus {
     box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); }
-  .btn-info.disabled, .btn-info:disabled {
+  .btn-info.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-info.flatpickr-monthDropdown-months, .btn-info:disabled {
     color: #ffffff;
     background-color: #17a2b8;
     border-color: #17a2b8; }
@@ -1728,7 +1728,7 @@ fieldset:disabled a.btn {
     border-color: #da7908; }
   .btn-warning:focus, .btn-warning.focus {
     box-shadow: 0 0 0 0.2rem rgba(247, 147, 30, 0.5); }
-  .btn-warning.disabled, .btn-warning:disabled {
+  .btn-warning.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-warning.flatpickr-monthDropdown-months, .btn-warning:disabled {
     color: #212529;
     background-color: #f7931e;
     border-color: #f7931e; }
@@ -1751,7 +1751,7 @@ fieldset:disabled a.btn {
     border-color: #971e23; }
   .btn-danger:focus, .btn-danger.focus {
     box-shadow: 0 0 0 0.2rem rgba(193, 39, 45, 0.5); }
-  .btn-danger.disabled, .btn-danger:disabled {
+  .btn-danger.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-danger.flatpickr-monthDropdown-months, .btn-danger:disabled {
     color: #ffffff;
     background-color: #c1272d;
     border-color: #c1272d; }
@@ -1774,7 +1774,7 @@ fieldset:disabled a.btn {
     border-color: #dae0e5; }
   .btn-light:focus, .btn-light.focus {
     box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5); }
-  .btn-light.disabled, .btn-light:disabled {
+  .btn-light.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-light.flatpickr-monthDropdown-months, .btn-light:disabled {
     color: #212529;
     background-color: #f8f9fa;
     border-color: #f8f9fa; }
@@ -1797,7 +1797,7 @@ fieldset:disabled a.btn {
     border-color: #1d2124; }
   .btn-dark:focus, .btn-dark.focus {
     box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
-  .btn-dark.disabled, .btn-dark:disabled {
+  .btn-dark.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-dark.flatpickr-monthDropdown-months, .btn-dark:disabled {
     color: #ffffff;
     background-color: #343a40;
     border-color: #343a40; }
@@ -1821,7 +1821,7 @@ fieldset:disabled a.btn {
     border-color: #007bff; }
   .btn-outline-primary:focus, .btn-outline-primary.focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }
-  .btn-outline-primary.disabled, .btn-outline-primary:disabled {
+  .btn-outline-primary.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-primary.flatpickr-monthDropdown-months, .btn-outline-primary:disabled {
     color: #007bff;
     background-color: transparent; }
   .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active,
@@ -1844,7 +1844,7 @@ fieldset:disabled a.btn {
     border-color: #6c757d; }
   .btn-outline-secondary:focus, .btn-outline-secondary.focus {
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5); }
-  .btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
+  .btn-outline-secondary.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-secondary.flatpickr-monthDropdown-months, .btn-outline-secondary:disabled {
     color: #6c757d;
     background-color: transparent; }
   .btn-outline-secondary:not(:disabled):not(.disabled):active, .btn-outline-secondary:not(:disabled):not(.disabled).active,
@@ -1867,7 +1867,7 @@ fieldset:disabled a.btn {
     border-color: #31EF26; }
   .btn-outline-success:focus, .btn-outline-success.focus {
     box-shadow: 0 0 0 0.2rem rgba(49, 239, 38, 0.5); }
-  .btn-outline-success.disabled, .btn-outline-success:disabled {
+  .btn-outline-success.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-success.flatpickr-monthDropdown-months, .btn-outline-success:disabled {
     color: #31EF26;
     background-color: transparent; }
   .btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active,
@@ -1890,7 +1890,7 @@ fieldset:disabled a.btn {
     border-color: #17a2b8; }
   .btn-outline-info:focus, .btn-outline-info.focus {
     box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); }
-  .btn-outline-info.disabled, .btn-outline-info:disabled {
+  .btn-outline-info.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-info.flatpickr-monthDropdown-months, .btn-outline-info:disabled {
     color: #17a2b8;
     background-color: transparent; }
   .btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active,
@@ -1913,7 +1913,7 @@ fieldset:disabled a.btn {
     border-color: #f7931e; }
   .btn-outline-warning:focus, .btn-outline-warning.focus {
     box-shadow: 0 0 0 0.2rem rgba(247, 147, 30, 0.5); }
-  .btn-outline-warning.disabled, .btn-outline-warning:disabled {
+  .btn-outline-warning.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-warning.flatpickr-monthDropdown-months, .btn-outline-warning:disabled {
     color: #f7931e;
     background-color: transparent; }
   .btn-outline-warning:not(:disabled):not(.disabled):active, .btn-outline-warning:not(:disabled):not(.disabled).active,
@@ -1936,7 +1936,7 @@ fieldset:disabled a.btn {
     border-color: #c1272d; }
   .btn-outline-danger:focus, .btn-outline-danger.focus {
     box-shadow: 0 0 0 0.2rem rgba(193, 39, 45, 0.5); }
-  .btn-outline-danger.disabled, .btn-outline-danger:disabled {
+  .btn-outline-danger.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-danger.flatpickr-monthDropdown-months, .btn-outline-danger:disabled {
     color: #c1272d;
     background-color: transparent; }
   .btn-outline-danger:not(:disabled):not(.disabled):active, .btn-outline-danger:not(:disabled):not(.disabled).active,
@@ -1959,7 +1959,7 @@ fieldset:disabled a.btn {
     border-color: #f8f9fa; }
   .btn-outline-light:focus, .btn-outline-light.focus {
     box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5); }
-  .btn-outline-light.disabled, .btn-outline-light:disabled {
+  .btn-outline-light.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-light.flatpickr-monthDropdown-months, .btn-outline-light:disabled {
     color: #f8f9fa;
     background-color: transparent; }
   .btn-outline-light:not(:disabled):not(.disabled):active, .btn-outline-light:not(:disabled):not(.disabled).active,
@@ -1982,7 +1982,7 @@ fieldset:disabled a.btn {
     border-color: #343a40; }
   .btn-outline-dark:focus, .btn-outline-dark.focus {
     box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
-  .btn-outline-dark.disabled, .btn-outline-dark:disabled {
+  .btn-outline-dark.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-outline-dark.flatpickr-monthDropdown-months, .btn-outline-dark:disabled {
     color: #343a40;
     background-color: transparent; }
   .btn-outline-dark:not(:disabled):not(.disabled):active, .btn-outline-dark:not(:disabled):not(.disabled).active,
@@ -2007,7 +2007,7 @@ fieldset:disabled a.btn {
     text-decoration: underline;
     border-color: transparent;
     box-shadow: none; }
-  .btn-link:disabled, .btn-link.disabled {
+  .btn-link:disabled, .btn-link.disabled, .profile-schedule .flatpickr-months .flatpickr-month .btn-link.flatpickr-monthDropdown-months {
     color: #6c757d;
     pointer-events: none; }
 
@@ -2208,7 +2208,7 @@ input[type="button"].btn-block {
     color: #ffffff;
     text-decoration: none;
     background-color: #007bff; }
-  .dropdown-item.disabled, .dropdown-item:disabled {
+  .dropdown-item.disabled, .profile-schedule .flatpickr-months .flatpickr-month .dropdown-item.flatpickr-monthDropdown-months, .dropdown-item:disabled {
     color: #6c757d;
     background-color: transparent; }
 
@@ -2748,7 +2748,7 @@ input[type="button"].btn-block {
   padding: 0.5rem 1rem; }
   .nav-link:hover, .nav-link:focus {
     text-decoration: none; }
-  .nav-link.disabled {
+  .nav-link.disabled, .profile-schedule .flatpickr-months .flatpickr-month .nav-link.flatpickr-monthDropdown-months {
     color: #6c757d; }
 
 .nav-tabs {
@@ -2761,7 +2761,7 @@ input[type="button"].btn-block {
     border-top-right-radius: 0.25rem; }
     .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
       border-color: #e9ecef #e9ecef #dee2e6; }
-    .nav-tabs .nav-link.disabled {
+    .nav-tabs .nav-link.disabled, .nav-tabs .profile-schedule .flatpickr-months .flatpickr-month .nav-link.flatpickr-monthDropdown-months, .profile-schedule .flatpickr-months .flatpickr-month .nav-tabs .nav-link.flatpickr-monthDropdown-months {
       color: #6c757d;
       background-color: transparent;
       border-color: transparent; }
@@ -3003,7 +3003,7 @@ input[type="button"].btn-block {
   color: rgba(0, 0, 0, 0.5); }
   .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
     color: rgba(0, 0, 0, 0.7); }
-  .navbar-light .navbar-nav .nav-link.disabled {
+  .navbar-light .navbar-nav .nav-link.disabled, .navbar-light .navbar-nav .profile-schedule .flatpickr-months .flatpickr-month .nav-link.flatpickr-monthDropdown-months, .profile-schedule .flatpickr-months .flatpickr-month .navbar-light .navbar-nav .nav-link.flatpickr-monthDropdown-months {
     color: rgba(0, 0, 0, 0.3); }
 
 .navbar-light .navbar-nav .show > .nav-link,
@@ -3035,7 +3035,7 @@ input[type="button"].btn-block {
   color: rgba(255, 255, 255, 0.5); }
   .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
     color: rgba(255, 255, 255, 0.75); }
-  .navbar-dark .navbar-nav .nav-link.disabled {
+  .navbar-dark .navbar-nav .nav-link.disabled, .navbar-dark .navbar-nav .profile-schedule .flatpickr-months .flatpickr-month .nav-link.flatpickr-monthDropdown-months, .profile-schedule .flatpickr-months .flatpickr-month .navbar-dark .navbar-nav .nav-link.flatpickr-monthDropdown-months {
     color: rgba(255, 255, 255, 0.25); }
 
 .navbar-dark .navbar-nav .show > .nav-link,
@@ -3313,7 +3313,7 @@ input[type="button"].btn-block {
   background-color: #007bff;
   border-color: #007bff; }
 
-.page-item.disabled .page-link {
+.page-item.disabled .page-link, .profile-schedule .flatpickr-months .flatpickr-month .page-item.flatpickr-monthDropdown-months .page-link {
   color: #6c757d;
   pointer-events: none;
   cursor: auto;
@@ -3616,7 +3616,7 @@ input[type="button"].btn-block {
   .list-group-item:hover, .list-group-item:focus {
     z-index: 1;
     text-decoration: none; }
-  .list-group-item.disabled, .list-group-item:disabled {
+  .list-group-item.disabled, .profile-schedule .flatpickr-months .flatpickr-month .list-group-item.flatpickr-monthDropdown-months, .list-group-item:disabled {
     color: #6c757d;
     background-color: #ffffff; }
   .list-group-item.active {
@@ -6989,8 +6989,9 @@ footer {
   color: #fff;
   fill: #fff; }
 
-.flatpickr-months .flatpickr-prev-month.disabled,
-.flatpickr-months .flatpickr-next-month.disabled {
+.flatpickr-months .flatpickr-prev-month.disabled, .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-prev-month.flatpickr-monthDropdown-months,
+.flatpickr-months .flatpickr-next-month.disabled,
+.profile-schedule .flatpickr-months .flatpickr-month .flatpickr-next-month.flatpickr-monthDropdown-months {
   display: none; }
 
 .flatpickr-months .flatpickr-prev-month i,
@@ -7375,8 +7376,9 @@ span.flatpickr-weekday {
   -webkit-box-shadow: -5px 0 0 #e2e2e2, 5px 0 0 #e2e2e2;
   box-shadow: -5px 0 0 #e2e2e2, 5px 0 0 #e2e2e2; }
 
-.flatpickr-day.disabled,
+.flatpickr-day.disabled, .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-day.flatpickr-monthDropdown-months,
 .flatpickr-day.disabled:hover,
+.profile-schedule .flatpickr-months .flatpickr-month .flatpickr-day.flatpickr-monthDropdown-months:hover,
 .flatpickr-day.prevMonthDay,
 .flatpickr-day.nextMonthDay,
 .flatpickr-day.notAllowed,
@@ -7387,8 +7389,9 @@ span.flatpickr-weekday {
   border-color: transparent;
   cursor: default; }
 
-.flatpickr-day.disabled,
-.flatpickr-day.disabled:hover {
+.flatpickr-day.disabled, .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-day.flatpickr-monthDropdown-months,
+.flatpickr-day.disabled:hover,
+.profile-schedule .flatpickr-months .flatpickr-month .flatpickr-day.flatpickr-monthDropdown-months:hover {
   cursor: not-allowed;
   color: rgba(72, 72, 72, 0.1); }
 
@@ -9746,6 +9749,12 @@ nav.user-profile {
         left: 0; }
       .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-current-month {
         padding-top: 6px; }
+      .profile-schedule .flatpickr-months .flatpickr-month .flatpickr-monthDropdown-months {
+        pointer-events: none;
+        background: transparent;
+        width: 80px;
+        padding: 0px;
+        user-select: none; }
 
 .user-middle {
   flex: 1; }

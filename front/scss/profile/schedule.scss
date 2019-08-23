@@ -111,6 +111,15 @@
             .flatpickr-current-month{
                 padding-top: 6px;
             }
+
+            .flatpickr-monthDropdown-months{
+                pointer-events: none;
+                background: transparent;
+                width: 80px;
+                padding: 0px;
+                user-select: none;
+                @extend .disabled;
+            }
         }
     }
 

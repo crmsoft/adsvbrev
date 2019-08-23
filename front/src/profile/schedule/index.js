@@ -90,6 +90,7 @@ class ProfileScheduleComponent extends Component{
                 <div className="block-content">
 
                     <Flatpickr 
+                        shorthand-current-month
                         ref={ref => { this.calendar = ref; }}
                         onDayCreate={
                             this.plotEvents.bind(this)
