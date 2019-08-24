@@ -19,6 +19,8 @@ class CreateEventParticipantsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('event_id');
 
+            $table->string('type')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')

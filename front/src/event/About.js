@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import AboutTab from './AboutTab';
+import ImageContent from '../profile/media-tabs/image-content';
 
 export default class About extends Component{
     
     render(){
         
-        const {about} = this.props;
+        const {about, media} = this.props;
 
         return (
             <div className="profile-about">
                 <Tabs>
                     <TabList className="nav nav-tabs">
+
                         <Tab selectedClassName="active">
                             <a href="javascript:void(0);">
                                 <span className="icon-info"></span>
@@ -31,16 +33,9 @@ export default class About extends Component{
                             </a>
                         </Tab>
 
-                        <Tab selectedClassName="active">
-                            <a href="javascript:void(0);">
-                                <span className="icon-play"></span>
-                                <span className="tab-title">
-                                    {" Videos"}
-                                </span>
-                            </a>
-                        </Tab>
                     </TabList>
                     <div className="content">
+
                         <TabPanel> 
 
                             <AboutTab description={about} />
@@ -49,15 +44,19 @@ export default class About extends Component{
 
                         <TabPanel> 
 
-                            Images of the event ....
+                            <div className="user-uploads">
+                                <ImageContent 
+                                    media={media}
+                                    totalImage={media.length}
+                                    user={null}
+                                    promise={new Promise((resolve, reject) => {
+                                        resolve(media)
+                                    })}
+                                />
+                            </div>
 
                         </TabPanel>
 
-                        <TabPanel> 
-
-                            Will be available soon...
-
-                        </TabPanel>
                     </div>
                 </Tabs>
             </div>

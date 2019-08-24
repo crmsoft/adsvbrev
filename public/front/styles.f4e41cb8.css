@@ -10104,7 +10104,8 @@ nav.user-profile {
           display: block; }
     .post .post-content .post-media {
       max-height: 750px;
-      max-width: 650px; }
+      max-width: 650px;
+      overflow: hidden; }
       .post .post-content .post-media .media img {
         max-width: 100%; }
       .post .post-content .post-media.n-2 {

@@ -8,6 +8,7 @@ use App\Http\Resources\UserList\User;
 use App\Http\Resources\UserList\UserCollection;
 use App\Http\Resources\Post\PostCollection;
 use App\Http\Resources\Group\GroupCollection;
+use App\Http\Resources\Media\MediaCollection;
 
 class EventResource extends JsonResource
 {
@@ -45,7 +46,8 @@ class EventResource extends JsonResource
             'participants' => [],
             'random' => new UserCollection($this->participants()->take(6)->inRandomOrder()->get()),
             'total_participant' => $this->participants()->count(),
-            'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get())
+            'feed' => new PostCollection($this->posts()->with(['media', 'event'])->take(2)->orderBy('created_at', 'desc')->get()),
+            'media' => new MediaCollection($this->media)
         ] : [
             'denied' => true
         ];

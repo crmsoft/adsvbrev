@@ -24,22 +24,27 @@ const ViewportImageItem = handleViewport(ImageListItem);
 
 const ImageList = ({
     onLoad,
-    user
+    user,
+    promise
 }) => {
         
     const [list, setList] = useState(() => {
 
-        var url = `/media/list/${user.username}`;
+        if (!promise) {
+            var url = `/media/list/${user.username}`;
 
-        if (user.type === 'game')
-        {
-            url = `/game/media/${user.username}`;
+            if (user.type === 'game')
+            {
+                url = `/game/media/${user.username}`;
+            } // end if
+    
+            axios.get(url)
+            .then(({data}) => {            
+                setList(data.data.reverse());
+            });
+        } else {
+            promise.then(data => setList(data))
         } // end if
-
-        axios.get(url)
-        .then(({data}) => {            
-            setList(data.data.reverse());
-        });
 
         return [];
     });
@@ -62,7 +67,8 @@ const ImageList = ({
 const Gallery = ({
     open,
     onClose,
-    user
+    user,
+    promise
 }) => {
     const [fetched, setFetched] = useState(false);
 
@@ -81,6 +87,7 @@ const Gallery = ({
         >
             <div className="container pt-3 pb-3" style={{maxHeight: '75vh', overflowY: 'auto'}}>
                 <ImageList 
+                    promise={promise}
                     user={user}
                     onLoad={setFetched}
                 />
@@ -107,7 +114,7 @@ export default class ImageContent extends Component {
 
     render(){
         
-        const {media, totalImage, user} = this.props;
+        const {media, totalImage, user, promise} = this.props;
         const {gallery} = this.state;
         const {showGallery, hideGallery} = this;        
 
@@ -133,6 +140,7 @@ export default class ImageContent extends Component {
                                 })
                             }
                             <Gallery 
+                                promise={promise}
                                 user={user}
                                 open={gallery} 
                                 onClose={hideGallery.bind(this)}

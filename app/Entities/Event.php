@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -70,5 +71,25 @@ class Event extends Model
     public function invitations()
     {
         return $this->morphsToMany(\App\Entities\Group::class, 'to');
+    }
+
+    /**
+     * Accessor relation like media query logic
+     * 
+     * @return Collection
+     */
+    public function getMediaAttribute()
+    {
+        $event_id = $this->id;
+
+        return Media::fromQuery(
+            \DB::table('postables')
+            ->join('media', function($query) use ($event_id) {
+                $query->on('media.mediable_id', '=', 'postables.post_id');
+                $query->on('mediable_type', '=', \DB::raw('\'App\\\\Post\''));
+                $query->on('postables.postable_type', '=', \DB::raw('\'App\\\\Entities\\\\Event\''));
+                $query->on('postables.postable_id', '=', \DB::raw($event_id));
+            })->select('media.*')->toSql()
+        );
     }
 }

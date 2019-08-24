@@ -81,7 +81,7 @@ class EventProfileComponent extends Component{
 
     render()
     {
-        const {description, denied, poster, owner, feed, suggested, is_private} = this.props;
+        const {description, denied, poster, owner, feed, suggested, media} = this.props;
         const loggedIn = this.state.user;
         let editor = false;
 
@@ -123,6 +123,7 @@ class EventProfileComponent extends Component{
 
                         <About 
                             about={description}
+                            media={media ? media : []}
                         /> 
                         
                         <section className="user-add-post">
