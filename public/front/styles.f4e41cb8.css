@@ -12032,7 +12032,6 @@ span.flatpickr-weekday {
   padding-left: 12px;
   color: #D1D1D1;
   font-size: 24px;
-  font-weight: 100;
   position: relative;
   z-index: 12;
 }
@@ -12042,6 +12041,7 @@ span.flatpickr-weekday {
   padding-left: 12px;
   position: relative;
   z-index: 12;
+  font-weight: 100;
 }
 
 .find-your-dudes {
