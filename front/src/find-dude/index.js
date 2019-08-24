@@ -231,8 +231,9 @@ class FDudesComponent extends Component{
 
                 <div className="user-middle">
                     <div className="find-your-dudes-title">
-                        <img src="img/binoculars.svg" alt="" />
+                        <img src="img/mygames-title.jpg" alt=""/>
                         <h3>Find Your Dudes!</h3>
+                        <h5>Get In Touch And Play</h5>
                     </div>
                     <section  className="find-your-dudes">
                             

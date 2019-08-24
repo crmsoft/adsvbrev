@@ -17,21 +17,44 @@ $minheight:50%;
 
 .find-your-dudes-title
 {
-    height: 30px;
-    line-height: 30px;
-    margin-bottom:1rem;
     margin-top:$dudetitletop;
-
+    height: 80px;
+    line-height: 80px;
+    position: relative;
+    /*background: url(../img/mygames-title.jpg);
+    background-position: 50% 55%;  */
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #354247;
+    border-bottom: 0px;
     img
     {
-        height: 30px;
+        /*height: 30px;
         float: left;
-        margin-right:0.5rem;
+        margin-right:0.5rem; */
+        height: 80px;
+        object-fit: cover;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
     }
     h3
     {
-        color:$mainColor;
+        margin:25px 0 0 0;
+        padding-left: 12px;
+        color:$greycolor;
         font-size: 24px;
+        font-weight: 100;
+        position: relative;
+        z-index: 12;
+    }
+    h5
+    {
+        color:$greycolor;
+        font-size: 14px;
+        padding-left: 12px;
+        position: relative;
+        z-index: 12;
     }
 }
 
@@ -88,6 +111,7 @@ $minheight:50%;
         {
             padding: 0px;
             overflow-y: hidden;
+            background: $myGamesColor;
         }
         .col-md-6
         {
@@ -301,7 +325,7 @@ $minheight:50%;
                         border-top-right-radius: 5px;
                         border-bottom-right-radius: 5px;
                         color:$searchcolor;
-                        height: 30px;
+                        height: 34px;
                         font-size: 14px;
                         ::placeholder
                         {
@@ -381,6 +405,11 @@ $minheight:50%;
 
             .message-input{
                 margin-bottom: 9px;
+                background:$bodyColor;
+                textarea
+                {
+                    background:$bodyColor;
+                }
             }
 
             .file-upload {
@@ -505,7 +534,7 @@ $minheight:50%;
                         border-top-right-radius: 5px;
                         border-bottom-right-radius: 5px;
                         color:$searchcolor;
-                        height: 30px;
+                        height: 34px;
                         font-size: 14px;
                         ::placeholder
                         {

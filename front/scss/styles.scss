@@ -17,7 +17,7 @@ $postDelimiter: #202833;
 $yellow: #f7931e;
 $red: #c1272d;
 $strokeColor: #354247;
-
+$myGamesColor:#101319;
 /** old declarations */
 $white: #ffffff;
 $grayText: #989898;
@@ -35,7 +35,7 @@ $commentMargin: 10px;
 
 @import "./icomoon/style";
 
-@import '~https://fonts.googleapis.com/css?family=Roboto:400,500,900';
+@import 'https://fonts.googleapis.com/css?family=Roboto:400,500,900';
 
 body{
     font-family: 'Roboto', sans-serif;
