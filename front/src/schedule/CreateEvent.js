@@ -72,7 +72,7 @@ export default class CreateEvent extends Component{
                 <button 
                     onClick={this.doOpen.bind(this)}
                     className="dd-btn btn-sm btn-full btn-create-event"
-                >Create Event</button>
+                ><span className="icon-plus"></span> Create Event</button>
             </Fragment>
         )
     }

@@ -1,7 +1,6 @@
 .profile-schedule{
     padding: 0 !important;
     position: relative;
-    overflow: hidden;
 
     .dec{
         position: absolute;
@@ -44,6 +43,9 @@
             span{
                 background-color: transparent;
                 color: white;
+                &.flatpickr-weekday{
+                    font-weight: 400;
+                }
             }
         }
     }
@@ -60,13 +62,19 @@
     .flatpickr-day {
         position: relative;
         height: 33px !important;
+        width: 33px !important;
+        line-height: 36px;
+        font-weight: 500;
         &:hover{
-            background-color: inherit !important;
             border-color: transparent;
+            background-color: $mainColor;
+            border-radius: 100%;
+            border: 0px !important;
         }
 
         &.selected,&.today,&:focus{
             border-color: transparent;
+            font-weight: 900;
         }
         .marks{
             position: absolute;
@@ -90,6 +98,7 @@
 
     .prevMonthDay, .nextMonthDay{
         opacity: 0.3;
+        font-weight: 100;
     }
 
     .flatpickr-months{

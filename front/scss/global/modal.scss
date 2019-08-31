@@ -30,9 +30,17 @@
         text-align: right;
         .dd-btn{
             float: none !important;
+            &:hover
+            {
+                font-weight: 600 !important;
+            }
         }
         .dd-btn + .dd-btn{
             margin-left: 10px;
+            &:hover
+            {
+                font-weight: 600 !important;
+            }
         }
         &:after{
             clear: both;
