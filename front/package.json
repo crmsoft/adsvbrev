@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel ./pages/index.html --out-dir ../public/front --no-cache",
+    "start": "parcel ./pages/index.html --out-dir ../public/front --no-cache --public-url ./",
     "prod": "parcel build ./pages/index.html --out-dir ../public/front",
     "settings": "parcel ./pages/settings.html"
   },
