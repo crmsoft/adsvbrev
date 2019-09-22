@@ -1,0 +1,302 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../scss/login-register/login.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+<div class="login-register">
+    <div class="login-back"></div>
+    <header>
+        <div class="logo-img">
+            <div class="logo-img-content">
+                <div class="logo-left-triangle"></div>
+                    <img src="../img/login-logo.svg" alt="">
+                <div class="logo-right-triangle"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="login-section">
+        <div class="login-section-inside">
+            <div class="container">
+                <div class="login-left">
+                    <div class="login-desc">
+                        <h3>Welcome to the division of gamers!</h3>
+                        <p>
+                            Find new dudes, play games, discover! <br>
+                            Never leave the game...
+                        </p>
+                    </div>
+                </div>
+                <div class="login-right">
+                    <div class="d-flex">
+                        <div class="flex-fill brand d-flex align-items-center">
+                            <img src="/../img/logo/logo.png" alt="">
+                        </div>
+                        <div class="flex-fill form-holder">
+                            <div id="login-register">
+                                <div>
+                                    <div>
+                                        <nav>
+                                            <div class="justify-content-center">
+                                                <a class="link active" href="/login">Login</a>
+                                                <a class="link" href="/register">Register</a>
+                                            </div>
+                                        </nav>
+                                        <form class="form ">
+                                            <div class="form-content">
+                                                <div class="form-group underline-input">
+                                                    <label for="loginemail">Email</label>
+                                                    <input type="email" name="loginemail" value="">
+                                                </div>
+                                                <div class="form-group underline-input">
+                                                    <label for="loginPassword">Password</label>
+                                                    <input type="password" name="loginpassword" value="">
+                                                </div>
+                                                <div class="form-group forgotten align-self-start">
+                                                    <a href="/password/reset">Forgot password ?</a>
+                                                </div>
+                                                <div class="mb-3">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit">Login</button>
+                                            </div>
+                                        </form>
+                                        <form class="form hidden">
+                                            <div class="form-content">
+                                                <div class="form-group underline-input">
+                                                    <label for="registeremail">Email</label>
+                                                    <input type="email" name="registeremail" value="">
+                                                </div>
+                                                <div class="form-group underline-input">
+                                                    <label for="registerusername">User Name</label>
+                                                    <input type="text" name="registerusername" value="">
+                                                </div>
+                                                <div class="form-group underline-input">
+                                                    <label for="registerpassword">Password</label>
+                                                    <input type="password" name="registerpassword" value="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit">Register</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="social-options">
+                                <li>
+                                    <a href="{{ route('login.with.social', ['twitch']) }}">
+                                        <img src="https://dev.twitch.tv/assets/favicon.ico" alt="Twitch">
+                                        <small>Login With Twitch</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('login.with.social', ['twitch']) }}">
+                                        <img src="https://dev.twitch.tv/assets/favicon.ico" alt="Twitch">
+                                        <small>Login With Twitch</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('login.with.social', ['twitch']) }}">
+                                        <img src="https://dev.twitch.tv/assets/favicon.ico" alt="Twitch">
+                                        <small>Login With Twitch</small>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<section class="login-page-section">
+    <div class="container">
+        <div class="login-page">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <h3>Games Groups</h3>
+                    <p>Discover the groups of games you play!</p>
+                </div>
+                <div class="section-header-right">
+                    <img src="../img/login-game.svg" alt="">
+                </div>
+            </div>
+            <div class="login-game-groups">
+                <div class="row">
+                    <div class="game-groups-box">
+                        <div class="group-box-img">
+                            <img src="../img/wow.jpg" alt="">
+                        </div>
+
+                    </div>
+                    <div class="game-groups-box">
+                        <div class="group-box-img">
+                            <img src="../img/login-farcry3.jpg" alt="">
+                        </div>
+
+                    </div>
+                    <div class="game-groups-box">
+                        <div class="group-box-img">
+                            <img src="../img/login-max-payne3.jpg" alt="">
+                        </div>
+
+                    </div>
+                    <div class="game-groups-box">
+                        <div class="group-box-img">
+                            <img src="../img/cod-bo3.jpg" alt="">
+                        </div>
+
+                    </div>
+                    <div class="game-groups-box">
+                        <div class="group-box-img">
+                            <img src="../img/login-cs-go.jpg" alt="">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="section-header">
+                <div class="section-header-left">
+                    <h3>E-Sports & Clans</h3>
+                    <p>Play with professionals, survive for your team!</p>
+                </div>
+                <div class="section-header-right">
+                    <img src="../img/login-clans.svg" alt="">
+                </div>
+
+            </div>
+            <div class="login-clans">
+                <div class="row">
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="login-clans-box">
+                        <div class="login-clans-box-img">
+                            <h3>Oxford Young</h3>
+                            <div class="login-clan-back"></div>
+                            <img src="../img/clans-oxford-youngs.jpg" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-header">
+                <div class="section-header-left">
+                    <h3>Find Your Dudes</h3>
+                    <p>Never play your games alone!</p>
+                </div>
+                <div class="section-header-right">
+                    <img src="../img/login-dudes.svg" alt="">
+                </div>
+            </div>
+            <div class="login-dudes">
+
+                <img src="../img/login-borders/top.svg" alt=""/>
+                <img src="../img/login-borders/right.svg" alt=""/>
+                <img src="../img/login-borders/bottom.svg" alt=""/>
+                <img src="../img/login-borders/left.svg" alt=""/>
+                <div class="login-dudes-back hidden"></div>
+                <div class="login-dudes-img">
+                    <img src="../img/cs-go.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-menu">
+            <ul>
+                <li><a href="#">home</a></li>
+                <li><a href="#">privacy</a></li>
+                <li><a href="#">terms of use</a></li>
+                <li><a href="#">&copy; divdudes 2019 </a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+</body>
+
+<script type="text/javascript">
+    $('.game-groups-box .group-box-img img').height($('.game-groups-box ').width() );
+    $('.game-groups-box').height($('.game-groups-box ').width() - 15 );
+</script>
+</html>

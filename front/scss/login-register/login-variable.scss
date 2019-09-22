@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i");
+
+$mainColor:#66FCF1;
+$blackColor:#000;
+$whiteColor:#fff;
+$loginBackColor:rgba(32, 40, 51, 0.6);
+$loginBtnColor:#0B0C10;
+$twitchColor:#593E83;
+$facebookColor:#475993;
+$loginPageColor:#202833;
+
+@mixin logo-left-triangle(){
+  width:0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 100px 170px 0;
+  border-color: $blackColor $blackColor transparent transparent;
+  left: -100px;
+  position: absolute;
+  top:0;
+}
+@mixin logo-right-triangle(){
+  width:0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 0 170px 100px;
+  border-color: $blackColor  transparent  transparent $blackColor;
+  right: -100px;
+  position: absolute;
+  top:0;
+}
+@mixin box-shadow(){
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+}
+@mixin login-back(){
+  background: rgba(150,115,161,1);
+  background: -moz-linear-gradient(left, rgba(150,115,161,1) 0%, rgba(0,169,157,0.67) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(150,115,161,1)), color-stop(100%, rgba(0,169,157,0.67)));
+  background: -webkit-linear-gradient(left, rgba(150,115,161,1) 0%, rgba(0,169,157,0.67) 100%);
+  background: -o-linear-gradient(left, rgba(150,115,161,1) 0%, rgba(0,169,157,0.67) 100%);
+  background: -ms-linear-gradient(left, rgba(150,115,161,1) 0%, rgba(0,169,157,0.67) 100%);
+  background: linear-gradient(to right, rgba(150,115,161,1) 0%, rgba(0,169,157,0.67) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9673a1', endColorstr='#00a99d', GradientType=1 );
+}
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin clansback(){
+  background: rgba(42,17,77,0.4);
+  background: -moz-linear-gradient(left, rgba(42,17,77,1) 0%, rgba(0,106,85,0.2) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(42,17,77,0.4)), color-stop(100%, rgba(0,106,85,0.2)));
+  background: -webkit-linear-gradient(left, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.2) 100%);
+  background: -o-linear-gradient(left, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.2) 100%);
+  background: -ms-linear-gradient(left, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.2) 100%);
+  background: linear-gradient(to right, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.2) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a114d', endColorstr='#006a55', GradientType=1 );
+}
+@mixin dudes-back(){
+  background: rgba(42,17,77,0.4);
+  background: -moz-linear-gradient(45deg, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.5) 52%, rgba(0,106,85,0.04) 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(42,17,77,1)), color-stop(52%, rgba(0,106,85,0.5)), color-stop(100%, rgba(0,106,85,0.04)));
+  background: -webkit-linear-gradient(45deg, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.5) 52%, rgba(0,106,85,0.04) 100%);
+  background: -o-linear-gradient(45deg, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.5) 52%, rgba(0,106,85,0.04) 100%);
+  background: -ms-linear-gradient(45deg, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.5) 52%, rgba(0,106,85,0.04) 100%);
+  background: linear-gradient(45deg, rgba(42,17,77,0.4) 0%, rgba(0,106,85,0.5) 52%, rgba(0,106,85,0.04) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a114d', endColorstr='#006a55', GradientType=1 );
+}

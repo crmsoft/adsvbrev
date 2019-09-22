@@ -9,6 +9,19 @@
     background-size: cover;
     z-index: -1;
     position: relative;
+
+    .login-header
+    {
+        position: fixed;
+        top:0;
+        height: 60px;
+        width: 100%;
+        img
+        {
+            width:150px;
+        }
+    }
+
     h1{
         height: 150px;
         font-size: 15px;

@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="login-register">
+    <div class="login-header">
+        <div class="logo-img">
+            <img src="img/login-logo.svg" alt="">
+        </div>
+    </div>
     <div class="d-flex">
         <div class="flex-fill brand d-flex align-items-center">
             <img src="/img/logo/logo.png" alt="">
